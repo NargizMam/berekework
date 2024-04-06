@@ -19,7 +19,7 @@ headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
   }
 });
 
-headingRouter.get('/', async (req, res, next) => {
+headingRouter.get('/', async (_req, res, next) => {
   try {
     const results = await Heading.findOne();
     return res.send(results);
