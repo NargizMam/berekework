@@ -2,7 +2,7 @@ import { Link, Box, Typography } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import Arrow from '../../../shared/assets/icons/Arrow-Right.png';
+import Arrow from '../../assets/Arrow-Right.png';
 import LinkButtonWithArrowStyle from './LinkButtonWithArrow-style';
 import './LinkButtonWithArrow.css';
 
