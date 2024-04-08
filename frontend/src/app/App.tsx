@@ -1,7 +1,7 @@
-import '../App.css'
+import '../App.css';
 import { Route, Routes } from 'react-router-dom';
 import { HeadingAdmin } from '../pages/HeadingAdmin';
-import { HeadingDetail } from '../pages/HeadingAdmin/ui/HeadingDetail';
+import { HeadingDetail } from '../pages/HeadingAdmin';
 
 const App = () => (
     <>
