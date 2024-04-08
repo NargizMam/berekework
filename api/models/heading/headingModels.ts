@@ -5,9 +5,12 @@ const headingSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  url: String,
   image: String,
   description: String,
+  button: {
+    url: String,
+    text: String,
+  },
 });
 
 const Heading = mongoose.model('Heading', headingSchema);
