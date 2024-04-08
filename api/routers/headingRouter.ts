@@ -1,6 +1,7 @@
 import express from 'express';
 import Heading from '../models/heading/headingModels';
 import { imagesUpload } from '../multer';
+import mongoose from 'mongoose';
 
 const headingRouter = express.Router();
 
@@ -19,6 +20,9 @@ headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
     await heading.save();
     return res.send(heading);
   } catch (error) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(error.message);
+    }
     return next(error);
   }
 });
@@ -41,7 +45,7 @@ headingRouter.get('/:location', async (req, res, next) => {
   }
 });
 
-headingRouter.patch('/', imagesUpload.single('image'), async (req, res, next) => {
+headingRouter.patch('/:location', imagesUpload.single('image'), async (req, res, next) => {
   try {
     const result = await Heading.updateOne({
       title: req.body.title,
@@ -49,7 +53,7 @@ headingRouter.patch('/', imagesUpload.single('image'), async (req, res, next) =>
       description: req.body.description,
       button: JSON.parse(req.body.button),
     });
-    return res.send(result);
+    return res.send({ message: `Update ${req.params.location} successfully.`, result });
   } catch (error) {
     return next(error);
   }
