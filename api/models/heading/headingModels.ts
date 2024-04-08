@@ -5,6 +5,10 @@ const headingSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  location: {
+    required: true,
+    type: String,
+  },
   image: String,
   description: String,
   button: {

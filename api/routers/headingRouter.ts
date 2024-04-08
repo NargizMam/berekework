@@ -8,6 +8,7 @@ headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
   try {
     const heading = new Heading({
       title: req.body.title,
+      location: req.body.location,
       image: req.file ? req.file.filename : null,
       description: req.body.description,
       button: {
@@ -24,7 +25,16 @@ headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
 
 headingRouter.get('/', async (_req, res, next) => {
   try {
-    const results = await Heading.findOne();
+    const results = await Heading.find();
+    return res.send(results);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+headingRouter.get('/:location', async (req, res, next) => {
+  try {
+    const results = await Heading.findOne({ location: req.params.location });
     return res.send(results);
   } catch (error) {
     return next(error);
