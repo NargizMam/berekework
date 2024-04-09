@@ -11,8 +11,8 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 
-app.use('/heading', headingRouter);
 app.use('/header', headerRouter);
+app.use('/heading', headingRouter);
 
 const run = async () => {
   await mongoose.connect(config.mongoose.db);

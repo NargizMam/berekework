@@ -27,11 +27,14 @@ headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
   }
 });
 
-headingRouter.get('/:location', async (req, res, next) => {
+headingRouter.get('/:location?', async (req, res, next) => {
   try {
     let results;
     if (req.params.location) {
       results = await Heading.findOne({ location: req.params.location });
+      if (!results) {
+        return res.status(404).send({ message: 'Heading not found' });
+      }
     } else {
       results = await Heading.find();
     }
