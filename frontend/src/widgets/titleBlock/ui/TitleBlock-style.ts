@@ -6,11 +6,15 @@ const TitleBlockStyle = {
     marginBottom: '35px',
     '@media (max-width: 900px)': {
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
+      gap: '25px',
     },
   },
   infoBlock: {
     maxWidth: '700px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
   title: {
     fontWeight: '700',
