@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import config from './config';
-import headingRouter from './routers/headingRouter';
+import headingRouter from './routes/headingRouter';
 import headerRouter from './routes/headerRouter';
 
 const app = express();
