@@ -2,12 +2,16 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import config from './config';
+import headerRouter from './routes/headerRouter';
 
 const app = express();
 
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
+
+app.use('/header', headerRouter);
+
 const run = async () => {
     await mongoose.connect(config.mongoose.db);
 
