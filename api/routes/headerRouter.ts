@@ -14,6 +14,10 @@ headerRouter.post('/', imagesUpload.single('logo'), async (req, res, next) => {
 
     const navbarItemsData: NavbarItemFields[] = JSON.parse(req.body.navbarItems);
 
+    if (navbarItemsData.length > 6) {
+      return res.status(422).send('NavbarItem can not be more than 6!');
+    }
+
     const savedNavbarItems = await Promise.all(
       navbarItemsData.map(async (item) => {
         const navbarItem = new NavbarItem({
