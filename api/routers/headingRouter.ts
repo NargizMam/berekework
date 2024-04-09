@@ -27,18 +27,14 @@ headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
   }
 });
 
-headingRouter.get('/', async (_req, res, next) => {
-  try {
-    const results = await Heading.find();
-    return res.send(results);
-  } catch (error) {
-    return next(error);
-  }
-});
-
 headingRouter.get('/:location', async (req, res, next) => {
   try {
-    const results = await Heading.findOne({ location: req.params.location });
+    let results;
+    if (req.params.location) {
+      results = await Heading.findOne({ location: req.params.location });
+    } else {
+      results = await Heading.find();
+    }
     return res.send(results);
   } catch (error) {
     return next(error);
