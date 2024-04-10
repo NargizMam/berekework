@@ -6,6 +6,7 @@ interface Props {
 }
 
 export const MainCards: React.FC<Props> = ({data}) => {
+  const numImages = data.length;
 
   return (
     <Grid container spacing={1} direction="row">
@@ -17,6 +18,8 @@ export const MainCards: React.FC<Props> = ({data}) => {
             description={mainCard.description}
             image={mainCard.image}
             url={mainCard.url}
+            icon={mainCard.icon}
+            numImages={numImages}
           />
         ))
       }
