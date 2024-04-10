@@ -1,8 +1,10 @@
-import './App.css'
+import Header from './widgets/Header/ui/Header.tsx';
 
 const App = () => (
     <>
-        BEREKE WORK
+        <header>
+          <Header/>
+        </header>
     </>
 );
 
