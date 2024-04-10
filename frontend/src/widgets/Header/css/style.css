@@ -1,0 +1,66 @@
+.main-nav-link {
+  color: #A9A9A9;
+}
+
+.main-nav-link:hover {
+  color: #000000;
+  text-shadow: 0 0 1px #333, 0 0 1px #333;
+}
+
+.main-nav-open {
+  display: block;
+}
+
+.main-nav-list {
+  list-style: none;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.7s ease;
+  padding: 0;
+}
+
+.main-mav-web {
+  display: none;
+}
+
+.main-nav-item {
+  margin-top: 10px;
+}
+
+.main-nav-open .main-nav-list {
+  max-height: 200px;
+}
+
+.main-nav-close .main-nav-list {
+  max-height: 0;
+}
+
+.main-nav-close {
+  overflow: hidden;
+}
+
+.close {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.login {
+  color: #000000;
+  cursor: pointer;
+  display: none;
+}
+
+.login:hover {
+  color: #FFE585;
+}
+
+.burger-button {
+  margin-left: auto;
+  background-image: url("../images/burger-menu.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  background-color: transparent;
+}
