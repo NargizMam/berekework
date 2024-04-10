@@ -38,13 +38,61 @@ async (req:Request, res: Response, next: NextFunction) => {
       URLpath: URLpath,
     };
 
-    const cardContainer = new mainContainerCard(newCardContainer);
+    const cardContainer = new mainContainerCard( newCardContainer );
     await cardContainer.save();
 
-    return res.send(newCardContainer);
+    return res.send( newCardContainer );
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(e);
+    }
+
+    next(e);
+  }
+});
+
+mainContainerCardRouter.put('/:id', cardUpload.any(), 
+async (req: Request, res: Response, next: NextFunction) => {
+  const { title, text, URLpath } = req.body;
+  let cardImage: string | null = null;
+  let cardIcon: string | null = null;
+
+  const files = req.files as Express.Multer.File[];
+
+  files.forEach((file) => {
+    cardImage = file.fieldname === 'image' ? file.filename : cardImage; // getting image from req.files array
+    cardIcon = file.fieldname === 'icon' ? file.filename : cardIcon; // getting icon from req.files array
+  });
+
+  try {
+    const cardID = req.params.id;
+
+    const existedCard = await mainContainerCard.findById( cardID );
+
+    if (!existedCard) {
+      return res.status(404).send({ error: 'Card not found' });
+    };
+
+    Object.assign(existedCard, { 
+      title, 
+      text, 
+      URLpath, 
+      image: cardImage, 
+      icon: cardIcon 
+    }); // changing all fields of card
+
+    await existedCard.save();
+
+    return res.send({ 
+      message: 'card has been changed', existedCard 
+    });
+  } catch (e) {
+    if (e instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(e);
+    }
+
+    if (e instanceof mongoose.Error.CastError) {
+      return res.status(400).send({ message: 'Invalid ID' });
     }
 
     next(e);
@@ -55,7 +103,7 @@ mainContainerCardRouter.delete('/:id', async (req: Request, res: Response, next:
   try {
     const cardID = req.params.id;
 
-    const result = await mainContainerCard.findByIdAndDelete(cardID);
+    const result = await mainContainerCard.findByIdAndDelete( cardID );
 
     if (!result) {
       return res.status(404).send({ 
@@ -64,8 +112,12 @@ mainContainerCardRouter.delete('/:id', async (req: Request, res: Response, next:
     }
 
     return res.send({ message: 'success', result });
-  } catch (error) {
-    next(error);
+  } catch (e) {
+    if (e instanceof mongoose.Error.CastError) {
+      return res.status(400).send({ message: 'Invalid ID' });
+    }
+
+    next(e);
   }
 });
 
