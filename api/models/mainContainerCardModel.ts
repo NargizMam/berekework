@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const mainContainerCardModel = new Schema({
+const mainContainerCardModel = new mongoose.Schema({
   title: {
     type: String,
     required: true,
