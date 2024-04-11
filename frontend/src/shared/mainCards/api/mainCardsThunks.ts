@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../../axiosApi.ts';
-import { MainCard } from '../model/mainCardsSlice.ts';
+import { MainCard } from '../model/types';
 
 export const fetchMainCards = createAsyncThunk<MainCard[]>('mainCards/fetchAll', async () => {
-  const result = await axiosApi.get<MainCard[]>('/');
+  const result = await axiosApi.get<MainCard[]>('/mainContainerCard');
   return result.data;
 });
 

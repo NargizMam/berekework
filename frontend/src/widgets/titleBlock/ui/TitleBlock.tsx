@@ -1,10 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import { LinkButtonWithArrow } from '../../../shared/linkButtonWithArrow/index';
+import { MainCards } from '../../../shared/mainCards/index';
 
 import TitleBlockStyle from './TitleBlock-style';
 import './TitleBlock.css';
-// import { MainCard } from '../../../shared/mainCards/ui/MainCardItem.tsx';
-// import MainCards from '../../../shared/mainCards/ui/MainCards.tsx';
 
 export interface TitleBlockApiData {
   title: string;
@@ -15,7 +14,6 @@ export interface TitleBlockApiData {
   image?: string;
   description?: string;
   location: string;
-  // cards: MainCard[];
 }
 
 interface Props {
@@ -51,7 +49,7 @@ export const TitleBlock: React.FC<Props> = ({ data }) => {
         {image}
       </Box>
       {button}
-      {/*<MainCards data={data.cards} />*/}
+      <MainCards />
     </>
   );
 };

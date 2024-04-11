@@ -1,26 +1,29 @@
-const MainCardItemStyle = (cardImage: string | undefined) => ({
+const MainCardItemStyle = (cardImage: string | null, cardIcon: string | null) => ({
   card: {
     position: 'relative',
     display: 'flex',
+    gap: '15px',
     borderRadius: '5px',
     alignItems: 'center',
     overflow: 'hidden',
     maxWidth: '100%',
     height: '100%',
     textDecoration: 'none',
-    padding: '10px',
+    padding: '15px',
     background: cardImage ? `#ECECEC url(${cardImage}) no-repeat right bottom` : '#ECECEC',
     backgroundSize: 'contain',
     '@media (min-width: 600px)': {
-      display: 'flex',
+      display: 'relative',
       borderRadius: '30px',
       border: '1px solid #ececec',
-      padding: '50px 269px 48px 50px',
+      padding: cardIcon ? '40px 40px 40px 124px' : '50px 269px 48px 50px',
     },
   },
   content: {
-    '@media (min-width: 600px)': {
-      height: '100%',
+    height: '100%',
+    padding: 0,
+    '&:last-child': {
+      paddingBottom: 0,
     },
   },
   title: {
@@ -39,31 +42,29 @@ const MainCardItemStyle = (cardImage: string | undefined) => ({
   text: {
     display: 'none',
     '@media (min-width: 600px)': {
+      display: 'block',
       textAlign: 'left',
       fontSize: '14px',
       fontWeight: 500,
       lineHeight: '20px',
+      color: '#8E8E8E',
       margin: 0,
       minWidth: '53%',
     },
   },
-  iconWrapper: {
-    display: 'flex',
-    flexShrink: 0,
-    overflow: 'hidden',
-    width: '24px',
-    height: '24px',
-    marginRight: '10px',
+  icon: {
+    maxWidth: '24px',
+    maxHeight: '24px',
     '@media (min-width: 600px)': {
-      width: '54px',
-      height: '54px',
-      marginRight: '24px',
+      position: 'absolute',
+      left: '40px',
+      top: '64px',
+      maxWidth: '54px',
+      maxHeight: '54px',
     },
   },
-  icon: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
+  link: {
+    textDecoration: 'none',
   },
 });
 export default MainCardItemStyle;

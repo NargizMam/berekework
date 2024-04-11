@@ -5,13 +5,17 @@ import { ThemeProvider } from '@mui/material';
 import BaseLayout from './layouts/BaseLayout.tsx';
 import appTheme from './appTheme.ts';
 import '../index.css';
+import { Provider } from 'react-redux';
+import { store } from './store/store.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={appTheme}>
-        <BaseLayout />
-      </ThemeProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={appTheme}>
+          <BaseLayout />
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
 );
