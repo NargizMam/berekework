@@ -6,14 +6,14 @@ import { apiURL } from '../../constants';
 export interface MainCard {
   _id?: string;
   title: string;
+  text: string;
   image?: string;
   icon?: string;
-  description: string;
-  url: string;
+  URLpath: string;
   numImages: number;
 }
 
-const MainCardItem: React.FC<MainCard> = ({title, image, icon, description, url, numImages}) => {
+const MainCardItem: React.FC<MainCard> = ({title, image, icon, text, URLpath, numImages}) => {
   const cardImage = apiURL + '/' + image;
   const cardIcon = apiURL + '/' + icon;
 
@@ -24,7 +24,7 @@ const MainCardItem: React.FC<MainCard> = ({title, image, icon, description, url,
 
   return (
     <Grid item md={numImages === 1 ? 12 : 6} sm={12} xs={12}>
-      <Link to={url} className="cardMain" style={cardImageStyle}>
+      <Link to={URLpath} className="cardMain" style={cardImageStyle}>
         {cardIcon && (
           <div className="cardIconWrapper">
             <img className="cardIсon" alt={title} src={cardIcon} />
@@ -35,7 +35,7 @@ const MainCardItem: React.FC<MainCard> = ({title, image, icon, description, url,
             {title}
           </h5>
           <p className="cardDescription">
-            {description}
+            {text}
           </p>
         </div>
       </Link>
