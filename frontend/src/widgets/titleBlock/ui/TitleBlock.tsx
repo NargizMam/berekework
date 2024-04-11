@@ -3,8 +3,8 @@ import { LinkButtonWithArrow } from '../../../shared/linkButtonWithArrow/index';
 
 import TitleBlockStyle from './TitleBlock-style';
 import './TitleBlock.css';
-import { MainCard } from '../../../shared/mainCards/ui/MainCardItem.tsx';
-import MainCards from '../../../shared/mainCards/ui/MainCards.tsx';
+// import { MainCard } from '../../../shared/mainCards/ui/MainCardItem.tsx';
+// import MainCards from '../../../shared/mainCards/ui/MainCards.tsx';
 
 export interface TitleBlockApiData {
   title: string;
@@ -15,7 +15,7 @@ export interface TitleBlockApiData {
   image?: string;
   description?: string;
   location: string;
-  cards: MainCard[];
+  // cards: MainCard[];
 }
 
 interface Props {
@@ -51,7 +51,7 @@ export const TitleBlock: React.FC<Props> = ({ data }) => {
         {image}
       </Box>
       {button}
-      <MainCards data={data.cards} />
+      {/*<MainCards data={data.cards} />*/}
     </>
   );
 };

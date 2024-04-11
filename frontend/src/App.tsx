@@ -1,5 +1,10 @@
 import './App.css';
+import { MainCards } from './shared/mainCards';
 
-const App = () => <>BEREKE WORK</>;
+const App = () => (
+  <>
+    <MainCards />
+  </>
+);
 
 export default App;

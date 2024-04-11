@@ -3,9 +3,18 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import { apiURL } from '../../../constants.ts';
 import MainCardItemStyle from './MainCardItem-style.ts';
-import { MainCard } from '../api/mainCardsSlice.ts';
 
-const MainCardItem: React.FC<MainCard> = ({ title, text, image, icon, URLpath, numImages }) => {
+export interface Props {
+  _id?: string;
+  title: string;
+  text: string;
+  image?: string;
+  icon?: string;
+  URLpath: string;
+  numImages: number;
+}
+
+const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numImages }) => {
   const cardImage = apiURL + '/' + image;
   const cardIcon = apiURL + '/' + icon;
   const styles = MainCardItemStyle(cardImage);

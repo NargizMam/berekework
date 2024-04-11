@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchMainCards, fetchSingleMainCard } from './mainCardsThunks.ts';
-
-export interface MainCard {
-  _id?: string;
-  title: string;
-  text: string;
-  image?: string;
-  icon?: string;
-  URLpath: string;
-  numImages: number;
-}
+import { fetchMainCards, fetchSingleMainCard } from '../api/mainCardsThunks.ts';
+import { RootState } from '../../../app/store/store.ts';
+import { MainCard } from './types';
 
 interface MainCardState {
   mainCards: MainCard[];
@@ -54,3 +46,7 @@ export const mainCardSlice = createSlice({
       });
   },
 });
+
+export const mainCardsReducer = mainCardSlice.reducer;
+export const selectMainCards = (state: RootState) => state.mainCards.mainCards;
+export const selectSingleMainCard = (state: RootState) => state.mainCards.mainCard;
