@@ -3,16 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import { apiURL } from '../../../constants.ts';
 import MainCardItemStyle from './MainCardItem-style.ts';
-
-export interface MainCard {
-  _id?: string;
-  title: string;
-  text: string;
-  image?: string;
-  icon?: string;
-  URLpath: string;
-  numImages: number;
-}
+import { MainCard } from '../api/mainCardsSlice.ts';
 
 const MainCardItem: React.FC<MainCard> = ({ title, text, image, icon, URLpath, numImages }) => {
   const cardImage = apiURL + '/' + image;
