@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import config from './config';
 import mainContainerCardRouter from './routers/mainContainerCardRouter';
+import headingRouter from './routes/headingRouter';
+import headerRouter from './routes/headerRouter';
 
 const app = express();
 
@@ -11,18 +13,19 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/mainContainerCard', mainContainerCardRouter);
+app.use('/header', headerRouter);
+app.use('/heading', headingRouter);
 
 const run = async () => {
-    await mongoose.connect(config.mongoose.db);
+  await mongoose.connect(config.mongoose.db);
 
-    app.listen(config.port, () => {
-        console.log(`Server started on ${config.port} port!`);
-    });
+  app.listen(config.port, () => {
+    console.log(`Server started on ${config.port} port!`);
+  });
 
-    process.on('exit', () => {
-        mongoose.disconnect();
-    });
+  process.on('exit', () => {
+    mongoose.disconnect();
+  });
 };
-
 
 void run();
