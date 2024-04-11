@@ -1,4 +1,4 @@
-import MainCardItem, { MainCard } from './MainCardItem.tsx';
+import MainCardItem, { MainCard } from './MainCardItem';
 import { Grid } from '@mui/material';
 
 interface Props {

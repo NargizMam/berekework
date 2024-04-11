@@ -1,32 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectSingleHeading } from '../model/HeadingSlice';
 import { getSingleHeading } from '../api/HeadingThunk';
 import { useParams } from 'react-router-dom';
-
-// interface HeadingMutation {
-//   title: string;
-//   description: string;
-//   image: File | null;
-//   url: string;
-// }
+import HeadingForm from './HeadingForm';
 
 export const HeadingDetail = () => {
   const heading = useAppSelector(selectSingleHeading);
   const {location} = useParams() as { location: string };
-  // const [state, setState] = useState<HeadingMutation>({
-  //   title: '',
-  //   description: '',
-  //   image: null,
-  //   url: '',
-  // });
   const dispatch = useAppDispatch();
+  const [change, setChange] = useState(false);
 
   useEffect(() => {
     dispatch(getSingleHeading(location));
   }, [dispatch, location]);
 
-  console.log(heading);
+  const changeHandle = () => {
+    setChange(prevState => !prevState);
+  };
 
   if (!heading) {
     return null;
@@ -35,6 +26,13 @@ export const HeadingDetail = () => {
   return (
     <div>
       <h2>{heading.title}</h2>
+      <button onClick={changeHandle}>change</button>
+      {
+        change ?
+          <HeadingForm location={location} id={heading._id} heading={heading}/>
+          :
+          null
+      }
     </div>
   );
 };
