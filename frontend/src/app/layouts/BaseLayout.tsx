@@ -1,9 +1,3 @@
-
-
-const BaseLayout = () => (
-  <>
-
-  </>
-);
+const BaseLayout = () => <></>;
 
 export default BaseLayout;

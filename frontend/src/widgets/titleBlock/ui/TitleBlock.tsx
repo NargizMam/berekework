@@ -3,9 +3,8 @@ import { LinkButtonWithArrow } from '../../../shared/linkButtonWithArrow/index';
 
 import TitleBlockStyle from './TitleBlock-style';
 import './TitleBlock.css';
-import { MainCard } from '../../../shared/mainCards/MainCardItem.tsx';
-import MainCards from '../../../shared/mainCards/MainCards.tsx';
-
+import { MainCard } from '../../../shared/mainCards/ui/MainCardItem.tsx';
+import MainCards from '../../../shared/mainCards/ui/MainCards.tsx';
 
 export interface TitleBlockApiData {
   title: string;
@@ -23,7 +22,7 @@ interface Props {
   data: TitleBlockApiData;
 }
 
-export const TitleBlock: React.FC<Props> = ({data}) => {
+export const TitleBlock: React.FC<Props> = ({ data }) => {
   const description = data.description ? (
     <Typography sx={data.image ? TitleBlockStyle.description : TitleBlockStyle.descriptionWithoutImage}>
       {data.description}
@@ -31,12 +30,12 @@ export const TitleBlock: React.FC<Props> = ({data}) => {
   ) : null;
   const image = data.image ? (
     <Box sx={TitleBlockStyle.imageWrapper}>
-      <img src={data.image} alt={data.title} className="TitleBlock__image"/>
+      <img src={data.image} alt={data.title} className="TitleBlock__image" />
     </Box>
   ) : null;
   const button = data.button ? (
     <Box sx={TitleBlockStyle.button}>
-      <LinkButtonWithArrow url={data.button?.url} text={data.button?.text}/>
+      <LinkButtonWithArrow url={data.button?.url} text={data.button?.text} />
     </Box>
   ) : null;
 
@@ -52,7 +51,7 @@ export const TitleBlock: React.FC<Props> = ({data}) => {
         {image}
       </Box>
       {button}
-      <MainCards data={data.cards}/>
+      <MainCards data={data.cards} />
     </>
   );
 };
