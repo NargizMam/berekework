@@ -70,10 +70,32 @@ vacanciesRouter.get('/:id', async (req, res, next) => {
   }
 });
 
+vacanciesRouter.delete('/:id', async (req, res, next) => {
+  try {
+    let _id: Types.ObjectId;
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(404).send({ error: 'Wrong ObjectId!' });
+    }
 
+    const result = await Vacancy.findByIdAndDelete(_id);
 
+    if (!result) {
+      return res.status(404).send({
+        error: 'Vacancy not found or already deleted',
+      });
+    }
 
+    return res.send({ message: 'success', result });
+  } catch (e) {
+    if (e instanceof mongoose.Error.CastError) {
+      return res.status(400).send({ error: 'Invalid ID' });
+    }
 
+    next(e);
+  }
+});
 
 
 export default vacanciesRouter;
