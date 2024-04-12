@@ -7,7 +7,7 @@ export interface Heading{
   title: string;
   description: string;
   location: string;
-  image: File | null;
+  image: string | null;
   button: {
     url: string;
     text: string;
