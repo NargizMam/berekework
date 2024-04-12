@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import express, { NextFunction, Request, Response } from 'express';
 import { cardUpload } from '../multer';
 import Vacancy from '../models/Vacancy';
@@ -48,5 +48,32 @@ vacanciesRouter.get('/', async (req: Request, res: Response, next: NextFunction)
     next(e);
   }
 });
+
+vacanciesRouter.get('/:id', async (req, res, next) => {
+  try {
+    let _id: Types.ObjectId;
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(404).send({ error: 'Wrong ObjectId!' });
+    }
+
+    const vacancy = await Vacancy.findById(_id);
+
+    if (!vacancy) {
+      return res.status(404).send({ error: 'Not found!' });
+    }
+
+    res.send(vacancy);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
+
+
+
+
 
 export default vacanciesRouter;
