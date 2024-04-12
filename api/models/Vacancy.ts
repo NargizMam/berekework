@@ -9,10 +9,10 @@ const vacancySchema = new Schema({
     type: String,
     required: true
   },
-  companyLogo: {
+ logo: {
     type: String
   },
-  companyName: {
+ company: {
     type: String,
     required: true
   },

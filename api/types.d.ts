@@ -1,9 +1,9 @@
 export interface Vacancy {
-  _id: string
+  _id: string;
   title: string;
   description: string;
-  companyLogo: string | null;
-  companyName: string;
+  logo: string | null;
+  company: string;
   city: string;
   salaryMin: number | null;
   salaryMax: number | null;

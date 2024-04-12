@@ -6,22 +6,22 @@ import { VacancyMutation } from '../types';
 
 const vacanciesRouter = express.Router();
 vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, next: NextFunction) => {
-  const { title, description, companyName, city, salaryMin, salaryMax } = req.body;
+  const { title, description, company, city, salaryMin, salaryMax } = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
 
   files.forEach((file) => {
-    companyLogo = file.fieldname === 'companyLogo' ? file.filename : companyLogo;
+    companyLogo = file.fieldname === 'logo' ? file.filename : companyLogo;
   });
 
   try {
     const newVacancy: VacancyMutation = {
-      title: title,
-      description: description,
-      companyLogo: companyLogo,
-      companyName: companyName,
-      city: city,
+      title,
+      description,
+      logo: companyLogo,
+      company: company,
+      city,
       salaryMin: salaryMin ? parseFloat(salaryMin) : null,
       salaryMax: salaryMax ? parseFloat(salaryMax) : null,
     };
@@ -71,13 +71,13 @@ vacanciesRouter.get('/:id', async (req, res, next) => {
 });
 
 vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
-  const { title, description, companyName, city, salaryMin, salaryMax } = req.body;
+  const { title, description, company, city, salaryMin, salaryMax } = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
 
   files.forEach((file) => {
-    companyLogo = file.fieldname === 'companyLogo' ? file.filename : companyLogo;
+    companyLogo = file.fieldname === 'logo' ? file.filename : companyLogo;
   });
 
   try {
@@ -92,8 +92,8 @@ vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
     Object.assign(existedVacancy, {
       title,
       description,
-      companyLogo,
-      companyName,
+      logo: companyLogo,
+      company,
       city,
       salaryMin: salaryMin ? parseFloat(salaryMin) : null,
       salaryMax: salaryMax ? parseFloat(salaryMax) : null,
