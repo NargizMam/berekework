@@ -8,7 +8,7 @@ export const fetchMainCards = createAsyncThunk<MainCard[]>('mainCards/fetchAll',
 });
 
 export const fetchSingleMainCard = createAsyncThunk<MainCard, string>('mainCard/fetchSingle', async (location) => {
-  // Отправка GET запроса на сервер для получения одного заголовка по местоположению
   const result = await axiosApi.get<MainCard>(`/${location}`);
   return result.data;
 });
+

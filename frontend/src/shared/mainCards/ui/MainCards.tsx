@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 export const MainCards = () => {
   const dispatch = useAppDispatch();
   const mainCards = useAppSelector(selectMainCards);
-  console.log(mainCards);
   const numImages = mainCards.length;
 
   useEffect(() => {
