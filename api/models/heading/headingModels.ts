@@ -2,18 +2,34 @@ import mongoose from 'mongoose';
 
 const headingSchema = new mongoose.Schema({
   title: {
-    required: true,
     type: String,
+    // typeField: {
+    //   type: String,
+    //   default: 'text',
+    // },
+    default: "{typeField: 'text'}",
   },
   location: {
-    required: true,
     type: String,
+    typeField: 'text',
   },
-  image: String,
-  description: String,
+  image: {
+    type: String,
+    typeField: 'file',
+  },
+  description: {
+    type: String,
+    typeField: 'text',
+  },
   button: {
-    url: String,
-    text: String,
+    url: {
+      type: String,
+      typeField: 'text',
+    },
+    text: {
+      type: String,
+      typeField: 'text',
+    },
   },
 });
 

@@ -1,28 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllHeading, getSingleHeading } from '../api/HeadingThunk';
+import { createHeadingDraft, getAllHeading, getSingleHeading } from '../api/HeadingThunk';
 import { RootState } from '../../../app/store/store';
+import { Heading } from './types';
 
-export interface Heading{
-  _id: string;
-  title: string;
-  description: string;
-  location: string;
-  image: string | null;
-  button: {
-    url: string;
-    text: string;
+export interface HeadingFields {
+  title: {
+    value: string;
+  };
+  image: {
+    value: string;
   }
 }
 
 interface HeadingState {
   headings: Heading[];
   heading: Heading | null;
+  headingFields: HeadingFields | null;
   headingLoading: boolean;
 }
 
 const initialState: HeadingState = {
   headings: [],
   heading: null,
+  headingFields: null,
   headingLoading: false,
 };
 
@@ -51,9 +51,20 @@ export const headingSlice = createSlice({
     builder.addCase(getSingleHeading.rejected, (state) => {
       state.headingLoading = false;
     });
+    builder.addCase(createHeadingDraft.pending, (state) => {
+      state.headingLoading = true;
+    });
+    builder.addCase(createHeadingDraft.fulfilled, (state, {payload: fields}) => {
+      state.headingLoading = false;
+      state.headingFields = fields;
+    });
+    builder.addCase(createHeadingDraft.rejected, (state) => {
+      state.headingLoading = false;
+    });
   },
 });
 
 export const headingReducer = headingSlice.reducer;
 export const selectAllHeading = (state: RootState) => state.heading.headings;
+export const selectHeadingFields = (state: RootState) => state.heading.headingFields;
 export const selectSingleHeading = (state: RootState) => state.heading.heading;

@@ -5,7 +5,6 @@ import { getSingleHeading } from '../api/HeadingThunk';
 import { useParams } from 'react-router-dom';
 import HeadingForm from './HeadingForm';
 import { BASE_URL } from '../../../app/constants';
-import { head } from 'axios';
 
 export const HeadingDetail = () => {
   const heading = useAppSelector(selectSingleHeading);

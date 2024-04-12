@@ -1,7 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../../app/axios';
-import { Heading } from '../model/HeadingSlice';
-import { HeadingMutation } from '../model/types';
+import { HeadingFields } from '../model/HeadingSlice';
+import { Heading, HeadingMutation } from '../model/types';
+
+export const createHeadingDraft = createAsyncThunk<HeadingFields>(
+  'headings/createHeadingDraft',
+  async () => {
+    const fields = await axiosApi.post('/heading/draft');
+    return fields.data;
+  },
+);
 
 export const createHeading = createAsyncThunk<void, HeadingMutation>(
   'headings/createHeading',
