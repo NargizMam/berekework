@@ -6,24 +6,24 @@ import { VacancyMutation } from '../types';
 
 const vacanciesRouter = express.Router();
 vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, next: NextFunction) => {
-  const { title, description, companyName, city} = req.body;
-  let salary: string | number = req.body.salary ? parseFloat(req.body.salary) : 'з/п не указана';
-  let logo: string | null = null;
+  const { title, description, companyName, city, salaryMin, salaryMax} = req.body;
+  let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
 
   files.forEach((file) => {
-    logo = file.fieldname === 'image' ? file.filename : logo;
+    companyLogo = file.fieldname === 'companyLogo' ? file.filename : companyLogo;
   });
 
   try {
     const newVacancy: VacancyMutation= {
       title: title,
       description: description,
-      companyLogo: logo,
+      companyLogo: companyLogo,
       companyName: companyName,
       city: city,
-      salary: salary,
+      salaryMin: salaryMin ? parseFloat(salaryMin) : null,
+      salaryMax: salaryMax ? parseFloat(salaryMax) : null,
     };
 
     const vacancy = new Vacancy(newVacancy);

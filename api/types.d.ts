@@ -2,10 +2,11 @@ export interface Vacancy {
   _id: string
   title: string;
   description: string;
-  companyLogo?: string | null;
+  companyLogo: string | null;
   companyName: string;
   city: string;
-  salary?: number | string;
+  salaryMin: number | null;
+  salaryMax: number | null;
 }
 
 export interface VacancyMutation {
@@ -14,7 +15,8 @@ export interface VacancyMutation {
   companyLogo?: string | null;
   companyName: string;
   city: string;
-  salary?: string | number;
+  salaryMin: number | null;
+  salaryMax: number | null;
 }
 
 export interface NavbarItemFields {
