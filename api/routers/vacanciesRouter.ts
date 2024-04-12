@@ -70,6 +70,54 @@ vacanciesRouter.get('/:id', async (req, res, next) => {
   }
 });
 
+vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
+  const { title, description, companyName, city, salaryMin, salaryMax } = req.body;
+  let companyLogo: string | null = null;
+
+  const files = req.files as Express.Multer.File[];
+
+  files.forEach((file) => {
+    companyLogo = file.fieldname === 'companyLogo' ? file.filename : companyLogo;
+  });
+
+  try {
+    const _id = req.params.id;
+
+    const existedVacancy = await Vacancy.findById(_id);
+
+    if (!existedVacancy) {
+      return res.status(404).send({ error: 'Vacancy not found' });
+    }
+
+    Object.assign(existedVacancy, {
+      title,
+      description,
+      companyLogo,
+      companyName,
+      city,
+      salaryMin: salaryMin ? parseFloat(salaryMin) : null,
+      salaryMax: salaryMax ? parseFloat(salaryMax) : null,
+    });
+
+    await existedVacancy.save();
+
+    return res.send({
+      message: 'Vacancy has been changed',
+      existedVacancy,
+    });
+  } catch (e) {
+    if (e instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(e);
+    }
+
+    if (e instanceof mongoose.Error.CastError) {
+      return res.status(400).send({ message: 'Invalid ID' });
+    }
+
+    next(e);
+  }
+});
+
 vacanciesRouter.delete('/:id', async (req, res, next) => {
   try {
     let _id: Types.ObjectId;
@@ -96,6 +144,5 @@ vacanciesRouter.delete('/:id', async (req, res, next) => {
     next(e);
   }
 });
-
 
 export default vacanciesRouter;
