@@ -6,7 +6,7 @@ import { VacancyMutation } from '../types';
 
 const vacanciesRouter = express.Router();
 vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, next: NextFunction) => {
-  const { title, description, companyName, city, salaryMin, salaryMax} = req.body;
+  const { title, description, companyName, city, salaryMin, salaryMax } = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
@@ -16,7 +16,7 @@ vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, 
   });
 
   try {
-    const newVacancy: VacancyMutation= {
+    const newVacancy: VacancyMutation = {
       title: title,
       description: description,
       companyLogo: companyLogo,
@@ -35,6 +35,16 @@ vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, 
       return res.status(422).send(e);
     }
 
+    next(e);
+  }
+});
+
+vacanciesRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const results = await Vacancy.find();
+
+    return res.send(results);
+  } catch (e) {
     next(e);
   }
 });
