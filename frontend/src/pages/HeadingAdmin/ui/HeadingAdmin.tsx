@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { createHeadingDraft, deleteHeading, getAllHeading } from '../api/HeadingThunk';
 import { selectAllHeading, selectHeadingFields, selectHeadingLoading } from '../model/HeadingSlice';
 import { Link } from 'react-router-dom';
-import HeadingForm from './HeadingForm';
 
 export const HeadingAdmin = () => {
   const headings = useAppSelector(selectAllHeading);
@@ -28,18 +27,6 @@ export const HeadingAdmin = () => {
   if (loading && headingFields) {
     return null;
   }
-
-  const obj = {
-    title: {
-      element: 'Title',
-      typeField: 'text'
-    },
-    image: {
-      typeField: 'file'
-    }
-  };
-
-  // console.log(Object.values(headingFields.title));
 
   return (
     <div>

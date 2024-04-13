@@ -14,8 +14,14 @@ const headingSchema = new mongoose.Schema({
     },
   },
   location: {
-    type: String,
-    typeField: 'text',
+    element: {
+      type: String,
+    },
+    typeField: {
+      type: String,
+      default: 'text',
+      immutable: true,
+    },
   },
   image: {
     element: {
@@ -28,17 +34,31 @@ const headingSchema = new mongoose.Schema({
     },
   },
   description: {
-    type: String,
-    typeField: 'text',
+    element: {
+      type: String,
+    },
+    typeField: {
+      type: String,
+      default: 'text',
+      immutable: true,
+    },
   },
   button: {
     url: {
       type: String,
-      typeField: 'text',
+      typeField: {
+        type: String,
+        default: 'text',
+        immutable: true,
+      },
     },
     text: {
       type: String,
-      typeField: 'text',
+      typeField: {
+        type: String,
+        default: 'text',
+        immutable: true,
+      },
     },
   },
 });
