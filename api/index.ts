@@ -5,6 +5,7 @@ import config from './config';
 import mainContainerCardRouter from './routers/mainContainerCardRouter';
 import headingRouter from './routes/headingRouter';
 import headerRouter from './routes/headerRouter';
+import ChooseBlockRouter from "./routers/chooseSpecialistBlock";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use('/mainContainerCard', mainContainerCardRouter);
 app.use('/header', headerRouter);
 app.use('/heading', headingRouter);
+app.use('/chooseBlock', ChooseBlockRouter);
 
 const run = async () => {
   await mongoose.connect(config.mongoose.db);
