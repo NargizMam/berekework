@@ -14,32 +14,30 @@
   }
 
   .button-link {
-    display: inline-block;
+    display: flex;
     width: 254px;
     height: 60px;
     line-height: 60px;
     border-radius: 40px;
     background-color: #FFFFFF;
-    text-decoration: none;
     color: #000000;
-    font-weight: bold;
+    justify-content: start;
     text-align: start;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 0 5px 30px;
+    text-decoration: none;
+    padding-top: 23px;
     cursor: pointer;
     position: relative;
   }
 
   span {
     position: absolute;
-    right: 10px;
+    right: 5px;
     top: 50%;
     transform: translateY(-50%);
     background-image: url('../images/arrow-right.png');
     width: 50px;
     height: 50px;
-    padding: 5px;
+    padding: 20px;
     background-color: #FFE585;
     background-size: 24px;
     line-height: 24px;

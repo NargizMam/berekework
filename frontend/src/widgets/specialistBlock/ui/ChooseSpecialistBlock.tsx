@@ -19,7 +19,7 @@ const ChooseSpecialistBlock = () => {
     <div className="chooseBlock">
       <div className="chooseBlockContent">
         <h2 className="chooseBlock-title">{chooseBlock?.title}</h2>
-        <a className="button-link">
+        <a href={chooseBlock?.url} className="button-link">
           {chooseBlock?.link}
           <span></span>
         </a>
