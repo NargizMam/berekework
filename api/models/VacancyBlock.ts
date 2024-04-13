@@ -17,10 +17,6 @@ const VacancyBlockSchema = new Schema({
     },
     required: true,
   },
-  location: {
-    type: String,
-    required: true,
-  },
   cards: {
     type: Schema.Types.ObjectId,
     ref: 'Vacancy',
@@ -32,6 +28,10 @@ const VacancyBlockSchema = new Schema({
       },
       message: 'Vacancies cards does not exist!',
     },
+  },
+  location: {
+    type: String,
+    required: true,
   },
 }, { timestamps: true });
 
