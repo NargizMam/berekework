@@ -2,20 +2,30 @@ import mongoose from 'mongoose';
 
 const headingSchema = new mongoose.Schema({
   title: {
-    type: String,
-    // typeField: {
-    //   type: String,
-    //   default: 'text',
-    // },
-    default: "{typeField: 'text'}",
+    element: {
+      type: String,
+      default: 'Title',
+      immutable: true,
+    },
+    typeField: {
+      type: String,
+      default: 'text',
+      immutable: true,
+    },
   },
   location: {
     type: String,
     typeField: 'text',
   },
   image: {
-    type: String,
-    typeField: 'file',
+    element: {
+      type: String,
+    },
+    typeField: {
+      type: String,
+      default: 'file',
+      immutable: true,
+    },
   },
   description: {
     type: String,

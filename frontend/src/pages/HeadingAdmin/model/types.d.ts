@@ -7,7 +7,9 @@ export interface HeadingMutation {
 
 export interface Heading{
   _id: string;
-  title: string;
+  title: {
+    element: string;
+  };
   description: string;
   location: string;
   image: string | null;

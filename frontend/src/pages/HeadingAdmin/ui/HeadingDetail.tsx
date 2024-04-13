@@ -26,7 +26,7 @@ export const HeadingDetail = () => {
 
   return (
     <div>
-      <h2>{heading.title}</h2>
+      <h2>{heading.title.element}</h2>
       {
         heading.image ?
           <img src={BASE_URL + '/' +heading.image} alt="image"/>

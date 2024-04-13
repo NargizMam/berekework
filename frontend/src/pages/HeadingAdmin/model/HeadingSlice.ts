@@ -5,11 +5,12 @@ import { Heading } from './types';
 
 export interface HeadingFields {
   title: {
-    value: string;
+    element: string;
+    typeField: string;
   };
   image: {
-    value: string;
-  }
+    typeField: string;
+  };
 }
 
 interface HeadingState {
@@ -68,3 +69,4 @@ export const headingReducer = headingSlice.reducer;
 export const selectAllHeading = (state: RootState) => state.heading.headings;
 export const selectHeadingFields = (state: RootState) => state.heading.headingFields;
 export const selectSingleHeading = (state: RootState) => state.heading.heading;
+export const selectHeadingLoading = (state: RootState) => state.heading.headingLoading;

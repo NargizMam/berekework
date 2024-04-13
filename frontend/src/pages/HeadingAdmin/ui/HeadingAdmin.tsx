@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { createHeadingDraft, deleteHeading, getAllHeading } from '../api/HeadingThunk';
-import { selectAllHeading, selectHeadingFields } from '../model/HeadingSlice';
+import { selectAllHeading, selectHeadingFields, selectHeadingLoading } from '../model/HeadingSlice';
 import { Link } from 'react-router-dom';
 import HeadingForm from './HeadingForm';
 
@@ -9,7 +9,8 @@ export const HeadingAdmin = () => {
   const headings = useAppSelector(selectAllHeading);
   const headingFields = useAppSelector(selectHeadingFields);
   const dispatch = useAppDispatch();
-  const [change, setChange] = useState(false);
+  // const [change, setChange] = useState(false);
+  const loading = useAppSelector(selectHeadingLoading);
 
   useEffect(() => {
     dispatch(getAllHeading());
@@ -24,30 +25,53 @@ export const HeadingAdmin = () => {
     await dispatch(getAllHeading());
   };
 
-  console.log(headingFields);
+  if (loading && headingFields) {
+    return null;
+  }
+
+  const obj = {
+    title: {
+      element: 'Title',
+      typeField: 'text'
+    },
+    image: {
+      typeField: 'file'
+    }
+  };
+
+  // console.log(Object.values(headingFields.title));
 
   return (
     <div>
       {
         headings.map((heading) => (
-          <>
-            <Link key={heading._id} to={heading.location}>
-              <h2>{heading.title}</h2>
+          <div key={heading._id}>
+            <Link to={heading.location}>
+              <h2>{heading.title.element}</h2>
             </Link>
             <button onClick={() => deleteHandle(heading._id)}>delete</button>
-          </>
+          </div>
         ))
       }
       <button onClick={createHeadingDraftHandle}>add</button>
       {
-        // Object.keys(headingFields, (field, ))
+        Object.entries(headingFields || '{}').map(([key, value]) => {
+          if(value.typeField) {
+            return (
+              <div key={key}>
+                <input type={value.typeField}/>
+              </div>
+            );
+          }
+          return null;
+        })
       }
-      {
-        change ?
-          <HeadingForm/>
-          :
-          null
-      }
+      {/*{*/}
+      {/*  change ?*/}
+      {/*    <HeadingForm/>*/}
+      {/*    :*/}
+      {/*    null*/}
+      {/*}*/}
     </div>
   );
 };
