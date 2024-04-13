@@ -19,11 +19,9 @@ const vacancySchema = new Schema({
     type: String,
     required: true,
   },
-  salaryMin: {
-    type: Number,
-  },
-  salaryMax: {
-    type: Number,
+  salary: {
+    min: Number,
+    max: Number,
   },
 }, { timestamps: true });
 

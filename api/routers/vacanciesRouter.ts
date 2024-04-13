@@ -6,7 +6,7 @@ import { VacancyMutation } from '../types';
 
 const vacanciesRouter = express.Router();
 vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, next: NextFunction) => {
-  const { title, description, company, city, salaryMin, salaryMax } = req.body;
+  const { title, description, company, city, salary } = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
@@ -22,8 +22,10 @@ vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, 
       logo: companyLogo,
       company: company,
       city,
-      salaryMin: salaryMin ? parseFloat(salaryMin) : null,
-      salaryMax: salaryMax ? parseFloat(salaryMax) : null,
+      salary: {
+        min: salary.min ? parseFloat(salary.min) : null,
+        max: salary.max ? parseFloat(salary.max) : null,
+      },
     };
 
     const vacancy = new Vacancy(newVacancy);
@@ -71,7 +73,7 @@ vacanciesRouter.get('/:id', async (req, res, next) => {
 });
 
 vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
-  const { title, description, company, city, salaryMin, salaryMax } = req.body;
+  const { title, description, company, city, salary } = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
@@ -95,8 +97,8 @@ vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
       logo: companyLogo,
       company,
       city,
-      salaryMin: salaryMin ? parseFloat(salaryMin) : null,
-      salaryMax: salaryMax ? parseFloat(salaryMax) : null,
+      min: salary.min ? parseFloat(salary.min) : null,
+      max: salary.max ? parseFloat(salary.max) : null,
     });
 
     await existedVacancy.save();
