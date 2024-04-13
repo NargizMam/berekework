@@ -1,31 +1,30 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const vacancySchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
   },
- logo: {
-    type: String
-  },
- company: {
+  logo: {
     type: String,
-    required: true
+  },
+  company: {
+    type: String,
+    required: true,
   },
   city: {
     type: String,
-    required: true
+    required: true,
   },
   salaryMin: {
-    type: Number
+    type: Number,
   },
   salaryMax: {
-    type: Number
-  }
+    type: Number,
+  },
 }, { timestamps: true });
 
 const Vacancy = model('Vacancy', vacancySchema);
