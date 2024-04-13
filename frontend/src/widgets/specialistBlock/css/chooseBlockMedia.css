@@ -1,0 +1,71 @@
+@media screen and (min-width: 1300px) {
+  .chooseBlock {
+    background: #FFE585;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .chooseBlockContent {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+
+  .button-link {
+    display: inline-block;
+    width: 254px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 40px;
+    background-color: #FFFFFF;
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    text-align: start;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0 5px 30px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  span {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url('../images/arrow-right.png');
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    background-color: #FFE585;
+    background-size: 24px;
+    line-height: 24px;
+    background-position: center;
+    border-radius: 50px;
+    background-repeat: no-repeat;
+    display: block;
+  }
+
+  .chooseBlock-img {
+    display: block;
+    float: right;
+    margin-right: 20px;
+  }
+
+  .chooseBlock-title {
+    font-size: 48px;
+    color: #000000;
+    text-align: start;
+    word-break: break-word;
+    width: 800px;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .chooseBlock-title {
+    font-size: 48px;
+  }
+}

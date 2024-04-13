@@ -1,0 +1,37 @@
+.chooseBlock {
+  background: #FFE585;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.chooseBlock-title {
+  color: #1a1a1a;
+}
+
+.chooseBlockContent {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+}
+
+.button-link {
+  background: #FFFFFF;
+  color: #000000;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.button-link:hover {
+  color: #000000;
+}
+
+.chooseBlock-img {
+  display: none;
+}
