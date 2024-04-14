@@ -1,5 +1,4 @@
-import { Schema, model, Types } from 'mongoose';
-import Vacancy from './Vacancy';
+import { model, Schema } from 'mongoose';
 
 const VacanciesBlockSchema = new Schema({
   title: {
@@ -9,14 +8,6 @@ const VacanciesBlockSchema = new Schema({
   cards: [{
     type: Schema.Types.ObjectId,
     ref: 'Vacancy',
-    required: true,
-    validate: {
-      validator: async (value: Types.ObjectId) => {
-        const vacancy = await Vacancy.findById(value);
-        return Boolean(vacancy);
-      },
-      message: 'Vacancy card does not exist!',
-    },
   }],
   button: {
     url: {

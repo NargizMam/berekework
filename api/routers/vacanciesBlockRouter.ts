@@ -4,14 +4,19 @@ import VacanciesBlock from '../models/VacanciesBlock';
 import { VacanciesBlockMutation } from '../types';
 
 const vacanciesBlockRouter = express.Router();
+
 vacanciesBlockRouter.post('/', async (req, res, next) => {
+  await VacanciesBlock.deleteMany({});
   const { title, cards, button, location } = req.body;
 
   try {
     const newVacanciesBlock: VacanciesBlockMutation = {
       title,
-      cards,
-      button,
+      cards: cards,
+      button: {
+        text: button.text,
+        url: button.url,
+      },
       location,
     };
 
@@ -30,7 +35,7 @@ vacanciesBlockRouter.post('/', async (req, res, next) => {
 
 vacanciesBlockRouter.get('/', async (req, res, next) => {
   try {
-    const result = await VacanciesBlock.find();
+    const result = await VacanciesBlock.find().populate('cards');
 
     return res.send(result);
   } catch (e) {

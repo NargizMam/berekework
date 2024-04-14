@@ -24,7 +24,7 @@ export interface VacanciesBlock {
   location: string;
 }
 
-export type VacanciesBlockMutation = Omit<VacancyBlock, '_id'>;
+export type VacanciesBlockMutation = Omit<VacanciesBlock, '_id'>;
 
 
 
