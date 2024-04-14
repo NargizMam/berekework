@@ -13,5 +13,18 @@ export interface Vacancy {
 
 export type VacancyMutation = Omit<Vacancy, '_id'>;
 
+export interface VacanciesBlock {
+  _id: string;
+  title: string;
+  cards: Vacancy[];
+  button: {
+    url: string;
+    text: string;
+  };
+  location: string;
+}
+
+export type VacanciesBlockMutation = Omit<VacancyBlock, '_id'>;
+
 
 

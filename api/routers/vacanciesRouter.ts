@@ -1,11 +1,11 @@
 import mongoose, { Types } from 'mongoose';
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import { cardUpload } from '../multer';
 import Vacancy from '../models/Vacancy';
 import { VacancyMutation } from '../types';
 
 const vacanciesRouter = express.Router();
-vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, next: NextFunction) => {
+vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
   const { title, description, company, city, salary } = req.body;
   let companyLogo: string | null = null;
 
@@ -41,7 +41,7 @@ vacanciesRouter.post('/', cardUpload.any(), async (req: Request, res: Response, 
   }
 });
 
-vacanciesRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+vacanciesRouter.get('/', async (req, res, next) => {
   try {
     const results = await Vacancy.find();
 

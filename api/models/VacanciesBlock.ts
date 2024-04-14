@@ -1,20 +1,9 @@
 import { Schema, model, Types } from 'mongoose';
 import Vacancy from './Vacancy';
 
-const VacancyBlockSchema = new Schema({
+const VacanciesBlockSchema = new Schema({
   title: {
     type: String,
-    required: true,
-  },
-  button: {
-    url: {
-      type: String,
-      required: true,
-    },
-    text: {
-      type: String,
-      required: true,
-    },
     required: true,
   },
   cards: [{
@@ -29,15 +18,26 @@ const VacancyBlockSchema = new Schema({
       message: 'Vacancy card does not exist!',
     },
   }],
+  button: {
+    url: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    required: true,
+  },
   location: {
     type: String,
     required: true,
   },
 }, { timestamps: true });
 
-const VacancyBlock = model('VacancyBlock', VacancyBlockSchema);
+const VacanciesBlock = model('VacanciesBlock', VacanciesBlockSchema);
 
-export default VacancyBlock;
+export default VacanciesBlock;
 
 
 
