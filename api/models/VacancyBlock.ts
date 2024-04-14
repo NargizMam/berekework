@@ -17,7 +17,7 @@ const VacancyBlockSchema = new Schema({
     },
     required: true,
   },
-  cards: {
+  cards: [{
     type: Schema.Types.ObjectId,
     ref: 'Vacancy',
     required: true,
@@ -26,9 +26,9 @@ const VacancyBlockSchema = new Schema({
         const vacancy = await Vacancy.findById(value);
         return Boolean(vacancy);
       },
-      message: 'Vacancies cards does not exist!',
+      message: 'Vacancy card does not exist!',
     },
-  },
+  }],
   location: {
     type: String,
     required: true,
