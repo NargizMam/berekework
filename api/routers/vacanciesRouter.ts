@@ -73,7 +73,7 @@ vacanciesRouter.get('/:id', async (req, res, next) => {
 });
 
 vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
-  const { title, description, company, city, salary } = req.body;
+  const { title, description, company, city, salary} = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
@@ -97,8 +97,10 @@ vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
       logo: companyLogo,
       company,
       city,
-      min: salary.min ? parseFloat(salary.min) : null,
-      max: salary.max ? parseFloat(salary.max) : null,
+      salary: {
+        min: salary.min ? parseFloat(salary.min) : null,
+        max: salary.max ? parseFloat(salary.max) : null,
+      },
     });
 
     await existedVacancy.save();

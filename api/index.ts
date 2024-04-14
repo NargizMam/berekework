@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import config from './config';
 import vacanciesRouter from './routers/vacanciesRouter';
+import vacanciesBlockRouter from './routers/vacanciesBlockRouter';
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/vacancies', vacanciesRouter);
+app.use('/vacanciesBlock', vacanciesBlockRouter);
 
 const run = async () => {
     await mongoose.connect(config.mongoose.db);

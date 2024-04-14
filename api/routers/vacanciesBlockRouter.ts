@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import { cardUpload } from '../multer';
 import VacanciesBlock from '../models/VacanciesBlock';
-import Vacancy from '../models/Vacancy';
 import { VacanciesBlockMutation } from '../types';
 
 const vacanciesBlockRouter = express.Router();
@@ -40,7 +38,7 @@ vacanciesBlockRouter.get('/', async (req, res, next) => {
   }
 });
 
-vacanciesBlockRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
+vacanciesBlockRouter.patch('/:id', async (req, res, next) => {
   const { title, cards, button, location } = req.body;
 
   try {
@@ -77,3 +75,5 @@ vacanciesBlockRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
     next(e);
   }
 });
+
+export default vacanciesBlockRouter;

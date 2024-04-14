@@ -27,7 +27,6 @@ const VacanciesBlockSchema = new Schema({
       type: String,
       required: true,
     },
-    required: true,
   },
   location: {
     type: String,
