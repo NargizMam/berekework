@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import express from 'express';
 import VacanciesBlock from '../models/VacanciesBlock';
 import { VacanciesBlockMutation } from '../types';
@@ -12,7 +12,7 @@ vacanciesBlockRouter.post('/', async (req, res, next) => {
   try {
     const newVacanciesBlock: VacanciesBlockMutation = {
       title,
-      cards: cards,
+      cards,
       button: {
         text: button.text,
         url: button.url,
@@ -43,6 +43,28 @@ vacanciesBlockRouter.get('/', async (req, res, next) => {
   }
 });
 
+vacanciesBlockRouter.get('/:id', async (req, res, next) => {
+  try {
+    let _id: Types.ObjectId;
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(404).send({ error: 'Wrong ObjectId!' });
+    }
+
+    const vacanciesBlock = await VacanciesBlock.findById(_id);
+
+    if (!vacanciesBlock) {
+      return res.status(404).send({ error: 'Vacancies block not found!' });
+    }
+
+    res.send(vacanciesBlock);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
 vacanciesBlockRouter.patch('/:id', async (req, res, next) => {
   const { title, cards, button, location } = req.body;
 
@@ -52,7 +74,7 @@ vacanciesBlockRouter.patch('/:id', async (req, res, next) => {
     const existedVacanciesBlock = await VacanciesBlock.findById(_id);
 
     if (!existedVacanciesBlock) {
-      return res.status(404).send({ error: 'VacanciesBlock not found' });
+      return res.status(404).send({ error: 'Vacancies block not found' });
     }
 
     Object.assign(existedVacanciesBlock, {
@@ -75,6 +97,33 @@ vacanciesBlockRouter.patch('/:id', async (req, res, next) => {
 
     if (e instanceof mongoose.Error.CastError) {
       return res.status(400).send({ message: 'Invalid ID' });
+    }
+
+    next(e);
+  }
+});
+
+vacanciesBlockRouter.delete('/:id', async (req, res, next) => {
+  try {
+    let _id: Types.ObjectId;
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(404).send({ error: 'Wrong ObjectId!' });
+    }
+
+    const result = await VacanciesBlock.findByIdAndDelete(_id);
+
+    if (!result) {
+      return res.status(404).send({
+        error: 'Vacancies block not found or already deleted',
+      });
+    }
+
+    return res.send({ message: 'success', result });
+  } catch (e) {
+    if (e instanceof mongoose.Error.CastError) {
+      return res.status(400).send({ error: 'Invalid ID' });
     }
 
     next(e);

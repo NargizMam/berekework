@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 const vacancySchema = new Schema({
+
   title: {
     type: String,
     required: true,

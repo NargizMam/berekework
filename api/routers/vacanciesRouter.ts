@@ -3,6 +3,7 @@ import express from 'express';
 import { cardUpload } from '../multer';
 import Vacancy from '../models/Vacancy';
 import { VacancyMutation } from '../types';
+import VacanciesBlock from '../models/VacanciesBlock';
 
 const vacanciesRouter = express.Router();
 vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
@@ -30,6 +31,16 @@ vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
 
     const vacancy = new Vacancy(newVacancy);
     await vacancy.save();
+
+    const vacanciesBlock = await VacanciesBlock.findOne();
+
+    if (!vacanciesBlock) {
+      return res.status(404).send({ error: 'Not found vacancies block!' });
+    }
+
+    vacanciesBlock.cards.push(vacancy._id);
+
+    await vacanciesBlock.save();
 
     return res.send(vacancy);
   } catch (e) {
@@ -138,6 +149,19 @@ vacanciesRouter.delete('/:id', async (req, res, next) => {
         error: 'Vacancy not found or already deleted',
       });
     }
+
+    const vacanciesBlock = await VacanciesBlock.findOne();
+
+    if (!vacanciesBlock) {
+      return res.status(404).send({ error: 'Vacancies block not found!!' });
+    }
+
+    const index = vacanciesBlock.cards.findIndex(cardId => cardId.equals(_id));
+    if (index !== -1) {
+      vacanciesBlock.cards.splice(index, 1);
+    }
+
+    await vacanciesBlock.save();
 
     return res.send({ message: 'success', result });
   } catch (e) {
