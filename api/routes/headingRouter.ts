@@ -5,12 +5,6 @@ import mongoose from 'mongoose';
 
 const headingRouter = express.Router();
 
-headingRouter.post('/draft', async (req, res, next) => {
-  const heading = new Heading();
-  await heading.save();
-  return res.send(heading);
-});
-
 headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
   try {
     const heading = new Heading({
@@ -50,29 +44,15 @@ headingRouter.get('/:location?', async (req, res, next) => {
   }
 });
 
-headingRouter.patch('/:id', imagesUpload.single('image'), async (req, res, next) => {
+headingRouter.patch('/:location', imagesUpload.single('image'), async (req, res, next) => {
   try {
-    const result = await Heading.findByIdAndUpdate(
-      { _id: req.params.id },
-      {
-        title: req.body.title,
-        image: req.file ? req.file.filename : null,
-        location: req.body.location,
-        description: req.body.description,
-        button: req.body.button ? JSON.parse(req.body.button) : undefined,
-      },
-    );
-    return res.send({ message: `Update ${req.params.id} successfully.`, result });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-headingRouter.delete('/:id', async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    await Heading.findByIdAndDelete(id);
-    return res.send({ message: `Heading ${id} deleted!` });
+    const result = await Heading.updateOne({
+      title: req.body.title,
+      image: req.file ? req.file.filename : null,
+      description: req.body.description,
+      button: JSON.parse(req.body.button),
+    });
+    return res.send({ message: `Update ${req.params.location} successfully.`, result });
   } catch (error) {
     return next(error);
   }

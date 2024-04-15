@@ -9,11 +9,11 @@ const createStorageConfig = (subFolder: string) =>
     destination: async (_req, _file, cb) => {
       const destDir = path.join(config.publicPath, subFolder);
       await fs.mkdir(destDir, { recursive: true });
-      cb(null, config.publicPath);
+      cb(null, destDir);
     },
     filename: (_req, file, cb) => {
       const extension = path.extname(file.originalname);
-      const filename = path.join(subFolder, randomUUID() + extension);
+      const filename = path.join(randomUUID() + extension);
       cb(null, filename);
     },
   });

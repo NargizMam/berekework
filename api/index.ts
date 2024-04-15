@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import config from './config';
-import mainContainerCardRouter from './routes/mainContainerCardRouter';
+import mainContainerCardRouter from './routers/mainContainerCardRouter';
 import headingRouter from './routes/headingRouter';
 import headerRouter from './routes/headerRouter';
 
