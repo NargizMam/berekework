@@ -7,8 +7,8 @@ export interface mainCardContainerType {
   URLpath: string | null;
 }
 
-export type mainCardContainerTypeWithoutId = Omit<mainCardContainerType, '_id'>
-  
+export type mainCardContainerTypeWithoutId = Omit<mainCardContainerType, '_id'>;
+
 export interface NavbarItemFields {
   nameNav: string;
   link: string;

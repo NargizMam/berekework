@@ -14,7 +14,7 @@ const TitleBlockStyle = {
     maxWidth: '700px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     fontWeight: '700',
