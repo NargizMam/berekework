@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { mainCardsReducer } from '../../shared/mainCards/model/mainCardsSlice.ts';
+import { headingReducer } from '../../pages/HeadingAdmin/model/HeadingSlice';
+import { mainCardsReducer } from '../../shared/mainCards/model/mainCardsSlice';
 
 export const store = configureStore({
   reducer: {
+    heading: headingReducer,
     mainCards: mainCardsReducer,
   },
 });
