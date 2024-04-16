@@ -5,6 +5,7 @@ import config from './config';
 import mainContainerCardRouter from './routes/mainContainerCardRouter';
 import headingRouter from './routes/headingRouter';
 import headerRouter from './routes/headerRouter';
+import userRouter from './routes/userRouter';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 
+app.use('/user', userRouter);
 app.use('/mainContainerCard', mainContainerCardRouter);
 app.use('/header', headerRouter);
 app.use('/heading', headingRouter);
