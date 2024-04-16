@@ -1,12 +1,12 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import mainContainerCard from '../models/mainContainerCardModel';
-import { cardUpload } from '../multer';
-import { mainCardContainerTypeWithoutId } from '../types';
-import mongoose from 'mongoose';
+import { Router, Request, Response, NextFunction } from "express";
+import mainContainerCard from "../models/mainContainerCardModel";
+import { cardUpload } from "../multer";
+import { mainCardContainerTypeWithoutId } from "../types";
+import mongoose from "mongoose";
 
 const mainContainerCardRouter = Router();
 
-mainContainerCardRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+mainContainerCardRouter.get('/', async(req: Request, res: Response, next: NextFunction) => {
   try {
     const results = await mainContainerCard.find(); // List of Cards
 
@@ -16,7 +16,8 @@ mainContainerCardRouter.get('/', async (req: Request, res: Response, next: NextF
   }
 });
 
-mainContainerCardRouter.post('/', cardUpload.any(), async (req: Request, res: Response, next: NextFunction) => {
+mainContainerCardRouter.post('/', cardUpload.any(),
+async (req:Request, res: Response, next: NextFunction) => {
   const { title, text, URLpath } = req.body;
   let cardImage: string | null = null;
   let cardIcon: string | null = null;
@@ -37,10 +38,10 @@ mainContainerCardRouter.post('/', cardUpload.any(), async (req: Request, res: Re
       URLpath: URLpath,
     };
 
-    const cardContainer = new mainContainerCard(newCardContainer);
+    const cardContainer = new mainContainerCard( newCardContainer );
     await cardContainer.save();
 
-    return res.send(newCardContainer);
+    return res.send( newCardContainer );
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(e);
@@ -50,7 +51,8 @@ mainContainerCardRouter.post('/', cardUpload.any(), async (req: Request, res: Re
   }
 });
 
-mainContainerCardRouter.put('/:id', cardUpload.any(), async (req: Request, res: Response, next: NextFunction) => {
+mainContainerCardRouter.put('/:id', cardUpload.any(), 
+async (req: Request, res: Response, next: NextFunction) => {
   const { title, text, URLpath } = req.body;
   let cardImage: string | null = null;
   let cardIcon: string | null = null;
@@ -65,25 +67,24 @@ mainContainerCardRouter.put('/:id', cardUpload.any(), async (req: Request, res: 
   try {
     const cardID = req.params.id;
 
-    const existedCard = await mainContainerCard.findById(cardID);
+    const existedCard = await mainContainerCard.findById( cardID );
 
     if (!existedCard) {
       return res.status(404).send({ error: 'Card not found' });
-    }
+    };
 
-    Object.assign(existedCard, {
-      title,
-      text,
-      URLpath,
-      image: cardImage,
-      icon: cardIcon,
+    Object.assign(existedCard, { 
+      title, 
+      text, 
+      URLpath, 
+      image: cardImage, 
+      icon: cardIcon 
     }); // changing all fields of card
 
     await existedCard.save();
 
-    return res.send({
-      message: 'card has been changed',
-      existedCard,
+    return res.send({ 
+      message: 'card has been changed', existedCard 
     });
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
@@ -102,11 +103,11 @@ mainContainerCardRouter.delete('/:id', async (req: Request, res: Response, next:
   try {
     const cardID = req.params.id;
 
-    const result = await mainContainerCard.findByIdAndDelete(cardID);
+    const result = await mainContainerCard.findByIdAndDelete( cardID );
 
     if (!result) {
-      return res.status(404).send({
-        message: 'Card not found or already deleted',
+      return res.status(404).send({ 
+        message: 'Card not found or already deleted' 
       });
     }
 
