@@ -7,12 +7,11 @@ const vacanciesBlockRouter = express.Router();
 
 vacanciesBlockRouter.post('/', async (req, res, next) => {
   await VacanciesBlock.deleteMany({});
-  const { title, cards, button, location } = req.body;
+  const { title, button, location } = req.body;
 
   try {
     const newVacanciesBlock: VacanciesBlockMutation = {
       title,
-      cards,
       button: {
         text: button.text,
         url: button.url,
@@ -35,7 +34,7 @@ vacanciesBlockRouter.post('/', async (req, res, next) => {
 
 vacanciesBlockRouter.get('/', async (req, res, next) => {
   try {
-    const result = await VacanciesBlock.find().populate('cards');
+    const result = await VacanciesBlock.find();
 
     return res.send(result);
   } catch (e) {
@@ -64,7 +63,6 @@ vacanciesBlockRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-
 vacanciesBlockRouter.patch('/:id', async (req, res, next) => {
   const { title, cards, button, location } = req.body;
 
@@ -79,7 +77,6 @@ vacanciesBlockRouter.patch('/:id', async (req, res, next) => {
 
     Object.assign(existedVacanciesBlock, {
       title,
-      cards,
       button,
       location,
     });

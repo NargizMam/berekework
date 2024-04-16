@@ -3,11 +3,10 @@ import express from 'express';
 import { cardUpload } from '../multer';
 import Vacancy from '../models/Vacancy';
 import { VacancyMutation } from '../types';
-import VacanciesBlock from '../models/VacanciesBlock';
 
 const vacanciesRouter = express.Router();
 vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
-  const { title, description, company, city, salary } = req.body;
+  const { title, description, company, city, salary, url } = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
@@ -27,20 +26,11 @@ vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
         min: salary.min ? parseFloat(salary.min) : null,
         max: salary.max ? parseFloat(salary.max) : null,
       },
+      url,
     };
 
     const vacancy = new Vacancy(newVacancy);
     await vacancy.save();
-
-    const vacanciesBlock = await VacanciesBlock.findOne();
-
-    if (!vacanciesBlock) {
-      return res.status(404).send({ error: 'Not found vacancies block!' });
-    }
-
-    vacanciesBlock.cards.push(vacancy._id);
-
-    await vacanciesBlock.save();
 
     return res.send(vacancy);
   } catch (e) {
@@ -54,7 +44,7 @@ vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
 
 vacanciesRouter.get('/', async (req, res, next) => {
   try {
-    const results = await Vacancy.find();
+    const results = await Vacancy.find().sort({ createdAt: -1 });
 
     return res.send(results);
   } catch (e) {
@@ -84,7 +74,7 @@ vacanciesRouter.get('/:id', async (req, res, next) => {
 });
 
 vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
-  const { title, description, company, city, salary} = req.body;
+  const { title, description, company, city, salary, url } = req.body;
   let companyLogo: string | null = null;
 
   const files = req.files as Express.Multer.File[];
@@ -112,6 +102,7 @@ vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
         min: salary.min ? parseFloat(salary.min) : null,
         max: salary.max ? parseFloat(salary.max) : null,
       },
+      url,
     });
 
     await existedVacancy.save();
@@ -149,19 +140,6 @@ vacanciesRouter.delete('/:id', async (req, res, next) => {
         error: 'Vacancy not found or already deleted',
       });
     }
-
-    const vacanciesBlock = await VacanciesBlock.findOne();
-
-    if (!vacanciesBlock) {
-      return res.status(404).send({ error: 'Vacancies block not found!!' });
-    }
-
-    const index = vacanciesBlock.cards.findIndex(cardId => cardId.equals(_id));
-    if (index !== -1) {
-      vacanciesBlock.cards.splice(index, 1);
-    }
-
-    await vacanciesBlock.save();
 
     return res.send({ message: 'success', result });
   } catch (e) {

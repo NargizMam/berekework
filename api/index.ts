@@ -15,15 +15,15 @@ app.use('/vacancies', vacanciesRouter);
 app.use('/vacanciesBlock', vacanciesBlockRouter);
 
 const run = async () => {
-    await mongoose.connect(config.mongoose.db);
+  await mongoose.connect(config.mongoose.db);
 
-    app.listen(config.port, () => {
-        console.log(`Server started on ${config.port} port!`);
-    });
+  app.listen(config.port, () => {
+    console.log(`Server started on ${config.port} port!`);
+  });
 
-    process.on('exit', () => {
-        mongoose.disconnect();
-    });
+  process.on('exit', () => {
+    mongoose.disconnect();
+  });
 };
 
 void run();
