@@ -33,7 +33,7 @@ const run = async () => {
         min: 25000,
         max: 35000,
       },
-      url: '/vacancies',
+      url: '/vacancies/661e0cb0e8cad5763f269346',
     },
     {
       logo: 'fixtures/logo_company_interpost.png',
@@ -44,7 +44,7 @@ const run = async () => {
         min: 25000,
         max: 35000,
       },
-      url: '/vacancies',
+      url: '/vacancies/661e0cb0e8cad5763f269347',
     },
     {
       logo: 'fixtures/logo_company_ect.png',
@@ -55,7 +55,7 @@ const run = async () => {
         min: 25000,
         max: 35000,
       },
-      url: '/vacancies',
+      url: '/vacancies/661e0cb0e8cad5763f269348',
     },
     {
       logo: 'fixtures/logo_company_laboratory.png',
@@ -63,7 +63,7 @@ const run = async () => {
       company: 'Интелмед',
       city: 'Бишкек',
       salary: 'з/п не указана',
-      url: '/vacancies',
+      url: '/vacancies/661e0cb0e8cad5763f269349',
     },
     {
       logo: 'fixtures/logo_company_megaservice.png',
@@ -74,7 +74,7 @@ const run = async () => {
         min: 25000,
         max: 40000,
       },
-      url: '/vacancies',
+      url: '/vacancies/661e0cb0e8cad5763f26934a',
     },
     {
       logo: 'fixtures/logo_company_cambridge.png',
@@ -85,7 +85,7 @@ const run = async () => {
         min: 15000,
         max: 50000,
       },
-      url: '/vacancies',
+      url: '/vacancies/661e0cb0e8cad5763f26934b',
     },
   );
 
