@@ -3,6 +3,8 @@ import config from './config';
 import Vacancy from './models/Vacancy';
 import VacanciesBlock from './models/VacanciesBlock';
 import Components from './models/componentsModel';
+import User from './models/users/userModel';
+import { randomUUID } from 'crypto';
 
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
@@ -17,8 +19,8 @@ const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
   
-  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies'];
-    
+  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies', 'users'];
+
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
   }
@@ -103,6 +105,13 @@ const run = async () => {
     name: 'Heading',
     requestUrl: '/heading',
 
+  });
+
+  await User.create({
+    email: 'admin@gmail.com',
+    password: 'admin',
+    token: randomUUID(),
+    role: 'superadmin',
   });
 
   await db.close();
