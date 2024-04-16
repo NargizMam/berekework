@@ -44,6 +44,10 @@ const headingSchema = new mongoose.Schema({
     },
   },
   button: {
+    element: {
+      type: String,
+      default: 'button',
+    },
     url: {
       type: String,
       typeField: {

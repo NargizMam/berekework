@@ -10,7 +10,9 @@ export interface Heading{
   title: {
     element: string;
   };
-  description: string;
+  description: {
+    element: string;
+  };
   location: string;
   image: string | null;
   button: {
