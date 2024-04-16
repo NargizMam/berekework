@@ -2,11 +2,13 @@ import mongoose from 'mongoose';
 import config from './config';
 import Vacancy from './models/Vacancy';
 import VacanciesBlock from './models/VacanciesBlock';
+import Components from './models/componentsModel';
+
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
     await db.dropCollection(collectionName);
-  } catch (e) {
+  } catch (error) {
     console.log(`Collection ${collectionName} was missing, skipping drop...`);
   }
 };
@@ -14,13 +16,13 @@ const dropCollection = async (db: mongoose.Connection, collectionName: string) =
 const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
-
-  const collections = ['vacanciesblocks', 'vacancies'];
-
+  
+  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies'];
+    
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
   }
-
+  
   await Vacancy.create(
     {
       logo: 'fixtures/logo_company_satcom.png',
@@ -94,6 +96,13 @@ const run = async () => {
       text: 'Смотреть еще',
     },
     location: '/',
+  });
+  
+  await Components.create({
+    image: 'fixtures/crybaby.jpg',
+    name: 'Heading',
+    requestUrl: '/heading',
+
   });
 
   await db.close();
