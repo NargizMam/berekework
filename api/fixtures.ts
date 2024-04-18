@@ -5,6 +5,7 @@ import VacanciesBlock from './models/VacanciesBlock';
 import Components from './models/componentsModel';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
+import Tariff from './models/tariff/tarrifModel';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -110,6 +111,11 @@ const run = async () => {
     password: 'admin',
     token: randomUUID(),
     role: 'superadmin',
+  });
+
+  await Tariff.create({
+    title: 'Basic',
+    description: ['Free Food', 'Apple Music'],
   });
 
   await db.close();
