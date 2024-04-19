@@ -1,0 +1,27 @@
+@media (min-width: 1024px) {
+  .about-us-main-title {
+    font-size: 46px;
+    margin: 0 0 60px 0;
+  }
+
+  .about-us-block-title-text {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 22px;
+    color: #000;
+  }
+
+  .about-us-title {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 40px;
+  }
+
+  .about-us-block-text {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    text-align: left;
+    color: #777777;
+  }
+}
