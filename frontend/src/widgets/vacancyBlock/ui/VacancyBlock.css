@@ -17,6 +17,7 @@
   background: #0866ff;
   color: #ffffff;
   width: 100%;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 949px) {
