@@ -12,3 +12,14 @@
   display: block;
   margin-bottom: 10px;
 }
+
+.about-us-block-text {
+  color: #777777;
+}
+
+.about-us-block-title-text {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 22px;
+  color: #000;
+}
