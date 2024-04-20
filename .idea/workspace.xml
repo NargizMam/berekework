@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fbfc2278-423f-4921-aaf4-553f3c44b530" name="Changes" comment="Reworked the styles for the link a bit.">
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage/HomePage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/css/footer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/css/footerMedia.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/images/facebook.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/images/footer-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/images/instagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/images/telegram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/images/whatsapp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/widgets/footer/ui/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="KAN_12_Specialist_Block" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Rdb03&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/NargizMam/berekework.git&quot;,
+    &quot;accountId&quot;: &quot;9bd7f71b-2ffc-47aa-9a59-f0d529f9098d&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2ex3RWe0igFTwVAX6PdQy1KPD3T" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "KAN-21__Footer__Frontend",
+    "last_opened_file_path": "/home/rdb03/AttractorSchool/pet-project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "ts.external.directory.path": "/home/rdb03/AttractorSchool/berekeWork/berekework/frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/widgets/footer/images" />
+      <recent name="$PROJECT_DIR$/frontend/src/widgets/footer/ui/images" />
+      <recent name="$PROJECT_DIR$/frontend/src/widgets/footer/ui" />
+      <recent name="$PROJECT_DIR$/frontend/src/widgets/footer" />
+      <recent name="$PROJECT_DIR$/frontend/src/public/images" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-WS-241.14494.235" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fbfc2278-423f-4921-aaf4-553f3c44b530" name="Changes" comment="" />
+      <created>1712832393788</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712832393788</updated>
+      <workItem from="1712832394809" duration="616000" />
+      <workItem from="1712906103027" duration="810000" />
+      <workItem from="1712907135578" duration="1261000" />
+      <workItem from="1712915434509" duration="619000" />
+      <workItem from="1712927009092" duration="3160000" />
+      <workItem from="1712976940000" duration="59000" />
+      <workItem from="1712991280648" duration="376000" />
+      <workItem from="1712991723946" duration="71000" />
+      <workItem from="1712991809059" duration="927000" />
+      <workItem from="1712993642042" duration="2763000" />
+      <workItem from="1713001476774" duration="4119000" />
+      <workItem from="1713256187090" duration="468000" />
+      <workItem from="1713256662780" duration="11378000" />
+      <workItem from="1713361075790" duration="2052000" />
+      <workItem from="1713422436968" duration="2397000" />
+    </task>
+    <task id="LOCAL-00001" summary="cherry-pick commits and fix conflicts">
+      <option name="closed" value="true" />
+      <created>1712927719347</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712927719348</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Длюавил">
+      <option name="closed" value="true" />
+      <created>1712928350369</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712928350369</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Rendered content on the page.&#10;Defined my own styles, pulling information from the backend.">
+      <option name="closed" value="true" />
+      <created>1713003577159</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713003577159</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implemented the component model, wrote a slice.&#10;Implemented changing the component on the backend">
+      <option name="closed" value="true" />
+      <created>1713003672091</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713003672091</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Reworked the styles for the link a bit.">
+      <option name="closed" value="true" />
+      <created>1713004602041</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713004602041</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <MESSAGE value="cherry-pick commits and fix conflicts" />
+    <MESSAGE value="Длюавил" />
+    <MESSAGE value="Rendered content on the page.&#10;Defined my own styles, pulling information from the backend." />
+    <MESSAGE value="Implemented the component model, wrote a slice.&#10;Implemented changing the component on the backend" />
+    <MESSAGE value="Reworked the styles for the link a bit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Reworked the styles for the link a bit." />
+  </component>
+</project>

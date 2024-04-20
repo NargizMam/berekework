@@ -5,7 +5,7 @@ import VacanciesBlock from './models/VacanciesBlock';
 import Components from './models/componentsModel';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
-
+import Tariff from './models/tariff/tarrifModel';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -18,13 +18,13 @@ const dropCollection = async (db: mongoose.Connection, collectionName: string) =
 const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
-  
-  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies', 'users'];
+
+  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies', 'users', 'tariffs'];
 
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
   }
-  
+
   await Vacancy.create(
     {
       logo: 'fixtures/logo_company_satcom.png',
@@ -99,12 +99,11 @@ const run = async () => {
     },
     location: '/',
   });
-  
+
   await Components.create({
     image: 'fixtures/crybaby.jpg',
     name: 'Heading',
     requestUrl: '/heading',
-
   });
 
   await User.create({
@@ -112,6 +111,11 @@ const run = async () => {
     password: 'admin',
     token: randomUUID(),
     role: 'superadmin',
+  });
+
+  await Tariff.create({
+    title: 'Basic',
+    description: ['Free Food', 'Apple Music'],
   });
 
   await db.close();
