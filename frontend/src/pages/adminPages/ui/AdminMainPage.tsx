@@ -1,5 +1,5 @@
 import {Paper, Typography} from '@mui/material';
-import Page from "./dashboard/page";
+import Page from "../dashboard/page";
 
 const AdminMainPage = () => {
   return (

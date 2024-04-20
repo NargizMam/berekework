@@ -1,8 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Box, Divider, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import {Link, NavLink} from 'react-router-dom';
+import {selectCompanyInfo} from "../model/AdminMainPageSlice";
+import {useAppDispatch, useAppSelector} from "../../../app/store/hooks";
+import {getCompanyInfo} from "../api/AdminMainPageThunk";
+import {apiURL} from "../../../constants";
 
 const SideNav: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const company = useAppSelector(selectCompanyInfo);
+    useEffect(() => {
+        dispatch(getCompanyInfo())
+    }, [dispatch]);
+
+    const image = apiURL + '/' + company?.logo;
+
+
   return (
     <Box
       sx={{
@@ -32,7 +45,7 @@ const SideNav: React.FC = () => {
       }}
     >
       <Box sx={{ p: '12px', textAlign: 'center' }} component={NavLink} to='/admin'>
-        <img src="logo.png" alt="Логотип" style={{ maxWidth: '100px' }} />
+        <img src={image} alt="Логотип" style={{ maxWidth: '100px' }} />
       </Box>
       <Divider sx={{ borderColor: '#000'}}/>
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>

@@ -4,14 +4,22 @@ import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import {List, ListItem, ListItemButton, ListItemText} from '@mui/material';
 import {Link, NavLink} from "react-router-dom";
+import {useAppSelector} from "../../../app/store/hooks";
+import {selectCompanyInfo} from "../model/AdminMainPageSlice";
+import {apiURL} from "../../../constants";
 
 export interface MobileNavProps {
   onClose?: () => void;
   open?: boolean;
 }
 
- const MobileNav = ({ open, onClose }: MobileNavProps) => (
-   <Drawer
+ const MobileNav = ({ open, onClose }: MobileNavProps) => {
+const company = useAppSelector(selectCompanyInfo);
+     const image = apiURL + '/' + company?.logo;
+
+
+ return(
+     <Drawer
      PaperProps={{
        sx: {
          bgcolor: '#ccc',
@@ -29,8 +37,8 @@ export interface MobileNavProps {
      open={open}
    >
      <Stack spacing={2} sx={{p: 3}}>
-       <Box sx={{display: 'inline-flex'}} onClick={onClose} component={NavLink} to='/admin'>
-         <img  src="logo.png" alt="Логотип" style={{maxWidth: '100px'}}/>
+       <Box sx={{display: 'inline-flex'}}  component={NavLink} to='/admin'>
+         <img  src={image} alt="Логотип" style={{maxWidth: '100px'}}/>
        </Box>
      </Stack>
      <Divider sx={{borderColor: '#000'}}/>
@@ -55,6 +63,6 @@ export interface MobileNavProps {
        </Box>
      <Divider sx={{borderColor: '#000'}}/>
    </Drawer>
- );
+ )};
 export default MobileNav;
 

@@ -1,5 +1,5 @@
 import {Route, Routes} from "react-router-dom";
-import AdminMainPage from "./AdminMainPage";
+import AdminMainPage from "./ui/AdminMainPage";
 import AdminAllPages from "./adminCreatePage/AdminAllPages";
 import Layout from "./dashboard/layout";
 import AdminPageForm from "./adminCreatePage/AdminPageForm";

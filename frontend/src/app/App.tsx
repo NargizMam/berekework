@@ -2,7 +2,7 @@ import '../App.css';
 import {Route, Routes} from 'react-router-dom';
 import {HeadingAdmin, HeadingDetail} from '../pages/HeadingAdmin';
 import AppContainer from './appContainer';
-import AdminApp from "./adminPages/AdminApp";
+import AdminApp from "../pages/adminPages/AdminApp";
 
 const App = () => (
     <AppContainer>
