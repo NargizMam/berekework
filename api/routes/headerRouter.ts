@@ -3,11 +3,11 @@ import NavbarItem from '../models/NavbarItem';
 import Header from '../models/Header';
 import mongoose from 'mongoose';
 import { NavbarItemFields } from '../types';
-import { imagesUpload } from '../multer';
+import { logosUpload} from '../multer';
 
 const headerRouter = express.Router();
 
-headerRouter.post('/', imagesUpload.single('logo'), async (req, res, next) => {
+headerRouter.post('/', logosUpload.single('logo'), async (req, res, next) => {
   try {
     await Header.deleteMany({});
     await NavbarItem.deleteMany({});
@@ -54,9 +54,14 @@ headerRouter.post('/', imagesUpload.single('logo'), async (req, res, next) => {
   }
 });
 
-headerRouter.get('/', async (_req, res, next) => {
+headerRouter.get('/', async (req, res, next) => {
   try {
-    const headerData = await Header.findOne().populate('navbarItems');
+    let headerData;
+    if(req.query){
+      headerData = await Header.findOne().select('logo name');
+      return res.send(headerData)
+    }
+    headerData = await Header.findOne().populate('navbarItems');
     return res.send(headerData);
   } catch (e) {
     next(e);
