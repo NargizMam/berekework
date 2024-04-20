@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import MainCardItem from './MainCardItem';
 import { selectMainCards } from '../model/mainCardsSlice.ts';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks.ts';
-import { fetchMainCards } from '../api/mainCardsThunks.ts';
+import { fetchMainCards } from '../model/mainCardsThunks.ts';
 import { useEffect } from 'react';
 
 export const MainCards = () => {
