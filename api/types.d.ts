@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
 export interface mainCardContainerType {
   _id: string;
@@ -70,3 +70,39 @@ export interface VacanciesBlockApi {
 
 export type VacanciesBlockMutation = Omit<VacanciesBlockApi, '_id'>;
 
+
+// Header
+export interface NavbarItemFields {
+  nameNav: string;
+  link: string;
+  isDrop: boolean;
+  access: string;
+  nestedMenu: [
+    {
+      nestedNameNav: string;
+      nestedLink: string;
+    },
+  ];
+}
+
+//Admin page create
+
+export interface Block {
+  nameComponent: string;
+  content: { [key: string]: string };
+}
+export interface ComponentModelType extends Document {
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface Page {
+  name: string;
+  url: string;
+  blocks: Block[];
+}
+
+export interface ModelType {
+  [key: string]: any;
+}

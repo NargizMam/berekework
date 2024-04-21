@@ -11,6 +11,7 @@ import vacanciesRouter from './routes/vacanciesRouter';
 import vacanciesBlockRouter from './routes/vacanciesBlockRouter';
 import tariffRouter from './routes/tariffRouter';
 import lastNewsBlockRouter from "./routes/lastNewsBlock";
+import pageCreateRouter from './routes/pageCreateRouter';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/vacancies', vacanciesRouter);
 app.use('/vacanciesBlock', vacanciesBlockRouter);
 app.use('/tariff', tariffRouter);
 app.use('/last-news-block', lastNewsBlockRouter);
+app.use('/page', pageCreateRouter);
 
 
 const run = async () => {
