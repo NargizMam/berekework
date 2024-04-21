@@ -9,9 +9,10 @@ const galleryVideoRouter = Router();
 
 galleryVideoRouter.get('/', async(req: Request, res: Response, next: NextFunction) => {
   try {
-    const results = await GalleryVideo.find({});
+    const picturesData = await GalleryVideo.find({picture: { $exists: true }});
+    const videosData = await GalleryVideo.find({video: { $exists: true }});
 
-    return res.send(results);
+    return res.send({gallery: picturesData, videos: videosData});
   } catch (error) {
     next(error);
   }
