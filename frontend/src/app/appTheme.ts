@@ -10,10 +10,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      'Montserrat',
-      'sans-serif',
-    ].join(','),
+    fontFamily: ['Montserrat', 'sans-serif'].join(','),
     fontWeightBold: 700,
   },
 });

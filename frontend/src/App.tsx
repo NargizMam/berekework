@@ -1,9 +1,5 @@
-import './App.css'
+import './App.css';
 
-const App = () => (
-    <>
-        BEREKE WORK
-    </>
-);
+const App = () => <>BEREKE WORK</>;
 
-export default App
+export default App;

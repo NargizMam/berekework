@@ -9,11 +9,11 @@ const createStorageConfig = (subFolder: string) =>
     destination: async (_req, _file, cb) => {
       const destDir = path.join(config.publicPath, subFolder);
       await fs.mkdir(destDir, { recursive: true });
-      cb(null, destDir);
+      cb(null, config.publicPath);
     },
     filename: (_req, file, cb) => {
       const extension = path.extname(file.originalname);
-      const filename = path.join(randomUUID() + extension);
+      const filename = path.join(subFolder, randomUUID() + extension);
       cb(null, filename);
     },
   });
@@ -21,4 +21,5 @@ const createStorageConfig = (subFolder: string) =>
 export const imagesUpload = multer({ storage: createStorageConfig('images') });
 export const videosUpload = multer({ storage: createStorageConfig('videos') });
 
+export const cardUpload = multer({ storage: createStorageConfig('cards') });
 export const avatarsUpload = multer({ storage: createStorageConfig('avatars') });
