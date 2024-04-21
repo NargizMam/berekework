@@ -1,4 +1,4 @@
-import MainCards from '../../shared/mainCards/ui/MainCards.tsx';
+import { MainCards } from '../../shared/mainCards';
 
 const BaseLayout = () => (
   <>

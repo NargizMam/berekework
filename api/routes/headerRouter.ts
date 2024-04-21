@@ -1,6 +1,6 @@
 import express from 'express';
-import NavbarItem from '../models/NavbarItem';
-import Header from '../models/Header';
+import NavbarItem from '../models/header/NavbarItem';
+import Header from '../models/header/Header';
 import mongoose from 'mongoose';
 import { NavbarItemFields } from '../types';
 import { logosUpload} from '../multer';
