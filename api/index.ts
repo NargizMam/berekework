@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import config from './config';
 import headerRouter from './routes/headerRouter';
+import galleryVideoRouter from './routes/galleryVideoRouter';
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/header', headerRouter);
+app.use('/gallery-video', galleryVideoRouter);
 
 const run = async () => {
     await mongoose.connect(config.mongoose.db);

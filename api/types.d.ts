@@ -11,3 +11,11 @@ export interface NavbarItemFields {
   ];
 }
 
+export interface GalleryVideoType {
+  name: string;
+  picture?: string;
+  video?: string;
+  date?: string;
+  updatedDate?: string;
+}
+
