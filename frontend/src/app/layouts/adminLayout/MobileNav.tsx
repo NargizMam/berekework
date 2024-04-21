@@ -4,9 +4,9 @@ import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import {List, ListItem, ListItemButton, ListItemText} from '@mui/material';
 import {Link, NavLink} from "react-router-dom";
-import {useAppSelector} from "../../../app/store/hooks";
-import {selectCompanyInfo} from "../model/AdminMainPageSlice";
-import {apiURL} from "../../../constants";
+import {useAppSelector} from "../../store/hooks";
+import {selectCompanyInfo} from "../../../pages/adminPages/model/AdminMainPageSlice";
+import { API_URL } from '../../constants/links';
 
 export interface MobileNavProps {
   onClose?: () => void;
@@ -15,7 +15,7 @@ export interface MobileNavProps {
 
  const MobileNav = ({ open, onClose }: MobileNavProps) => {
 const company = useAppSelector(selectCompanyInfo);
-     const image = apiURL + '/' + company?.logo;
+     const image = API_URL + '/' + company?.logo;
 
 
  return(

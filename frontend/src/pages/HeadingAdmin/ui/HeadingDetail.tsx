@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectSingleHeading } from '../model/HeadingSlice';
 import { getSingleHeading } from '../api/HeadingThunk';
 import { useParams } from 'react-router-dom';
-import { BASE_URL } from '../../../app/constants';
+import { API_URL } from '../../../app/constants/links';
 
 export const HeadingDetail = () => {
   const heading = useAppSelector(selectSingleHeading);
@@ -23,7 +23,7 @@ export const HeadingDetail = () => {
       <h2>{heading.title.element}</h2>
       {
         heading.image ?
-          <img src={BASE_URL + '/' +heading.image} alt="image"/>
+          <img src={API_URL + '/' +heading.image} alt="image"/>
           :
           null
       }

@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
 import { Box, Divider, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import {Link, NavLink} from 'react-router-dom';
-import {selectCompanyInfo} from "../model/AdminMainPageSlice";
-import {useAppDispatch, useAppSelector} from "../../../app/store/hooks";
-import {getCompanyInfo} from "../api/AdminMainPageThunk";
-import {apiURL} from "../../../constants";
+import {selectCompanyInfo} from "../../../pages/adminPages/model/AdminMainPageSlice";
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import {getCompanyInfo} from "../../../pages/adminPages/api/AdminMainPageThunk";
+import { API_URL } from '../../constants/links';
 
-const SideNav: React.FC = () => {
+const SideNavAdmin: React.FC = () => {
     const dispatch = useAppDispatch();
     const company = useAppSelector(selectCompanyInfo);
     useEffect(() => {
         dispatch(getCompanyInfo())
     }, [dispatch]);
 
-    const image = apiURL + '/' + company?.logo;
+    const image = API_URL + '/' + company?.logo;
 
 
   return (
@@ -39,8 +39,8 @@ const SideNav: React.FC = () => {
         position: 'fixed',
         scrollbarWidth: 'none',
         top: 0,
-        width: 'var(--SideNav-width)',
-        zIndex: 'var(--SideNav-zIndex)',
+        width: 'var(--SideNavAdmin-width)',
+        zIndex: 'var(--SideNavAdmin-zIndex)',
         '&::-webkit-scrollbar': { display: 'none' },
       }}
     >
@@ -72,4 +72,4 @@ const SideNav: React.FC = () => {
   );
 };
 
-export default SideNav;
+export default SideNavAdmin;

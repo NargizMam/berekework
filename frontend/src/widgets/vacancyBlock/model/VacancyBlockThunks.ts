@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../../axiosApi';
 import { VacancyBlockApiData } from '../../../shared/api/vacancy/types';
+import axiosApi from '../../../app/axiosApi';
 
 
 export const getVacancyBlock = createAsyncThunk<VacancyBlockApiData>('vacancyBlock/getVacancyBlock', async () => {

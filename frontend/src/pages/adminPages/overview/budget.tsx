@@ -19,7 +19,6 @@ export function Budget(): React.JSX.Element {
               <Typography variant="h4">Какая-то инфа</Typography>
             </Stack>
           </Stack>
-
         </Stack>
       </CardContent>
     </Card>

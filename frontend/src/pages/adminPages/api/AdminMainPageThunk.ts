@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Company} from "../../HeadingAdmin/model/types";
-import axiosApi from "../../../app/axios";
+import axiosApi from "../../../app/axiosApi";
 
 export const getCompanyInfo = createAsyncThunk<Company>(
     'admin/getCompanyInfo',
