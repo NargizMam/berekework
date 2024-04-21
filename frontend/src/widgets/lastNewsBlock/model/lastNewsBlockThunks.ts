@@ -8,3 +8,11 @@ export const getLastNewsBlock = createAsyncThunk<LastNewsBlockApiData>(
     return response.data;
   });
 
+export const getLastNewsBlockById = createAsyncThunk<LastNewsBlockApiData, string>(
+  'lastNewsBlock/geLastNewsBlock',
+  async (id) => {
+    const response = await axiosApi.get<LastNewsBlockApiData>(`/last-news-block/${id}`);
+    return response.data;
+  }
+);
+

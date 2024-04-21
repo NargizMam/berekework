@@ -1,6 +1,6 @@
 import { LastNewsBlockApiData } from './types';
 import { createSlice } from '@reduxjs/toolkit';
-import { getLastNewsBlock } from './lastNewsBlockThunks';
+import { getLastNewsBlockById } from './lastNewsBlockThunks';
 import { RootState } from '../../../app/store/store';
 
 interface LastNewsBlockState {
@@ -19,20 +19,20 @@ const lastNewsBlockSlice = createSlice({
   reducers: {},
   extraReducers: (bilder) => {
     bilder
-      .addCase(getLastNewsBlock.pending, (state) => {
+      .addCase(getLastNewsBlockById.pending, (state) => {
         state.isLoading = true;
         state.block = null;
       })
-      .addCase(getLastNewsBlock.fulfilled, (state, { payload: lastNewsBlock }) => {
+      .addCase(getLastNewsBlockById.fulfilled, (state, { payload: lastNewsBlock }) => {
         state.isLoading = false;
         state.block = lastNewsBlock;
       })
-      .addCase(getLastNewsBlock.rejected, (state) => {
+      .addCase(getLastNewsBlockById.rejected, (state) => {
         state.isLoading = false;
       });
   },
 });
 
 export const lastNewsBlockReducer = lastNewsBlockSlice.reducer;
-export const selectLastNewsBlock = (state: RootState) => state.lastNewsBlock;
+export const selectLastNewsBlockbyId = (state: RootState) => state.lastNewsBlock;
 export const selectIsLoading = (state: RootState) => state.lastNewsBlock.isLoading;

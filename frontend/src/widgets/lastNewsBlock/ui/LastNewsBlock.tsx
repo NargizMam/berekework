@@ -1,11 +1,11 @@
 import { useAppSelector } from '../../../app/store/hooks';
-import { selectLastNewsBlock } from '../model/lastNewsBlockSlice';
+import { selectLastNewsBlockbyId } from '../model/lastNewsBlockSlice';
 
 const LastNewsBlock = () => {
   // const [startIndex, setStartIndex] = useState(0);
   // const pageSize = 3;
 
-  const lastNewsBlock = useAppSelector(selectLastNewsBlock);
+  const lastNewsBlock = useAppSelector(selectLastNewsBlockbyId);
 
   console.log(lastNewsBlock);
 
@@ -13,7 +13,7 @@ const LastNewsBlock = () => {
 
   return (
     <>
-      ПРИВЕТ
+      Последние новости
     </>
   );
 };
