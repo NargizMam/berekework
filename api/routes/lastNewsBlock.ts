@@ -8,8 +8,13 @@ const lastNewsBlockRouter = express.Router();
 lastNewsBlockRouter.get('/', async (req, res, next) => {
     try {
         const pageId = req.query.pageId;
+        let blocks;
 
-        const blocks = await LastNewsBlock.find({page: pageId});
+        if (pageId) {
+            blocks = await LastNewsBlock.find({page: pageId});
+        } else {
+            blocks = await LastNewsBlock.find();
+        }
 
         return res.send(blocks);
     } catch (e) {
