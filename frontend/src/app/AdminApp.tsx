@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import AdminMainPage from '../pages/adminPages/ui/AdminMainPage';
-import AdminAllPages from '../pages/adminPages/adminCreatePage/AdminAllPages';
 import AdminLayout from './layouts/adminLayout/AdminLayout';
-import AdminPageForm from '../pages/adminPages/adminCreatePage/AdminPageForm';
+import { AdminMainPage } from '../pages/adminMainPage';
+import { AdminAllPages, AdminCreatePage } from '../pages/adminPages';
+import { HeadingAdmin, HeadingDetail } from '../pages/HeadingAdmin';
 
 const AdminApp = () => {
   return (
@@ -11,7 +11,11 @@ const AdminApp = () => {
         <Routes>
           <Route path="/" element={<AdminMainPage />} />
           <Route path="/pages" element={<AdminAllPages />} />
-          <Route path="/pages/new-page" element={<AdminPageForm />} />
+          <Route path="/pages/new-page" element={<AdminCreatePage />} />
+
+          <Route path="/adminHeading" element={<HeadingAdmin/>} />
+          <Route path="/adminHeading/:location" element={<HeadingDetail/>} />
+          <Route path="*" element={'Not found'} />
         </Routes>
       </AdminLayout>
     </>

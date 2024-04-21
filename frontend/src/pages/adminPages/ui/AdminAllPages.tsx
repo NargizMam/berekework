@@ -1,7 +1,7 @@
 import { Button, Typography } from '@mui/material';
 import { NavLink } from "react-router-dom";
 
-const AdminAllPages = () => {
+export const AdminAllPages = () => {
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <Typography>Страницы еще не созданы</Typography>
@@ -12,4 +12,3 @@ const AdminAllPages = () => {
   );
 };
 
-export default AdminAllPages;

@@ -1,21 +1,9 @@
-import React, {useEffect} from 'react';
-import { Box, Divider, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import {Link, NavLink} from 'react-router-dom';
-import {selectCompanyInfo} from "../../../pages/adminPages/model/AdminMainPageSlice";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {getCompanyInfo} from "../../../pages/adminPages/api/AdminMainPageThunk";
-import { API_URL } from '../../constants/links';
+import React from 'react';
+import { Box, Divider, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { SIDE_BAR_LINKS } from '../../constants/links';
 
 const SideNavAdmin: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const company = useAppSelector(selectCompanyInfo);
-    useEffect(() => {
-        dispatch(getCompanyInfo())
-    }, [dispatch]);
-
-    const image = API_URL + '/' + company?.logo;
-
-
   return (
     <Box
       sx={{
@@ -44,27 +32,58 @@ const SideNavAdmin: React.FC = () => {
         '&::-webkit-scrollbar': { display: 'none' },
       }}
     >
-      <Box sx={{ p: '12px', textAlign: 'center' }} component={NavLink} to='/admin'>
-        <img src={image} alt="Логотип" style={{ maxWidth: '100px' }} />
-      </Box>
-      <Divider sx={{ borderColor: '#000'}}/>
+      <Typography
+        sx={{ p: '12px', textAlign: 'center', color: 'black', textDecoration: 'none', fontWeight: 'bold' }}
+        component={Link}
+        to="/"
+      >
+        Bereke Admin
+      </Typography>
+      <Divider sx={{ borderColor: '#000' }} />
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
         <List>
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to="pages" sx={{ borderRadius: '4px', marginBottom: '8px', width: '100%', borderBottom: '1px solid #000' }}>
+          {SIDE_BAR_LINKS.map((sideLink) => (
+            <ListItem disablePadding key={sideLink.id}>
+              <ListItemButton component={Link} to={sideLink.path} sx={{
+                borderRadius: '4px',
+                marginBottom: '8px',
+                width: '100%',
+                borderBottom: '1px solid #000',
+              }}>
+                <ListItemText primary={sideLink.value} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+         {/* <ListItem disablePadding>
+            <ListItemButton component={Link} to="pages" sx={{
+              borderRadius: '4px',
+              marginBottom: '8px',
+              width: '100%',
+              borderBottom: '1px solid #000',
+            }}>
               <ListItemText primary="Pages" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="users" sx={{ borderRadius: '4px', marginBottom: '8px', width: '100%', borderBottom: '1px solid #000' }}>
+            <ListItemButton component={Link} to="users" sx={{
+              borderRadius: '4px',
+              marginBottom: '8px',
+              width: '100%',
+              borderBottom: '1px solid #000',
+            }}>
               <ListItemText primary="Users" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="vacance" sx={{ borderRadius: '4px', marginBottom: '8px', width: '100%', borderBottom: '1px solid #000' }}>
+            <ListItemButton component={Link} to="vacance" sx={{
+              borderRadius: '4px',
+              marginBottom: '8px',
+              width: '100%',
+              borderBottom: '1px solid #000',
+            }}>
               <ListItemText primary="Vacance" />
             </ListItemButton>
-          </ListItem>
+          </ListItem>*/}
         </List>
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
