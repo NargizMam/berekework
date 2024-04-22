@@ -20,3 +20,7 @@ export interface Heading{
     text: string;
   }
 }
+export interface Company {
+  logo: string;
+  name: string;
+}

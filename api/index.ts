@@ -1,15 +1,17 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+
 import config from './config';
 import mainContainerCardRouter from './routes/mainContainerCardRouter';
 import headingRouter from './routes/headingRouter';
 import headerRouter from './routes/headerRouter';
-
 import userRouter from './routes/userRouter';
 import vacanciesRouter from './routes/vacanciesRouter';
 import vacanciesBlockRouter from './routes/vacanciesBlockRouter';
 import tariffRouter from './routes/tariffRouter';
+import lastNewsBlockRouter from "./routes/lastNewsBlock";
+import pageCreateRouter from './routes/pageCreateRouter';
 
 const app = express();
 
@@ -24,6 +26,9 @@ app.use('/heading', headingRouter);
 app.use('/vacancies', vacanciesRouter);
 app.use('/vacanciesBlock', vacanciesBlockRouter);
 app.use('/tariff', tariffRouter);
+app.use('/last-news-block', lastNewsBlockRouter);
+app.use('/page', pageCreateRouter);
+
 
 const run = async () => {
   await mongoose.connect(config.mongoose.db);

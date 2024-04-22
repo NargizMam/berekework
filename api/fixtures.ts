@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 import config from './config';
 import Vacancy from './models/Vacancy';
 import VacanciesBlock from './models/VacanciesBlock';
-import Components from './models/componentsModel';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
+import LastNewsBlock from './models/LastNewsBlock';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -19,7 +19,7 @@ const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
 
-  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies', 'users', 'tariffs'];
+  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies', 'users', 'tariffs', 'lastnewsblocks'];
 
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
@@ -100,12 +100,6 @@ const run = async () => {
     location: '/',
   });
 
-  await Components.create({
-    image: 'fixtures/crybaby.jpg',
-    name: 'Heading',
-    requestUrl: '/heading',
-  });
-
   await User.create({
     email: 'admin@gmail.com',
     password: 'admin',
@@ -117,6 +111,37 @@ const run = async () => {
     titleCommon: 'Tariff',
     title: 'Basic',
     description: ['Free Food', 'Apple Music'],
+  });
+
+  await LastNewsBlock.create({
+    title: 'Последние новости',
+    page: 'last-news-block',
+    cards: [
+      {
+        cardTitle: 'Природные катастрофы угрожают',
+        cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/natural-disasters',
+      },
+      {
+        cardTitle: 'Рост напряженности на Украине',
+        cardText: 'Международные обсуждения и реакции на политическую ситуацию',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/ukraine-tensions',
+      },
+      {
+        cardTitle: 'Экономические прогнозы на следующий квартал',
+        cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/economic-forecasts',
+      },
+      {
+        cardTitle: 'Новые технологии в медицине',
+        cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/medical-technologies',
+      },
+    ],
   });
 
   await db.close();

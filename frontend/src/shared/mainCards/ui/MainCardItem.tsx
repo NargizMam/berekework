@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import { apiURL } from '../../../constants.ts';
-import MainCardItemStyle from './MainCardItem-style.ts';
 import '../../../App.css';
 import { Link } from 'react-router-dom';
+import { API_URL } from '../../../app/constants/links';
+import MainCardItemStyle from './MainCardItem-style';
 
 export interface Props {
   _id?: string;
@@ -16,8 +16,8 @@ export interface Props {
 }
 
 const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numImages }) => {
-  let cardIcon = icon ? apiURL + '/cards/' + icon : null;
-  let cardImage = image ? apiURL + '/cards/' + image : null;
+  const cardIcon = icon ? API_URL + '/cards/' + icon : null;
+  const cardImage = image ? API_URL + '/cards/' + image : null;
 
   const styles = MainCardItemStyle(cardImage, cardIcon);
   const iconElement = cardIcon ? <CardMedia component="img" sx={styles.icon} image={cardIcon} alt="{title}" /> : null;
