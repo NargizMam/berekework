@@ -1,20 +1,17 @@
 import mongoose from 'mongoose';
 
 const tariffSchema = new mongoose.Schema({
-  commonTitle: {
+  mainTitle: {
     type: String,
-    default: 'Tariff',
-    immutable: true,
+    required: true,
   },
   title: {
     type: String,
-    default: 'Tariff',
-    immutable: true,
+    required: true,
   },
   description: {
     type: [String],
-    default: ['Basic stuff'],
-    immutable: true,
+    required: true,
   },
 });
 
