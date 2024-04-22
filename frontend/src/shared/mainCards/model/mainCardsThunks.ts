@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
 import { MainCard } from './types';
 import axiosApi from '../../../axiosApi';
 

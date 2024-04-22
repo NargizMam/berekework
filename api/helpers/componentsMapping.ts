@@ -1,5 +1,7 @@
 import Heading from '../models/heading/headingModels';
+import { ModelType } from '../types';
 
-const componentsMapping = {
+export const modelMapping: ModelType = {
   heading: Heading,
 };
+

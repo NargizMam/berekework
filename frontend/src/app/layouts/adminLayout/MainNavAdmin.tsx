@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import ListIcon from '@mui/icons-material/List';
-import MobileNav from './Mobile-nav';
+import MobileNav from './MobileNav';
 
-const MainNav = (): React.JSX.Element => {
+const MainNavAdmin = (): React.JSX.Element => {
 const [openNav, setOpenNav] = useState<boolean>(false);
 return (
 <React.Fragment>
@@ -52,4 +52,4 @@ return (
   </React.Fragment>
 );
 };
-export default MainNav;
+export default MainNavAdmin;

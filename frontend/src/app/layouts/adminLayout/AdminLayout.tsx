@@ -1,17 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import MainNav from '../layout/Main-nav';
-import SideNav from '../layout/Side-nav';
 import {Outlet} from "react-router-dom";
+import GlobalStyles from '@mui/material/GlobalStyles';
+import SideNavAdmin from './SideNavAdmin';
+import MainNavAdmin from './MainNavAdmin';
+
 
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps): React.JSX.Element => (
+const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => (
   <>
     <GlobalStyles
       styles={{
@@ -34,9 +35,9 @@ const Layout = ({ children }: LayoutProps): React.JSX.Element => (
         minHeight: '100%',
       }}
     >
-      <SideNav/>
-      <Box sx={{display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: {lg: 'var(--SideNav-width)'}}}>
-        <MainNav/>
+      <SideNavAdmin/>
+      <Box sx={{display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: {lg: 'var(--SideNavAdmin-width)'}}}>
+        <MainNavAdmin/>
         <main>
           <Container maxWidth="xl" sx={{py: '64px'}}>
             {children}
@@ -47,4 +48,4 @@ const Layout = ({ children }: LayoutProps): React.JSX.Element => (
     </Box>
   </>
 );
-export default Layout;
+export default AdminLayout;

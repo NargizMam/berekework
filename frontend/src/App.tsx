@@ -2,7 +2,8 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { HeadingAdmin, HeadingDetail } from './pages/HeadingAdmin';
 import HomePage from './pages/HomePage/HomePage';
-import AdminApp from './pages/adminPages/AdminApp';
+import AdminApp from './app/AdminApp';
+
 
 const App = () => {
   return (

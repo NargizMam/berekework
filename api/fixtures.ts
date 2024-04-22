@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import config from './config';
 import Vacancy from './models/Vacancy';
 import VacanciesBlock from './models/VacanciesBlock';
-import Components from './models/componentsModel';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
@@ -99,12 +98,6 @@ const run = async () => {
       text: 'Смотреть еще',
     },
     location: '/',
-  });
-
-  await Components.create({
-    image: 'fixtures/crybaby.jpg',
-    name: 'Heading',
-    requestUrl: '/heading',
   });
 
   await User.create({

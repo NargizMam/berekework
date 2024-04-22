@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../../app/axios';
+import axiosApi from '../../../app/axiosApi';
 import { HeadingFields } from '../model/HeadingSlice';
 import { Heading, HeadingMutation } from '../model/types';
 
