@@ -1,3 +1,0 @@
-interface TariffState{
-  tariffFields:
-}
