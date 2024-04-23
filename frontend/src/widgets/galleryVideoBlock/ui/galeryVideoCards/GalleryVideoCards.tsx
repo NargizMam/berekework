@@ -1,7 +1,6 @@
-import { Grid } from '@mui/material';
 import { GalleryVideoCardApiData } from '../../model/types';
 import GalleryVideoCardItem from './GalleryVideoCardItem';
-import GalleryVideoCardsStyle from './GalleryVideoCards-style';
+import './GalleryVideoBlock.css';
 
 interface Props {
   startIndex: number;
@@ -18,11 +17,17 @@ export const GalleryVideoCards: React.FC<Props> = ({ cards, pageSize, startIndex
   }
 
   return (
-    <Grid container spacing={1} direction="row" sx={GalleryVideoCardsStyle.container}>
+    // <Grid container spacing={1} direction="row" sx={GalleryVideoCardsStyle.container}>
+    //   {cardsToDisplay.map((card) => (
+    //     <GalleryVideoCardItem key={card._id} image={card.image} video={card.video} />
+    //   ))}
+    // </Grid>
+
+    <div className="GalleryVideoBlock__item">
       {cardsToDisplay.map((card) => (
         <GalleryVideoCardItem key={card._id} image={card.image} video={card.video} />
       ))}
-    </Grid>
+    </div>
   );
 };
 

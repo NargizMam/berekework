@@ -1,6 +1,4 @@
 import React from 'react';
-import { Box, Card, Grid } from '@mui/material';
-import TitleBlockStyle from '../../../titleBlock/ui/TitleBlock-style';
 
 export interface Props {
   id?: string;
@@ -10,21 +8,17 @@ export interface Props {
 
 const GalleryVideoCardItem: React.FC<Props> = ({ image, video }) => {
   const media = image ? (
-    <Box sx={TitleBlockStyle.imageWrapper}>
-      <img src={image} alt="image" className="TitleBlock__image" />
-    </Box>
-  ) : video ? (
-    <video controls>
-      <source src={video} type="video/mp4" />
+    <div className="GalleryVideoBlock__image-wrapper">
+      <img src={image} alt="image" className="GalleryVideoBlock__image" />
+    </div>
+  ) : (
+    <video controls className="GalleryVideoBlock__media">
+      <source src={video} type="video/mp4" className="GalleryVideoBlock__media" />
       Ваш браузер не поддерживает видео в формате mp4.
     </video>
-  ) : null;
-
-  return (
-    <Grid item xs={12} sm={4} md={4}>
-      <Card sx={{ maxWidth: 420 }}>{media}</Card>
-    </Grid>
   );
+
+  return media;
 };
 
 export default GalleryVideoCardItem;

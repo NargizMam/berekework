@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import LastNewsCardItemStyle from './LastNewsCardItem-style';
+import '../../../../App.css';
 
 export interface Props {
   id?: string;
@@ -38,7 +39,6 @@ const LastNewsCardItem: React.FC<Props> = ({ cardTitle, cardText, dateTime, butt
 
   const card = (
     <Card sx={LastNewsCardItemStyle.card}>
-      {/*<CardActionArea sx={LastNewsCardItemStyle.cardAction}>*/}
       <CardContent sx={LastNewsCardItemStyle.content}>
         <Typography variant="body1" sx={LastNewsCardItemStyle.title}>
           {cardTitle}
@@ -48,21 +48,20 @@ const LastNewsCardItem: React.FC<Props> = ({ cardTitle, cardText, dateTime, butt
         </Typography>
         {createdAt}
       </CardContent>
-      {/*</CardActionArea>*/}
     </Card>
   );
 
   if (buttonUrl) {
     return (
-      <Grid item xs={12} sm={4} md={4} sx={LastNewsCardItemStyle.container}>
-        <Link to={buttonUrl} style={{ textDecoration: 'none' }}>
+      <Grid item md={4}>
+        <Link to={buttonUrl} style={{ textDecoration: 'none', height: '100%', display: 'flex' }}>
           {card}
         </Link>
       </Grid>
     );
   } else {
     return (
-      <Grid item xs={12} sm={4} md={4} sx={LastNewsCardItemStyle.container}>
+      <Grid item xs={12} sm={4} md={4}>
         {card}
       </Grid>
     );

@@ -1,26 +1,33 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { useState } from 'react';
+import { useAppSelector } from '../../../app/store/hooks';
 import { Loader } from '../../../shared/loader';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { PaginationCards } from '../../../shared/PaginationCards';
 import GalleryVideoCards from './galeryVideoCards/GalleryVideoCards';
-import { selectGalleryVideoBlock, selectGalleryVideoBlockLoading } from '../model/galleryVideoBlockSlice';
-import { getGalleryVideoBlock } from '../model/galleryVideoBlockThunks';
+import { selectGalleryVideoBlockLoading } from '../model/galleryVideoBlockSlice';
+// import { getGalleryVideoBlock } from '../model/galleryVideoBlockThunks';
 import GalleryVideoBlockStyle from './GalleryVideoBlock-style';
+import photo from '../ui/media/photo.png';
 
 const GalleryVideoBlock = () => {
   const [startIndex, setStartIndex] = useState(0);
   const pageSize = 3;
 
-  const block = useAppSelector(selectGalleryVideoBlock);
+  // const block = useAppSelector(selectGalleryVideoBlock);
+
+  const block = {
+    title: 'Галерея',
+    page: 'About as',
+    cards: [{ image: photo }, { image: photo }, { image: photo }, { image: photo }],
+  };
   const isLoading = useAppSelector(selectGalleryVideoBlockLoading);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
-  useEffect(() => {
-    dispatch(getGalleryVideoBlock());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getGalleryVideoBlock());
+  // }, [dispatch]);
 
   if (!block) {
     return null;

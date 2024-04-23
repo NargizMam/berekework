@@ -1,11 +1,13 @@
 const GalleryVideoCardsStyle = {
   container: {
+    justifyContent: 'spaceBetween',
     flexWrap: 'noWrap',
+    gap: '10px',
     overflowX: 'auto',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
 
     '@media (min-width: 900px)': {
       flexWrap: 'wrap',
+      gap: 0,
       overflowX: 'hidden',
     },
   },

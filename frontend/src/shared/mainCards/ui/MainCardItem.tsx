@@ -16,8 +16,8 @@ export interface Props {
 }
 
 const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numImages }) => {
-  const cardIcon = icon ? API_URL + '/cards/' + icon : null;
-  const cardImage = image ? API_URL + '/cards/' + image : null;
+  const cardIcon = icon ? API_URL + '/' + icon : null;
+  const cardImage = image ? API_URL + '/' + image : null;
 
   const styles = MainCardItemStyle(cardImage, cardIcon);
   const iconElement = cardIcon ? <CardMedia component="img" sx={styles.icon} image={cardIcon} alt="{title}" /> : null;

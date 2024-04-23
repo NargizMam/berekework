@@ -20,19 +20,6 @@ const lastNewsBlockSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder
-    //   .addCase(getLastNewsBlock.pending, (state) => {
-    //     state.isLoading = true;
-    //     state.block = null;
-    //   })
-    //   .addCase(getLastNewsBlock.fulfilled, (state, { payload: lastNewsBlock }) => {
-    //     state.isLoading = false;
-    //     state.block = lastNewsBlock;
-    //   })
-    //   .addCase(getLastNewsBlock.rejected, (state) => {
-    //     state.isLoading = false;
-    //   });
-
     builder
       .addCase(getLastNewsBlock.pending, (state) => {
         state.isLoading = true;

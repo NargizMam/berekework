@@ -1,0 +1,16 @@
+.GalleryVideoBlock__image-wrapper {
+    min-width: 272px;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.GalleryVideoBlock__image {
+    width: 100%;
+    object-fit: contain;
+}
+
+.GalleryVideoBlock__item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px
+}

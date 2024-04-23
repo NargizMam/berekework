@@ -1,11 +1,12 @@
 import Footer from '../../widgets/footer/ui/Footer';
 import LastNewsBlock from '../../widgets/lastNewsBlock/ui/LastNewsBlock';
-import { MainCards } from '../../shared/mainCards';
+import GalleryVideoBlock from '../../widgets/galleryVideoBlock/ui/GalleryVideoBlock';
 
 const HomePage = () => {
   return (
     <>
-      <MainCards />
+      {/*<MainCards />*/}
+      <GalleryVideoBlock />
       <LastNewsBlock />
       <footer>
         <Footer />

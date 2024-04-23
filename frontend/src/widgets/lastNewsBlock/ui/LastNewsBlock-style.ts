@@ -1,11 +1,8 @@
 const LastNewsBlockStyle = {
   block: {
     flexDirection: 'column',
-    maxWidth: '1310px',
-    padding: '0 15px',
     fontSize: '24px',
     margin: '0 auto 70px',
-    height: '100%',
     overflowY: 'hidden',
     '@media (min-width: 1200px)': {
       marginBottom: '100px',

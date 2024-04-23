@@ -1,22 +1,20 @@
 const LastNewsCardItemStyle = {
-  container: {
-    minWidth: '272px',
-  },
   card: {
     boxShadow: 'none',
     border: '1px solid #ECECEC',
     borderRadius: '30px',
     background: '#ECECEC',
+    minWidth: '272px',
   },
-  cardAction: {},
   content: {
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
     fontFamily: 'Montserrat, sans-serif',
     color: '#000',
     padding: '24px',
     fontWeight: '500',
-    height: '100%',
+    minWidth: '272px',
 
     '@media (min-width: 900px)': {
       padding: '40px',

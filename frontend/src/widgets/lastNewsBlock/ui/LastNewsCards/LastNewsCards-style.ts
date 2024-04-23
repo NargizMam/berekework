@@ -2,7 +2,7 @@ const LastNewsCardsStyle = {
   container: {
     flexWrap: 'noWrap',
     overflowX: 'auto',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    justifyContent: 'spaceBetween',
 
     '@media (min-width: 900px)': {
       flexWrap: 'wrap',
