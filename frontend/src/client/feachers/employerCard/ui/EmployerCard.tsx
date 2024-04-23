@@ -1,6 +1,6 @@
 import { Avatar, Typography } from '@mui/material';
 import React from 'react';
-import noImage from '../../../shared/assets/NoImage.png';
+import noImage from '../../../../shared/assets/NoImage.png';
 import EmployerCardStyle from './EmployerCard-style';
 import './EmployerCard.css';
 
