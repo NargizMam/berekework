@@ -3,6 +3,7 @@ import LastNewsBlock from '../../../widgets/lastNewsBlock/ui/LastNewsBlock';
 import { MainCards } from '../../../widgets/mainCards';
 
 const HomePage = () => {
+
   return (
     <>
       <MainCards />
