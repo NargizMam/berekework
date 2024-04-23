@@ -13,7 +13,7 @@ const user = 'admin';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <BrowserRouter>
-      <ThemeProvider theme={appTheme}>{user === 'admin' ? <App /> : <AdminApp />}</ThemeProvider>
+      <ThemeProvider theme={appTheme}>{user === 'admin' ? <AdminApp /> : <App />}</ThemeProvider>
     </BrowserRouter>
   </Provider>,
 );
