@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const GalleryVideoCardItem: React.FC<Props> = ({ image, video }) => {
-  const media = image ? (
+  return image ? (
     <div className="GalleryVideoBlock__image-wrapper">
       <img src={image} alt="image" className="GalleryVideoBlock__image" />
     </div>
@@ -17,8 +17,6 @@ const GalleryVideoCardItem: React.FC<Props> = ({ image, video }) => {
       Ваш браузер не поддерживает видео в формате mp4.
     </video>
   );
-
-  return media;
 };
 
 export default GalleryVideoCardItem;
