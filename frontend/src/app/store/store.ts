@@ -5,12 +5,14 @@ import { vacancyBlockReducer } from '../../widgets/vacancyBlock/model/VacancyBlo
 import { lastNewsBlockReducer } from '../../widgets/lastNewsBlock/model/lastNewsBlockSlice';
 import { pageReducer } from '../../pages/adminPages/model/adminCreatePageSlice';
 import { headerReducer } from '../../pages/headerCreate/model/headerSlice';
+import { galleryVideoBlockReducer } from '../../widgets/galleryVideoBlock/model/galleryVideoBlockSlice';
 
 export const store = configureStore({
   reducer: {
     heading: headingReducer,
     vacancyBlock: vacancyBlockReducer,
     lastNewsBlock: lastNewsBlockReducer,
+    galleryVideoBlock: galleryVideoBlockReducer,
     mainCards: mainCardsReducer,
     page: pageReducer,
     header: headerReducer,
