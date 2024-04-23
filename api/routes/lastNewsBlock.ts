@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose, {Types} from 'mongoose';
-import LastNewsBlock from "../models/LastNewsBlock";
+import LastNewsBlock from "../models/lastNews/LastNewsBlock";
 
 
 const lastNewsBlockRouter = express.Router();
