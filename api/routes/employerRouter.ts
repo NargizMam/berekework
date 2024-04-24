@@ -28,7 +28,7 @@ employerRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) =
   }
 });
 
-employerRouter.get('/', async (req, res, next) => {
+employerRouter.get('/', async (_req, res, next) => {
   try {
     const results = await Employer.find();
     res.send(results);
@@ -39,7 +39,7 @@ employerRouter.get('/', async (req, res, next) => {
 
 employerRouter.delete('/:id', async (req, res, next) => {
   try {
-    const result = await Employer.findByIdAndDelete(req.params.id);
+    await Employer.findByIdAndDelete(req.params.id);
     res.send({ message: 'Employer deleted!' });
   } catch (error) {
     return next(error);

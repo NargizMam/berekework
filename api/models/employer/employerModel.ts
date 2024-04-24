@@ -1,6 +1,6 @@
 import mongoose, { HydratedDocument } from 'mongoose';
 import { randomUUID } from 'crypto';
-import { EmployerFields, EmployerModel, UserFields, UserMethods, UserModel } from '../../types';
+import { EmployerFields, EmployerModel, UserFields, UserMethods } from '../../types';
 import bcrypt from 'bcrypt';
 
 export const SALT_WORK_FACTOR = 10;
