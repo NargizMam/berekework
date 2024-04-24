@@ -7,7 +7,7 @@ import { AdminMainPage } from '../admin/page/adminMainPage';
 import { HeaderAdmin } from '../admin/page/headerCreate';
 import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
 import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
-import { RegisterPage } from '../client/page/Auth';
+import { LoginPage, RegisterPage } from '../client/page/Auth';
 
 const App = () => (
   <>
@@ -19,6 +19,7 @@ const App = () => (
     <AdminLayout>
       <Routes>
         <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
         <Route path="/admin" element={<AdminMainPage/>}/>
         <Route path="/header" element={<HeaderAdmin/>}/>
         <Route path="/pages" element={<AdminAllPages/>}/>

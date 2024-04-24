@@ -34,7 +34,7 @@ userRouter.post('/sessions', async (req, res, next) => {
     const isMatch = await user.checkPassword(req.body.password);
 
     if (!isMatch) {
-      return res.status(422).send({ error: 'Email and password are correct!' });
+      return res.status(422).send({ error: 'Email and password no correct!' });
     }
 
     user.generateToken();

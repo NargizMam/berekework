@@ -3,7 +3,7 @@ import { RegisterMutation } from '../model/types';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { useAppDispatch } from '../../../../app/store/hooks';
-import { register } from '../model/AuthThunk';
+import { register } from '../api/AuthThunk';
 
 export const RegisterPage = () => {
   const [state, setState] = useState<RegisterMutation>({
