@@ -15,7 +15,7 @@ export const MainCards = () => {
   }, [dispatch]);
 
   return (
-    <Grid container spacing={1} direction="row">
+    <Grid container spacing={1} direction="row" sx={{ marginBottom: '180px' }}>
       {mainCards.map((mainCard) => (
         <MainCardItem
           key={mainCard._id}

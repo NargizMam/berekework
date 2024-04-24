@@ -1,6 +1,4 @@
-import { Grid } from '@mui/material';
 import LastNewsCardItem from './LastNewsCardItem';
-import LastNewsCardsStyle from './LastNewsCards-style';
 import { LastNewsCardApiData } from '../../model/types';
 
 interface Props {
@@ -18,7 +16,7 @@ export const LastNewsCards: React.FC<Props> = ({ cards, pageSize, startIndex, is
   }
 
   return (
-    <Grid container spacing={1} direction="row" sx={LastNewsCardsStyle.container}>
+    <div>
       {cardsToDisplay.map((card) => (
         <LastNewsCardItem
           key={card._id}
@@ -28,7 +26,7 @@ export const LastNewsCards: React.FC<Props> = ({ cards, pageSize, startIndex, is
           buttonUrl={card.buttonUrl}
         />
       ))}
-    </Grid>
+    </div>
   );
 };
 

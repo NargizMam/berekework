@@ -16,11 +16,15 @@ export interface Props {
 }
 
 const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numImages }) => {
-  const cardIcon = icon ? API_URL + '/cards/' + icon : null;
-  const cardImage = image ? API_URL + '/cards/' + image : null;
+  const cardIcon = icon ? API_URL + icon : null;
+  const cardImage = image ? API_URL + image : null;
 
-  const styles = MainCardItemStyle(cardImage, cardIcon);
+  const styles = MainCardItemStyle(cardIcon);
+
   const iconElement = cardIcon ? <CardMedia component="img" sx={styles.icon} image={cardIcon} alt="{title}" /> : null;
+  const imageElement = cardImage ? (
+    <CardMedia component="img" sx={styles.image} image={cardImage} alt="{title}" />
+  ) : null;
 
   const cardContent = (
     <CardContent sx={styles.content}>
@@ -35,22 +39,22 @@ const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numI
 
   const cardBody = (
     <Card sx={styles.card}>
-      {iconElement}
+      {iconElement ? iconElement : imageElement}
       {cardContent}
     </Card>
   );
 
   if (URLpath) {
     return (
-      <Grid item md={numImages === 1 ? 12 : 6} sm={12} xs={12}>
-        <Link to={URLpath} style={{ textDecoration: 'none' }}>
+      <Grid item md={numImages === 1 ? 12 : 6} sm={12} xs={12} sx={{ height: '100%' }}>
+        <Link to={URLpath} style={{ textDecoration: 'none', height: '100%' }}>
           {cardBody}
         </Link>
       </Grid>
     );
   } else {
     return (
-      <Grid item md={numImages === 1 ? 12 : 6} sm={12} xs={12}>
+      <Grid item md={numImages === 1 ? 12 : 6} sm={12} xs={12} sx={{ height: '100%' }}>
         {cardBody}
       </Grid>
     );
