@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './app/store/store';
 import { ThemeProvider } from '@mui/material';
 import App from './app/App';
-import './index.css';
+import './app/index.css';
 import appTheme from './app/appTheme';
 
 

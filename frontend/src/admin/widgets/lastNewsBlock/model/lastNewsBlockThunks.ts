@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { LastNewsBlockApiData } from './types';
-import axiosApi from '../../../app/axiosApi';
+import axiosApi from '../../../../app/axiosApi';
 
 export const getLastNewsBlock = createAsyncThunk<LastNewsBlockApiData[] | LastNewsBlockApiData, string | undefined>(
   'lastNewsBlock/geLastNewsBlock',
