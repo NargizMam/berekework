@@ -31,7 +31,7 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
           </main>
         </Box>
     </>
-  )
+  );
 
 };
 export default AdminLayout;
