@@ -2,9 +2,10 @@ import { Box, Button, Grid, IconButton, TextField, Typography } from '@mui/mater
 import React, { useState } from 'react';
 import { AddCircle } from '@mui/icons-material';
 import { useAppDispatch } from '../../../../app/store/hooks';
-import { HeaderMutation } from '../../../../shared/api/admin/types';
+import { HeaderMutation } from '../../../../shared/types';
 import { createHeader } from '../api/headerThunks';
 import FileInput from '../../../../shared/fileInput/FileInput';
+
 
 export const HeaderAdmin = () => {
   const dispatch = useAppDispatch();

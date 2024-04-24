@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material';
 import MainCardItem from './MainCardItem';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectMainCards } from '../model/mainCardsSlice';
 import { fetchMainCards } from '../model/mainCardsThunks';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 
 export const MainCards = () => {
   const dispatch = useAppDispatch();

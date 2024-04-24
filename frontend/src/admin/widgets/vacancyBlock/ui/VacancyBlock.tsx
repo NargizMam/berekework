@@ -1,14 +1,14 @@
+import { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { VacancyCard } from '../../vacancyCard/ui/VacancyCard';
 import VacancyBlockStyle from './VacancyBlock-style';
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectBlock, selectIsLoading, selectVacancy, selectisLoadingCard } from '../model/VacancyBlockSlice';
-import { Loader } from '../../../shared/loader/index';
 import { getVacancyBlock, getVacancyCard } from '../model/VacancyBlockThunks';
 import './VacancyBlock.css';
-import { VacancyCardApiData } from '../../../shared/api/vacancy/types';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { Loader } from '../../../../shared/loader';
+import { VacancyCardApiData } from '../../../../shared/types';
+import { VacancyCard } from '../../vacancyCard';
 
 export const VacancyBlock = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ export const VacancyBlock = () => {
         </Typography>
         <div className="VacancyBlock__flex">
           {isLoadingCard ? (
-            <Loader />
+            <Loader/>
           ) : (
             vacancyCard.map((data: VacancyCardApiData, index: number) => {
               if (index < 6) {
@@ -51,5 +51,5 @@ export const VacancyBlock = () => {
     );
   }
 
-  return <>{isLoading ? <Loader /> : render}</>;
+  return <>{isLoading ? <Loader/> : render}</>;
 };
