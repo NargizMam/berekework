@@ -108,6 +108,7 @@ const run = async () => {
   });
 
   await Tariff.create({
+    titleCommon: 'Tariff',
     title: 'Basic',
     description: ['Free Food', 'Apple Music'],
   });

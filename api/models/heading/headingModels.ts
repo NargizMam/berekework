@@ -5,35 +5,16 @@ const headingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
-    type: String,
-  },
-  image: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
+  image: String,
+  description: String,
   button: {
-    element: {
-      type: String,
-      default: 'button',
-    },
     url: {
       type: String,
-      typeField: {
-        type: String,
-        default: 'text',
-        immutable: true,
-      },
+      required: true,
     },
     text: {
       type: String,
-      typeField: {
-        type: String,
-        default: 'text',
-        immutable: true,
-      },
+      required: true,
     },
   },
 });

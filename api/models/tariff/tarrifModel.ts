@@ -1,13 +1,17 @@
 import mongoose from 'mongoose';
 
 const tariffSchema = new mongoose.Schema({
-  title: {
-    required: true,
+  mainTitle: {
     type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
   },
   description: {
-    required: true,
     type: [String],
+    required: true,
   },
 });
 
