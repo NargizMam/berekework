@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 import AppContainer from './appContainer';
-import HomePage from '../pages/CRM/HomePage/HomePage';
-import '../App.css';
-import { HeadingAdmin, HeadingDetail } from '../pages/CRM/HeadingAdmin';
+import HomePage from '../client/page/HomePage/HomePage';
 import AdminLayout from './layouts/adminLayout/AdminLayout';
-import { AdminMainPage } from '../pages/CRM/adminMainPage';
-import { HeaderAdmin } from '../pages/CRM/headerCreate';
-import { AdminAllPages, AdminCreatePage } from '../pages/CRM/adminPages';
+import { AdminMainPage } from '../admin/page/adminMainPage';
+import { HeaderAdmin } from '../admin/page/headerCreate';
+import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
+import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
+
 
 const App = () => (
   <>

@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { headingReducer } from '../../pages/CRM/HeadingAdmin/model/HeadingSlice';
-import { mainCardsReducer } from '../../widgets/mainCards/model/mainCardsSlice';
-import { vacancyBlockReducer } from '../../widgets/vacancyBlock/model/VacancyBlockSlice';
-import { lastNewsBlockReducer } from '../../widgets/lastNewsBlock/model/lastNewsBlockSlice';
-import { pageReducer } from '../../pages/CRM/adminPages/model/adminCreatePageSlice';
-import { headerReducer } from '../../pages/CRM/headerCreate/model/headerSlice';
+import { headingReducer } from '../../admin/page/HeadingAdmin/model/HeadingSlice';
+import { vacancyBlockReducer } from '../../admin/widgets/vacancyBlock/model/VacancyBlockSlice';
+import { lastNewsBlockReducer } from '../../admin/widgets/lastNewsBlock/model/lastNewsBlockSlice';
+import { mainCardsReducer } from '../../admin/widgets/mainCards/model/mainCardsSlice';
+import { pageReducer } from '../../admin/page/adminPages/model/adminCreatePageSlice';
+import { headerReducer } from '../../admin/page/headerCreate/model/headerSlice';
+
 
 export const store = configureStore({
   reducer: {
