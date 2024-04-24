@@ -1,7 +1,7 @@
 import mongoose, { Types } from 'mongoose';
 import express from 'express';
 import { cardUpload } from '../multer';
-import Vacancy from '../models/Vacancy';
+import Vacancy from '../models/vacancy/Vacancy';
 import { VacancyMutation } from '../types';
 
 const vacanciesRouter = express.Router();

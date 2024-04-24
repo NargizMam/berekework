@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import config from './config';
-import Vacancy from './models/Vacancy';
-import VacanciesBlock from './models/VacanciesBlock';
+import Vacancy from './models/vacancy/Vacancy';
+import VacanciesBlock from './models/vacancy/VacanciesBlock';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
-import LastNewsBlock from './models/LastNewsBlock';
+import LastNewsBlock from './models/lastNews/LastNewsBlock';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {

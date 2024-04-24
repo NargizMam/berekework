@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import mainContainerCard from "../models/mainContainerCardModel";
+import mainContainerCard from "../models/mainContainerCard/mainContainerCardModel";
 import { cardUpload } from "../multer";
 import { mainCardContainerTypeWithoutId } from "../types";
 import mongoose from "mongoose";

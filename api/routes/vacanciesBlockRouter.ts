@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import VacanciesBlock from '../models/VacanciesBlock';
+import VacanciesBlock from '../models/vacancy/VacanciesBlock';
 import {VacanciesBlockMutation} from '../types';
 
 const vacanciesBlockRouter = express.Router();
