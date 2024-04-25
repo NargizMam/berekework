@@ -2,18 +2,20 @@ import mongoose from 'mongoose';
 
 const headingSchema = new mongoose.Schema({
   title: {
-    required: true,
     type: String,
-  },
-  location: {
     required: true,
-    type: String,
   },
   image: String,
   description: String,
   button: {
-    url: String,
-    text: String,
+    url: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
   },
 });
 

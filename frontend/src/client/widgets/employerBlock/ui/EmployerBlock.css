@@ -1,0 +1,26 @@
+.EmployerBlock__flex {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 0 28px;
+}
+
+.EmployerBlock__buttonWrapper {
+  text-align: center;
+  margin-top: 35px;
+}
+
+.EmployerBlock__button {
+  border: none;
+  border-radius: 30px;
+  padding: 26px 0;
+  background: #0866ff;
+  color: #ffffff;
+  width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .EmployerBlock__flex {
+    flex-direction: column;
+  }
+}
