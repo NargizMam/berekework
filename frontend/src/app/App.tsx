@@ -6,6 +6,7 @@ import { AdminMainPage } from '../admin/page/adminMainPage';
 import { HeaderAdmin } from '../admin/page/headerCreate';
 import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
 import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
+import FooterAdmin from '../admin/page/FooterAdmin/ui/FooterAdmin';
 
 
 const App = () => (
@@ -19,9 +20,9 @@ const App = () => (
       <Routes>
         <Route path="/admin" element={<AdminMainPage/>}/>
         <Route path="/header" element={<HeaderAdmin/>}/>
+        <Route path="/footer" element={<FooterAdmin/>}/>
         <Route path="/pages" element={<AdminAllPages/>}/>
         <Route path="/pages/new-page" element={<AdminCreatePage/>}/>
-
         <Route path="/adminHeading" element={<HeadingAdmin/>}/>
         <Route path="/adminHeading/:location" element={<HeadingDetail/>}/>
         <Route path="*" element={'Not found'}/>
