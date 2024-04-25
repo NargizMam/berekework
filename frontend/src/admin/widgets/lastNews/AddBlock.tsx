@@ -1,8 +1,9 @@
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks.ts';
-import { selectBlocksLoading } from './blocks/model/blockSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { selectBlocksLoading } from './blocks/model/blockSlice';
 import { BlockMutation } from './blocks/blockTypes';
-import { addBlock } from './blocks/model/blockThunk.ts';
-import BlockForm from './blocks/BlockForm.tsx';
+import { addBlock } from './blocks/model/blockThunk';
+import BlockForm from './blocks/BlockForm';
+
 
 const AddBlock = () => {
     const dispatch = useAppDispatch();

@@ -1,9 +1,10 @@
 import {useEffect} from 'react';
 import {CircularProgress} from "@mui/material";
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks.ts';
-import { selectBlocks, selectBlocksLoading } from './blocks/model/blockSlice.ts';
-import { fetchBlocks } from './blocks/model/blockThunk.ts';
-import BlockItem from './blocks/BlockItem.tsx';
+import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { selectBlocks, selectBlocksLoading } from './blocks/model/blockSlice';
+import { fetchBlocks } from './blocks/model/blockThunk';
+import BlockItem from './blocks/BlockItem';
+
 
 
 

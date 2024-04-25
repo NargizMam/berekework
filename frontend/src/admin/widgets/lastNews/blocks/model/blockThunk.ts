@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import axiosApi from '../../../../../axiosApi.ts';
 import { Block, BlockMutation } from '../blockTypes';
+import axiosApi from '../../../../../app/axiosApi';
 
 export const fetchBlocks = createAsyncThunk<Block[],  string >(
     'block/fetchAll',

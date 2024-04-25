@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import CardForm from "../cards/cardForm.tsx";
 import {Button, Grid, TextField} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import {LoadingButton} from "@mui/lab";
 import { Card } from '../cards/cardTypes';
 import { Block, BlockMutation } from './blockTypes';
+import CardForm from '../cards/cardForm';
 
 
 interface Props {

@@ -1,7 +1,7 @@
-import { Typography, Box, Button } from '@mui/material';
-import React, { useState } from 'react'
+import { Typography } from '@mui/material';
+import React, { useState } from 'react';
 import { VacancyCard, VacancyCardApiData } from '../../../feachers/vacancyCard/ui/VacancyCard';
-import './VacancyBlock.css'
+import './VacancyBlock.css';
 import VacancyBlockStyle from './VacancyBlock-style';
 
 interface Props {

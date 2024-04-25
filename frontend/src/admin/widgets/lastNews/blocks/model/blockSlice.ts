@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchBlocks, fetchBlock} from "./blockThunk.ts";
 import { Block } from '../blockTypes';
-import { RootState } from '../../../../../app/store/store.ts';
+import { fetchBlock, fetchBlocks } from './blockThunk';
+import { RootState } from '../../../../../app/store/store';
+
 
 interface BlockState {
     blocks: Block[];
@@ -51,7 +52,7 @@ export const blockSlice = createSlice({
 
 });
 
-export const lastNewsBlockReducer = blockSlice.reducer;
+export const lastNewsReducer = blockSlice.reducer;
 export const selectBlocks = (state: RootState) => state.lastNews.blocks;
 export const selectBlock = (state: RootState) => state.lastNews.block;
 export const selectBlocksLoading = (state: RootState) => state.lastNews.fetchAllLoading;
