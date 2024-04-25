@@ -1,7 +1,7 @@
 import { LastNewsBlockApiData } from './types';
 import { createSlice } from '@reduxjs/toolkit';
 import { getLastNewsBlock } from './lastNewsBlockThunks';
-import { RootState } from '../../../app/store/store';
+import { RootState } from '../../../../app/store/store';
 
 interface LastNewsBlockState {
   block: LastNewsBlockApiData | null;

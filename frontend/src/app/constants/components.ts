@@ -1,4 +1,4 @@
-import { Components } from '../../shared/api/admin/types';
+import { Components } from '../../shared/types';
 
 export const components: Components[] = [
   {

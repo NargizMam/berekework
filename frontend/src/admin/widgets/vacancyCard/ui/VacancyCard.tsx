@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import { VacancyCardApiData } from '../../../shared/api/vacancy/types';
 import VacancyCardStyle from './VacancyCard-style';
 import './VacancyCard.css';
+import { VacancyCardApiData } from '../../../../shared/types';
 
 interface Props {
   data: VacancyCardApiData;
