@@ -1,6 +1,6 @@
+import { fetchRateBlock } from "./ratesThunk";
 import {RateBlock} from "./types";
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchRateBlock} from "./ratesThunk.ts";
 
 interface RateState {
     items: RateBlock[];

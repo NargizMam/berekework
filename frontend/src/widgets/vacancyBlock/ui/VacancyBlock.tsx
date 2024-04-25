@@ -1,7 +1,7 @@
-import { Typography, Box, Button } from '@mui/material';
-import React, { useState } from 'react'
+import { Typography } from '@mui/material';
+import React, { useState } from 'react';
 import { VacancyCard, VacancyCardApiData } from '../../../feachers/vacancyCard/ui/VacancyCard';
-import './VacancyBlock.css'
+import './VacancyBlock.css';
 import VacancyBlockStyle from './VacancyBlock-style';
 
 interface Props {
@@ -20,7 +20,7 @@ export const VacancyBlock: React.FC<Props> = ({data}) => {
       <Typography variant="h2" sx={VacancyBlockStyle.title}>Последние Вакансии</Typography>
       <div className="VacancyBlock__flex">
         {data.map((data, index) => (
-          <VacancyCard key={data._id} data={data} viseble={index >= currentRow? false : true}/>
+          <VacancyCard key={data._id} data={data} viseble={index >= currentRow ? false : true}/>
         ))}
       </div>
       <div className="VacancyBlock__buttonWrapper">

@@ -1,4 +1,4 @@
-import { RootState } from '../../../../app/store/store.ts';
+import { RootState } from '../../../../app/store/store';
 
 
 export const selectRates= (state: RootState) => state.tariff.items;

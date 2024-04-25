@@ -3,8 +3,9 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import './ratesBlock.css'
 import {useEffect, useState} from "react";
-import { RateCardData } from '../../data.ts';
-import RatesCard from '../card/ratesCard.tsx';
+import { RateCardData } from '../../data';
+import RatesCard from '../card/ratesCard';
+
 
 
 const RatesBLock = () => {

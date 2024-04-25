@@ -1,11 +1,7 @@
-* {
-    box-sizing: border-box;
-}
-
 #root {
-  max-width: 1310px;
-  margin: 0 auto;
-  padding: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 .logo {
