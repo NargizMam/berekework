@@ -3,9 +3,9 @@ import {Grid, Paper, Typography, CardContent, IconButton, Button} from "@mui/mat
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import {Link} from "react-router-dom";
-import {deleteBlock, fetchBlocks} from "./model/blockThunk.ts";
 import { Card } from '../cards/cardTypes';
-import { useAppDispatch } from '../../../../app/store/hooks.ts';
+import { deleteBlock, fetchBlocks } from './model/blockThunk';
+import { useAppDispatch } from '../../../../app/store/hooks';
 
 interface Props {
     blockId: string, 

@@ -1,11 +1,11 @@
 
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks.ts';
-import { selectBlock, selectOneBlockLoading } from './blocks/model/blockSlice.ts';
-import { addBlock, fetchBlock } from './blocks/model/blockThunk.ts';
 import { BlockMutation } from './blocks/blockTypes';
-import BlockForm from './blocks/BlockForm.tsx';
+import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { selectBlock, selectOneBlockLoading } from './blocks/model/blockSlice';
+import { addBlock, fetchBlock } from './blocks/model/blockThunk';
+import BlockForm from './blocks/BlockForm';
 
 
 const Refactor = () => {
@@ -19,6 +19,7 @@ const Refactor = () => {
             dispatch(fetchBlock(id));
         }
     }, [id, dispatch]);
+
     const onFormSubmit = async (blockMutation: BlockMutation) => {
         try {
             if (id) {
