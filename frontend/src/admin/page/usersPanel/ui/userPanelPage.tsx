@@ -1,18 +1,22 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { getAllUser } from '../api/usersThunk';
-import { selectUsers } from '../model/usersSlice';
+import { selectUsers, selectUsersLoading } from '../model/usersSlice';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Loader } from '../../../../shared/loader';
 
 export const UserPanelPage = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector(selectUsers);
+  const loading = useAppSelector(selectUsersLoading);
 
   useEffect(() => {
     dispatch(getAllUser());
   }, [dispatch]);
 
-  console.log(users);
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -25,10 +29,7 @@ export const UserPanelPage = () => {
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <TableRow
-              key={user._id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={user._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {user.email}
               </TableCell>

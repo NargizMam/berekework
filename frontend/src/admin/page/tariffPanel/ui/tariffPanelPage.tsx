@@ -1,16 +1,22 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectTariffs } from '../model/tariffSlice';
+import { selectTariffs, selectTariffsLoading } from '../model/tariffSlice';
 import { getAllTariff } from '../api/tariffThunk';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Loader } from '../../../../shared/loader';
 
 export const TariffPanelPage = () => {
   const dispatch = useAppDispatch();
   const tariffs = useAppSelector(selectTariffs);
+  const loading = useAppSelector(selectTariffsLoading);
 
   useEffect(() => {
     dispatch(getAllTariff());
   }, [dispatch]);
+
+  if(loading) {
+    return <Loader/>;
+  }
 
   return (
     <TableContainer component={Paper}>

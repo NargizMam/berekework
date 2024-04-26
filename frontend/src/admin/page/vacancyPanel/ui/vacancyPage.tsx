@@ -1,18 +1,22 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { getAllVacancy } from '../api/vacancyThunk';
-import { selectVacancies } from '../model/vacancySlice';
+import { selectVacancies, selectVacanciesLoading } from '../model/vacancySlice';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Loader } from '../../../../shared/loader';
 
 export const VacancyPage = () => {
   const dispatch = useAppDispatch();
   const vacancies = useAppSelector(selectVacancies);
+  const loading = useAppSelector(selectVacanciesLoading);
 
   useEffect(() => {
     dispatch(getAllVacancy());
   }, [dispatch]);
 
-  console.log(vacancies);
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -29,21 +33,19 @@ export const VacancyPage = () => {
         </TableHead>
         <TableBody>
           {vacancies.map((vacancy) => (
-            <TableRow
-              key={vacancy._id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={vacancy._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {vacancy.title}
               </TableCell>
               <TableCell align="right">{vacancy.company}</TableCell>
               <TableCell align="right">{vacancy.city}</TableCell>
-              {
-                vacancy.salary ?
-                  <TableCell align="right">{vacancy.salary.min} - {vacancy.salary.max}</TableCell>
-                  :
-                  <TableCell align="right">No salary</TableCell>
-              }
+              {vacancy.salary ? (
+                <TableCell align="right">
+                  {vacancy.salary.min} - {vacancy.salary.max}
+                </TableCell>
+              ) : (
+                <TableCell align="right">No salary</TableCell>
+              )}
               <TableCell align="right">{vacancy.createdAt}</TableCell>
               <TableCell align="right">{vacancy.updatedAt}</TableCell>
             </TableRow>

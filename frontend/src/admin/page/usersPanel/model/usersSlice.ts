@@ -38,3 +38,4 @@ const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 export const selectUsers = (state: RootState) => state.users.users;
+export const selectUsersLoading = (state: RootState) => state.users.usersLoading;

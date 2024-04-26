@@ -47,3 +47,4 @@ const vacancySlice = createSlice({
 
 export const vacancyReducer = vacancySlice.reducer;
 export const selectVacancies = (state: RootState) => state.vacancy.vacancies;
+export const selectVacanciesLoading = (state: RootState) => state.vacancy.vacanciesLoading;

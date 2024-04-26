@@ -38,3 +38,4 @@ const tariffSlice = createSlice({
 
 export const tariffReducer = tariffSlice.reducer;
 export const selectTariffs = (state: RootState) => state.tariff.tariffs;
+export const selectTariffsLoading = (state: RootState) => state.tariff.tariffsLoading;
