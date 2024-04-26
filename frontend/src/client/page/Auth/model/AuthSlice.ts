@@ -1,6 +1,7 @@
 import { AuthResponse, GlobalError, User, ValidationError } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { login, register } from '../api/AuthThunk';
+import { RootState } from '../../../../app/store/store';
 
 interface AuthState {
   user: User | null;
@@ -21,7 +22,11 @@ const initialState: AuthState = {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    unsetUser: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(register.pending, (state) => {
       state.registerLoading = true;
@@ -50,3 +55,6 @@ export const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
+export const {unsetUser} = authSlice.actions;
+
+export const selectUser = (state: RootState) => state.auth.user;
