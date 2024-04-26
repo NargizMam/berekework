@@ -28,10 +28,10 @@ const rootReducer = combineReducers({
   auth: persistReducer(usersPersistConfig, authReducer),
   heading: headingReducer,
   vacancyBlock: vacancyBlockReducer,
-  lastNewsBlock: lastNewsBlockReducer,
   mainCards: mainCardsReducer,
   page: pageReducer,
   header: headerReducer,
+  lastNews: lastNewsBlockReducer,
 });
 
 export const store = configureStore({
