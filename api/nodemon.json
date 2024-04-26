@@ -1,0 +1,4 @@
+{
+  "ignore": ["node_modules", "db.json", "public"],
+  "ext": "ts"
+}
