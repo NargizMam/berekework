@@ -8,6 +8,9 @@ import { HeaderAdmin } from '../admin/page/headerCreate';
 import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
 import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
 import { LoginPage, RegisterPage } from '../client/page/Auth';
+import { UserPanelPage } from '../admin/page/usersPanel';
+import { VacancyPage } from '../admin/page/vacancyPanel';
+import { TariffPanelPage } from '../admin/page/tariffPanel';
 
 const App = () => (
   <>
@@ -23,6 +26,9 @@ const App = () => (
         <Route path="/admin" element={<AdminMainPage/>}/>
         <Route path="/header" element={<HeaderAdmin/>}/>
         <Route path="/pages" element={<AdminAllPages/>}/>
+        <Route path="/users" element={<UserPanelPage/>}/>
+        <Route path="/vacancy" element={<VacancyPage/>}/>
+        <Route path="/tariffs" element={<TariffPanelPage/>}/>
         <Route path="/pages/new-page" element={<AdminCreatePage/>}/>
         <Route path="/adminHeading" element={<HeadingAdmin/>}/>
         <Route path="/adminHeading/:location" element={<HeadingDetail/>}/>

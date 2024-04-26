@@ -46,6 +46,15 @@ userRouter.post('/sessions', async (req, res, next) => {
   }
 });
 
+userRouter.get('/', async (_req, res, next) => {
+  try {
+    const result = await User.find();
+    return res.send(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
 userRouter.delete('/sessions', async (req, res, next) => {
   try {
     const headerValue = req.get('Authorization');

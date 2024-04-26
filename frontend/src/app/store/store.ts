@@ -17,6 +17,9 @@ import {
   REHYDRATE,
   persistStore,
 } from 'redux-persist';
+import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
+import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
+import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -32,6 +35,9 @@ const rootReducer = combineReducers({
   mainCards: mainCardsReducer,
   page: pageReducer,
   header: headerReducer,
+  users: usersReducer,
+  vacancy: vacancyReducer,
+  tariff: tariffReducer,
 });
 
 export const store = configureStore({
