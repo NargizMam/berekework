@@ -66,6 +66,7 @@ export interface VacancyApi {
     max: number | null;
   };
   url: string;
+  employer: string;
 }
 
 export type VacancyMutation = Omit<VacancyApi, '_id'>;

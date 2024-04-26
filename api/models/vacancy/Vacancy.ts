@@ -26,7 +26,10 @@ const vacancySchema = new Schema(
     },
     url: {
       type: String,
-      required: true,
+    },
+    employer: {
+      type: Schema.Types.ObjectId,
+      ref: 'Employer',
     },
   },
   { timestamps: true },
