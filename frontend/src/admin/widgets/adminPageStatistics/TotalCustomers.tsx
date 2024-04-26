@@ -1,27 +1,48 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { Grid, Paper } from '@mui/material';
+import { PieChart } from '@mui/x-charts';
 
 
 export function TotalCustomers() {
 
   return (
-    <Card>
-      <CardContent>
-        <Stack spacing={2}>
-          <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
-            <Stack spacing={1}>
-              <Typography color="text.secondary" variant="overline">
-                Total Customers
-              </Typography>
-            </Stack>
-              <Typography color="text.secondary" variant="caption">
-                Since last month
-              </Typography>
-            </Stack>
-        </Stack>
-      </CardContent>
-    </Card>
+    <Paper sx={{marginBottom: '30px', padding: '20px'}}>
+      <Typography color="text.secondary" variant="h6" marginBottom="20px">
+        Customers
+      </Typography>
+      <Grid display="flex">
+        <Grid>
+          <Typography marginBottom="10px">New customers</Typography>
+          <PieChart
+            series={[
+              {
+                data: [
+                  {id: 0, value: 10, label: 'Employers'},
+                  {id: 1, value: 15, label: 'Applicants'},
+                ],
+              },
+            ]}
+            width={400}
+            height={200}
+          />
+        </Grid>
+        <Grid>
+          <Typography marginBottom="10px">Lost</Typography>
+          <PieChart
+            series={[
+              {
+                data: [
+                  {id: 1, value: 30, label: 'Employers'},
+                  {id: 2, value: 25, label: 'Applicants'},
+                ],
+              },
+            ]}
+            width={400}
+            height={200}
+          />
+        </Grid>
+
+      </Grid>
+    </Paper>
   );
 }
