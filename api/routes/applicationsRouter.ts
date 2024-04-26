@@ -8,11 +8,12 @@ import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
 const applicationsRouter = express.Router();
 
 //Создание новой заявки на вакансию. Требуется аутентификация пользователя.
-applicationsRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
+applicationsRouter.post('/:vacancyId', auth, async (req: RequestWithUser, res, next) => {
   try {
-    const { vacancyId } = req.body;
+    const { vacancyId } = req.params;
 
     const vacancy = await Vacancy.findById(vacancyId);
+
     if (!vacancy) {
       return res.status(404).json({ error: 'Vacancy not found' });
     }
@@ -34,7 +35,7 @@ applicationsRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
   }
 });
 
-// Получение всех заявок. Доступ разрешен администратору или пользователям, создавшим заявку.
+// Получение всех заявок. Доступ разрешен администратору или пользователям, создавшим заявку. Пользователь видит только свои заявки
 applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
   try {
     const user = req.user;
@@ -46,7 +47,7 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
       filter = { user: user._id };
     }
 
-    const response = await Application.find(filter);
+    const response = await Application.find(filter).populate('vacancy').sort({ createdAt: -1 });
     return res.send(response);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
@@ -73,11 +74,14 @@ applicationsRouter.get('/:id', employerAuth, async (req: RequestWithEmployer, re
       return res.status(404).send({ error: 'Vacancy not found' });
     }
 
-    if (vacancy.employer !== req.employer?._id) {
+    if (vacancy.employer && !vacancy.employer.equals(req.employer?._id)) {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
-    const applications = await Application.find({ vacancy: _id });
+    const applications = await Application.find({ vacancy: _id })
+      .populate('vacancy')
+      .populate('user')
+      .sort({ createdAt: -1 });
 
     return res.send(applications);
   } catch (e) {
@@ -86,6 +90,52 @@ applicationsRouter.get('/:id', employerAuth, async (req: RequestWithEmployer, re
     }
 
     return next(e);
+  }
+});
+
+// Обновление статуса заявки. Доступ разрешен работодателю, получившему заявку.
+applicationsRouter.patch('/:id', employerAuth, async (req: RequestWithEmployer, res, next) => {
+  const validStatuses = ['Новая', 'На рассмотрении', 'Принят', 'Отклонен'];
+
+  try {
+    if (!validStatuses.includes(req.body.status)) {
+      return res.status(400).json({ error: 'Invalid status' });
+    }
+
+    const application = await Application.findById(req.params.id).populate('vacancy');
+
+    if (!application) {
+      return res.status(404).send({ error: 'Application not found' });
+    }
+
+    const vacancyId = application.vacancy._id;
+
+    const vacancy = await Vacancy.findById(vacancyId).populate('employer');
+
+    if (!vacancy) {
+      return res.status(404).send({ error: 'Vacancy not found' });
+    }
+
+    if (vacancy.employer && !vacancy.employer._id.equals(req.employer?._id)) {
+      return res.status(403).send({ error: 'Not authorized' });
+    }
+
+    const result = await Application.findByIdAndUpdate(
+      req.params.id,
+      { $set: { status: req.body.status } },
+      { new: true },
+    );
+
+    if (!result) {
+      return res.status(404).send({ message: 'Application not found' });
+    }
+
+    return res.send({ message: 'ok' });
+  } catch (e) {
+    if (e instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(e);
+    }
+    next(e);
   }
 });
 
@@ -122,56 +172,6 @@ applicationsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) 
     }
 
     return next(e);
-  }
-});
-
-// Обновление статуса заявки. Доступ разрешен работодателю, получившему заявку.
-applicationsRouter.patch('/:id', employerAuth, async (req: RequestWithEmployer, res, next) => {
-  const validStatuses = ['Новая', 'На рассмотрении', 'Принят', 'Отклонен'];
-
-  try {
-    if (!validStatuses.includes(req.body.status)) {
-      return res.status(400).json({ error: 'Invalid status' });
-    }
-
-    const application = await Application.findById(req.params.id).populate('vacancy');
-
-    if (!application) {
-      return res.status(404).send({ error: 'Application not found' });
-    }
-
-    const vacancyId = application.vacancy._id;
-
-    const vacancy = await Vacancy.findById(vacancyId).populate('employer');
-
-    if (!vacancy) {
-      return res.status(404).send({ error: 'Vacancy not found' });
-    }
-
-    if (vacancy.employer?._id !== req.employer?._id) {
-      return res.status(403).send({ error: 'Not authorized' });
-    }
-
-    if (!vacancy) {
-      return res.status(404).send({ error: 'Vacancy not found' });
-    }
-
-    const result = await Application.findByIdAndUpdate(
-      req.params.id,
-      { $set: { status: req.body.status } },
-      { new: true },
-    );
-
-    if (!result) {
-      return res.status(404).send({ message: 'Application not found' });
-    }
-
-    return res.send({ message: 'ok' });
-  } catch (e) {
-    if (e instanceof mongoose.Error.ValidationError) {
-      return res.status(422).send(e);
-    }
-    next(e);
   }
 });
 

@@ -6,6 +6,7 @@ import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
 import LastNewsBlock from './models/lastNews/LastNewsBlock';
+import Employer from './models/employer/employerModel';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -19,7 +20,16 @@ const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
 
-  const collections = ['components', 'headings', 'vacanciesblocks', 'vacancies', 'users', 'tariffs', 'lastnewsblocks'];
+  const collections = [
+    'components',
+    'headings',
+    'vacanciesblocks',
+    'vacancies',
+    'users',
+    'employers',
+    'tariffs',
+    'lastnewsblocks',
+  ];
 
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
@@ -105,6 +115,13 @@ const run = async () => {
     password: 'admin',
     token: randomUUID(),
     role: 'superadmin',
+  });
+
+  await Employer.create({
+    email: 'employer@gmail.com',
+    password: 'employer',
+    token: randomUUID(),
+    role: 'employer',
   });
 
   await Tariff.create({

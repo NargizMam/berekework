@@ -3,8 +3,6 @@ import { selectLastNewsBlock, selectLastNewsBlockIsLoading } from '../model/last
 import { getLastNewsBlock } from '../model/lastNewsBlockThunks';
 
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { getLastNewsBlock } from '../model/lastNewsBlockThunks';
-import { selectLastNewsBlock, selectLastNewsBlockIsLoading } from '../model/lastNewsBlockSlice';
 import LastNewsBlockStyle from './LastNewsBlock-style';
 import { PaginationCards } from '../../PaginationCards';
 import LastNewsCards from './LastNewsCards/LastNewsCards';
@@ -45,7 +43,7 @@ const LastNewsBlock = () => {
   };
 
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (
