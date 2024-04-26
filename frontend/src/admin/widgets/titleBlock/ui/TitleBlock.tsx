@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
-import { LinkButtonWithArrow } from '../../../shared/linkButtonWithArrow/index';
-import { MainCards } from '../../mainCards/index';
 
 import TitleBlockStyle from './TitleBlock-style';
 import './TitleBlock.css';
+import { LinkButtonWithArrow } from '../../../../shared/linkButtonWithArrow';
+import MainCards from '../../mainCards/ui/MainCards';
 
 export interface TitleBlockApiData {
   title: string;
@@ -49,7 +49,7 @@ export const TitleBlock: React.FC<Props> = ({ data }) => {
         {image}
       </Box>
       {button}
-      <MainCards />
+      <MainCards/>
     </>
   );
 };

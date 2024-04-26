@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import '../../../../app/App.css';
 import { Link } from 'react-router-dom';
+import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import MainCardItemStyle from './MainCardItem-style';
 import { API_URL } from '../../../../app/constants/links';
+import './../../../../App.css';
 
 export interface Props {
   _id?: string;

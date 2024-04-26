@@ -4,11 +4,12 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import { IPage, Field } from '../../../../shared/api/admin/types';
+import { Field, IPage } from '../../../../shared/types';
 import { useAppDispatch } from '../../../../app/store/hooks';
 import { components } from '../../../../app/constants/components';
-import InputItem from '../../../../admin/widgets/adminPageCreateForm/InputItem';
 import { createPage } from '../api/adminCreatePageThunks';
+import InputItem from '../../../widgets/adminPageCreateForm/InputItem';
+
 
 interface Fields {
   [key: string]: Field;
@@ -71,7 +72,6 @@ export const AdminCreatePage = () => {
     e.preventDefault();
 
     const result = { name, url, blocks: page };
-    console.log(result);
     await dispatch(createPage(result));
   };
 

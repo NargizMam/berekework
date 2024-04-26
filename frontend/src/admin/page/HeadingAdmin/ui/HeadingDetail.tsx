@@ -27,7 +27,7 @@ export const HeadingDetail = () => {
           :
           null
       }
-      <p>{heading.description}</p>
+      <p>{heading.description.element}</p>
     </div>
   );
 };

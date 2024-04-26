@@ -1,10 +1,11 @@
 import { Paper, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Budget } from '../../../../admin/widgets/adminPageStatistics/Budget';
-import { TotalCustomers } from '../../../../admin/widgets/adminPageStatistics/TotalCustomers';
-import { TasksProgress } from '../../../../admin/widgets/adminPageStatistics/TasksProgress';
-import { TotalProfit } from '../../../../admin/widgets/adminPageStatistics/TotalProfit';
-import { Traffic } from '../../../../admin/widgets/adminPageStatistics/Traffic';
+import { Budget } from '../../../widgets/adminPageStatistics/Budget';
+import { TotalProfit } from '../../../widgets/adminPageStatistics/TotalProfit';
+import { Traffic } from '../../../widgets/adminPageStatistics/Traffic';
+import { TasksProgress } from '../../../widgets/adminPageStatistics/TasksProgress';
+import { TotalCustomers } from '../../../widgets/adminPageStatistics/TotalCustomers';
+
 
 export const AdminMainPage = () => {
   return (

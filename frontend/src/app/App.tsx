@@ -7,6 +7,7 @@ import { AdminMainPage } from '../admin/page/adminMainPage';
 import { HeaderAdmin } from '../admin/page/headerCreate';
 import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
 import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
+
 import { LoginPage, RegisterPage } from '../client/page/Auth';
 
 const App = () => (

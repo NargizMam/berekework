@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../../app/store/store';
 import { fetchMainCards, fetchSingleMainCard } from './mainCardsThunks';
 import { MainCard } from './types';
+import { RootState } from '../../../../app/store/store';
 
 interface MainCardState {
   mainCards: MainCard[];

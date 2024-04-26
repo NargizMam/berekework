@@ -1,7 +1,8 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { Field } from '../../shared/api/admin/types';
+import { Field } from '../../../shared/types';
 import FileInput from '../../../shared/fileInput/FileInput';
+
 
 interface Input {
   field: Field;
