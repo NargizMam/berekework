@@ -20,7 +20,7 @@ const initialState: BlockState = {
     fetchOneLoading: false,
     fetchCreating: false,
     fetchDeleting: false,
-}
+};
 
 export const blockSlice = createSlice({
     name: 'blocks',
