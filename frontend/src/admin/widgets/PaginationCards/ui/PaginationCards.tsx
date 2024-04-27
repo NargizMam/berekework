@@ -1,5 +1,6 @@
 import { Box, IconButton } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import React from 'react';
 
 interface Props {
   onBack: () => void;

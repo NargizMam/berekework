@@ -71,7 +71,7 @@ async (req: Request, res: Response, next: NextFunction) => {
 
     if (!existedCard) {
       return res.status(404).send({ error: 'Card not found' });
-    };
+    }
 
     Object.assign(existedCard, { 
       title, 
