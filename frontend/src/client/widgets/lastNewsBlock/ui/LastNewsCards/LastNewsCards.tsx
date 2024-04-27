@@ -1,7 +1,8 @@
 import { Grid } from '@mui/material';
 import LastNewsCardItem from './LastNewsCardItem';
 import LastNewsCardsStyle from './LastNewsCards-style';
-import { Card } from '../../../lastNews/cards/cardTypes';
+import { Card } from '../../../../../admin/widgets/lastNews/cards/cardTypes';
+import React from 'react';
 
 interface Props {
   startIndex: number;

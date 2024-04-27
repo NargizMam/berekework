@@ -1,6 +1,6 @@
 import Footer from '../../widgets/footer/ui/Footer';
 import { MainCards } from '../../../admin/widgets/mainCards';
-import LastNewsBlock from '../../../admin/widgets/lastNewsBlock/ui/LastNewsBlock';
+import LastNewsBlock from '../../widgets/lastNewsBlock/ui/LastNewsBlock';
 
 const HomePage = () => {
 
