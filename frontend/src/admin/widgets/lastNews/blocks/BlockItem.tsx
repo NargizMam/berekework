@@ -22,7 +22,7 @@ const BlockItem: React.FC<Props> = ({blockId, title, cards}) => {
         } catch {
             ///
         }
-    }
+    };
 
     return (
         <>

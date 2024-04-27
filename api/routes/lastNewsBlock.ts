@@ -55,6 +55,7 @@ lastNewsBlockRouter.post('/', async (req, res, next) => {
                     id: req.body.id,
                     title: req.body.title,
                     page: req.body.page,
+                    dateTime: req.body.dateTime,
                     cards: req.body.cards,
                 };
 

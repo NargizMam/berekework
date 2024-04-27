@@ -17,6 +17,7 @@ const CardForm: React.FC<Props> = ({card, cardId, addCard, deleteCard}) => {
     cardTitle: card?.cardTitle || '',
     cardText: card?.cardText || '',
     buttonUrl: card?.buttonUrl || '',
+    dateTime: new Date(),
   });
   const [isAdded, setIsAdded] = useState(false);
 

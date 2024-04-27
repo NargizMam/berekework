@@ -10,6 +10,20 @@ export const fetchBlocks = createAsyncThunk<Block[],  string >(
     },
 );
 
+export const getLastNewsBlock = createAsyncThunk<Block[] | Block, string | undefined>(
+  'lastNewsBlock/geLastNewsBlock',
+  async (pageId: string | undefined) => {
+    let url = '/last-news-block';
+
+    if (pageId) {
+      url += `/?pageId=${pageId}`;
+    }
+
+    const response = await axiosApi.get<Block[] | Block>(url);
+    return response.data;
+  },
+);
+
 export const fetchBlock = createAsyncThunk<Block,  string >(
     'block/fetchOne',
     async (id) => {

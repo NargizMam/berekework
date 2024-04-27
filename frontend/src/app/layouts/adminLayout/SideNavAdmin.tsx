@@ -1,6 +1,7 @@
-import { Box, Divider, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SIDE_BAR_LINKS } from '../../constants/links';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import React from 'react';
 
 export interface MobileProps {
@@ -13,40 +14,47 @@ const SideNavAdmin: React.FC<MobileProps> = ({onClose, open}) => {
   return (
     <Box
       sx={{
-        bgcolor: '#ccc',
+        bgcolor: '#cfd8dc',
         flexDirection: 'column',
         height: '100%',
         left: 0,
-        width: '20%',
+        width: '18%',
         padding: '5px',
         position: 'fixed',
         display: displayValue,
         scrollbarWidth: 'none',
         top: 0,
+
       }}
     >
       <Typography
-        sx={{ p: '12px', textAlign: 'center', color: 'black', textDecoration: 'none', fontWeight: 'bold' }}
+        variant='h6'
+        paddingTop={4}
+        paddingBottom={2}
+        paddingLeft={2}
+        sx={{color: 'black', textDecoration: 'none'}}
         component={Link}
-        to="/"
+        to="/admin"
       >
-        Bereke Admin
+      Bereke Admin
       </Typography>
 
-      <Divider sx={{ borderColor: '#000' , mt: '10px'}} />
+      <Divider sx={{ mt: '10px'}} />
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
         <List>
           {SIDE_BAR_LINKS.map((sideLink) => (
             <ListItem disablePadding key={sideLink.id}>
               <ListItemButton component={Link} to={sideLink.path} sx={{
-                borderRadius: '4px',
-                marginBottom: '8px',
+                marginBottom: '10px',
                 width: '100%',
-                borderBottom: '1px solid #000',
               }}>
+                <ListItemIcon >
+                  <LabelImportantIcon />
+                </ListItemIcon>
                 <ListItemText primary={sideLink.value} />
               </ListItemButton>
             </ListItem>
+
           ))}
         </List>
       </Box>

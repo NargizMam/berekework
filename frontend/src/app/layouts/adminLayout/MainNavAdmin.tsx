@@ -10,10 +10,10 @@ const MainNavAdmin = (): React.JSX.Element => {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
 
 
-  let sideNavBar = <SideNavAdmin open={true} />;
+  let sideNavBar = <SideNavAdmin open={true}/>;
 
-    if(window.innerWidth < 1000){
-        sideNavBar = <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)}/>;
+  if (window.innerWidth < 1000) {
+    sideNavBar = <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)}/>;
   }
   React.useEffect(() => {
     const handleResize = () => {
@@ -29,24 +29,24 @@ const MainNavAdmin = (): React.JSX.Element => {
 
   return (
     <>
-      <Box component="header">
-          <Stack
-            direction="row"
-            spacing={2}
-            sx={{ alignItems: 'center', justifyContent: 'flex-start', minHeight: '64px', px: 2 }}
+      <Box component="header" display='flex'>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{alignItems: 'center', justifyContent: 'flex-start', minHeight: '64px', px: 2}}
+        >
+          <IconButton
+            onClick={(): void => {
+              setOpenNav(true);
+            }}
+            sx={{display: {lg: 'none'}}}
           >
-            <IconButton
-              onClick={(): void => {
-                setOpenNav(true);
-              }}
-              sx={{ display: { lg: 'none' } }}
-            >
-              <ListIcon />
-            </IconButton>
-          </Stack>
+            <ListIcon/>
+          </IconButton>
+        </Stack>
         {sideNavBar}
-        <Stack sx={{ alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1 }} direction="row" spacing={5}>
-          <Avatar src="/assets/avatar.png" sx={{ cursor: 'pointer' }} />
+        <Stack sx={{alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1}} direction="row" spacing={5}>
+          <Avatar src="/assets/avatar.png" sx={{cursor: 'pointer'}}/>
         </Stack>
       </Box>
     </>
