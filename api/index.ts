@@ -13,6 +13,7 @@ import tariffRouter from './routes/tariffRouter';
 import lastNewsBlockRouter from './routes/lastNewsBlock';
 import pageCreateRouter from './routes/pageCreateRouter';
 import employerRouter from './routes/employerRouter';
+import applicationsRouter from './routes/applicationsRouter';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/vacanciesBlock', vacanciesBlockRouter);
 app.use('/tariff', tariffRouter);
 app.use('/last-news-block', lastNewsBlockRouter);
 app.use('/page', pageCreateRouter);
+app.use('/applications', applicationsRouter);
 
 const run = async () => {
   await mongoose.connect(config.mongoose.db);

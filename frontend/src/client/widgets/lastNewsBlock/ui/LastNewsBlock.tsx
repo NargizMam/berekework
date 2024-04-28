@@ -27,7 +27,6 @@ const LastNewsBlock = () => {
     return;
   }
 
-  console.log(block);
 
   const cards = block.cards;
 
@@ -43,7 +42,7 @@ const LastNewsBlock = () => {
   };
 
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (
