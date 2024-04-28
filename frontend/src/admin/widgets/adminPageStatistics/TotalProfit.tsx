@@ -1,27 +1,28 @@
-import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { Grid, Paper } from '@mui/material';
+import { BarChart } from '@mui/x-charts';
 
 
 
 export function TotalProfit(){
   return (
-    <Card>
-      <CardContent>
-        <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
-          <Stack spacing={1}>
-            <Typography color="text.secondary" variant="overline">
-              Total Profit
-            </Typography>
-            <Typography variant="h4">Статистика</Typography>
-          </Stack>
-          <Avatar sx={{ backgroundColor: 'var(--mui-palette-primary-main)', height: '56px', width: '56px' }}>
-            Статистика
-          </Avatar>
-        </Stack>
-      </CardContent>
-    </Card>
+    <Paper sx={{marginBottom: '30px', padding: '20px'}}>
+      <Typography color="text.secondary" variant="h6" marginBottom='20px'>
+        Total profit
+      </Typography>
+      <Grid>
+        <BarChart
+          series={[
+            { data: [35] },
+            { data: [51] },
+            { data: [15] },
+            { data: [60] },
+          ]}
+          height={290}
+          xAxis={[{ data: ['Сентябрь'], scaleType: 'band' }]}
+          margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+        />
+      </Grid>
+    </Paper>
   );
 }

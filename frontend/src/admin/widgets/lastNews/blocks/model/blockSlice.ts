@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import { Block } from '../blockTypes';
-import { fetchBlock, fetchBlocks } from './blockThunk';
+import { fetchBlock, fetchBlocks, getLastNewsBlock } from './blockThunk';
 import { RootState } from '../../../../../app/store/store';
 
 
@@ -20,7 +20,7 @@ const initialState: BlockState = {
     fetchOneLoading: false,
     fetchCreating: false,
     fetchDeleting: false,
-}
+};
 
 export const blockSlice = createSlice({
     name: 'blocks',
@@ -46,7 +46,19 @@ export const blockSlice = createSlice({
         });
         builder.addCase(fetchBlock.rejected, (state) => {
             state.fetchOneLoading = false;
-        })
+        });
+      builder
+      .addCase(getLastNewsBlock.pending, (state) => {
+        state.fetchAllLoading = true;
+        state.block = null;
+      })
+      .addCase(getLastNewsBlock.fulfilled, (state, { payload: lastNewsBlock }) => {
+        state.fetchAllLoading = false;
+        state.block = Array.isArray(lastNewsBlock) ? lastNewsBlock[0] : lastNewsBlock;
+      })
+      .addCase(getLastNewsBlock.rejected, (state) => {
+        state.fetchAllLoading = false;
+      });
     }
 
 

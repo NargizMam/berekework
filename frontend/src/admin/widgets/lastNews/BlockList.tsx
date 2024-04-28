@@ -5,9 +5,6 @@ import { selectBlocks, selectBlocksLoading } from './blocks/model/blockSlice';
 import { fetchBlocks } from './blocks/model/blockThunk';
 import BlockItem from './blocks/BlockItem';
 
-
-
-
 const BlockList = () => {
     const dispatch = useAppDispatch();
     const blocks = useAppSelector(selectBlocks);

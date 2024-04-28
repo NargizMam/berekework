@@ -1,30 +1,85 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { Grid, Paper } from '@mui/material';
+import { BarChart } from '@mui/x-charts';
 
 
 export function TasksProgress(): React.JSX.Element {
-  return (
-    <Card>
-      <CardContent>
-        <Stack spacing={2}>
-          <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
-            <Stack spacing={1}>
-              <Typography color="text.secondary" gutterBottom variant="overline">
-                Task Progress
-              </Typography>
-              <Typography variant="h4">80%</Typography>
-            </Stack>
-            <Avatar sx={{ backgroundColor: 'var(--mui-palette-warning-main)', height: '56px', width: '56px' }}>
-            еще что-то
-            </Avatar>
-          </Stack>
+  const chartSetting = {
+    xAxis: [
+      {
+        label: 'Progress (%)',
+      },
+    ],
+    width: 500,
+    height: 400,
+  };
+  const dataset = [
+    {
+      progress: 21,
+      month: 'Jan',
+    },
+    {
+      progress: 28,
+      month: 'Fev',
+    },
+    {
+      progress: 41,
+      month: 'Mar',
+    },
+    {
+      progress: 73,
+      month: 'Apr',
+    },
+    {
+      progress: 99,
+      month: 'May',
+    },
+    {
+      progress: 80,
+      month: 'June',
+    },
+    {
+      progress: 11,
+      month: 'July',
+    },
+    {
+      progress: 16,
+      month: 'Aug',
+    },
+    {
+      progress: 25,
+      month: 'Sept',
+    },
+    {
+      progress: 55,
+      month: 'Oct',
+    },
+    {
+      progress: 48,
+      month: 'Nov',
+    },
+    {
+      progress: 25,
+      month: 'Dec',
+    },
+  ];
 
-        </Stack>
-      </CardContent>
-    </Card>
+  const valueFormatter = (value: number | null) => `${value}mm`;
+  return (
+    <Paper sx={{marginBottom: '30px', padding: '20px'}}>
+      <Typography color="text.secondary" variant="h6" marginBottom='20px'>
+        Task progress
+      </Typography>
+      <Grid>
+        <BarChart
+          dataset={dataset}
+          yAxis={[{ scaleType: 'band', dataKey: 'month' }]}
+          series={[{ dataKey: 'progress', valueFormatter }]}
+          layout="horizontal"
+          {...chartSetting}
+        />
+      </Grid>
+    </Paper>
   );
 }

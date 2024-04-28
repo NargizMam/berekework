@@ -2,7 +2,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { mainCardsReducer } from '../../admin/widgets/mainCards/model/mainCardsSlice';
 import { headingReducer } from '../../admin/page/HeadingAdmin/model/HeadingSlice';
 import { vacancyBlockReducer } from '../../admin/widgets/vacancyBlock/model/VacancyBlockSlice';
-import { lastNewsBlockReducer } from '../../admin/widgets/lastNewsBlock/model/lastNewsBlockSlice';
 import { pageReducer } from '../../admin/page/adminPages/model/adminCreatePageSlice';
 import { headerReducer } from '../../admin/page/headerCreate/model/headerSlice';
 import { authReducer } from '../../client/page/Auth/model/AuthSlice';
@@ -17,6 +16,7 @@ import {
   REHYDRATE,
   persistStore,
 } from 'redux-persist';
+import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
   mainCards: mainCardsReducer,
   page: pageReducer,
   header: headerReducer,
-  lastNews: lastNewsBlockReducer,
+  lastNews: lastNewsReducer,
 });
 
 export const store = configureStore({

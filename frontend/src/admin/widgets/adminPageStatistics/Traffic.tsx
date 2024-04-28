@@ -6,8 +6,8 @@ import CardHeader from '@mui/material/CardHeader';
 export function Traffic(){
 
   return (
-    <Card >
-      <CardHeader title="Traffic source" />
+    <Card sx={{marginBottom: '30px'}}>
+    <CardHeader title="Traffic source" />
       <CardContent>
         какая-то статистика
       </CardContent>

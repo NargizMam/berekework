@@ -4,6 +4,7 @@ import TitleBlockStyle from './TitleBlock-style';
 import './TitleBlock.css';
 import { LinkButtonWithArrow } from '../../../../shared/linkButtonWithArrow';
 import MainCards from '../../mainCards/ui/MainCards';
+import React from 'react';
 
 export interface TitleBlockApiData {
   title: string;

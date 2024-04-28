@@ -50,7 +50,7 @@ const BlockForm: React.FC<Props> = ({block, onSubmit, loading}) => {
                 page: '1',  //заменить при наличии pageId
                 title: '',
                 cards: []
-            })
+            });
             setCardForm([]);
         }
     };
