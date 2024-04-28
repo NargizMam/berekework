@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { selectLastNewsBlock, selectLastNewsBlockIsLoading } from '../model/lastNewsBlockSlice';
-import { getLastNewsBlock } from '../model/lastNewsBlockThunks';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LastNewsBlockStyle from './LastNewsBlock-style';
-import { PaginationCards } from '../../PaginationCards';
+import { PaginationCards } from '../../../../admin/widgets/PaginationCards';
 import LastNewsCards from './LastNewsCards/LastNewsCards';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
+import { getLastNewsBlock } from '../../../../admin/widgets/lastNews/blocks/model/blockThunk';
+import { selectBlock, selectBlocksLoading } from '../../../../admin/widgets/lastNews/blocks/model/blockSlice';
 
 const LastNewsBlock = () => {
   const [startIndex, setStartIndex] = useState(0);
   const pageSize = 3;
 
-  const block = useAppSelector(selectLastNewsBlock);
-  const isLoading = useAppSelector(selectLastNewsBlockIsLoading);
+  const block = useAppSelector(selectBlock);
+  const isLoading = useAppSelector(selectBlocksLoading);
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));

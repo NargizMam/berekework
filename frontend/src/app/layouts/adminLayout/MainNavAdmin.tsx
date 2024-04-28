@@ -1,21 +1,25 @@
-import React from 'react';
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import ListIcon from '@mui/icons-material/List';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { SideNavAdmin } from './SideNavAdmin';
 import { Link, Menu, MenuItem } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../../client/page/Auth/api/AuthThunk';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
-import SideNavAdmin from './SideNavAdmin';
 
 const MainNavAdmin = (): React.JSX.Element => {
-  const [openNav, setOpenNav] = React.useState<boolean>(false);
+  const theme = useTheme();
   const dispatch = useAppDispatch();
+  const [openNav, setOpenNav] = React.useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
   const user = useAppSelector(selectUser);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,42 +34,38 @@ const MainNavAdmin = (): React.JSX.Element => {
     dispatch(logout());
   };
 
-  let sideNavBar = <SideNavAdmin open={true} />;
-
-  if (window.innerWidth < 1000) {
-    sideNavBar = <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)} />;
-  }
+  const handleNavToggle = () => {
+    setOpenNav((prev) => !prev);
+  };
 
   useEffect(() => {
-    const handleResize = () => {
-      setOpenNav(window.innerWidth < 1000);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    if (!isMobileScreen) {
+      setOpenNav(true);
+    }
+  }, [isMobileScreen]);
 
   return (
-    <>
-      <Box component="header">
-        <Stack
-          direction="row"
-          spacing={2}
-          sx={{ alignItems: 'center', justifyContent: 'flex-start', minHeight: '64px', px: 2 }}
-        >
+    <Box component="header" display='flex' position="relative">
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{alignItems: 'center', justifyContent: 'flex-start', minHeight: '64px', px: 2}}
+      >
+        {isMobileScreen && (
           <IconButton
-            onClick={(): void => {
-              setOpenNav(true);
-            }}
+            onClick={handleNavToggle}
             sx={{ display: { lg: 'none' } }}
           >
             <ListIcon />
           </IconButton>
-        </Stack>
-        {sideNavBar}
+        )}
+
+      </Stack>
+      {isMobileScreen ? (
+        <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)} />
+      ) : (
+        <SideNavAdmin open={true}/>
+      )}
         <Stack
           onClick={handleClick}
           sx={{ alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1 }}
@@ -86,7 +86,7 @@ const MainNavAdmin = (): React.JSX.Element => {
           )}
         </Menu>
       </Box>
-    </>
   );
 };
 export default MainNavAdmin;
+

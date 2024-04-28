@@ -1,12 +1,13 @@
 import { Grid } from '@mui/material';
 import LastNewsCardItem from './LastNewsCardItem';
 import LastNewsCardsStyle from './LastNewsCards-style';
-import { LastNewsCardApiData } from '../../model/types';
+import { Card } from '../../../../../admin/widgets/lastNews/cards/cardTypes';
+import React from 'react';
 
 interface Props {
   startIndex: number;
   pageSize?: number;
-  cards: LastNewsCardApiData[];
+  cards: Card[];
   isPaginationEnabled: boolean;
 }
 
@@ -21,7 +22,7 @@ export const LastNewsCards: React.FC<Props> = ({ cards, pageSize, startIndex, is
     <Grid container spacing={1} direction="row" sx={LastNewsCardsStyle.container}>
       {cardsToDisplay.map((card) => (
         <LastNewsCardItem
-          key={card._id}
+          key={card.id}
           cardTitle={card.cardTitle}
           cardText={card.cardText}
           dateTime={card.dateTime}
