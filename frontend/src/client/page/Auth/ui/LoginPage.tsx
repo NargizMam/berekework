@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import { useAppDispatch } from '../../../../app/store/hooks';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { LoginMutation } from '../model/types';
 import { login } from '../api/AuthThunk';
@@ -11,6 +11,7 @@ export const LoginPage = () => {
     email: '',
     password: '',
   });
+  const navigate = useNavigate();
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -23,6 +24,7 @@ export const LoginPage = () => {
   const submitFormHandler = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(login(state)).unwrap();
+    navigate('/');
   };
 
   return (

@@ -22,14 +22,14 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
           padding: '20px'
         }}
       >
-          <MainNavAdmin/>
-          <main>
-            <Container sx={{mx: '18%'}}>
-              {children}
-              <Outlet/>
-            </Container>
-          </main>
-        </Box>
+        <MainNavAdmin/>
+        <main>
+          <Container sx={{mx: '18%'}}>
+            {children}
+            <Outlet/>
+          </Container>
+        </main>
+      </Box>
     </>
   );
 

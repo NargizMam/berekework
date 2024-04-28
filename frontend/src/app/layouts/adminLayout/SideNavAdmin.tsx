@@ -47,12 +47,12 @@ export const SideNavAdmin: React.FC<SideNavProps> = ({open, onClose}) => {
         Bereke Admin
       </Typography>
       {isMobileScreen &&
-      <FirstPageIcon onClick={onClose}
-                     sx={{
-                       position: 'absolute',
-                       top: '10px',
-                       right: '10px',
-                       cursor: 'pointer'}}/>}
+        <FirstPageIcon onClick={onClose}
+                       sx={{
+                         position: 'absolute',
+                         top: '10px',
+                         right: '10px',
+                         cursor: 'pointer'}}/>}
       <Divider sx={{mt: '10px'}}/>
       <Box component="nav" sx={{flex: '1 1 auto', p: '12px'}}>
         <List>

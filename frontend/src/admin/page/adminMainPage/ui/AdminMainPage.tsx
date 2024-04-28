@@ -1,10 +1,9 @@
 import { Typography } from '@mui/material';
 import { Budget } from '../../../widgets/adminPageStatistics/Budget';
+import { TotalCustomers } from '../../../widgets/adminPageStatistics/TotalCustomers';
+import { TasksProgress } from '../../../widgets/adminPageStatistics/TasksProgress';
 import { TotalProfit } from '../../../widgets/adminPageStatistics/TotalProfit';
 import { Traffic } from '../../../widgets/adminPageStatistics/Traffic';
-import { TasksProgress } from '../../../widgets/adminPageStatistics/TasksProgress';
-import { TotalCustomers } from '../../../widgets/adminPageStatistics/TotalCustomers';
-
 
 export const AdminMainPage = () => {
   return (

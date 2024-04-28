@@ -7,15 +7,21 @@ import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
 import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
 import Container from '@mui/material/Container';
 import { LoginPage, RegisterPage } from '../client/page/Auth';
+import { UserPanelPage } from '../admin/page/usersPanel';
+import { VacancyPage } from '../admin/page/vacancyPanel';
+import { TariffPanelPage } from '../admin/page/tariffPanel';
 
 
 const App = () => (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/admin/*" element={<AdminRoutes />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/users" element={<UserPanelPage/>}/>
+      <Route path="/vacancy" element={<VacancyPage/>}/>
+      <Route path="/tariffs" element={<TariffPanelPage/>}/>
       <Route path="*" element={'Not found'} />
-      <Route path="/admin/*" element={<AdminRoutes />} />
     </Routes>
 );
 

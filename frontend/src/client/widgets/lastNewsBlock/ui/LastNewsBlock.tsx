@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import LastNewsBlockStyle from './LastNewsBlock-style';
 import { PaginationCards } from '../../../../admin/widgets/PaginationCards';
