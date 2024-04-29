@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import '../css/style.css';
 import '../css/media.css';
 import logo from '../images/logo-company.png';
-import { useAppDispatch, useAppSelector } from '../../../app/hook.ts';
-import { selectHeaderInfo } from '../model/HeaderSlice.ts';
-import { fetchHeader } from '../api/HeaderThunk.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { selectHeader } from '../../../admin/page/headerCreate/model/headerSlice';
+import { fetchHeader } from '../../../admin/page/headerCreate/api/headerThunks';
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const header = useAppSelector(selectHeaderInfo);
+  const header = useAppSelector(selectHeader);
 
   useEffect(() => {
     dispatch(fetchHeader());
