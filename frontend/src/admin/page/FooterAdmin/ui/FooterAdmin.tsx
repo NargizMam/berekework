@@ -4,7 +4,7 @@ const FooterAdmin = () => {
   return (
     <div>
       <h1>#Footer Admin</h1>
-      <Button variant="contained">Add Block Links</Button>
+      <Button variant="contained">Create your footer</Button>
     </div>
   );
 };

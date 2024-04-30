@@ -72,7 +72,7 @@ footerRouter.delete('/footerLinks/:linkId', async (req, res, next) => {
   try {
     const { linkId } = req.params;
 
-    const existingFooter = await Footer.findById(linkId);
+    const existingFooter = await Footer.findOne({ 'footerLinks._id': linkId });
 
     if (!existingFooter) {
       return res.status(404).send("Footer not found");
