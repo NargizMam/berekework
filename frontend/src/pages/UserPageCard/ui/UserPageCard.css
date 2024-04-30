@@ -1,0 +1,52 @@
+.UserPageCard {
+  background: #ffffff;
+  position: relative;
+  padding: 110px 40px 40px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.UserPageCard__status {
+  background: #F0F0F0;
+  padding: 10px 27px;
+  border-radius: 25px;
+  display: inline;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.UserPageCard__logoWrapper {
+  margin: 0 0 27px;
+}
+
+.UserPageCard__date {
+  color: #8E8E8E;
+
+}
+
+.UserPageCard__btnWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.UserPageCard__btn {
+  padding: 25px 0;
+  border-radius: 30px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.UserPageCard__btn_connect {
+  background: #FFE585;
+
+}
+
+.UserPageCard__btn_cencel {
+  background: #E9E9E9;
+
+}
