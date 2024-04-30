@@ -99,11 +99,13 @@ export interface ILinks {
   text: string,
 }
 
+export interface IFooterLinks{
+  title: string,
+  links: ILinks[],
+}
+
 export interface IFooter {
-  footerLinks: {
-    title: string;
-    links: ILinks[],
-  },
+  footerLinks: IFooterLinks,
   logo: File | null;
   socialNetworks: {
     title: string,
