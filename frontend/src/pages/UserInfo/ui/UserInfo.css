@@ -1,0 +1,58 @@
+.UserInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.UserInfo__info {
+  display: flex;
+  gap: 45px;
+  margin: 40px 0 35px;
+}
+
+.UserInfo__location {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.UserInfo__age {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.UserInfo__description {
+  text-align: left;
+}
+
+.UserInfo__button {
+  text-decoration: none;
+  color: inherit;
+  padding: 20px 0;
+  background: #0866ff;
+  width: 100%;
+  border-radius: 25px;
+}
+
+.UserInfo__buttonText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+@media screen and (max-width: 640px) {
+  .UserInfo__info {
+    flex-direction: column;
+  }
+
+  .UserInfo__buttonText {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 5px;
+  }
+}
