@@ -58,3 +58,7 @@ export const authReducer = authSlice.reducer;
 export const {unsetUser} = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
+export const selectRegisterLoading = (state: RootState) => state.auth.registerLoading;
+export const selectRegisterError = (state: RootState) => state.auth.registerError;
+export const selectLoginLoading = (state: RootState) => state.auth.loginLoading;
+export const selectLoginError = (state: RootState) => state.auth.loginError;

@@ -1,9 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { RegisterMutation } from '../model/types';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { Box, Grid, Link, TextField, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-import { useAppDispatch } from '../../../../app/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { register } from '../api/AuthThunk';
+import { selectRegisterError, selectRegisterLoading } from '../model/AuthSlice';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
 
 export const RegisterPage = () => {
   const [state, setState] = useState<RegisterMutation>({
@@ -12,9 +15,12 @@ export const RegisterPage = () => {
     avatar: null,
   });
   const dispatch = useAppDispatch();
+  const error = useAppSelector(selectRegisterError);
+  const navigate = useNavigate();
+  const loading = useAppSelector(selectRegisterLoading);
 
   const changeFields = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const {name, value} = event.target;
 
     setState((prevState) => ({
       ...prevState,
@@ -22,9 +28,18 @@ export const RegisterPage = () => {
     }));
   };
 
+  const getFieldError = (fieldName: string) => {
+    try {
+      return error?.error[fieldName].message;
+    } catch {
+      return undefined;
+    }
+  };
+
   const submitFormHandler = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(register(state)).unwrap();
+    navigate('/');
   };
 
   return (
@@ -38,49 +53,50 @@ export const RegisterPage = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign up
+          Регистрация
         </Typography>
-        <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                label="Username"
+                label="E-mail"
                 name="email"
                 value={state.email}
                 onChange={changeFields}
-                autoComplete="new-username"
-                // error={Boolean(getFieldError('username'))}
-                // helperText={getFieldError('username')}
+                autoComplete="new-email"
+                error={Boolean(getFieldError('email'))}
+                helperText={getFieldError('email')}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 name="password"
-                label="Password"
+                label="Пароль"
                 type="password"
                 value={state.password}
                 onChange={changeFields}
                 autoComplete="new-password"
-                // error={Boolean(getFieldError('password'))}
-                // helperText={getFieldError('password')}
+                error={Boolean(getFieldError('password'))}
+                helperText={getFieldError('password')}
               />
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
+            loading={loading}
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{mt: 3, mb: 2, backgroundColor: '#0866FF', borderRadius: '30px'}}
           >
-            Sign Up
-          </Button>
-          {/*<Grid container justifyContent="flex-end">*/}
-          {/*  <Grid item>*/}
-          {/*    <Link component={RouterLink} to="/login" variant="body2">*/}
-          {/*      Already have an account? Sign in*/}
-          {/*    </Link>*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
+            Зарегестрироваться
+          </LoadingButton>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link component={RouterLink} to="/register" variant="body2">
+                Войти
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>

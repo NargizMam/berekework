@@ -1,30 +1,32 @@
-import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
-import { useAppDispatch } from '../../../../app/store/hooks';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Alert, Box, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { Link as RouterLink } from 'react-router-dom';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { LoginMutation } from '../model/types';
 import { login } from '../api/AuthThunk';
+import { selectLoginError, selectLoginLoading } from '../model/AuthSlice';
+import { LoadingButton } from '@mui/lab';
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
+  const error = useAppSelector(selectLoginError);
+  const loading = useAppSelector(selectLoginLoading);
   const [state, setState] = useState<LoginMutation>({
     email: '',
     password: '',
   });
-  const navigate = useNavigate();
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const {name, value} = event.target;
 
     setState((prevState) => {
-      return { ...prevState, [name]: value };
+      return {...prevState, [name]: value};
     });
   };
 
   const submitFormHandler = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(login(state)).unwrap();
-    navigate('/');
   };
 
   return (
@@ -38,18 +40,18 @@ export const LoginPage = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign in
+          Bereke work
         </Typography>
-        {/*{error && (*/}
-        {/*  <Alert severity="error" sx={{ mt: 3, width: '100%' }}>*/}
-        {/*    {error.error}*/}
-        {/*  </Alert>*/}
-        {/*)}*/}
-        <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3 }}>
+        {error && (
+          <Alert severity="error" sx={{mt: 3, width: '100%'}}>
+            {error.error}
+          </Alert>
+        )}
+        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                label="Username"
+                label="E-mail"
                 name="email"
                 autoComplete="current-username"
                 value={state.email}
@@ -59,7 +61,7 @@ export const LoginPage = () => {
             <Grid item xs={12}>
               <TextField
                 name="password"
-                label="Password"
+                label="Пароль"
                 type="password"
                 value={state.password}
                 onChange={inputChangeHandler}
@@ -67,18 +69,19 @@ export const LoginPage = () => {
               />
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
+            loading={loading}
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{mt: 3, mb: 2, backgroundColor: '#0866FF', borderRadius: '30px'}}
           >
-            Sign In
-          </Button>
+            Войти
+          </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link component={RouterLink} to="/register" variant="body2">
-                Or sign up
+                Зарегестрироваться
               </Link>
             </Grid>
           </Grid>
