@@ -93,3 +93,32 @@ export interface VacancyBlockApiData {
   };
   location: string;
 }
+
+export interface ILinks {
+  url: string,
+  text: string,
+}
+
+export interface IFooter {
+  footerLinks: {
+    title: string;
+    links: ILinks[],
+  },
+  logo: File | null;
+  socialNetworks: {
+    title: string,
+    socialNetworkArr: [{
+      name: string,
+      url: string,
+      icon: string;
+    }]
+  },
+  contactDetails: {
+    title: string,
+    contactsDetailsArr: [{
+      text: string,
+    }]
+  },
+  copyright: string,
+}
+

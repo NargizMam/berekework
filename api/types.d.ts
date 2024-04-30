@@ -106,3 +106,4 @@ export interface Page {
 export interface ModelType {
   [key: string]: any;
 }
+

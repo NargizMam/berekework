@@ -1,5 +1,7 @@
 import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { ILinks } from '../../../../shared/types';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface LinkBlockFormProps {
   open: boolean;
@@ -11,7 +13,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 500,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -20,15 +22,26 @@ const style = {
 
 const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
   const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
+
+  const [linksState, setLinksState] = useState<ILinks[]>(
+    [{url: '', text: ''},]
+  );
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
-  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value);
 
   const handleSubmit = () => {
     console.log("Title:", title);
-    console.log("URL:", url);
   };
+
+  const addInputField = ()=>{
+    setLinksState([...linksState, {url: '', text: ''}]);
+  }
+
+  const removeFields = (index: number) => {
+    let data = [...linksState];
+    data.splice(index, 1)
+    setLinksState(data);
+  }
 
   const closeModal = () => {
     onClose();
@@ -50,24 +63,53 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
             <Button onClick={closeModal}>close</Button>
           </Grid>
           <TextField
-            label="Заголовок ссылки"
+            label="Заголовок блока с ссылками"
             variant="outlined"
             fullWidth
             value={title}
             onChange={handleTitleChange}
             sx={{ mt: 2 }}
           />
-          <TextField
-            label="URL ссылки"
-            variant="outlined"
-            fullWidth
-            value={url}
-            onChange={handleUrlChange}
-            sx={{ mt: 2 }}
-          />
-          <Button onClick={handleSubmit} variant="contained" sx={{ mt: 2 }}>
-            Создать блок с ссылками
-          </Button>
+          {linksState.map((element, index) => (
+            <Grid sx={{display: "flex", alignItems: "center"}} key={index}>
+              <TextField
+                label="url"
+                variant="outlined"
+                fullWidth
+                onChange={handleTitleChange}
+                value={element.url}
+                sx={{ mt: 2 , marginRight: '10px'}}
+              />
+              <TextField
+                label="Текст"
+                variant="outlined"
+                fullWidth
+                value={element.text}
+                onChange={handleTitleChange}
+                sx={{ mt: 2 , marginLeft: '10px', marginRight: "20px"}}
+              />
+              {
+                index ?
+                  <Button type="button"
+                          variant="contained"
+                          sx={{marginTop: '15px'}}
+                          onClick={() => removeFields(index)}
+                          ><CloseIcon/></Button>
+                  : <div style={{width: '100px', marginLeft: '20px'}}></div>
+              }
+            </Grid>
+          ))}
+          <Grid sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}>
+            <Button
+              variant="contained"
+              className="btn btn-outline-success"
+              onClick={addInputField}
+              sx={{marginTop: "20px"}}
+            >+ Add Link</Button>
+            <Button onClick={handleSubmit} variant="contained" sx={{ mt: 2 }}>
+              Создать блок с ссылками
+            </Button>
+          </Grid>
         </Box>
       </Modal>
     </div>
