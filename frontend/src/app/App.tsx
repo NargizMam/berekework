@@ -13,6 +13,7 @@ import { TariffPanelPage } from '../admin/page/tariffPanel';
 import { useAppSelector } from './store/hooks';
 import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
+import ClientLayout from './layouts/clientLayout/ClientLayout';
 
 
 const App = () => {
@@ -96,16 +97,18 @@ const App = () => {
         </AdminLayout>
         :
         <>
-          <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            {/*<Route path="/admin/*" element={<AdminRoutes/>}/>*/}
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/users" element={<UserPanelPage/>}/>
-            <Route path="/vacancy" element={<VacancyPage/>}/>
-            <Route path="/tariffs" element={<TariffPanelPage/>}/>
-            <Route path="*" element={'Not found'}/>
-          </Routes>
+          <ClientLayout>
+            <Routes>
+              <Route path="/" element={<HomePage/>}/>
+              {/*<Route path="/admin/*" element={<AdminRoutes/>}/>*/}
+              <Route path="/register" element={<RegisterPage/>}/>
+              <Route path="/login" element={<LoginPage/>}/>
+              <Route path="/users" element={<UserPanelPage/>}/>
+              <Route path="/vacancy" element={<VacancyPage/>}/>
+              <Route path="/tariffs" element={<TariffPanelPage/>}/>
+              <Route path="*" element={'Not found'}/>
+            </Routes>
+          </ClientLayout>
         </>
       }
 
