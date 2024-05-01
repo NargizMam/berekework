@@ -15,13 +15,12 @@ const HomePage = () => {
         <LastNewsBlock/>
         <TitleBlock data={{
           title: 'Найди работу, которая делает каждый день интересным',
-          location: 'kljlk',
+          location: '/eqq',
           button: {
             url: '/',
             text: 'Перейти к вакансиям'
           }
         }}/>
-
       </main>
       <footer>
         <Footer/>
