@@ -15,7 +15,7 @@ export const createFooter = createAsyncThunk(
   'footer/createFooter',
   async (footerData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/footer', footerData);
+      const response = await axios.post('/footer', footerData);
       return response.data;
     }  catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
@@ -25,7 +25,6 @@ export const createFooter = createAsyncThunk(
     }
   }
 );
-
 
 export const createFooterLinks = createAsyncThunk(
   'footer/addFooterLinks',

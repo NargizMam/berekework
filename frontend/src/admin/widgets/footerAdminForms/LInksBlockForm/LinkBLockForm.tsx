@@ -22,7 +22,7 @@ const style = {
   p: 4,
 };
 
-const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
+const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
   const [title, setTitle] = useState('');
   const dispatch = useAppDispatch();
 
@@ -32,11 +32,7 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
 
-  const handleSubmit = () => {
-    console.log("Title:", title);
-  };
-
-  const addInputField = ()=>{
+  const addInputField = () => {
     setLinksState([...linksState, {url: '', text: ''}]);
   };
 
@@ -62,17 +58,16 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
     e.preventDefault();
 
     const obj: IFooterLinks = {
-       title: title,
+      title: title,
       links: linksState,
     };
 
     try {
-      await dispatch(createFooterLinks(obj)).unwrap();
+      await dispatch(createFooterLinks(obj));
     } catch (e) {
       alert('Invalid field');
     }
   };
-
 
   const closeModal = () => {
     onClose();
@@ -103,7 +98,7 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
               sx={{mt: 2}}
             />
             {linksState.map((element, index) => (
-              <Grid sx={{display: "flex", alignItems: "center"}} key={index}>
+              <Grid sx={{display: 'flex', alignItems: 'center'}} key={index}>
                 <TextField
                   label="url"
                   variant="outlined"
@@ -118,7 +113,7 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
                   fullWidth
                   value={element.text}
                   onChange={e => handleTextChange(index, e)}
-                  sx={{mt: 2, marginLeft: '10px', marginRight: "20px"}}
+                  sx={{mt: 2, marginLeft: '10px', marginRight: '20px'}}
                 />
                 {
                   index ?
@@ -137,9 +132,9 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
                 variant="contained"
                 className="btn btn-outline-success"
                 onClick={addInputField}
-                sx={{marginTop: "20px"}}
+                sx={{marginTop: '20px'}}
               >+ Add Link</Button>
-              <Button onClick={handleSubmit} variant="contained" sx={{mt: 2}}>
+              <Button type="submit" variant="contained" sx={{mt: 2}}>
                 Создать блок с ссылками
               </Button>
             </Grid>
@@ -147,7 +142,7 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
         </Modal>
       </form>
     </div>
-);
+  );
 };
 
 export default LinkBLockForm;
