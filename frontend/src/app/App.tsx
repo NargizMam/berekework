@@ -10,7 +10,6 @@ import { LoginPage, RegisterPage } from '../client/page/Auth';
 import { UserPanelPage } from '../admin/page/usersPanel';
 import { VacancyPage } from '../admin/page/vacancyPanel';
 import { TariffPanelPage } from '../admin/page/tariffPanel';
-import Header from '../widgets/Header/ui/Header';
 import { useAppSelector } from './store/hooks';
 import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
@@ -97,9 +96,6 @@ const App = () => {
         </AdminLayout>
         :
         <>
-          <header>
-            <Header/>
-          </header>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
             {/*<Route path="/admin/*" element={<AdminRoutes/>}/>*/}
