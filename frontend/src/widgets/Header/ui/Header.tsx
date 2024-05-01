@@ -42,7 +42,16 @@ const Header = () => {
         </nav>
     );
 
-    return (
+    const links = [(
+      <>
+        <a>Главная</a>
+        <a>О нас</a>
+        <a>Вакансии</a>
+        <a>Для работодателей</a>
+      </>
+    )];
+
+  return (
         <div className="header">
             <div className="header-content container">
                 <div style={{display: 'flex', alignItems: 'center'}}>
@@ -54,9 +63,9 @@ const Header = () => {
                 {nav}
                 <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
                     <ul className="main-nav-list">
-                        {header?.navbarItems && header.navbarItems.map((item) => (
-                            <li key={item.nameNav} className="main-nav-item">
-                                <a className="main-nav-link" href={item.link}>{item.nameNav}</a>
+                        {links.map(() => (
+                            <li className="main-nav-item">
+                                <a className="main-nav-link" ></a>
                             </li>
                         ))}
                     </ul>
