@@ -5,6 +5,7 @@ import { lastNewsBlockReducer } from '../../admin/widgets/lastNewsBlock/model/la
 import { mainCardsReducer } from '../../admin/widgets/mainCards/model/mainCardsSlice';
 import { pageReducer } from '../../admin/page/adminPages/model/adminCreatePageSlice';
 import { headerReducer } from '../../admin/page/headerCreate/model/headerSlice';
+import { footerReducer } from '../../admin/page/FooterAdmin/model/FooterSlice';
 
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     mainCards: mainCardsReducer,
     page: pageReducer,
     header: headerReducer,
+    footer: footerReducer,
   },
 });
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { IFooterLinks, ILinks } from '../../../../shared/types';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch } from '../../../../app/store/hooks';
+import { createFooterLinks } from '../../../page/FooterAdmin/api/FooterThunk';
 
 interface LinkBlockFormProps {
   open: boolean;
@@ -10,7 +11,7 @@ interface LinkBlockFormProps {
 }
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -37,13 +38,13 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
 
   const addInputField = ()=>{
     setLinksState([...linksState, {url: '', text: ''}]);
-  }
+  };
 
   const removeFields = (index: number) => {
-    let data = [...linksState];
-    data.splice(index, 1)
+    const data = [...linksState];
+    data.splice(index, 1);
     setLinksState(data);
-  }
+  };
 
   const handleUrlChange = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newData = [...linksState];
@@ -63,10 +64,10 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({ open, onClose }) => {
     const obj: IFooterLinks = {
        title: title,
       links: linksState,
-    }
+    };
 
     try {
-      await dispatch(createCocktail(obj)).unwrap();
+      await dispatch(createFooterLinks(obj)).unwrap();
     } catch (e) {
       alert('Invalid field');
     }
