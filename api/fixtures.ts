@@ -121,6 +121,10 @@ const run = async () => {
     email: 'employer@gmail.com',
     password: 'employer',
     token: randomUUID(),
+    action: 'Game organization',
+    foundationYear: '2012',
+    scope: 'Major',
+    companyName: 'NAVI',
     role: 'employer',
   });
 

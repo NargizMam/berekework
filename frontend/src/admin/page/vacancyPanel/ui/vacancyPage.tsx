@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { getAllVacancy } from '../api/vacancyThunk';
+import { deleteVacancy, getAllVacancy } from '../api/vacancyThunk';
 import { selectVacancies, selectVacanciesLoading } from '../model/vacancySlice';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 
 export const VacancyPage = () => {
@@ -13,6 +13,11 @@ export const VacancyPage = () => {
   useEffect(() => {
     dispatch(getAllVacancy());
   }, [dispatch]);
+
+  const handleDeleteVacancy = async (id: string) => {
+    await dispatch(deleteVacancy(id));
+    await dispatch(getAllVacancy());
+  };
 
   if (loading) {
     return <Loader />;
@@ -48,6 +53,11 @@ export const VacancyPage = () => {
               )}
               <TableCell align="right">{vacancy.createdAt}</TableCell>
               <TableCell align="right">{vacancy.updatedAt}</TableCell>
+              <TableCell align="right">
+                <Button onClick={() => handleDeleteVacancy(vacancy._id)} variant="contained">
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

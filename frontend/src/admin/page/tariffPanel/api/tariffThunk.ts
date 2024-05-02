@@ -8,3 +8,10 @@ export const getAllTariff = createAsyncThunk(
     return response.data;
   }
 );
+
+export const deleteTariff = createAsyncThunk<void, string>(
+  'tariff/delete',
+  async (id) => {
+    await axiosApi.delete(`/tariff/${id}`);
+  }
+);
