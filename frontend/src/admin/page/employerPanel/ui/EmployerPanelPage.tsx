@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectEmployerLoading, selectEmployers } from '../model/employerSlice';
 import { deleteEmployer, getAllEmployer } from '../api/employerThunk';
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
+import { Link as RouterLink } from 'react-router-dom';
 
 export const EmployerPanelPage = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ export const EmployerPanelPage = () => {
 
   return (
     <TableContainer component={Paper}>
+      <Link component={RouterLink} to='/admin/new-employer'>Create</Link>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

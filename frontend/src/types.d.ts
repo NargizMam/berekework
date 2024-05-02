@@ -22,3 +22,16 @@ export interface Moderator{
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ValidationError {
+  error: {
+    [key: string]: {
+      name: string;
+      message: string;
+    };
+  };
+  message: string;
+  name: string;
+  _message: string;
+}
+
