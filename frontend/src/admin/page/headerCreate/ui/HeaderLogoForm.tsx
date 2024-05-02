@@ -1,37 +1,29 @@
-import React, { useRef } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
+import React, { ChangeEvent } from 'react';
+import { Grid, TextField } from '@mui/material';
+import FileInput from '../../../../shared/fileInput/FileInput';
 
 interface Props {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  name: string;
-  label: string;
-  filename?: string;
+  logoName: string;
+  logoUrl: string;
+  fileName?: string | undefined;
+  onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onFileInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FileInput: React.FC<Props> = ({ onChange, name, label, filename }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const activateInput = () => {
-    if (inputRef.current) {
-      inputRef.current.click();
-    }
-  };
-
+const HeaderLogoForm: React.FC<Props> = ({ logoName, logoUrl, onInputChange, onFileInputChange, fileName }) => {
   return (
-    <>
-      <input style={{ display: 'none' }} type="file" name={name} onChange={onChange} ref={inputRef} />
-      <Grid container direction="row" spacing={2} alignItems="center">
-        <Grid item xs>
-          <TextField disabled label={label} value={filename || ''} onClick={activateInput} />
-        </Grid>
-        <Grid item>
-          <Button variant="contained" onClick={activateInput}>
-            Browse
-          </Button>
-        </Grid>
+    <Grid container direction="column" spacing={2}>
+      <Grid item>
+        <TextField id="name" label="Name" name="name" value={logoName} onChange={onInputChange} required />
       </Grid>
-    </>
+      <Grid item>
+        <TextField id="url" label="URL" name="url" value={logoUrl} onChange={onInputChange} required />
+      </Grid>
+      <Grid item>
+        <FileInput label="Logo" name="logo" onChange={onFileInputChange} filename={fileName} />
+      </Grid>
+    </Grid>
   );
 };
 
-export default FileInput;
+export default HeaderLogoForm;
