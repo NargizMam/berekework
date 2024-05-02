@@ -1,6 +1,6 @@
 import { Alert, Box, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { LoginMutation } from '../model/types';
 import { login } from '../api/AuthThunk';
@@ -9,6 +9,7 @@ import { LoadingButton } from '@mui/lab';
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const error = useAppSelector(selectLoginError);
   const loading = useAppSelector(selectLoginLoading);
   const [state, setState] = useState<LoginMutation>({
@@ -27,6 +28,7 @@ export const LoginPage = () => {
   const submitFormHandler = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(login(state)).unwrap();
+    navigate('/');
   };
 
   return (

@@ -1,6 +1,7 @@
 import Header from '../../../widgets/Header/ui/Header';
 import Footer from '../../../client/widgets/footer/ui/Footer';
 import React from 'react';
+import { Container } from '@mui/material';
 
 const ClientLayout: React.FC<React.PropsWithChildren> = ({children}) => {
   return (
@@ -8,8 +9,10 @@ const ClientLayout: React.FC<React.PropsWithChildren> = ({children}) => {
       <header>
         <Header/>
       </header>
-      <main className="container">
-        {children}
+      <main >
+        <Container>
+          {children}
+        </Container>
       </main>
       <footer>
         <Footer/>
