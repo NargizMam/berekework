@@ -5,6 +5,7 @@ import Page from '../models/page/Page';
 import { modelMapping } from '../helpers/componentsMapping';
 
 const pageCreateRouter = express.Router();
+
 pageCreateRouter.post('/', async (req, res, next) => {
   try {
     const { name, url } = req.body;
@@ -19,10 +20,10 @@ pageCreateRouter.post('/', async (req, res, next) => {
     const blocks: Block[] = req.body.blocks;
 
     for (const block of blocks) {
-      const modelName = modelMapping[block.nameComponent];
+      const modelName = modelMapping[block.nameComponent.toLocaleLowerCase()];
 
       if (modelName) {
-        const componentInstance = new modelMapping[block.nameComponent](block.content);
+        const componentInstance = new modelMapping[block.nameComponent.toLocaleLowerCase()](block.content);
         const id = await componentInstance.save();
         newPage.componentType.push(block.nameComponent);
         newPage.components.push(id._id);
@@ -35,7 +36,7 @@ pageCreateRouter.post('/', async (req, res, next) => {
     const newPageModel = new Page(newPage);
     await newPageModel.save();
 
-    res.status(200).send('Page created successfully');
+    res.status(200).send({message: 'Page created successfully', id: newPageModel._id});
   } catch (e) {
     console.log(e);
     next(e);
@@ -51,4 +52,16 @@ pageCreateRouter.get('/', async (_req, res, next) => {
     next(e);
   }
 });
+
+pageCreateRouter.get('/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const page = await Page.findById(id).select('-__v').populate('components');
+    return res.send(page);
+  } catch (e) {
+    next(e);
+  }
+});
+
 export default pageCreateRouter;

@@ -22,6 +22,7 @@ import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
+import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
 
 
 const usersPersistConfig = {
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   vacancy: vacancyReducer,
   moderator: moderatorsReducer,
   tariff: tariffReducer,
+  file: fileReducer,
   chooseBlock: chooseBlockReducer,
 });
 

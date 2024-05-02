@@ -1,30 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextField } from '@mui/material';
-import { Field } from '../../../shared/types';
-import FileInput from '../../../shared/fileInput/FileInput';
-
+import { useAppSelector } from '../../../app/store/hooks';
+import { selectImageLocation } from '../../page/adminPages/model/imageUploadSlice';
+import { Field } from '../../page/adminPages/model/types';
+import ImageUpload from '../../shared/imageUpload/imageUpload';
 
 interface Input {
   field: Field;
   index: number;
   value: string | File;
   onChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
-  imageInputChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void;
+  imageInputChange: (location: string, index: number) => void;
 }
 
-const InputItem: React.FC<Input> = ({
-  field,
-  onChange,
-  index,
-  imageInputChange,
-  value,
-}) => {
-  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    imageInputChange(e, index);
-  };
+const InputItem: React.FC<Input> = ({ field, onChange, index, imageInputChange, value }) => {
+  const imageLocation = useAppSelector(selectImageLocation);
+
+  useEffect(() => {
+    imageInputChange(imageLocation, index);
+  }, [imageLocation, imageInputChange, index]);
 
   const onComponentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e, index);
@@ -56,13 +50,7 @@ const InputItem: React.FC<Input> = ({
         />
       );
     case 'image':
-      return (
-        <FileInput
-          label="Image"
-          name="image"
-          onChange={fileInputChangeHandler}
-        />
-      );
+      return <ImageUpload name={'image'} />;
     default:
       console.error(`Invalid field type: ${field.typeField}`);
       return null;
