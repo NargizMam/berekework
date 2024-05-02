@@ -2,12 +2,23 @@ import { Router } from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 import { imagesUpload } from '../multer';
+import permit from "../middleware/permit";
 
 const userRouter = Router();
 
 userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
+  console.log(req.query)
   try {
-    const user = new User({
+    if (req.query && req.query.role) {
+      const user = new User({
+        email: req.body.email,
+        password: req.body.password,
+        role: 'admin'
+      });
+      user.generateToken();
+      await user.save();
+    }
+      const user = new User({
       email: req.body.email,
       password: req.body.password,
       avatar: req.file ? req.file.filename : null,
@@ -46,12 +57,31 @@ userRouter.post('/sessions', async (req, res, next) => {
   }
 });
 
-userRouter.get('/', async (_req, res, next) => {
+userRouter.get('/', async (req, res, next) => {
   try {
-    const result = await User.find();
-    return res.send(result);
+    if (req.query && req.query.role) {
+      const moderators = await User.find({ role: 'admin' });
+      return res.send(moderators);
+    } else {
+      const users = await User.find({ role: { $nin: ['admin', 'superadmin'] } });
+      return res.send(users);
+    }
   } catch (error) {
     return next(error);
+  }
+});
+userRouter.delete('/', async (req, res,next) => {
+  if(req.query ) {
+    try {
+      const deletedModerator = await User.findByIdAndDelete(req.query.moderator);
+      if (!deletedModerator) {
+        return res.send('Модератор возможно был удален!');
+      }
+      return res.send('Модератор был удален!');
+    }
+    catch (e) {
+      next(e);
+    }
   }
 });
 

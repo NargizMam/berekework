@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { Outlet } from 'react-router-dom';
 import MainNavAdmin from './MainNavAdmin';
 import Container from '@mui/material/Container';
@@ -12,23 +11,22 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
 
   return (
     <>
-      <Box
+      <Container
         sx={{
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
-          minHeight: '100%',
           padding: '20px'
         }}
       >
         <MainNavAdmin/>
         <main>
-          <Container maxWidth='sm' style={{marginLeft: '18%'}}>
+          <Container maxWidth='md' style={{marginLeft: '15%'}}>
             {children}
             <Outlet/>
           </Container>
         </main>
-      </Box>
+      </Container>
     </>
   );
 

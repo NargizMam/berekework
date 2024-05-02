@@ -14,6 +14,7 @@ import Header from '../widgets/Header/ui/Header';
 import { useAppSelector } from './store/hooks';
 import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
+import { ModeratorsPage } from '../admin/page/moderatorsPanel/ui/moderatorsPage';
 
 const AdminRoutes = () => (
   <AdminLayout>
@@ -22,6 +23,7 @@ const AdminRoutes = () => (
         <Route path="/" element={<AdminMainPage />} />
         <Route path="/header" element={<HeaderAdmin />} />
         <Route path="/pages" element={<AdminAllPages />} />
+        <Route path="/moderators" element={<ModeratorsPage />} />
         <Route path="/pages/new-page" element={<AdminCreatePage />} />
         <Route path="/adminHeading" element={<HeadingAdmin />} />
         <Route path="/adminHeading:location" element={<HeadingDetail />} />
