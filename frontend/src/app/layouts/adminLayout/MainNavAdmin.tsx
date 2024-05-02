@@ -23,16 +23,17 @@ const MainNavAdmin = (): React.JSX.Element => {
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
   const user = useAppSelector(selectUser);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickAvatar = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
   };
 
   const handleLogout = () => {
     dispatch(logout());
+    handleCloseMenu();
   };
 
   const handleNavToggle = () => {
@@ -68,29 +69,27 @@ const MainNavAdmin = (): React.JSX.Element => {
         <SideNavAdmin open={true}/>
       )}
       <Stack
-        onClick={handleClick}
         sx={{alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1}}
         direction="row"
         spacing={5}
       >
         <a href="/">
-        <img src={logo} alt="logo"/>
-      </a>
-        <Avatar src="/assets/avatar.png" sx={{cursor: 'pointer'}}/>
+          <img src={logo} alt="logo"/>
+        </a>
+        <Avatar src="/assets/avatar.png" sx={{cursor: 'pointer'}} onClick={handleClickAvatar} />
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu} keepMounted>
+          {user ? (
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          ) : (
+            <MenuItem>
+              <Link component={RouterLink} to="/login">
+                Login
+              </Link>
+            </MenuItem>
+          )}
+        </Menu>
       </Stack>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
-        {user ? (
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        ) : (
-          <MenuItem onClick={handleLogout}>
-            <Link component={RouterLink} to="/login">
-              Login
-            </Link>
-          </MenuItem>
-        )}
-      </Menu>
     </Box>
   );
 };
 export default MainNavAdmin;
-
