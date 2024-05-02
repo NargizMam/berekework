@@ -1,1 +1,1 @@
-export { VacancyPage } from './ui/moderatorsPage';
+export { ModeratorsPage } from './ui/moderatorsPage';
