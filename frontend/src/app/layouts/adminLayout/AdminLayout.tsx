@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { Outlet } from 'react-router-dom';
 import MainNavAdmin from './MainNavAdmin';
-
+import Container from '@mui/material/Container';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,7 +23,7 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
       >
         <MainNavAdmin/>
         <main>
-          <Container sx={{mx: '18%'}}>
+          <Container maxWidth='sm' style={{marginLeft: '18%'}}>
             {children}
             <Outlet/>
           </Container>

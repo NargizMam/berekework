@@ -13,6 +13,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../../client/page/Auth/api/AuthThunk';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
+import logo from '../../../widgets/Header/images/logo-company.png';
 
 const MainNavAdmin = (): React.JSX.Element => {
   const theme = useTheme();
@@ -54,38 +55,41 @@ const MainNavAdmin = (): React.JSX.Element => {
         {isMobileScreen && (
           <IconButton
             onClick={handleNavToggle}
-            sx={{ display: { lg: 'none' } }}
+            sx={{display: {lg: 'none'}}}
           >
-            <ListIcon />
+            <ListIcon/>
           </IconButton>
         )}
 
       </Stack>
       {isMobileScreen ? (
-        <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)} />
+        <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)}/>
       ) : (
         <SideNavAdmin open={true}/>
       )}
-        <Stack
-          onClick={handleClick}
-          sx={{ alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1 }}
-          direction="row"
-          spacing={5}
-        >
-          <Avatar src="/assets/avatar.png" sx={{ cursor: 'pointer' }} />
-        </Stack>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
-          {user ? (
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          ) : (
-            <MenuItem onClick={handleLogout}>
-              <Link component={RouterLink} to="/login">
-                Login
-              </Link>
-            </MenuItem>
-          )}
-        </Menu>
-      </Box>
+      <Stack
+        onClick={handleClick}
+        sx={{alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1}}
+        direction="row"
+        spacing={5}
+      >
+        <a href="/">
+        <img src={logo} alt="logo"/>
+      </a>
+        <Avatar src="/assets/avatar.png" sx={{cursor: 'pointer'}}/>
+      </Stack>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
+        {user ? (
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        ) : (
+          <MenuItem onClick={handleLogout}>
+            <Link component={RouterLink} to="/login">
+              Login
+            </Link>
+          </MenuItem>
+        )}
+      </Menu>
+    </Box>
   );
 };
 export default MainNavAdmin;
