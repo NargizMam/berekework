@@ -14,7 +14,7 @@ import Header from '../widgets/Header/ui/Header';
 import { useAppSelector } from './store/hooks';
 import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
-import { ModeratorsPage } from '../admin/page/moderatorsPanel/ui/moderatorsPage';
+import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 
 const AdminRoutes = () => (
   <AdminLayout>
