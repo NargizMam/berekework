@@ -50,25 +50,8 @@ export interface Components {
     };
   };
 }
-export interface Field {
-  type: string;
-  typeField: string;
-  fieldName: string;
-  value: string | File;
-  required: boolean;
-  placeholder: string;
-}
 
-export interface IPage {
-  nameComponent: string;
-  content: { [key: string]: string | File };
-}
 
-export interface CreatePage {
-  name: string;
-  url: string;
-  blocks: IPage[];
-}
 
 export interface VacancyCardApiData {
   _id: string;
