@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../../app/store/store';
 import { createHeader, fetchHeader } from '../api/headerThunks';
-import { IHeader } from '../../../../shared/types';
+import { IHeader } from './types';
 
 interface HeaderState {
   headerData: IHeader | null;
