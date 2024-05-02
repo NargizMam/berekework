@@ -1,11 +1,9 @@
 const MainCardItemStyle = (cardImage: string | null, cardIcon: string | null) => ({
   card: {
-    position: 'relative',
     display: 'flex',
     gap: '15px',
     borderRadius: '5px',
     alignItems: 'center',
-    overflow: 'hidden',
     maxWidth: '100%',
     height: '100%',
     textDecoration: 'none',
@@ -13,7 +11,6 @@ const MainCardItemStyle = (cardImage: string | null, cardIcon: string | null) =>
     background: cardImage ? `#ECECEC url(${cardImage}) no-repeat right bottom` : '#ECECEC',
     backgroundSize: 'contain',
     '@media (min-width: 600px)': {
-      display: 'relative',
       borderRadius: '30px',
       border: '1px solid #ececec',
       padding: cardIcon ? '40px 40px 40px 124px' : '50px 269px 48px 50px',
@@ -56,7 +53,6 @@ const MainCardItemStyle = (cardImage: string | null, cardIcon: string | null) =>
     maxWidth: '24px',
     maxHeight: '24px',
     '@media (min-width: 600px)': {
-      position: 'absolute',
       left: '40px',
       top: '64px',
       maxWidth: '54px',

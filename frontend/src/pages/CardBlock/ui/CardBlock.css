@@ -1,0 +1,18 @@
+.CardBlock {
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  justify-content: 'space-between'; 
+  gap: 10;
+}
+
+@media screen and (max-width: 949px) {
+  .CardBlock {
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .CardBlock {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+}

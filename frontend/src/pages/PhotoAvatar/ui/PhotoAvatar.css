@@ -1,0 +1,20 @@
+.PhotoAvatar {
+  position: relative;
+}
+
+.PhotoAvatar__image {
+  border: 5px solid #FFFF;
+}
+
+.PhotoAvatar__buttton {
+  padding: 0;
+  border-radius: 50%;
+  position: absolute;
+  border: none;
+  background: #0866FF;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
