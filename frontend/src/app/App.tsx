@@ -56,63 +56,50 @@ const App = () => {
   //     </Container>
   //   </AdminLayout>
   // );
+  const AdminRoutes = () => (
+    <AdminLayout>
+      <Container>
+        <Routes>
+          <Route path="/" element={<AdminMainPage/>}/>
+          <Route path="/header" element={<HeaderAdmin/>}/>
+          <Route path="/pages" element={<AdminAllPages/>}/>
+          <Route path="/pages/new-page" element={<AdminCreatePage/>}/>
+          <Route path="/adminHeading" element={<HeadingAdmin/>}/>
+          <Route path="/adminHeading:location" element={<HeadingDetail/>}/>
+        </Routes>
+      </Container>
+    </AdminLayout>
+  );
+
   return (
     <>
-      {user?.role === 'superadmin' || user?.role === 'admin' ?
-        <AdminLayout>
-          <Container>
-            <Routes>
-              <Route path="/" element={(
-                <ProtectedRoute isAllowed={user && user.role === 'superadmin' || user && user.role === 'admin'}>
-                  <AdminMainPage/>
-                </ProtectedRoute>
-              )}/>
-              <Route path="/header" element={(
-                <ProtectedRoute isAllowed={user && user.role === 'superadmin' || user && user.role === 'admin'}>
-                  <HeaderAdmin/>
-                </ProtectedRoute>
-              )}/>
-              <Route path="/pages" element={(
-                <ProtectedRoute isAllowed={user && user.role === 'superadmin' || user && user.role === 'admin'}>
-                  <AdminAllPages/>
-                </ProtectedRoute>
-              )}/>
-              <Route path="/pages/new-page" element={(
-                <ProtectedRoute isAllowed={user && user.role === 'superadmin' || user && user.role === 'admin'}>
-                  <AdminCreatePage/>
-                </ProtectedRoute>
-              )}/>
-              <Route path="/adminHeading" element={(
-                <ProtectedRoute isAllowed={user && user.role === 'superadmin' || user && user.role === 'admin'}>
-                  <HeadingAdmin/>
-                </ProtectedRoute>
-              )}/>
-              <Route path="/adminHeading:location" element={(
-                <ProtectedRoute isAllowed={user && user.role === 'superadmin' || user && user.role === 'admin'}>
-                  <HeadingDetail/>
-                </ProtectedRoute>
-              )}/>
-            </Routes>
-          </Container>
-        </AdminLayout>
-        :
-        <>
-          <header>
-            <Header/>
-          </header>
-          <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            {/*<Route path="/admin/*" element={<AdminRoutes/>}/>*/}
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/users" element={<UserPanelPage/>}/>
-            <Route path="/vacancy" element={<VacancyPage/>}/>
-            <Route path="/tariffs" element={<TariffPanelPage/>}/>
-            <Route path="*" element={'Not found'}/>
-          </Routes>
-        </>
-      }
-
+      <Routes>
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedRoute
+              isAllowed={
+                user &&
+                (user.role === 'superadmin' || user.role === 'admin')
+              }
+            >
+              <AdminRoutes/>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <header>
+        <Header/>
+      </header>
+      <Routes>
+        <Route path="/" element={<HomePage/>}/>
+        <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/users" element={<UserPanelPage/>}/>
+        <Route path="/vacancy" element={<VacancyPage/>}/>
+        <Route path="/tariffs" element={<TariffPanelPage/>}/>
+        <Route path="*" element={'Not found'}/>
+      </Routes>
     </>
   );
 
