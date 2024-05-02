@@ -88,7 +88,7 @@ export const RegisterPage = () => {
             variant="contained"
             sx={{mt: 3, mb: 2, backgroundColor: '#0866FF', borderRadius: '30px'}}
           >
-            Зарегестрироваться
+            Зарегистрироваться
           </LoadingButton>
           <Grid container justifyContent="flex-end">
             <Grid item>

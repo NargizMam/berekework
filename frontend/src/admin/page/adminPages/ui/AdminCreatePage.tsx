@@ -77,6 +77,7 @@ export const AdminCreatePage = () => {
 
   return (
     <>
+      <Typography sx={{m: 2}}>Создания новой страницы</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <TextField
           label="Name"
