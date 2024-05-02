@@ -21,7 +21,9 @@ import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice
 import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
+import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
+
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -39,6 +41,7 @@ const rootReducer = combineReducers({
   lastNews: lastNewsReducer,
   users: usersReducer,
   vacancy: vacancyReducer,
+  moderator: moderatorsReducer,
   tariff: tariffReducer,
   chooseBlock: chooseBlockReducer,
   employer: employerReducer,

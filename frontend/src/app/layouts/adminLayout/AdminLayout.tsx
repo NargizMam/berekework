@@ -1,9 +1,7 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { Outlet } from 'react-router-dom';
 import MainNavAdmin from './MainNavAdmin';
-
+import Container from '@mui/material/Container';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,23 +11,22 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
 
   return (
     <>
-      <Box
+      <Container
         sx={{
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
-          minHeight: '100%',
           padding: '20px'
         }}
       >
         <MainNavAdmin/>
         <main>
-          <Container sx={{mx: '18%'}}>
+          <Container maxWidth='md' style={{marginLeft: '15%'}}>
             {children}
             <Outlet/>
           </Container>
         </main>
-      </Box>
+      </Container>
     </>
   );
 

@@ -157,10 +157,10 @@ const run = async () => {
         buttonUrl: '/economic-forecasts',
       },
       {
-        cardTitle: 'Новые технологии в медицине',
-        cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/medical-technologies',
+        email: 'moderator2@gmail.com',
+        password: 'moderator2',
+        token: randomUUID(),
+        role: 'admin',
       },
     ],
   });

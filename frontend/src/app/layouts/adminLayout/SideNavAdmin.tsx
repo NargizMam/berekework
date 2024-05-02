@@ -12,7 +12,7 @@ export interface SideNavProps {
   onClose?: () => void;
 }
 
-export const SideNavAdmin: React.FC<SideNavProps> = ({open, onClose}) => {
+export const SideNavAdmin: React.FC<SideNavProps> = ({ open, onClose }) => {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -23,55 +23,60 @@ export const SideNavAdmin: React.FC<SideNavProps> = ({open, onClose}) => {
         flexDirection: 'column',
         height: '100%',
         left: 0,
-        width: '18%',
+        minWidth: '15%',
         display: open ? 'flex' : 'none',
-        padding: '5px',
+        padding: isMobileScreen ? '3px' : '5px',
         position: 'fixed',
         scrollbarWidth: 'none',
         top: 0,
         transition: 'width 0.3s ease-in-out',
         overflowX: 'hidden',
-        '&:hover': {
-          width: '18%'
-        },
       }}
     >
       <Typography
-        variant={open ? 'h6' : 'body1'}
+        variant={!isMobileScreen ? 'h6' : 'body1'}
         paddingTop={4}
         paddingBottom={2}
-        sx={{color: 'black', textDecoration: 'none'}}
+        sx={{ color: 'black', textDecoration: 'none' }}
         component={Link}
         to="/admin"
       >
         Bereke Admin
       </Typography>
-      {isMobileScreen &&
-        <FirstPageIcon onClick={onClose}
-                       sx={{
-                         position: 'absolute',
-                         top: '10px',
-                         right: '10px',
-                         cursor: 'pointer'}}/>}
-      <Divider sx={{mt: '10px'}}/>
-      <Box component="nav" sx={{flex: '1 1 auto', p: '12px'}}>
+      {isMobileScreen && (
+        <FirstPageIcon
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            cursor: 'pointer',
+          }}
+        />
+      )}
+      <Divider sx={{ mt: '10px' }} />
+      <Box component="nav" sx={{ flex: '1 1 auto', p: isMobileScreen ? '2px' : '12px' }}>
         <List>
           {SIDE_BAR_LINKS.map((sideLink) => (
             <ListItem disablePadding key={sideLink.id}>
-              <ListItemButton component={Link} to={sideLink.path} sx={{
-                marginBottom: '10px',
-                width: '100%',
-              }}>
+              <ListItemButton
+                component={Link}
+                to={sideLink.path}
+                sx={{
+                  marginBottom: isMobileScreen ? '2px' : '10px',
+                  width: '100%',
+                }}
+              >
                 <ListItemIcon>
-                  <LabelImportantIcon/>
+                  <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }}/>
                 </ListItemIcon>
-                <ListItemText primary={sideLink.value}/>
+                <ListItemText primary={sideLink.value} sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Box>
-      <Divider sx={{borderColor: '#000'}}/>
+      <Divider sx={{ borderColor: '#000' }} />
     </Box>
   );
 };
