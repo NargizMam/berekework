@@ -30,6 +30,11 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
     [{url: '', text: ''},]
   );
 
+  console.log({
+    title,
+    linksState,
+  });
+
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
 
   const addInputField = () => {
@@ -63,6 +68,7 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
     };
 
     try {
+      console.log(obj);
       await dispatch(createFooterLinks(obj));
     } catch (e) {
       alert('Invalid field');
@@ -75,72 +81,70 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
 
   return (
     <div>
-      <form autoComplete="off" onSubmit={submitFormHandler} style={{width: '100%'}}>
-        <Modal
-          open={open}
-          onClose={closeModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Grid sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Создание блока с ссылками
-              </Typography>
-              <Button onClick={closeModal}>close</Button>
+      <Modal
+        open={open}
+        onClose={closeModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Grid sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Создание блока с ссылками
+            </Typography>
+            <Button onClick={closeModal}>close</Button>
+          </Grid>
+          <TextField
+            label="Заголовок блока с ссылками"
+            variant="outlined"
+            fullWidth
+            value={title}
+            onChange={handleTitleChange}
+            sx={{mt: 2}}
+          />
+          {linksState.map((element, index) => (
+            <Grid sx={{display: 'flex', alignItems: 'center'}} key={index}>
+              <TextField
+                label="url"
+                variant="outlined"
+                fullWidth
+                onChange={e => handleUrlChange(index, e)}
+                value={element.url}
+                sx={{mt: 2, marginRight: '10px'}}
+              />
+              <TextField
+                label="Текст"
+                variant="outlined"
+                fullWidth
+                value={element.text}
+                onChange={e => handleTextChange(index, e)}
+                sx={{mt: 2, marginLeft: '10px', marginRight: '20px'}}
+              />
+              {
+                index ?
+                  <Button type="button"
+                          variant="contained"
+                          sx={{marginTop: '15px'}}
+                          onClick={() => removeFields(index)}
+                  ><CloseIcon/></Button>
+                  : <div style={{width: '100px', marginLeft: '20px'}}></div>
+              }
             </Grid>
-            <TextField
-              label="Заголовок блока с ссылками"
-              variant="outlined"
-              fullWidth
-              value={title}
-              onChange={handleTitleChange}
-              sx={{mt: 2}}
-            />
-            {linksState.map((element, index) => (
-              <Grid sx={{display: 'flex', alignItems: 'center'}} key={index}>
-                <TextField
-                  label="url"
-                  variant="outlined"
-                  fullWidth
-                  onChange={e => handleUrlChange(index, e)}
-                  value={element.url}
-                  sx={{mt: 2, marginRight: '10px'}}
-                />
-                <TextField
-                  label="Текст"
-                  variant="outlined"
-                  fullWidth
-                  value={element.text}
-                  onChange={e => handleTextChange(index, e)}
-                  sx={{mt: 2, marginLeft: '10px', marginRight: '20px'}}
-                />
-                {
-                  index ?
-                    <Button type="button"
-                            variant="contained"
-                            sx={{marginTop: '15px'}}
-                            onClick={() => removeFields(index)}
-                    ><CloseIcon/></Button>
-                    : <div style={{width: '100px', marginLeft: '20px'}}></div>
-                }
-              </Grid>
-            ))}
-            <Grid
-              sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}>
-              <Button
-                variant="contained"
-                className="btn btn-outline-success"
-                onClick={addInputField}
-                sx={{marginTop: '20px'}}
-              >+ Add Link</Button>
-              <Button type="submit" variant="contained" sx={{mt: 2}}>
-                Создать блок с ссылками
-              </Button>
-            </Grid>
-          </Box>
-        </Modal>
-      </form>
+          ))}
+          <Grid
+            sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}>
+            <Button
+              variant="contained"
+              className="btn btn-outline-success"
+              onClick={addInputField}
+              sx={{marginTop: '20px'}}
+            >+ Add Link</Button>
+            <Button type="submit" onClick={submitFormHandler} variant="contained" sx={{mt: 2}}>
+              Создать блок с ссылками
+            </Button>
+          </Grid>
+        </Box>
+      </Modal>
     </div>
   );
 };

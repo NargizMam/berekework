@@ -46,6 +46,8 @@ footerRouter.post('/new-links', async (req, res, next) => {
     }
 
     const { title, links } = req.body;
+    console.log('REQ BODY: ')
+    console.dir(req.body, { depth: null, maxArrayLength: null })
 
     const existingFooter = existingFooters[0];
 

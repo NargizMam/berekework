@@ -28,17 +28,19 @@ export const createFooter = createAsyncThunk(
 
 export const createFooterLinks = createAsyncThunk(
   'footer/addFooterLinks',
-  async (links: IFooterLinks) => {
-    const formData = new FormData();
-    formData.append('title', links.title);
+  async (links: IFooterLinks, { rejectWithValue }) => {
+    try {
+      const data = {
+        title: links.title,
+        links: links.links,
+      };
 
-    if (links.links) {
-      links.links.forEach((link, index) => {
-        formData.append(`links[${index}][url]`, link.url);
-        formData.append(`links[${index}][text]`, link.text);
-      });
+      const response = await axiosApi.post('/footer/new-links', data);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
     }
-    await axiosApi.post('/footer/new-links', formData);
   }
 );
 
