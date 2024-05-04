@@ -1,5 +1,5 @@
 import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { useEffect } from 'react';
 import { fetchAllPages } from '../api/adminPageThunks';
@@ -8,6 +8,7 @@ import { selectPageFetchingAll, selectPages } from '../model/adminPageSlice';
 
 export const AdminAllPages = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const pages = useAppSelector(selectPages);
   const fetchAllPagesLoading = useAppSelector(selectPageFetchingAll);
 
@@ -20,7 +21,7 @@ export const AdminAllPages = () => {
   };
 
   const onEditPage = (pageId: string) => {
-    console.log(pageId);
+    navigate(`/admin/page/edit/${pageId}`);
   };
 
   return (
