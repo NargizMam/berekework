@@ -6,10 +6,11 @@ import { Fields, IPage } from '../../page/adminPages/model/types';
 interface Props {
   block: Fields;
   index: number;
-  onDeleteComponent: (index: number) => void;
+  onDeleteComponent: (index: number, componentId?: string) => void;
   page: IPage[];
   chooseComponentName: string[];
   setPagesData: (data: IPage[]) => void;
+  imageInputChange: (location: string, index: number) => void;
 }
 
 const ComponentList: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const ComponentList: React.FC<Props> = ({
   page,
   chooseComponentName,
   setPagesData,
+  imageInputChange,
 }) => {
   const onChangeComponentsInput = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const { name, value } = e.target;
@@ -27,18 +29,16 @@ const ComponentList: React.FC<Props> = ({
     setPagesData(data);
   };
 
-  const imageInputChange = (location: string, index: number) => {
-    const data = [...page];
-    data[index].content['image'] = location;
-    setPagesData(data);
-  };
-
   return (
     <>
       <Box sx={{ border: '1px solid black', borderRadius: '14px', padding: 1, margin: '10px 0' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-around', margin: '10px 0' }}>
           <Typography variant="h6">{chooseComponentName[index]}</Typography>
-          <Button variant="contained" color={'error'} onClick={() => onDeleteComponent(index)}>
+          <Button
+            variant="contained"
+            color={'error'}
+            onClick={() => onDeleteComponent(index, page[index].content['_id'] as string)}
+          >
             Delete
           </Button>
         </Box>

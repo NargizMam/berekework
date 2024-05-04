@@ -1,0 +1,144 @@
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { fetchOnePage } from '../api/adminPageThunks';
+import { selectOnePage, selectPageFetchingOne } from '../model/adminPageSlice';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
+import { Fields, IPage } from '../model/types';
+import ModalComponents from '../../../widgets/ModalComponents/ModalComponents';
+import ComponentList from '../../../widgets/adminPageCreateForm/ComponentList';
+import { components } from '../../../../app/constants/components';
+
+const EditPage = () => {
+  const { id } = useParams() as { id: string };
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [chooseComponentName, setChooseComponentName] = useState<string[]>([]);
+
+  const [state, setState] = useState({
+    name: '',
+    url: '',
+  });
+  const [componentsField, setComponentsField] = useState<Fields[]>([]);
+  const [page, setPages] = useState<IPage[]>([]);
+
+  const dispatch = useAppDispatch();
+
+  const onePage = useAppSelector(selectOnePage);
+  const onePageFetching = useAppSelector(selectPageFetchingOne);
+
+  useEffect(() => {
+    dispatch(fetchOnePage(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (onePage) {
+      setState({ name: onePage.name, url: onePage.url });
+
+      setPages([]);
+      setChooseComponentName([]);
+      setComponentsField([]);
+
+      onePage.componentType.map((componentName, componentIndex) => {
+        const findIndex = components.findIndex((value) => value.name === componentName);
+
+        console.log(findIndex);
+
+        const component = components[findIndex];
+
+        setChooseComponentName((prevState) => [...prevState, component.displayName]);
+        setComponentsField((prevState) => [...prevState, component.fields]);
+
+        setPages((prevState) => [
+          ...prevState,
+          {
+            nameComponent: componentName,
+            content: onePage.components[componentIndex],
+          },
+        ]);
+        setIsOpenModal(false);
+      });
+    }
+  }, [onePage]);
+
+  console.log(onePage);
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const onEditPage = (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = { name: state.name, url: state.url, blocks: page };
+    console.log(result);
+  };
+
+  const onDeleteComponent = (index: number, componentId?: string) => {
+    console.log(`Delete first component by this id in api ${componentId}  Than delete from state by this ${index}}`);
+  };
+
+  const imageInputChange = (location: string, index: number) => {
+    console.log('Location=', location, ` Index = ${index}`);
+  };
+
+  return (
+    <>
+      {onePageFetching ? (
+        <CircularProgress />
+      ) : (
+        onePage && (
+          <>
+            <Typography variant={'h4'} sx={{ fontWeight: 'bold', margin: '10px 0' }}>
+              Edit page
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <ComponentAdder
+                name={state.name}
+                url={state.url}
+                onInputChange={onInputChange}
+                setOpenModal={setIsOpenModal}
+              />
+            </Box>
+            <Box component={'form'} sx={{ mt: 2 }} onSubmit={onEditPage}>
+              <Grid container spacing={2} direction="column">
+                {componentsField.map((component, index) => (
+                  <ComponentList
+                    key={`${index}-component`}
+                    page={page}
+                    index={index}
+                    block={component}
+                    chooseComponentName={chooseComponentName}
+                    setPagesData={setPages}
+                    onDeleteComponent={onDeleteComponent}
+                    imageInputChange={imageInputChange}
+                  />
+                ))}
+              </Grid>
+              <Grid item>
+                <Button variant={'contained'} type={'submit'} sx={{ margin: '10px 0' }}>
+                  Save
+                </Button>
+              </Grid>
+            </Box>
+            <ModalComponents
+              isOpen={isOpenModal}
+              setIsOpen={setIsOpenModal}
+              onChangePages={(page) => setPages((prevState) => [...prevState, page])}
+              onChangeComponentDisplayName={(displayName) =>
+                setChooseComponentName((prevState) => [...prevState, displayName])
+              }
+              onChangeComponentField={(fields) => setComponentsField((prevState) => [...prevState, fields])}
+            />
+          </>
+        )
+      )}
+    </>
+  );
+};
+export default EditPage;

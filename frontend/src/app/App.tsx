@@ -15,7 +15,7 @@ import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
-import EditPage from '../admin/page/editPage/ui/EditPage';
+import EditPage from '../admin/page/adminPages/ui/EditPage';
 
 const AdminRoutes = () => (
   <AdminLayout>

@@ -2,38 +2,6 @@ import { Components } from '../../shared/types';
 
 export const components: Components[] = [
   {
-    id: '123',
-    image: '',
-    name: 'MainBlock',
-    displayName: 'Main block',
-    fields: {
-      title: {
-        type: 'string',
-        fieldName: 'title',
-        value: '',
-        typeField: 'short-text',
-        required: true,
-        placeholder: 'Put title',
-      },
-      description: {
-        type: 'string',
-        fieldName: 'description',
-        value: '',
-        typeField: 'long-text',
-        required: true,
-        placeholder: 'Put description',
-      },
-      image: {
-        type: 'string',
-        fieldName: 'image',
-        value: '',
-        typeField: 'image',
-        required: true,
-        placeholder: 'Put image',
-      },
-    },
-  },
-  {
     id: 'heading2313213',
     image: '',
     name: 'Heading',
@@ -62,14 +30,6 @@ export const components: Components[] = [
         typeField: 'image',
         required: false,
         placeholder: 'Put image',
-      },
-      url: {
-        type: 'string',
-        fieldName: 'url',
-        value: '',
-        typeField: 'short-text',
-        required: false,
-        placeholder: 'Put url',
       },
     },
   },
