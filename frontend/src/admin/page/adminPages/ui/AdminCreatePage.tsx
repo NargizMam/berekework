@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Divider, Grid, List, ListItem, ListItemText, Modal, Typography } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
+import { Box, Button, Grid } from '@mui/material';
 import { useAppDispatch } from '../../../../app/store/hooks';
-import { components } from '../../../../app/constants/components';
 import { createPage, fetchAllPages } from '../api/adminPageThunks';
 import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
 import ComponentList from '../../../widgets/adminPageCreateForm/ComponentList';
+import ModalComponents from '../../../widgets/ModalComponents/ModalComponents';
 import { Fields, IPage } from '../model/types';
 
 export const AdminCreatePage = () => {
@@ -21,25 +17,8 @@ export const AdminCreatePage = () => {
     name: '',
     url: '',
   });
-  const [openModal, setOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [chooseComponentName, setChooseComponentName] = useState<string[]>([]);
-
-  const onSelectComponent = (index: number) => {
-    const selectComponent = components[index];
-    setChooseComponentName((prevState) => [...prevState, selectComponent.displayName]);
-    setComponentsField((prevState) => [...prevState, selectComponent.fields]);
-    const oneFieldObject = [];
-
-    for (const key in selectComponent.fields) {
-      const value = selectComponent.fields[key as keyof typeof selectComponent.fields];
-      const item = { [key]: value.value };
-      oneFieldObject.push(item);
-    }
-
-    const combinedObject = Object.assign({}, ...oneFieldObject);
-    setPages((prevState) => [...prevState, { nameComponent: selectComponent.name, content: combinedObject }]);
-    setOpenModal(false);
-  };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +50,7 @@ export const AdminCreatePage = () => {
           name={initialPageValues.name}
           url={initialPageValues.url}
           onInputChange={onInputChange}
-          setOpenModal={setOpenModal}
+          setOpenModal={setIsOpenModal}
         />
       </Box>
       <Box component={'form'} sx={{ mt: 2 }} onSubmit={onSubmit}>
@@ -94,43 +73,15 @@ export const AdminCreatePage = () => {
           </Button>
         </Grid>
       </Box>
-      <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            backgroundColor: '#fff',
-            border: '2px solid #000',
-            p: 2,
-          }}
-        >
-          <Tooltip title="Search">
-            <IconButton>
-              <SearchIcon />
-            </IconButton>
-          </Tooltip>
-          <InputBase placeholder="Search..." sx={{ border: '1px solid #000', borderRadius: '4px', px: 1 }} />
-          <Typography variant="h6" component="h2" gutterBottom>
-            Select a Component
-          </Typography>
-          <Divider />
-          <List>
-            {components.map((component, index) => (
-              <ListItem
-                key={component.id}
-                onClick={() => {
-                  onSelectComponent(index);
-                }}
-              >
-                <ListItemText primary={component.displayName} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Modal>
+      <ModalComponents
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        onChangePages={(page) => setPages((prevState) => [...prevState, page])}
+        onChangeComponentDisplayName={(displayName) =>
+          setChooseComponentName((prevState) => [...prevState, displayName])
+        }
+        onChangeComponentField={(fields) => setComponentsField((prevState) => [...prevState, fields])}
+      />
     </>
   );
 };
