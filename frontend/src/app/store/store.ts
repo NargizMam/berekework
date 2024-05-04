@@ -2,20 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { mainCardsReducer } from '../../admin/widgets/mainCards/model/mainCardsSlice';
 import { headingReducer } from '../../admin/page/HeadingAdmin/model/HeadingSlice';
 import { vacancyBlockReducer } from '../../admin/widgets/vacancyBlock/model/VacancyBlockSlice';
-import { pageReducer } from '../../admin/page/adminPages/model/adminCreatePageSlice';
+import { pageReducer } from '../../admin/page/adminPages/model/adminPageSlice';
 import { headerReducer } from '../../admin/page/headerCreate/model/headerSlice';
 import { authReducer } from '../../client/page/Auth/model/AuthSlice';
 import storage from 'redux-persist/lib/storage';
-import {
-  persistReducer,
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-  persistStore,
-} from 'redux-persist';
+import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
 import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
 import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
@@ -23,7 +14,6 @@ import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/block
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
 import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
-
 
 const usersPersistConfig = {
   key: 'shop:users',

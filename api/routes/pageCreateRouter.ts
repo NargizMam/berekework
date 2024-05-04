@@ -29,22 +29,32 @@ pageCreateRouter.post('/', async (req, res, next) => {
         newPage.components.push(id._id);
         await componentInstance.save();
       } else {
-        return res.status(422).send({ error: 'No such components', missingComponents: blocks.filter(block => !modelMapping[block.nameComponent]) });
+        return res.status(422).send({
+          error: 'No such components',
+          missingComponents: blocks.filter((block) => !modelMapping[block.nameComponent]),
+        });
       }
     }
 
     const newPageModel = new Page(newPage);
     await newPageModel.save();
 
-    res.status(200).send({message: 'Page created successfully', id: newPageModel._id});
+    res.status(200).send({ message: 'Page created successfully', id: newPageModel._id });
   } catch (e) {
     console.log(e);
     next(e);
   }
 });
 
-pageCreateRouter.get('/', async (_req, res, next) => {
+pageCreateRouter.get('/', async (req, res, next) => {
   try {
+    const crmAllPages = req.query.crmPages;
+
+    if (crmAllPages) {
+      const pages = await Page.find().select('_id name url').sort({ createdAt: -1 });
+      return res.send(pages);
+    }
+
     const pages = await Page.find().populate('components');
     return res.send(pages);
   } catch (e) {

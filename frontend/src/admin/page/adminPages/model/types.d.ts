@@ -21,6 +21,13 @@ export interface CreatePage {
 export interface OnePageResponse {
   _id: string;
   name: string;
+  url: string;
   components: [{ [key: string]: string }];
   componentType: string[];
+}
+
+export interface AllPagesCRM {
+  _id: string;
+  name: string;
+  url: string;
 }
