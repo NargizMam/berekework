@@ -31,3 +31,7 @@ export interface AllPagesCRM {
   name: string;
   url: string;
 }
+
+export interface Fields {
+  [key: string]: Field;
+}

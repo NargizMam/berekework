@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Divider, Grid, List, ListItem, ListItemText, Modal, Typography } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -7,19 +8,14 @@ import InputBase from '@mui/material/InputBase';
 import { useAppDispatch } from '../../../../app/store/hooks';
 import { components } from '../../../../app/constants/components';
 import { createPage, fetchAllPages } from '../api/adminPageThunks';
-import InputItem from '../../../widgets/adminPageCreateForm/InputItem';
-import { Field, IPage } from '../model/types';
-import { useNavigate } from 'react-router-dom';
 import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
-
-interface Fields {
-  [key: string]: Field;
-}
+import ComponentList from '../../../widgets/adminPageCreateForm/ComponentList';
+import { Fields, IPage } from '../model/types';
 
 export const AdminCreatePage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [blocks, setBlocks] = useState<Fields[]>([]);
+  const [componentsField, setComponentsField] = useState<Fields[]>([]);
   const [page, setPages] = useState<IPage[]>([]);
   const [initialPageValues, setInitialPageValues] = useState({
     name: '',
@@ -31,7 +27,7 @@ export const AdminCreatePage = () => {
   const onSelectComponent = (index: number) => {
     const selectComponent = components[index];
     setChooseComponentName((prevState) => [...prevState, selectComponent.displayName]);
-    setBlocks((prevState) => [...prevState, selectComponent.fields]);
+    setComponentsField((prevState) => [...prevState, selectComponent.fields]);
     const oneFieldObject = [];
 
     for (const key in selectComponent.fields) {
@@ -43,19 +39,6 @@ export const AdminCreatePage = () => {
     const combinedObject = Object.assign({}, ...oneFieldObject);
     setPages((prevState) => [...prevState, { nameComponent: selectComponent.name, content: combinedObject }]);
     setOpenModal(false);
-  };
-
-  const onChangeComponents = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const { name, value } = e.target;
-    const data = [...page];
-    data[index].content[name] = value;
-    setPages(data);
-  };
-
-  const imageInputChange = (location: string, index: number) => {
-    const data = [...page];
-    data[index].content['image'] = location;
-    setPages(data);
   };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -75,6 +58,12 @@ export const AdminCreatePage = () => {
     }));
   };
 
+  const deleteBlock = (index: number) => {
+    setComponentsField((prevBlocks) => prevBlocks.filter((_, i) => i !== index));
+    setPages((prevPages) => prevPages.filter((_, i) => i !== index));
+    setChooseComponentName((prevNames) => prevNames.filter((_, i) => i !== index));
+  };
+
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -87,32 +76,16 @@ export const AdminCreatePage = () => {
       </Box>
       <Box component={'form'} sx={{ mt: 2 }} onSubmit={onSubmit}>
         <Grid container spacing={2} direction="column">
-          {blocks.map((block, index) => (
-            <React.Fragment key={index}>
-              <Box sx={{ border: '1px solid black', borderRadius: '14px', padding: 1, margin: '10px 0' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-around', margin: '10px 0' }}>
-                  <Typography variant="h6">{chooseComponentName[index]}</Typography>
-                  <Button variant="contained" color={'error'}>
-                    Delete
-                  </Button>
-                </Box>
-                {Object.keys(block).map((key: keyof Fields) => {
-                  const input = block[key];
-                  const value = page[index].content[key];
-                  return (
-                    <Grid item sx={{ mb: 1 }} key={`${index}-${key}`}>
-                      <InputItem
-                        field={input}
-                        index={index}
-                        value={value}
-                        onChange={onChangeComponents}
-                        imageInputChange={imageInputChange}
-                      />
-                    </Grid>
-                  );
-                })}
-              </Box>
-            </React.Fragment>
+          {componentsField.map((component, index) => (
+            <ComponentList
+              key={`${index}-component`}
+              page={page}
+              index={index}
+              block={component}
+              chooseComponentName={chooseComponentName}
+              setPagesData={setPages}
+              onDeleteComponent={deleteBlock}
+            />
           ))}
         </Grid>
         <Grid item>
