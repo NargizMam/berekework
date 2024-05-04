@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Divider, Grid, List, ListItem, ListItemText, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, List, ListItem, ListItemText, Modal, Typography } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -10,6 +10,7 @@ import { createPage, fetchAllPages } from '../api/adminPageThunks';
 import InputItem from '../../../widgets/adminPageCreateForm/InputItem';
 import { Field, IPage } from '../model/types';
 import { useNavigate } from 'react-router-dom';
+import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
 
 interface Fields {
   [key: string]: Field;
@@ -20,8 +21,10 @@ export const AdminCreatePage = () => {
   const dispatch = useAppDispatch();
   const [blocks, setBlocks] = useState<Fields[]>([]);
   const [page, setPages] = useState<IPage[]>([]);
-  const [name, setName] = useState('');
-  const [url, setUrl] = useState('');
+  const [initialPageValues, setInitialPageValues] = useState({
+    name: '',
+    url: '',
+  });
   const [openModal, setOpenModal] = useState(false);
   const [chooseComponentName, setChooseComponentName] = useState<string[]>([]);
 
@@ -57,26 +60,30 @@ export const AdminCreatePage = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = { name, url, blocks: page };
+    const result = { name: initialPageValues.name, url: initialPageValues.url, blocks: page };
     dispatch(createPage(result));
     dispatch(fetchAllPages());
     navigate('/admin/pages');
   };
 
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setInitialPageValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} variant="outlined" />
-        <TextField label="URL" value={url} onChange={(e) => setUrl(e.target.value)} variant="outlined" />
-        {name && url && (
-          <Button
-            onClick={() => setOpenModal(true)}
-            variant="contained"
-            sx={{ backgroundColor: '#000', color: '#fff', borderColor: '#000', width: '50%', alignSelf: 'center' }}
-          >
-            Добавить компонент
-          </Button>
-        )}
+        <ComponentAdder
+          name={initialPageValues.name}
+          url={initialPageValues.url}
+          onInputChange={onInputChange}
+          setOpenModal={setOpenModal}
+        />
       </Box>
       <Box component={'form'} sx={{ mt: 2 }} onSubmit={onSubmit}>
         <Grid container spacing={2} direction="column">
