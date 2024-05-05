@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import config from './config';
-import Vacancy from './models/Vacancy';
-import VacanciesBlock from './models/VacanciesBlock';
+import Vacancy from './models/vacancy/Vacancy';
+import VacanciesBlock from './models/vacancy/VacanciesBlock';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
-import LastNewsBlock from './models/LastNewsBlock';
-import mainContainerCard from './models/mainContainerCardModel';
+import LastNewsBlock from './models/lastNews/LastNewsBlock';
+import Employer from './models/employer/employerModel';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -26,9 +26,9 @@ const run = async () => {
     'vacanciesblocks',
     'vacancies',
     'users',
+    'employers',
     'tariffs',
     'lastnewsblocks',
-    'maincontainercards',
   ];
 
   for (const collectionName of collections) {
@@ -117,7 +117,19 @@ const run = async () => {
     role: 'superadmin',
   });
 
+  await Employer.create({
+    email: 'employer@gmail.com',
+    password: 'employer',
+    token: randomUUID(),
+    action: 'Game organization',
+    foundationYear: '2012',
+    scope: 'Major',
+    companyName: 'NAVI',
+    role: 'employer',
+  });
+
   await Tariff.create({
+    mainTitle: 'Tariff',
     title: 'Basic',
     description: ['Free Food', 'Apple Music'],
   });
@@ -145,26 +157,13 @@ const run = async () => {
         buttonUrl: '/economic-forecasts',
       },
       {
-        cardTitle: 'Новые технологии в медицине',
-        cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/medical-technologies',
+        email: 'moderator2@gmail.com',
+        password: 'moderator2',
+        token: randomUUID(),
+        role: 'admin',
       },
     ],
   });
-
-  await mainContainerCard.create(
-    {
-      title: 'Вакансии за рубежом',
-      text: 'Ищете работу за границей? У нас есть вакансии! Присоединяйтесь и найди…',
-      image: '/fixtures/image_maincard_suitcase.png',
-    },
-    {
-      title: 'Вакансии в Кыргызстане',
-      text: 'Ищете работу? У нас есть вакансии в Кыргызстане для вас! Присоединяйте…',
-      image: '/fixtures/image_maincard_folder.png',
-    },
-  );
 
   await db.close();
 };

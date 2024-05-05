@@ -1,94 +1,82 @@
-import React from 'react';
-import { Box, Divider, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SIDE_BAR_LINKS } from '../../constants/links';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
+import React from 'react';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
-const SideNavAdmin: React.FC = () => {
+export interface SideNavProps {
+  open?: boolean;
+  onClose?: () => void;
+}
+
+export const SideNavAdmin: React.FC<SideNavProps> = ({ open, onClose }) => {
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Box
       sx={{
-        '--SideNav-background': 'var(--mui-palette-neutral-950)',
-        '--SideNav-color': 'var(--mui-palette-common-white)',
-        '--NavItem-color': 'var(--mui-palette-neutral-300)',
-        '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
-        '--NavItem-active-background': 'var(--mui-palette-primary-main)',
-        '--NavItem-active-color': 'var(--mui-palette-primary-contrastText)',
-        '--NavItem-disabled-color': 'var(--mui-palette-neutral-500)',
-        '--NavItem-icon-color': 'var(--mui-palette-neutral-400)',
-        '--NavItem-icon-active-color': 'var(--mui-palette-primary-contrastText)',
-        '--NavItem-icon-disabled-color': 'var(--mui-palette-neutral-600)',
-        bgcolor: '#ccc',
-        color: '#fff',
-        display: { xs: 'none', lg: 'flex' },
+        bgcolor: '#cfd8dc',
         flexDirection: 'column',
         height: '100%',
         left: 0,
-        maxWidth: '100%',
+        minWidth: '15%',
+        display: open ? 'flex' : 'none',
+        padding: isMobileScreen ? '3px' : '5px',
         position: 'fixed',
         scrollbarWidth: 'none',
         top: 0,
-        width: 'var(--SideNavAdmin-width)',
-        zIndex: 'var(--SideNavAdmin-zIndex)',
-        '&::-webkit-scrollbar': { display: 'none' },
+        transition: 'width 0.3s ease-in-out',
+        overflowX: 'hidden',
       }}
     >
       <Typography
-        sx={{ p: '12px', textAlign: 'center', color: 'black', textDecoration: 'none', fontWeight: 'bold' }}
+        variant={!isMobileScreen ? 'h6' : 'body1'}
+        paddingTop={4}
+        paddingBottom={2}
+        sx={{ color: 'black', textDecoration: 'none' }}
         component={Link}
-        to="/"
+        to="/admin"
       >
         Bereke Admin
       </Typography>
-      <Divider sx={{ borderColor: '#000' }} />
-      <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
+      {isMobileScreen && (
+        <FirstPageIcon
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            cursor: 'pointer',
+          }}
+        />
+      )}
+      <Divider sx={{ mt: '10px' }} />
+      <Box component="nav" sx={{ flex: '1 1 auto', p: isMobileScreen ? '2px' : '12px' }}>
         <List>
           {SIDE_BAR_LINKS.map((sideLink) => (
             <ListItem disablePadding key={sideLink.id}>
-              <ListItemButton component={Link} to={sideLink.path} sx={{
-                borderRadius: '4px',
-                marginBottom: '8px',
-                width: '100%',
-                borderBottom: '1px solid #000',
-              }}>
-                <ListItemText primary={sideLink.value} />
+              <ListItemButton
+                component={Link}
+                to={sideLink.path}
+                sx={{
+                  marginBottom: isMobileScreen ? '2px' : '10px',
+                  width: '100%',
+                }}
+              >
+                <ListItemIcon>
+                  <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }}/>
+                </ListItemIcon>
+                <ListItemText primary={sideLink.value} sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
               </ListItemButton>
             </ListItem>
           ))}
-         {/* <ListItem disablePadding>
-            <ListItemButton component={Link} to="pages" sx={{
-              borderRadius: '4px',
-              marginBottom: '8px',
-              width: '100%',
-              borderBottom: '1px solid #000',
-            }}>
-              <ListItemText primary="Pages" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to="users" sx={{
-              borderRadius: '4px',
-              marginBottom: '8px',
-              width: '100%',
-              borderBottom: '1px solid #000',
-            }}>
-              <ListItemText primary="Users" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to="vacance" sx={{
-              borderRadius: '4px',
-              marginBottom: '8px',
-              width: '100%',
-              borderBottom: '1px solid #000',
-            }}>
-              <ListItemText primary="Vacance" />
-            </ListItemButton>
-          </ListItem>*/}
         </List>
       </Box>
-      <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
+      <Divider sx={{ borderColor: '#000' }} />
     </Box>
   );
 };
-
-export default SideNavAdmin;

@@ -9,7 +9,7 @@ export interface mainCardContainerType {
   URLpath: string | null;
 }
 
-export type mainCardContainerTypeWithoutId = Omit<mainCardContainerType, '_id'>
+export type mainCardContainerTypeWithoutId = Omit<mainCardContainerType, '_id'>;
 
 export interface NavbarItemFields {
   nameNav: string;
@@ -29,10 +29,21 @@ export interface UserFields {
   password: string;
   token: string;
   role: string;
-  displayName?: string;
   googleID?: string;
-  githubID?: string;
   avatar?: string;
+}
+
+export interface EmployerFields {
+  email: string;
+  password: string;
+  token: string;
+  role: string;
+  companyName: string;
+  googleID?: string;
+  avatar?: string;
+  scope: string;
+  action: string;
+  foundationYear: string;
 }
 
 export interface UserMethods {
@@ -41,6 +52,7 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
+export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
 
 export interface VacancyApi {
   _id: string;
@@ -54,6 +66,7 @@ export interface VacancyApi {
     max: number | null;
   };
   url: string;
+  employer: string;
 }
 
 export type VacancyMutation = Omit<VacancyApi, '_id'>;
@@ -69,7 +82,6 @@ export interface VacanciesBlockApi {
 }
 
 export type VacanciesBlockMutation = Omit<VacanciesBlockApi, '_id'>;
-
 
 // Header
 export interface NavbarItemFields {

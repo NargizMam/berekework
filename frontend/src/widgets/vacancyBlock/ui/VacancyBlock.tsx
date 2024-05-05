@@ -1,55 +1,33 @@
 import { Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { VacancyCard } from '../../../feachers/vacancyCard/ui/VacancyCard';
-import VacancyBlockStyle from './VacancyBlock-style';
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
-import { selectBlock, selectIsLoading, selectVacancy, selectisLoadingCard } from '../model/VacancyBlockSlice';
-import { Loader } from '../../../shared/loader/index';
-import { getVacancyBlock, getVacancyCard } from '../model/VacancyBlockThunks';
+import React, { useState } from 'react';
+import { VacancyCard, VacancyCardApiData } from '../../../feachers/vacancyCard/ui/VacancyCard';
 import './VacancyBlock.css';
-import { VacancyCardApiData } from '../../../shared/api/vacancy/types';
+import VacancyBlockStyle from './VacancyBlock-style';
 
-export const VacancyBlock = () => {
-  const dispatch = useAppDispatch();
-  const block = useAppSelector(selectBlock);
-  const vacancyCard = useAppSelector(selectVacancy);
-  const isLoading = useAppSelector(selectIsLoading);
-  const isLoadingCard = useAppSelector(selectisLoadingCard);
-  let render;
+interface Props {
+  data: VacancyCardApiData[];
+}
 
-  useEffect(() => {
-    dispatch(getVacancyBlock()).unwrap();
-    dispatch(getVacancyCard()).unwrap();
-  }, [dispatch]);
+export const VacancyBlock: React.FC<Props> = ({data}) => {
+  const [currentRow, setCurrentRow] = useState(6);
 
-  if (block) {
-    render = (
-      <>
-        <Typography variant="h2" sx={VacancyBlockStyle.title}>
-          {block.title}
-        </Typography>
-        <div className="VacancyBlock__flex">
-          {isLoadingCard ? (
-            <Loader />
-          ) : (
-            vacancyCard.map((data: VacancyCardApiData, index: number) => {
-              if (index < 6) {
-                return <VacancyCard key={data._id} data={data} />;
-              } else {
-                return null;
-              }
-            })
-          )}
-        </div>
-        <div className="VacancyBlock__buttonWrapper">
-          <Link className="VacancyBlock__button" to={block.button.url}>
-            <Typography sx={VacancyBlockStyle.button}>{block.button.text}</Typography>
-          </Link>
-        </div>
-      </>
-    );
-  }
+  const showMore = () => {
+    setCurrentRow(prev => prev + 6);
+  };
 
-  return <>{isLoading ? <Loader /> : render}</>;
+  return (
+    <>
+      <Typography variant="h2" sx={VacancyBlockStyle.title}>Последние Вакансии</Typography>
+      <div className="VacancyBlock__flex">
+        {data.map((data, index) => (
+          <VacancyCard key={data._id} data={data} viseble={index >= currentRow? false : true}/>
+        ))}
+      </div>
+      <div className="VacancyBlock__buttonWrapper">
+        <button className="VacancyBlock__button" onClick={showMore}>
+          <Typography sx={VacancyBlockStyle.button}>Смотреть еще</Typography>
+        </button>
+      </div>
+    </>
+  );
 };

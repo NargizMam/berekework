@@ -5,38 +5,19 @@ const headingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
-    type: String,
-  },
-  image: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  button: {
-    element: {
-      type: String,
-      default: 'button',
-    },
+  image: String,
+  description: String,
+  /*button: {
     url: {
       type: String,
-      typeField: {
-        type: String,
-        default: 'text',
-        immutable: true,
-      },
+      required: true,
     },
     text: {
       type: String,
-      typeField: {
-        type: String,
-        default: 'text',
-        immutable: true,
-      },
+      required: true,
     },
-  },
-});
+  },*/
+}, {versionKey: false});
 
 const Heading = mongoose.model('Heading', headingSchema);
 export default Heading;

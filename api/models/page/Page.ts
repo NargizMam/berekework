@@ -22,7 +22,7 @@ const PageSchema = new Schema({
       required: true,
     },
   ],
-});
+}, {versionKey: false});
 
 const Page = model('Page', PageSchema);
 

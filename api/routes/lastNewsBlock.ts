@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose, {Types} from 'mongoose';
-import LastNewsBlock from "../models/LastNewsBlock";
+import LastNewsBlock from "../models/lastNews/LastNewsBlock";
 
 
 const lastNewsBlockRouter = express.Router();
@@ -55,6 +55,7 @@ lastNewsBlockRouter.post('/', async (req, res, next) => {
                     id: req.body.id,
                     title: req.body.title,
                     page: req.body.page,
+                    dateTime: req.body.dateTime,
                     cards: req.body.cards,
                 };
 

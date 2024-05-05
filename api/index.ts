@@ -10,8 +10,11 @@ import userRouter from './routes/userRouter';
 import vacanciesRouter from './routes/vacanciesRouter';
 import vacanciesBlockRouter from './routes/vacanciesBlockRouter';
 import tariffRouter from './routes/tariffRouter';
-import lastNewsBlockRouter from "./routes/lastNewsBlock";
+import lastNewsBlockRouter from './routes/lastNewsBlock';
 import pageCreateRouter from './routes/pageCreateRouter';
+import employerRouter from './routes/employerRouter';
+import applicationsRouter from './routes/applicationsRouter';
+import imageUploadRouter from "./routes/imageUploadRouter";
 
 const app = express();
 
@@ -20,6 +23,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/user', userRouter);
+app.use('/employer', employerRouter);
 app.use('/mainContainerCard', mainContainerCardRouter);
 app.use('/header', headerRouter);
 app.use('/heading', headingRouter);
@@ -28,7 +32,8 @@ app.use('/vacanciesBlock', vacanciesBlockRouter);
 app.use('/tariff', tariffRouter);
 app.use('/last-news-block', lastNewsBlockRouter);
 app.use('/page', pageCreateRouter);
-
+app.use('/upload-image', imageUploadRouter);
+app.use('/applications', applicationsRouter);
 
 const run = async () => {
   await mongoose.connect(config.mongoose.db);
