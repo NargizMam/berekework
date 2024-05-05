@@ -18,12 +18,10 @@ const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numI
   const cardIcon = icon ? API_URL + icon : null;
   const cardImage = image ? API_URL + image : null;
 
-  const styles = MainCardItemStyle(cardIcon);
+  const styles = MainCardItemStyle(cardImage, cardIcon);
 
   const iconElement = cardIcon ? <CardMedia component="img" sx={styles.icon} image={cardIcon} alt="{title}" /> : null;
-  const imageElement = cardImage ? (
-    <CardMedia component="img" sx={styles.image} image={cardImage} alt="{title}" />
-  ) : null;
+  const imageElement = cardImage ? <CardMedia component="img" image={cardImage} alt="{title}" /> : null;
 
   const cardContent = (
     <CardContent sx={styles.content}>
