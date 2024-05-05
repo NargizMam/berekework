@@ -30,26 +30,21 @@ const contactsDetailsSchema = new Schema({
 const FooterSchema = new Schema({
   footerLinks: {
     type: [footerLinkSchema],
-    validate: [arrayMinSize, 'At least one footer link is required']
   },
   logo: {
     type: String,
-    required: true,
   },
   socialNetworks: {
     title: {
       type: String,
-      required: true,
     },
     socialNetworksArr: [socialNetworkSchema]
   },
   contactDetails: {
     type: [contactsDetailsSchema],
-    validate: [arrayMinSize, 'At least one contact detail is required']
   },
   copyright: {
     type: String,
-    required: true,
   },
 });
 

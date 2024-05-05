@@ -6,7 +6,7 @@ import axiosApi from '../../../../app/axiosApi';
 export const fetchFooterData = createAsyncThunk(
   'footer/fetchFooterData',
   async () => {
-    const response = await axios.get('/footer');
+    const response = await axiosApi.get('/footer');
     return response.data;
   }
 );
@@ -15,7 +15,7 @@ export const createFooter = createAsyncThunk(
   'footer/createFooter',
   async (footerData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/footer', footerData);
+      const response = await axiosApi.post('/footer', footerData);
       return response.data;
     }  catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {

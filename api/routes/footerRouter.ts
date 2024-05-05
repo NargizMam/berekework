@@ -70,6 +70,39 @@ footerRouter.post('/new-links', async (req, res, next) => {
   }
 });
 
+footerRouter.post('/new-contacts-block', async (req, res, next) => {
+  try {
+    const existingFooters = await Footer.find();
+
+    const totalContactDetails = existingFooters.reduce((total, footer) => total + footer.contactDetails.length, 0);
+
+    if (totalContactDetails >= 1) {
+      return res.status(400).send("you cannot add more than one contact block");
+    }
+
+    const { title, contactsDetailsArr } = req.body;
+
+    const existingFooter = existingFooters[0];
+
+    if (!existingFooter) {
+      const newFooter = new Footer({
+        contactDetails: [{ title, contactsDetailsArr }],
+      });
+
+      await newFooter.save();
+      return res.send(newFooter);
+    }
+
+    existingFooter.contactDetails.push({ title, contactsDetailsArr });
+    await existingFooter.save();
+
+    return res.send(existingFooter);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 footerRouter.delete('/footerLinks/:linkId', async (req, res, next) => {
   try {
     const { linkId } = req.params;
@@ -96,6 +129,34 @@ footerRouter.delete('/footerLinks/:linkId', async (req, res, next) => {
     next(error);
   }
 });
+
+footerRouter.delete('/contactBlock/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const existingFooter = await Footer.findOne({ 'contactDetails._id': id });
+
+    if (!existingFooter) {
+      return res.status(404).send("Footer not found");
+    }
+
+    const contactBlockIndex = existingFooter.contactDetails.findIndex(block => block._id && block._id.toString() === id);
+
+    if (contactBlockIndex === -1) {
+      return res.status(404).send("Contact block not found");
+    }
+
+    existingFooter.contactDetails.splice(contactBlockIndex, 1);
+
+    await existingFooter.save();
+
+    return res.send("Contact block deleted successfully");
+  } catch (error) {
+    console.error('Error deleting contact block:', error);
+    next(error);
+  }
+});
+
 
 
 

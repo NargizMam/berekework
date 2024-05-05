@@ -1,9 +1,10 @@
 import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IFooterLinks, ILinks } from '../../../../shared/types';
 import CloseIcon from '@mui/icons-material/Close';
-import { useAppDispatch } from '../../../../app/store/hooks';
-import { createFooterLinks } from '../../../page/FooterAdmin/api/FooterThunk';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { createFooterLinks, fetchFooterData } from '../../../page/FooterAdmin/api/FooterThunk';
+import { selectFooter } from '../../../page/FooterAdmin/model/FooterSlice';
 
 interface LinkBlockFormProps {
   open: boolean;
@@ -25,15 +26,15 @@ const style = {
 const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
   const [title, setTitle] = useState('');
   const dispatch = useAppDispatch();
+  const footer = useAppSelector(selectFooter);
+
+  useEffect(() => {
+    dispatch(fetchFooterData());
+  }, [dispatch]);
 
   const [linksState, setLinksState] = useState<ILinks[]>(
     [{url: '', text: ''},]
   );
-
-  console.log({
-    title,
-    linksState,
-  });
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
 
@@ -62,18 +63,33 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const footerLinks = footer[0]?.footerLinks;
+
+    if (!footerLinks || !Array.isArray(footerLinks)) {
+      console.error('Invalid footerLinks data:', footerLinks);
+      return;
+    }
+
+    const existingFooterLinksCount = footerLinks.length;
+
+    if (existingFooterLinksCount >= 5) {
+      alert('Превышено максимальное количество блоков с ссылками (5)\n' +
+        'Прежде чем добавить новый блок, удалите один из уже существующих');
+      return;
+    }
+
     const obj: IFooterLinks = {
       title: title,
       links: linksState,
     };
 
     try {
-      console.log(obj);
       await dispatch(createFooterLinks(obj));
     } catch (e) {
       alert('Invalid field');
     }
   };
+
 
   const closeModal = () => {
     onClose();

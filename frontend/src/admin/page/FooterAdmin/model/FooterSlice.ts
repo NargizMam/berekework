@@ -54,5 +54,6 @@ export const FooterSlice = createSlice({
 
 export const footerReducer = FooterSlice.reducer;
 export const selectFooter = (state: RootState) => state.footer.footer;
+export const selectFooterLinks = (state: RootState) => state.footer.footerLinks;
 export const selectCreateFooterLinks = (state: RootState) => state.footer.createFooterLinks;
 export const selectDeleteLoading = (state: RootState) => state.footer.deleteFooterLinks;
