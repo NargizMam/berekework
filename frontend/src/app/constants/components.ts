@@ -23,7 +23,7 @@ export const components: Components[] = [
         required: true,
         placeholder: 'Put description',
       },
-       image: {
+      image: {
         type: 'string',
         fieldName: 'image',
         value: '',
@@ -70,7 +70,7 @@ export const components: Components[] = [
         typeField: 'short-text',
         required: false,
         placeholder: 'Put url',
-      }
+      },
     },
   },
   {
@@ -102,7 +102,7 @@ export const components: Components[] = [
         typeField: 'short-text',
         required: false,
         placeholder: 'Put url',
-      }
+      },
     },
   },
   {

@@ -1,10 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { CreatePage } from '../../../../shared/types';
 import axiosApi from '../../../../app/axiosApi';
+import { CreatePage, OnePageResponse } from '../model/types';
 
-export const createPage = createAsyncThunk<void, CreatePage>(
-  'page/create',
-  async (data) => {
-    await axiosApi.post('/page', data);
-  },
+export const createPage = createAsyncThunk<string, CreatePage>('page/create', async (data) => {
+  const response = await axiosApi.post('/page', data);
+  return response.data.id;
+});
+
+export const fetchOnePage = createAsyncThunk<OnePageResponse, string>(
+  'page/fetchOne',
+  async (id) => {
+    const response = await axiosApi.get(`/page/${id}`);
+    return response.data;
+  }
 );

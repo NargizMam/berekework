@@ -23,6 +23,7 @@ import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/block
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
+import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
 
 
 const usersPersistConfig = {
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   vacancy: vacancyReducer,
   moderator: moderatorsReducer,
   tariff: tariffReducer,
+  file: fileReducer,
   chooseBlock: chooseBlockReducer,
   employer: employerReducer,
 });

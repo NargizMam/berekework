@@ -1,39 +1,3 @@
-// Header Admin interface
-export interface HeaderMutation {
-  logo: File | null | string;
-  name: string;
-  url: string;
-  navbarItems: NavbarItemMutation[];
-}
-
-export interface NavbarItemMutation {
-  nameNav: string;
-  link: string;
-  isDrop: boolean;
-  nestedMenu: NestedMenuMutation[];
-}
-
-export interface NestedMenuMutation {
-  nestedNameNav: string;
-  nestedLink: string;
-}
-
-export interface IHeader {
-  _id: string;
-  logo: string;
-  name: string;
-  url: string;
-  navbarItems: {
-    nameNav: string;
-    link: string;
-    isDrop: boolean;
-    nestedMenu: {
-      nestedNameNav: string;
-      nestedLink: string;
-    }[];
-  }[];
-}
-
 export interface Components {
   id: string;
   image: string;
@@ -49,25 +13,6 @@ export interface Components {
       placeholder: string;
     };
   };
-}
-export interface Field {
-  type: string;
-  typeField: string;
-  fieldName: string;
-  value: string | File;
-  required: boolean;
-  placeholder: string;
-}
-
-export interface IPage {
-  nameComponent: string;
-  content: { [key: string]: string | File };
-}
-
-export interface CreatePage {
-  name: string;
-  url: string;
-  blocks: IPage[];
 }
 
 export interface VacancyCardApiData {

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { HeaderMutation, IHeader } from '../../../../shared/types';
 import axiosApi from '../../../../app/axiosApi';
+import { HeaderMutation, IHeader } from '../model/types';
 
 
 export const createHeader = createAsyncThunk<void, HeaderMutation>(
