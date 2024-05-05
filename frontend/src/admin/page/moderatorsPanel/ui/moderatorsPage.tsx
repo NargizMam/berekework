@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { deleteModerator, getAllModerators } from '../api/moderatorsThunk';
 import {
   Button,
-  Grid,
   Paper,
   Table,
   TableBody,
@@ -15,7 +14,7 @@ import {
 } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 import { selectModerators, selectModeratorsLoading } from '../model/moderatorsSlice';
-import { RegisterPage } from '../../../../client/page/Auth/ui/RegisterPage';
+import { ModeratorsForm } from './moderatorsForm';
 
 export const ModeratorsPage = () => {
   const dispatch = useAppDispatch();
@@ -37,11 +36,9 @@ export const ModeratorsPage = () => {
 
   return (
     <>
-      <Grid position="relative">
-        {loading && <Loader/>}
-        {moderators.length === 0 ??
-          <Typography>Модераторы еще не созданы</Typography>}
-
+      {loading && <Loader/>}
+      {moderators.length === 0 ??
+        <Typography>Модераторы еще не созданы</Typography>}
         <TableContainer component={Paper}>
           <Table sx={{minWidth: 650}}>
             <TableHead>
@@ -56,6 +53,7 @@ export const ModeratorsPage = () => {
               {moderators.map((moderator) => (
                 <TableRow key={moderator._id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                   <TableCell align="left">{moderator.email}</TableCell>
+                  <TableCell align="left">{moderator.password}</TableCell>
                   <TableCell align="left">{moderator.role}</TableCell>
                   <TableCell align="left">{moderator.createdAt}</TableCell>
                   <TableCell align="left">{moderator.updatedAt}</TableCell>
@@ -70,8 +68,7 @@ export const ModeratorsPage = () => {
         <div style={{position: 'fixed', top: 'auto', right: 20, zIndex: 999, margin: '5px'}}>
           <Button variant="outlined" onClick={() =>setOpenForm(true)}>Create moderator</Button>
         </div>
-      </Grid>
-      {openForm && <RegisterPage/>}
+      {openForm && <ModeratorsForm close={() =>setOpenForm(false)}/>}
     </>
 
   );

@@ -7,25 +7,27 @@ import permit from "../middleware/permit";
 const userRouter = Router();
 
 userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
-  console.log(req.query)
   try {
     if (req.query && req.query.role) {
       const user = new User({
+        displayName: req.body.name,
         email: req.body.email,
         password: req.body.password,
         role: 'admin'
       });
       user.generateToken();
       await user.save();
-    }
+      return;
+    }else{
       const user = new User({
-      email: req.body.email,
-      password: req.body.password,
-      avatar: req.file ? req.file.filename : null,
-    });
-    user.generateToken();
-    await user.save();
-    return res.send({ message: 'Registered!', user });
+        email: req.body.email,
+        password: req.body.password,
+        avatar: req.file ? req.file.filename : null,
+      });
+      user.generateToken();
+      await user.save();
+      return res.send({ message: 'Registered!', user });
+    }
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(error);
@@ -70,10 +72,10 @@ userRouter.get('/', async (req, res, next) => {
     return next(error);
   }
 });
-userRouter.delete('/', async (req, res,next) => {
-  if(req.query ) {
+userRouter.delete('/:id', async (req, res,next) => {
+  if(req.params) {
     try {
-      const deletedModerator = await User.findByIdAndDelete(req.query.moderator);
+      const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
         return res.send('Модератор возможно был удален!');
       }

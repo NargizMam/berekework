@@ -13,12 +13,17 @@ export interface Header {
     }]
   }]
 }
-export interface Moderator{
+export interface ModeratorApi{
   _id: string;
   name: string;
   email: string;
-  password: string;
   role: string;
+  password: string;
   createdAt: string;
   updatedAt: string;
+}
+export interface Moderator{
+  name: string;
+  email: string;
+  password: string;
 }
