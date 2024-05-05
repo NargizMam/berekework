@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectTariffs, selectTariffsLoading } from '../model/tariffSlice';
-import { getAllTariff } from '../api/tariffThunk';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { deleteTariff, getAllTariff } from '../api/tariffThunk';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 
 export const TariffPanelPage = () => {
@@ -14,8 +14,13 @@ export const TariffPanelPage = () => {
     dispatch(getAllTariff());
   }, [dispatch]);
 
-  if(loading) {
-    return <Loader/>;
+  const handleDeleteTariff = async (id: string) => {
+    await dispatch(deleteTariff(id));
+    await dispatch(getAllTariff());
+  };
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -24,19 +29,21 @@ export const TariffPanelPage = () => {
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
-            <TableCell align="right">description</TableCell>
+            <TableCell>description</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {tariffs.map((tariff) => (
-            <TableRow
-              key={tariff._id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={tariff._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {tariff.title}
               </TableCell>
-              <TableCell align="right">{tariff.description.join(' ')}</TableCell>
+              <TableCell>{tariff.description.join(', ')}</TableCell>
+              <TableCell align="right">
+                <Button onClick={() => handleDeleteTariff(tariff._id)} variant="contained">
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
