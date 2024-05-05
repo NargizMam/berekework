@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 import { selectModerators, selectModeratorsLoading } from '../model/moderatorsSlice';
-import { RegisterPage } from '../../../../client/page/Auth/ui/RegisterPage';
+import { RegisterPage } from '../../../../client/page/Auth';
 
 export const ModeratorsPage = () => {
   const dispatch = useAppDispatch();

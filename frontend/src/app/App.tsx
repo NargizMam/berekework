@@ -15,6 +15,7 @@ import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
+import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/PotentialEmployeesPage';
 
 const AdminRoutes = () => (
@@ -28,6 +29,12 @@ const AdminRoutes = () => (
         <Route path="/pages/new-page" element={<AdminCreatePage />} />
         <Route path="/adminHeading" element={<HeadingAdmin />} />
         <Route path="/adminHeading:location" element={<HeadingDetail />} />
+        <Route path="/users" element={<UserPanelPage />} />
+        <Route path="/vacancy" element={<VacancyPage />} />
+        <Route path="/tariffs" element={<TariffPanelPage />} />
+        <Route path="/employers" element={<EmployerPanelPage/>}/>
+        <Route path="/new-employer" element={<EmployerFormPage/>}/>
+        <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
       </Routes>
     </Container>
   </AdminLayout>
@@ -59,10 +66,6 @@ const App = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/users" element={<UserPanelPage />} />
-              <Route path="/vacancy" element={<VacancyPage />} />
-              <Route path="/tariffs" element={<TariffPanelPage />} />
-              <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
               <Route path="*" element={'Not found'} />
             </Routes>
           </Container>

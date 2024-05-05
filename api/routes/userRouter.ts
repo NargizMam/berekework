@@ -2,23 +2,22 @@ import { Router } from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 import { imagesUpload } from '../multer';
-import permit from "../middleware/permit";
 
 const userRouter = Router();
 
 userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
-  console.log(req.query)
+  console.log(req.query);
   try {
     if (req.query && req.query.role) {
       const user = new User({
         email: req.body.email,
         password: req.body.password,
-        role: 'admin'
+        role: 'admin',
       });
       user.generateToken();
       await user.save();
     }
-      const user = new User({
+    const user = new User({
       email: req.body.email,
       password: req.body.password,
       avatar: req.file ? req.file.filename : null,
@@ -70,16 +69,15 @@ userRouter.get('/', async (req, res, next) => {
     return next(error);
   }
 });
-userRouter.delete('/', async (req, res,next) => {
-  if(req.query ) {
+userRouter.delete('/', async (req, res, next) => {
+  if (req.query) {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.query.moderator);
       if (!deletedModerator) {
         return res.send('Модератор возможно был удален!');
       }
       return res.send('Модератор был удален!');
-    }
-    catch (e) {
+    } catch (e) {
       next(e);
     }
   }
