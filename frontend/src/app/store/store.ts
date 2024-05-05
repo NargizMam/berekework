@@ -23,6 +23,7 @@ import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/block
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
 import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
+import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
 
 
 const usersPersistConfig = {
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
   tariff: tariffReducer,
   file: fileReducer,
   chooseBlock: chooseBlockReducer,
+  warningMessage: warningMessageReducer,
 });
 
 export const store = configureStore({

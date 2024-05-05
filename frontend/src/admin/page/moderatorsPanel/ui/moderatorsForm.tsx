@@ -19,7 +19,6 @@ export const ModeratorsForm: React.FC<Props> = ({close}) => {
   const error = useAppSelector(selectModeratorsCreateError);
   const loading = useAppSelector(selectModeratorsCreating);
   const [state, setState] = useState<Moderator>(initialState);
-
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
 
@@ -31,9 +30,10 @@ export const ModeratorsForm: React.FC<Props> = ({close}) => {
   const submitFormHandler = async (event: FormEvent) => {
     event.preventDefault();
     try{
-      await dispatch(createModerator(state)).unwrap();
+      dispatch(createModerator(state)).unwrap();
       dispatch(getAllModerators());
       setState(initialState);
+      close();
     }catch(e){
     }
   };
@@ -48,14 +48,15 @@ export const ModeratorsForm: React.FC<Props> = ({close}) => {
           alignItems: 'center',
         }}
       >
+        {error && (
+        <Alert severity="error" sx={{mt: 3, width: '100%'}}>
+          {error?.message}
+        </Alert>
+      )}
         <Typography component="h1" variant="h5">
           Create admin
         </Typography>
-        {error && (
-          <Alert severity="error" sx={{mt: 3, width: '100%'}}>
-            {error.error}
-          </Alert>
-        )}
+
         <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -89,7 +90,6 @@ export const ModeratorsForm: React.FC<Props> = ({close}) => {
           </Grid>
           <LoadingButton
             loading={loading}
-            onClick={close}
             type="submit"
             fullWidth
             variant="contained"

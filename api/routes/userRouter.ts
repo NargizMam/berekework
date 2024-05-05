@@ -1,8 +1,7 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
-import { imagesUpload } from '../multer';
-import permit from "../middleware/permit";
+import {imagesUpload} from '../multer';
 
 const userRouter = Router();
 
@@ -17,7 +16,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
       });
       user.generateToken();
       await user.save();
-      return;
+      return res.send({ message: 'Admin was created!' });
     }else{
       const user = new User({
         email: req.body.email,
@@ -79,7 +78,7 @@ userRouter.delete('/:id', async (req, res,next) => {
       if (!deletedModerator) {
         return res.send('Модератор возможно был удален!');
       }
-      return res.send('Модератор был удален!');
+      return res.send('Модератор удачно удален!');
     }
     catch (e) {
       next(e);

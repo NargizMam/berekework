@@ -15,6 +15,7 @@ import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
+import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 
 
 
@@ -53,6 +54,7 @@ const App = () => {
 
   return (
     <>
+      <WarningMessage/>
       {location.pathname.startsWith('/admin') ? (
         adminRoutes
       ) : (

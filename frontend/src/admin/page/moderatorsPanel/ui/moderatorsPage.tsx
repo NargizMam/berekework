@@ -15,6 +15,7 @@ import {
 import { Loader } from '../../../../shared/loader';
 import { selectModerators, selectModeratorsLoading } from '../model/moderatorsSlice';
 import { ModeratorsForm } from './moderatorsForm';
+import { openErrorMessage, openSuccessMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 
 export const ModeratorsPage = () => {
   const dispatch = useAppDispatch();
@@ -30,8 +31,13 @@ export const ModeratorsPage = () => {
     return <Loader/>;
   }
   const onDeleteModerator = async (id: string) => {
-    await dispatch(deleteModerator(id)).unwrap();
-    dispatch(getAllModerators());
+    try{
+      await dispatch(deleteModerator(id)).unwrap();
+      dispatch(openSuccessMessage());
+      dispatch(getAllModerators());
+    }catch (e) {
+      dispatch(openErrorMessage());
+    }
   };
 
   return (
