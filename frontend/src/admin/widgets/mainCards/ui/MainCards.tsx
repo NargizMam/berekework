@@ -1,4 +1,3 @@
-import { Grid } from '@mui/material';
 import MainCardItem from './MainCardItem';
 import { useEffect } from 'react';
 import { selectMainCards } from '../model/mainCardsSlice';
@@ -15,7 +14,7 @@ export const MainCards = () => {
   }, [dispatch]);
 
   return (
-    <Grid container spacing={1} direction="row" sx={{ marginBottom: '180px' }}>
+    <div className="Main-cards__container">
       {mainCards.map((mainCard) => (
         <MainCardItem
           key={mainCard._id}
@@ -27,7 +26,7 @@ export const MainCards = () => {
           numImages={numImages}
         />
       ))}
-    </Grid>
+    </div>
   );
 };
 
