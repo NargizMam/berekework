@@ -32,9 +32,8 @@ const AdminRoutes = () => (
         <Route path="/users" element={<UserPanelPage />} />
         <Route path="/vacancy" element={<VacancyPage />} />
         <Route path="/tariffs" element={<TariffPanelPage />} />
-        <Route path="/employers" element={<EmployerPanelPage/>}/>
-        <Route path="/new-employer" element={<EmployerFormPage/>}/>
-        <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
+        <Route path="/employers" element={<EmployerPanelPage />} />
+        <Route path="/new-employer" element={<EmployerFormPage />} />
       </Routes>
     </Container>
   </AdminLayout>
@@ -66,6 +65,7 @@ const App = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
               <Route path="*" element={'Not found'} />
             </Routes>
           </Container>
