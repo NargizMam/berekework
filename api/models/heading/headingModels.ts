@@ -7,7 +7,7 @@ const headingSchema = new mongoose.Schema({
   },
   image: String,
   description: String,
-  button: {
+  /*button: {
     url: {
       type: String,
       required: true,
@@ -16,8 +16,8 @@ const headingSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-  },
-});
+  },*/
+}, {versionKey: false});
 
 const Heading = mongoose.model('Heading', headingSchema);
 export default Heading;

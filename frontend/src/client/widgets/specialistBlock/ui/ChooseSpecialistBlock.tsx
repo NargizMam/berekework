@@ -20,7 +20,7 @@ const ChooseSpecialistBlock = () => {
         <h2 className="chooseBlock-title">Как выбрать подходящего специалиста?</h2>
         <a href={chooseBlock?.url} className="button-link">
          Читать подробнее
-          <span></span>
+          <span className='span'></span>
         </a>
       </div>
     </div>
