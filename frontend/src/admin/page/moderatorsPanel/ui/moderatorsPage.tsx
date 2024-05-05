@@ -17,6 +17,7 @@ import { selectModerators, selectModeratorsLoading } from '../model/moderatorsSl
 import { ModeratorsForm } from './moderatorsForm';
 import { openErrorMessage, openSuccessMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 
+
 export const ModeratorsPage = () => {
   const dispatch = useAppDispatch();
   const moderators = useAppSelector(selectModerators);

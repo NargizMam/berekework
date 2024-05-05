@@ -20,6 +20,7 @@ import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
 import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
 import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
+import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
 import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   file: fileReducer,
   chooseBlock: chooseBlockReducer,
   warningMessage: warningMessageReducer,
+  employer: employerReducer,
 });
 
 export const store = configureStore({

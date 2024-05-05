@@ -1,7 +1,8 @@
 import {Router} from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
-import {imagesUpload} from '../multer';
+
+import { imagesUpload } from '../multer';
 
 const userRouter = Router();
 
@@ -12,7 +13,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
         displayName: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        role: 'admin'
+        role: 'admin',
       });
       user.generateToken();
       await user.save();
@@ -73,6 +74,7 @@ userRouter.get('/', async (req, res, next) => {
 });
 userRouter.delete('/:id', async (req, res,next) => {
   if(req.params) {
+
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {

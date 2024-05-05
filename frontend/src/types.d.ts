@@ -27,3 +27,16 @@ export interface Moderator{
   email: string;
   password: string;
 }
+
+export interface ValidationError {
+  error: {
+    [key: string]: {
+      name: string;
+      message: string;
+    };
+  };
+  message: string;
+  name: string;
+  _message: string;
+}
+

@@ -110,18 +110,51 @@ const run = async () => {
     location: '/',
   });
 
-  await User.create(
-      {
+  await User.create({
     email: 'admin@gmail.com',
     password: 'admin',
     token: randomUUID(),
     role: 'superadmin',
-  },
+  });
+
+  await Employer.create({
+    email: 'employer@gmail.com',
+    password: 'employer',
+    token: randomUUID(),
+    action: 'Game organization',
+    foundationYear: '2012',
+    scope: 'Major',
+    companyName: 'NAVI',
+    role: 'employer',
+  });
+
+  await Tariff.create({
+    mainTitle: 'Tariff',
+    title: 'Basic',
+    description: ['Free Food', 'Apple Music'],
+  });
+
+  await LastNewsBlock.create({
+    title: 'Последние новости',
+    page: 'last-news-block',
+    cards: [
       {
-        email: 'moderator@gmail.com',
-        password: 'moderator',
-        token: randomUUID(),
-        role: 'admin',
+        cardTitle: 'Природные катастрофы угрожают',
+        cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/natural-disasters',
+      },
+      {
+        cardTitle: 'Рост напряженности на Украине',
+        cardText: 'Международные обсуждения и реакции на политическую ситуацию',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/ukraine-tensions',
+      },
+      {
+        cardTitle: 'Экономические прогнозы на следующий квартал',
+        cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/economic-forecasts',
       },
       {
         email: 'moderator2@gmail.com',
