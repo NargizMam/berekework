@@ -4,6 +4,7 @@ import '../css/footer.css';
 import React, { useState } from 'react';
 import ContactsBlockForm from '../../../widgets/footerAdminForms/ContactsBlockForm/ContactsBlockForm';
 import CopyrightForm from '../../../widgets/footerAdminForms/CopyrightForm/CopyrightForm';
+import LogoAdminForm from '../../../widgets/footerAdminForms/LogoAdminForm/LogoAdminForm';
 
 const style = {
   position: 'absolute' as const,
@@ -22,12 +23,14 @@ const FooterAdmin: React.FC = () => {
   const [openLinks, setOpenLinks] = useState(false);
   const [openContact, setOpenContact] = useState(false);
   const [openCopyright, setOpenCopyright] = useState(false);
+  const [openLogo, setOpenLogo] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const openLinksFunc = () => setOpenLinks(true);
   const openContactFunc = () => setOpenContact(true);
   const openCopyrightFunc = () => setOpenCopyright(true);
+  const openLogoFunc = () => setOpenLogo(true);
 
   return (
     <>
@@ -57,7 +60,8 @@ const FooterAdmin: React.FC = () => {
               <Button
                 sx={{margin: '20px 0'}}
                 className="footer-btn"
-                variant="contained">
+                variant="contained"
+                onClick={openLogoFunc}>
                 Добавить логотип
               </Button>
               <Button
@@ -87,6 +91,7 @@ const FooterAdmin: React.FC = () => {
       {openLinks && <LinkBLockForm onClose={() => setOpenLinks(false)} open={openLinks}/>}
       {openContact && <ContactsBlockForm onClose={() => setOpenContact(false)} open={openContact}/>}
       {openCopyright && <CopyrightForm onClose={() => setOpenCopyright(false)} open={openCopyright}/>}
+      {openLogo && <LogoAdminForm onClose={() => setOpenLogo(false)} open={openLogo}/>}
     </>
   );
 };

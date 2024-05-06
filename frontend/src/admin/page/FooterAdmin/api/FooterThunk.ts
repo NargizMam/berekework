@@ -103,3 +103,30 @@ export const deleteCopyright = createAsyncThunk(
   }
 );
 
+export const createLogo = createAsyncThunk(
+  'footer/createLogo',
+  async (logoFormData: FormData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('/api/footer/logo', logoFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteLogo = createAsyncThunk(
+  'footer/deleteLogo',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete('/api/footer/logo');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

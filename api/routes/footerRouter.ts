@@ -185,7 +185,7 @@ footerRouter.post('/new-copyright', async (req, res, next) => {
   }
 });
 
-footerRouter.delete('/delete-copyright', async (req, res, next) => {
+footerRouter.delete('/delete-copyright', async (_req, res, next) => {
   try {
     const existingFooter = await Footer.findOne();
     const footerCopyright = existingFooter?.copyright;
@@ -204,8 +204,6 @@ footerRouter.delete('/delete-copyright', async (req, res, next) => {
 });
 
 footerRouter.put('/logo', imagesUpload.single('logo'), async (req, res, next) => {
-  const newData = req.body;
-
   try {
     const footer = await Footer.findOne();
 
@@ -223,7 +221,7 @@ footerRouter.put('/logo', imagesUpload.single('logo'), async (req, res, next) =>
   }
 });
 
-footerRouter.delete('/logo', async (req, res, next) => {
+footerRouter.delete('/logo', async (_req, res, next) => {
   try {
     const footer = await Footer.findOne();
 
@@ -245,7 +243,7 @@ footerRouter.delete('/logo', async (req, res, next) => {
             .then(() => {
               res.json({message: 'Logo deleted successfully'});
             })
-            .catch((error) => {
+            .catch((_error) => {
               res.status(500).json({error: 'Failed to update Footer document'});
             });
       });
@@ -256,9 +254,6 @@ footerRouter.delete('/logo', async (req, res, next) => {
     next(error);
   }
 });
-
-
-
 
 
 export default footerRouter;
