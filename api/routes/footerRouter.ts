@@ -1,5 +1,8 @@
 import express from 'express';
 import Footer from '../models/footer/Footer';
+import {imagesUpload} from "../multer";
+import path from "path";
+import * as fs from "node:fs";
 
 const footerRouter = express.Router();
 
@@ -199,6 +202,62 @@ footerRouter.delete('/delete-copyright', async (req, res, next) => {
     next(error);
   }
 });
+
+footerRouter.put('/logo', imagesUpload.single('logo'), async (req, res, next) => {
+  const newData = req.body;
+
+  try {
+    const footer = await Footer.findOne();
+
+    if (!footer) {
+      return res.status(404).json({ error: 'Footer not found' });
+    }
+
+    footer.logo = req.file?.filename;
+
+    const updatedFooter = await footer.save();
+
+    res.json(updatedFooter);
+  } catch (error) {
+    next(error);
+  }
+});
+
+footerRouter.delete('/logo', async (req, res, next) => {
+  try {
+    const footer = await Footer.findOne();
+
+    if (!footer) {
+      return res.status(404).json({ error: 'Footer not found' });
+    }
+
+    if (footer.logo) {
+      const logoPath = path.join(__dirname, '..', 'public', footer.logo);
+
+      fs.unlink(logoPath, (err) => {
+        if (err) {
+          return res.status(500).json({error: 'Failed to delete logo file'});
+        }
+
+        footer.logo = undefined;
+
+        footer.save()
+            .then(() => {
+              res.json({message: 'Logo deleted successfully'});
+            })
+            .catch((error) => {
+              res.status(500).json({error: 'Failed to update Footer document'});
+            });
+      });
+    } else {
+      return res.status(404).json({ error: 'Logo not found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 
 
