@@ -2,6 +2,8 @@ import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import LinkBLockForm from '../../../widgets/footerAdminForms/LInksBlockForm/LinkBLockForm';
 import '../css/footer.css';
 import React, { useState } from 'react';
+import ContactsBlockForm from '../../../widgets/footerAdminForms/ContactsBlockForm/ContactsBlockForm';
+import CopyrightForm from '../../../widgets/footerAdminForms/CopyrightForm/CopyrightForm';
 
 const style = {
   position: 'absolute' as const,
@@ -18,10 +20,14 @@ const style = {
 const FooterAdmin: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [openLinks, setOpenLinks] = useState(false);
+  const [openContact, setOpenContact] = useState(false);
+  const [openCopyright, setOpenCopyright] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const openLinksFunc = () => setOpenLinks(true);
+  const openContactFunc = () => setOpenContact(true);
+  const openCopyrightFunc = () => setOpenCopyright(true);
 
   return (
     <>
@@ -63,12 +69,14 @@ const FooterAdmin: React.FC = () => {
               <Button
                 sx={{margin: '20px 0'}}
                 className="footer-btn"
+                onClick={openContactFunc}
                 variant="contained">
                 Добавить свои контактные данные
               </Button>
               <Button
                 sx={{margin: '20px 0'}}
                 className="footer-btn"
+                onClick={openCopyrightFunc}
                 variant="contained">
                 Добавить свой копирайт
               </Button>
@@ -77,6 +85,8 @@ const FooterAdmin: React.FC = () => {
         </Modal>
       </div>
       {openLinks && <LinkBLockForm onClose={() => setOpenLinks(false)} open={openLinks}/>}
+      {openContact && <ContactsBlockForm onClose={() => setOpenContact(false)} open={openContact}/>}
+      {openCopyright && <CopyrightForm onClose={() => setOpenCopyright(false)} open={openCopyright}/>}
     </>
   );
 };

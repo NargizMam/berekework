@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { isAxiosError } from 'axios';
-import { IFooterLinks } from '../../../../shared/types';
+import { IContactsBlock, IFooterLinks } from '../../../../shared/types';
 import axiosApi from '../../../../app/axiosApi';
 
 export const fetchFooterData = createAsyncThunk(
@@ -44,6 +44,24 @@ export const createFooterLinks = createAsyncThunk(
   }
 );
 
+export const createContactsBLock = createAsyncThunk(
+  'footer/addContactsBLock',
+  async (contactsBlock: IContactsBlock, { rejectWithValue }) => {
+    try {
+      const data = {
+        title: contactsBlock.title,
+        contactsDetailsArr: contactsBlock.contactsDetailsArr,
+      };
+
+      const response = await axiosApi.post('/footer/new-contacts-block', data);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 
 export const deleteFooterLink = createAsyncThunk(
   'footer/deleteFooterLink',
@@ -60,4 +78,28 @@ export const deleteFooterLink = createAsyncThunk(
   }
 );
 
+export const createCopyright = createAsyncThunk(
+  'footer/addCopyright',
+  async (text: string, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axiosApi.post('/footer/new-copyright', { text });
+      await dispatch(fetchFooterData());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteCopyright = createAsyncThunk(
+  'footer/deleteCopyright',
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      await axiosApi.delete('/footer/copyright');
+      await dispatch(fetchFooterData());
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 

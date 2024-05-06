@@ -104,6 +104,15 @@ export interface IFooterLinks{
   links: ILinks[],
 }
 
+export interface IContactsBlock {
+  title: string,
+  contactsDetailsArr: { text: string }[],
+}
+
+export interface ICopyright {
+  text: string,
+}
+
 export interface IFooter {
   footerLinks: IFooterLinks,
   logo: File | null;

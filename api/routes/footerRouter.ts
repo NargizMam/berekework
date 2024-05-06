@@ -157,6 +157,48 @@ footerRouter.delete('/contactBlock/:id', async (req, res, next) => {
   }
 });
 
+footerRouter.post('/new-copyright', async (req, res, next) => {
+  try {
+    const existingFooter = await Footer.findOne();
+    const footerCopyright = existingFooter?.copyright;
+
+    if (footerCopyright) {
+      return res.status(400).send('Копирайт уже существует в футере');
+    }
+
+    const { text } = req.body;
+
+    if (!text || text.trim() === '') {
+      return res.status(400).send('Текст копирайта не может быть пустым');
+    }
+
+    existingFooter!.copyright = text;
+    await existingFooter!.save();
+
+    return res.status(201).send(existingFooter);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+footerRouter.delete('/delete-copyright', async (req, res, next) => {
+  try {
+    const existingFooter = await Footer.findOne();
+    const footerCopyright = existingFooter?.copyright;
+
+    if (!footerCopyright) {
+      return res.status(404).send('Копирайт не найден в футере');
+    }
+
+    await existingFooter!.updateOne({ $unset: { copyright: 1 } });
+
+    return res.status(200).send('Копирайт успешно удален из футера');
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
 
 

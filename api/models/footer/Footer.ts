@@ -48,9 +48,6 @@ const FooterSchema = new Schema({
   },
 });
 
-function arrayMinSize(arr: []) {
-  return arr.length > 0;
-}
 
 const Footer = model('Footer', FooterSchema);
 export default Footer;

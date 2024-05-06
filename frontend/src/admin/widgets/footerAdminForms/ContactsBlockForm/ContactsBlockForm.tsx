@@ -1,12 +1,12 @@
-import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { IFooterLinks, ILinks } from '../../../../shared/types';
-import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { createFooterLinks, fetchFooterData } from '../../../page/FooterAdmin/api/FooterThunk';
 import { selectFooter } from '../../../page/FooterAdmin/model/FooterSlice';
+import { createContactsBLock, fetchFooterData } from '../../../page/FooterAdmin/api/FooterThunk';
+import { IContactsBlock } from '../../../../shared/types';
+import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
-interface LinkBlockFormProps {
+interface ContactsBlockFormProps {
   open: boolean;
   onClose: () => void;
 }
@@ -23,75 +23,68 @@ const style = {
   p: 4,
 };
 
-const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
+const ContactsBlockForm: React.FC<ContactsBlockFormProps> = ({open, onClose}) => {
   const [title, setTitle] = useState('');
   const dispatch = useAppDispatch();
   const footer = useAppSelector(selectFooter);
+
+  console.log(footer);
 
   useEffect(() => {
     dispatch(fetchFooterData());
   }, [dispatch]);
 
-  const [linksState, setLinksState] = useState<ILinks[]>(
-    [{url: '', text: ''},]
-  );
+  const [textState, setTextState] = useState([{ text: '' }]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
 
   const addInputField = () => {
-    setLinksState([...linksState, {url: '', text: ''}]);
+    setTextState([...textState, { text: ''}]);
   };
 
   const removeFields = (index: number) => {
-    const data = [...linksState];
+    const data = [...textState];
     data.splice(index, 1);
-    setLinksState(data);
-  };
-
-  const handleUrlChange = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const newData = [...linksState];
-    newData[index].url = event.target.value;
-    setLinksState(newData);
+    setTextState(data);
   };
 
   const handleTextChange = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const newData = [...linksState];
+    const newData = [...textState];
     newData[index].text = event.target.value;
-    setLinksState(newData);
+    setTextState(newData);
   };
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const footerLinks = footer[0]?.footerLinks;
+    const footerContactsBlock = footer[0]?.contactDetails;
 
-    if (!footerLinks || !Array.isArray(footerLinks)) {
-      console.error('Invalid footerLinks data:', footerLinks);
+    if (!footerContactsBlock || !Array.isArray(footerContactsBlock)) {
+      console.error('Invalid footerLinks data:', footerContactsBlock);
       return;
     }
 
-    const existingFooterLinksCount = footerLinks.length;
+    const existingFooterLinksCount = footerContactsBlock.length;
 
-    if (existingFooterLinksCount >= 5) {
-      alert('Превышено максимальное количество блоков с ссылками (5)\n' +
-        'Прежде чем добавить новый блок, удалите один из уже существующих');
+    if (existingFooterLinksCount >= 1) {
+      alert('Возможно создать только один контактный блок.\n' +
+        'Прежде чем добавить новый, удалите предыдущий');
       return;
     }
 
-    const obj: IFooterLinks = {
+    const obj: IContactsBlock = {
       title: title,
-      links: linksState,
+      contactsDetailsArr: textState,
     };
 
     try {
-      await dispatch(createFooterLinks(obj));
-      alert('ВЫ успешно создали блок с ссылками!');
+      await dispatch(createContactsBLock(obj));
+      alert('ВЫ успешно создали блок c вашими контактами!');
       onClose();
     } catch (e) {
       alert('Invalid field');
     }
   };
-
 
   const closeModal = () => {
     onClose();
@@ -108,44 +101,36 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
         <Box sx={style}>
           <Grid sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Создание блока с ссылками
+              Создание блока контактов
             </Typography>
             <Button onClick={closeModal}><CloseIcon /></Button>
           </Grid>
           <TextField
-            label="Заголовок блока с ссылками"
+            label="Заголовок блока контактов"
             variant="outlined"
             fullWidth
             value={title}
             onChange={handleTitleChange}
             sx={{mt: 2}}
           />
-          {linksState.map((element, index) => (
+          {textState.map((element, index) => (
             <Grid sx={{display: 'flex', alignItems: 'center'}} key={index}>
-              <TextField
-                label="url"
-                variant="outlined"
-                fullWidth
-                onChange={e => handleUrlChange(index, e)}
-                value={element.url}
-                sx={{mt: 2, marginRight: '10px'}}
-              />
               <TextField
                 label="Текст"
                 variant="outlined"
                 fullWidth
                 value={element.text}
                 onChange={e => handleTextChange(index, e)}
-                sx={{mt: 2, marginLeft: '10px', marginRight: '20px'}}
+                sx={{mt: 2}}
               />
               {
                 index ?
                   <Button type="button"
                           variant="contained"
-                          sx={{marginTop: '15px'}}
+                          sx={{marginTop: '15px', marginLeft: "20px"}}
                           onClick={() => removeFields(index)}
                   ><CloseIcon/></Button>
-                  : <div style={{width: '100px', marginLeft: '20px'}}></div>
+                  : <div></div>
               }
             </Grid>
           ))}
@@ -167,5 +152,4 @@ const LinkBLockForm: React.FC<LinkBlockFormProps> = ({open, onClose}) => {
   );
 };
 
-export default LinkBLockForm;
-
+export default ContactsBlockForm;
