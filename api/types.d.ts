@@ -118,3 +118,14 @@ export interface Page {
 export interface ModelType {
   [key: string]: any;
 }
+
+export interface EmployeesDataType {
+  name: string,
+  photo?: string,
+  profession: string,
+  age: number,
+  country: string,
+  city: string,
+  education?: string,
+  experience?: string,
+}
