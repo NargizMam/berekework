@@ -21,8 +21,6 @@ const BlockForm: React.FC<Props> = ({block, onSubmit, loading}) => {
     });
     const [cardForm, setCardForm] = useState<React.ReactNode[]>([]);
 
-    console.log(cardForm);
-
     useEffect(() => {
         if (block) {
             setCardForm(

@@ -14,6 +14,7 @@ import Header from '../widgets/Header/ui/Header';
 import { useAppSelector } from './store/hooks';
 import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
+import ApplicantSettings from '../client/page/Applicant/ApplicantSettings';
 
 
 const App = () => {
@@ -100,16 +101,20 @@ const App = () => {
           <header>
             <Header/>
           </header>
-          <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            {/*<Route path="/admin/*" element={<AdminRoutes/>}/>*/}
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/users" element={<UserPanelPage/>}/>
-            <Route path="/vacancy" element={<VacancyPage/>}/>
-            <Route path="/tariffs" element={<TariffPanelPage/>}/>
-            <Route path="*" element={'Not found'}/>
-          </Routes>
+          <Container>
+            <Routes>
+              <Route path="/" element={<HomePage/>}/>
+              {/*<Route path="/admin/*" element={<AdminRoutes/>}/>*/}
+              <Route path="/register" element={<RegisterPage/>}/>
+              <Route path="/login" element={<LoginPage/>}/>
+              <Route path="/users" element={<UserPanelPage/>}/>
+              <Route path="/vacancy" element={<VacancyPage/>}/>
+              <Route path="/tariffs" element={<TariffPanelPage/>}/>
+              <Route path="/newApplicant" element={<ApplicantSettings/>}/>
+              <Route path="*" element={'Not found'}/>
+            </Routes>
+          </Container>
+
         </>
       }
 

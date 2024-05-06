@@ -20,6 +20,7 @@ import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
 import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
 import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
+import { applicantReducer } from '../../client/applicant/model/applicantSlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   users: usersReducer,
   vacancy: vacancyReducer,
   tariff: tariffReducer,
+  applicant: applicantReducer,
 });
 
 export const store = configureStore({
