@@ -33,4 +33,4 @@ const fileSlice = createSlice({
 
 export const fileReducer = fileSlice.reducer;
 export const selectImageLocation = (state: RootState) => state.file.imageLocation;
-export const selectImageUpload = (state: RootState) => state.file.imageUpload;
+export const selectImageUploadLoading = (state: RootState) => state.file.imageUpload;

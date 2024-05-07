@@ -7,7 +7,7 @@ export interface Components {
     [key: string]: {
       type: string;
       fieldName: string;
-      value: string | File;
+      value: string;
       typeField: string;
       required: boolean;
       placeholder: string;

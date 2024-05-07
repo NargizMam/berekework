@@ -13,7 +13,8 @@ const createStorageConfig = (subFolder: string) =>
     },
     filename: (_req, file, cb) => {
       const extension = path.extname(file.originalname);
-      const filename = path.join(subFolder, randomUUID() + extension);
+      const fileName = path.basename(file.originalname, extension);
+      const filename = path.join(subFolder, '&' + fileName + '&' + randomUUID() + extension);
       cb(null, filename);
     },
   });

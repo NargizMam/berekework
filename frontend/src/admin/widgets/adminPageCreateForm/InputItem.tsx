@@ -1,27 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TextField } from '@mui/material';
-import { useAppSelector } from '../../../app/store/hooks';
-import { selectImageLocation } from '../../page/adminPages/model/imageUploadSlice';
 import { Field } from '../../page/adminPages/model/types';
 import ImageUpload from '../../shared/imageUpload/imageUpload';
 
 interface Input {
   field: Field;
   index: number;
-  value: string | File;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
   imageInputChange: (location: string, index: number) => void;
 }
 
 const InputItem: React.FC<Input> = ({ field, onChange, index, imageInputChange, value }) => {
-  const imageLocation = useAppSelector(selectImageLocation);
-
-  useEffect(() => {
-    imageInputChange(imageLocation, index);
-  }, [imageLocation, imageInputChange, index]);
-
   const onComponentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e, index);
+  };
+
+  const onImageChange = (imageLoc: string) => {
+    console.log('ON CHANGE: ', imageLoc);
+    imageInputChange(imageLoc, index);
   };
 
   switch (field.typeField) {
@@ -50,7 +47,9 @@ const InputItem: React.FC<Input> = ({ field, onChange, index, imageInputChange, 
         />
       );
     case 'image':
-      return <ImageUpload name={'image'} />;
+      return (
+        <ImageUpload onChangeImage={onImageChange} value={value ? value.split('&')[1] + '.' + value.slice(-3) : ''} />
+      );
     default:
       console.error(`Invalid field type: ${field.typeField}`);
       return null;

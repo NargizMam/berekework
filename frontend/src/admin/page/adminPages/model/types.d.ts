@@ -2,14 +2,14 @@ export interface Field {
   type: string;
   typeField: string;
   fieldName: string;
-  value: string | File;
+  value: string;
   required: boolean;
   placeholder: string;
 }
 
 export interface IPage {
   nameComponent: string;
-  content: { [key: string]: string | File };
+  content: { [key: string]: string };
 }
 
 export interface CreatePage {
