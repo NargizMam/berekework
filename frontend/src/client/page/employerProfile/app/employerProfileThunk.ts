@@ -5,7 +5,6 @@ import { EmployerInfoApi } from '../../../../types';
 export const getEmployersProfileInfo = createAsyncThunk<EmployerInfoApi, string>(
   'employersProfile/getInfo',
   async (id) => {
-    console.log(id);
     const response = await axiosApi.get(`/employer/${id}`);
     return response.data;
   }

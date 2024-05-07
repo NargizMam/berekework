@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import {model, Schema} from 'mongoose';
 
 const vacancySchema = new Schema(
   {
@@ -20,11 +20,11 @@ const vacancySchema = new Schema(
     url: {
       type: String,
     },
-      employer: {
-          type: Schema.Types.ObjectId,
-          ref: 'Employer',
-          required: true,
-      },
+  employer: {
+      type: Schema.Types.ObjectId,
+      ref: 'Employer',
+      required: true,
+  },
   },
   { timestamps: true },
 );
