@@ -1,0 +1,93 @@
+.CreateVacancyForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.applicantFormContainer {
+  background-color: #ffffff;
+  border-radius: 30px;
+  width: 850px;
+  padding: 40px 50px;
+}
+
+.labelForField {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #000000;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.field {
+  border: #e9e9e9 solid 2px;
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 35px;
+  line-height: 1.25;
+  color: #8E8E8E;
+  padding-left: 30px;
+  width: 380px;
+  height: 70px;
+  background-color: #ffffff;
+}
+
+.field:focus {
+  outline: none;
+  border-color: #0866ff;
+}
+
+button.sendBtn {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  background-color: #0866ff;
+  border-radius: 30px;
+  height: 70px;
+  margin-top: 50px;
+}
+
+textarea.field {
+  padding-top: 20px;
+  padding-right: 20px;
+}
+
+select.field {
+  position: relative;
+  -webkit-appearance: none;
+  width: 420px;
+  z-index: 50;
+  background: transparent;
+}
+
+.salarySection {
+  display: flex;
+  gap: 25px
+}
+
+.selectWrapper {
+  position: relative;
+  width: 420px;
+  display: block;
+  z-index: 100;
+}
+
+.selectWrapper svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5%;
+  z-index: 1;
+}
+
+.field[type='number']::-webkit-inner-spin-button,
+.field[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.field[type='number'] {
+  -moz-appearance: textfield; 
+}
