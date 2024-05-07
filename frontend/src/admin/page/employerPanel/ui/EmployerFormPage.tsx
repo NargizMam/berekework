@@ -1,9 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, Grid, TextField } from '@mui/material';
 import { EmployerMutation } from '../model/types';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { createEmployer } from '../api/employerThunk';
 import { selectEmployerError } from '../model/employerSlice';
+import { getExtension } from '../../../../feachers/checkExtensiion';
 
 export const EmployerFormPage = () => {
   const [state, setState] = useState<EmployerMutation>({
@@ -13,9 +14,17 @@ export const EmployerFormPage = () => {
     scope: '',
     action: '',
     foundationYear: '',
+    document: null,
+    address: '',
+    avatar: null,
   });
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectEmployerError);
+  const documentSelect = useRef<HTMLInputElement>(null);
+  const imageSelect = useRef<HTMLInputElement>(null);
+  const [filename, setFilename] = useState('');
+  const [filenameImage, setFilenameImage] = useState('');
+  const [errorDocument, setErrorDocument] = useState(false);
 
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -36,7 +45,53 @@ export const EmployerFormPage = () => {
       scope: '',
       action: '',
       foundationYear: '',
+      document: null,
+      address: '',
+      avatar: null,
     });
+  };
+
+  const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = event.target;
+    if (files && files[0]) {
+      if (name === 'avatar'){
+        setFilenameImage(files[0].name);
+      } else if (name === 'document') {
+        setFilename(files[0].name);
+      }
+      setState((prevState) => ({
+        ...prevState,
+        [name]: files[0],
+      }));
+    }
+
+    if (name === 'document') {
+      setErrorDocument(getExtension(filename)?.toLowerCase() !== 'pdf');
+    }
+  };
+
+  const clearDocumentField = () => {
+    setFilename('');
+    setFilenameImage('');
+    setState((prevState) => ({
+      ...prevState,
+      avatar: null,
+    }));
+    if (documentSelect.current) {
+      documentSelect.current.value = '';
+    }
+  };
+
+  const selectFile = (type: string) => {
+    if (type === 'document') {
+      if (documentSelect.current) {
+        documentSelect.current.click();
+      }
+    } else if (type === 'image') {
+      if (imageSelect.current) {
+        imageSelect.current.click();
+      }
+    }
   };
 
   const getFieldError = (fieldName: string) => {
@@ -133,6 +188,85 @@ export const EmployerFormPage = () => {
             error={Boolean(getFieldError('foundationYear'))}
             helperText={getFieldError('foundationYear')}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            value={state.address}
+            onChange={changeField}
+            name="address"
+            id="standard-basic"
+            label="Address"
+            variant="outlined"
+            required={true}
+            error={Boolean(getFieldError('address'))}
+            helperText={getFieldError('address')}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <input
+            style={{ display: 'none' }}
+            type="file"
+            name="document"
+            onChange={changeFileFiled}
+            ref={documentSelect}
+          />
+          <Grid container direction="row" spacing={2} alignItems="center">
+            <Grid item xs>
+              <TextField
+                disabled
+                label="document"
+                value={filename || ''}
+                onClick={() => selectFile('document')}
+                error={!errorDocument}
+                helperText={!errorDocument ? 'PDF format!' : null}
+              />
+            </Grid>
+            <Grid item>
+              <Button variant="contained" onClick={() => selectFile('document')}>
+                Browse
+              </Button>
+            </Grid>
+            {filename.length !== 0 && (
+              <Grid item>
+                <Button variant="contained" onClick={clearDocumentField}>
+                  Clear
+                </Button>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <input
+            style={{ display: 'none' }}
+            type="file"
+            name="avatar"
+            onChange={changeFileFiled}
+            ref={imageSelect}
+          />
+          <Grid container direction="row" spacing={2} alignItems="center">
+            <Grid item xs>
+              <TextField
+                disabled
+                label="avatar"
+                value={filenameImage || ''}
+                onClick={() => selectFile('image')}
+                error={Boolean(getFieldError('avatar'))}
+                helperText={getFieldError('avatar')}
+              />
+            </Grid>
+            <Grid item>
+              <Button variant="contained" onClick={() => selectFile('image')}>
+                Browse
+              </Button>
+            </Grid>
+            {filenameImage.length !== 0 && (
+              <Grid item>
+                <Button variant="contained" onClick={clearDocumentField}>
+                  Clear
+                </Button>
+              </Grid>
+            )}
+          </Grid>
         </Grid>
         <Grid item xs={6}>
           <Button type="submit" variant="contained">

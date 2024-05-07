@@ -19,6 +19,13 @@ export const createEmployer = createAsyncThunk<
     formData.append('scope', employer.scope);
     formData.append('action', employer.action);
     formData.append('foundationYear', employer.foundationYear);
+    formData.append('address', employer.address);
+    if(employer.document) {
+      formData.append('document', employer.document);
+    }
+    if(employer.avatar) {
+      formData.append('avatar', employer.avatar);
+    }
     await axiosApi.post('/employer', formData);
   } catch (error) {
     if (isAxiosError(error) && error.response && error.response.status === 422) {

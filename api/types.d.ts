@@ -44,6 +44,8 @@ export interface EmployerFields {
   scope: string;
   action: string;
   foundationYear: string;
+  address: string;
+  document: string;
 }
 
 export interface UserMethods {
@@ -117,4 +119,9 @@ export interface Page {
 
 export interface ModelType {
   [key: string]: any;
+}
+
+export interface UploadedFiles {
+  avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
+  document?: Express.Multer.File[]; // Массив файлов для поля 'document'
 }

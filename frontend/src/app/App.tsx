@@ -37,6 +37,11 @@ const App = () => {
           <Route path="/pages/new-page" element={<AdminCreatePage />} />
           <Route path="/adminHeading" element={<HeadingAdmin />} />
           <Route path="/adminHeading:location" element={<HeadingDetail />} />
+          <Route path="/employers" element={<EmployerPanelPage/>}/>
+          <Route path="/employers-submit" element={<EmployerFormPage/>}/>
+          <Route path="/tariffs" element={<TariffPanelPage/>}/>
+          <Route path="/vacancy" element={<VacancyPage/>}/>
+          <Route path="/users" element={<UserPanelPage/>}/>
         </Routes>
       </Container>
     </AdminLayout>

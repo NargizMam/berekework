@@ -162,16 +162,7 @@ const run = async () => {
         token: randomUUID(),
         role: 'admin',
       },
-  );
-
-  await Employer.create({
-    email: 'employer@gmail.com',
-    companyName: 'HeadeHunter',
-    scope: 'Биржа',
-    foundationYear: '1999',
-    password: 'employer',
-    token: randomUUID(),
-    role: 'employer',
+    ],
   });
 
   await Tariff.create({
@@ -213,5 +204,4 @@ const run = async () => {
 
   await db.close();
 };
-
 void run();
