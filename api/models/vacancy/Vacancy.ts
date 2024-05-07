@@ -9,13 +9,6 @@ const vacancySchema = new Schema(
     description: {
       type: String,
     },
-    logo: {
-      type: String,
-    },
-    company: {
-      type: String,
-      required: true,
-    },
     city: {
       type: String,
       required: true,
@@ -27,10 +20,11 @@ const vacancySchema = new Schema(
     url: {
       type: String,
     },
-    employer: {
-      type: Schema.Types.ObjectId,
-      ref: 'Employer',
-    },
+      employer: {
+          type: Schema.Types.ObjectId,
+          ref: 'Employer',
+          required: true,
+      },
   },
   { timestamps: true },
 );

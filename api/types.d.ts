@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import {Document, Model, Types} from 'mongoose';
 
 export interface mainCardContainerType {
   _id: string;
@@ -58,15 +58,12 @@ export interface VacancyApi {
   _id: string;
   title: string;
   description: string;
-  logo: string | null;
-  company: string;
-  city: string;
   salary: {
     min: number | null;
     max: number | null;
   };
   url: string;
-  employer: string;
+  employer: Types.ObjectId;
 }
 
 export type VacancyMutation = Omit<VacancyApi, '_id'>;

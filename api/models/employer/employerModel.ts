@@ -52,6 +52,7 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     type: String,
     required: true,
   },
+
 });
 
 employerSchema.methods.checkPassword = function (password: string) {
