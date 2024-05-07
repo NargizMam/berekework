@@ -4,7 +4,6 @@ import { cardUpload } from '../multer';
 import Vacancy from '../models/vacancy/Vacancy';
 import { VacancyMutation } from '../types';
 import { RequestWithEmployer } from '../middleware/employerAuth';
-import LastNewsBlock from '../models/lastNews/LastNewsBlock';
 
 const vacanciesRouter = express.Router();
 vacanciesRouter.post('/', cardUpload.single('logo'), async (req, res, next) => {

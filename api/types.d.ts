@@ -31,6 +31,23 @@ export interface UserFields {
   role: string;
   googleID?: string;
   avatar?: string;
+  name?: string;
+  surname?: string;
+  patronymic?: string;
+  gender?: 'male' | 'female';
+  dateOfBirth?: string;
+  country?: string;
+  city?: string;
+  education?: string;
+  aboutMe?: string;
+  job?: string;
+  preferredCity?: string;
+  contact: {
+    phone?: string;
+    whatsapp?: string;
+    telegram?: string;
+  };
+  documents?: string[];
 }
 
 export interface EmployerFields {
