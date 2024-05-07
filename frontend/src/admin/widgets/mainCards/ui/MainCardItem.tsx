@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import MainCardItemStyle from './MainCardItem-style';
 import { API_URL } from '../../../../app/constants/links';
+import './MainCardItem.css';
 
 export interface Props {
   _id?: string;
@@ -18,27 +19,38 @@ const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numI
   const cardIcon = icon ? API_URL + icon : null;
   const cardImage = image ? API_URL + image : null;
 
-  const styles = MainCardItemStyle(cardImage, cardIcon);
+  const styles = MainCardItemStyle(cardIcon, cardImage);
 
-  const iconElement = cardIcon ? <CardMedia component="img" sx={styles.icon} image={cardIcon} alt="{title}" /> : null;
-  const imageElement = cardImage ? <CardMedia component="img" image={cardImage} alt="{title}" /> : null;
+  const iconElement = cardIcon ? <img style={styles.icon} src={cardIcon} alt="{title}" /> : null;
+  // const imageElement = cardImage ? <div style={styles.image}>ппп</div> : null;
+
+  // const imageElement = cardImage ? (
+  //   <CardMedia component="img" sx={styles.image} image={cardImage} alt="{title}" />
+  // ) : null;
+
+  // const imageElement = cardImage ? <div style={styles.image}></div> : null;
 
   const cardContent = (
-    <CardContent sx={styles.content}>
-      <Typography variant="h5" sx={styles.title}>
-        {title}
-      </Typography>
-      <Typography variant="body2" sx={styles.text}>
-        {text}
-      </Typography>
-    </CardContent>
+    <div style={styles.content}>
+      <h5 style={styles.title}>{title}</h5>
+      <p style={styles.text}>{text}</p>
+    </div>
   );
 
   const cardBody = (
-    <Card sx={styles.card}>
-      {iconElement ? iconElement : imageElement}
-      {cardContent}
-    </Card>
+    <div style={styles.card}>
+      {cardImage ? (
+        <>
+          {cardContent}
+          {/*{imageElement}*/}
+        </>
+      ) : (
+        <>
+          {iconElement}
+          {cardContent}
+        </>
+      )}
+    </div>
   );
 
   if (URLpath) {

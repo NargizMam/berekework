@@ -7,6 +7,7 @@ import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
 import LastNewsBlock from './models/lastNews/LastNewsBlock';
 import Employer from './models/employer/employerModel';
+import mainContainerCard from './models/mainContainerCard/mainContainerCardModel';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -29,6 +30,7 @@ const run = async () => {
     'employers',
     'tariffs',
     'lastnewsblocks',
+    'maincontainercards',
   ];
 
   for (const collectionName of collections) {
@@ -164,6 +166,19 @@ const run = async () => {
       },
     ],
   });
+
+  await mainContainerCard.create([
+    {
+      title: 'Вакансии в Кыргызстане',
+      text: 'Ищете работу? У нас есть вакансии в Кыргызстане для вас! Присоединяйте…',
+      image: '/fixtures/image_maincard_folder.png',
+    },
+    {
+      title: 'Вакансии за рубежом',
+      text: 'Ищете работу за границей? У нас есть вакансии! Присоединяйтесь и найди…',
+      image: '/fixtures/image_maincard_suitcase.png',
+    },
+  ]);
 
   await db.close();
 };

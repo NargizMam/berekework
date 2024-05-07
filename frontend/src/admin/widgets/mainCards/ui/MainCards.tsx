@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { selectMainCards } from '../model/mainCardsSlice';
 import { fetchMainCards } from '../model/mainCardsThunks';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { Grid } from '@mui/material';
 
 export const MainCards = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +15,7 @@ export const MainCards = () => {
   }, [dispatch]);
 
   return (
-    <div className="Main-cards__container">
+    <Grid container>
       {mainCards.map((mainCard) => (
         <MainCardItem
           key={mainCard._id}
@@ -26,7 +27,7 @@ export const MainCards = () => {
           numImages={numImages}
         />
       ))}
-    </div>
+    </Grid>
   );
 };
 
