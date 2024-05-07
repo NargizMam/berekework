@@ -131,49 +131,84 @@ const run = async () => {
       },
   );
 
-  // await Employer.create({
-  //   email: 'employer@gmail.com',
-  //   password: 'employer',
-  //   token: randomUUID(),
-  //   role: 'employer',
-  // });
-  //
-  // await Tariff.create({
-  //   mainTitle: 'Tariff',
-  //   title: 'Basic',
-  //   description: ['Free Food', 'Apple Music'],
-  // });
-  //
-  // await LastNewsBlock.create({
-  //   title: 'Последние новости',
-  //   page: 'last-news-block',
-  //   cards: [
-  //     {
-  //       cardTitle: 'Природные катастрофы угрожают',
-  //       cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
-  //       dateTime: '2024-04-21T12:00:00Z',
-  //       buttonUrl: '/natural-disasters',
-  //     },
-  //     {
-  //       cardTitle: 'Рост напряженности на Украине',
-  //       cardText: 'Международные обсуждения и реакции на политическую ситуацию',
-  //       dateTime: '2024-04-21T12:00:00Z',
-  //       buttonUrl: '/ukraine-tensions',
-  //     },
-  //     {
-  //       cardTitle: 'Экономические прогнозы на следующий квартал',
-  //       cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
-  //       dateTime: '2024-04-21T12:00:00Z',
-  //       buttonUrl: '/economic-forecasts',
-  //     },
-  //     {
-  //       cardTitle: 'Новые технологии в медицине',
-  //       cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
-  //       dateTime: '2024-04-21T12:00:00Z',
-  //       buttonUrl: '/medical-technologies',
-  //     },
-  //   ],
-  // });
+  await Employer.create(
+      {
+        email: "employer1@example.com",
+        password: "password123",
+        token: randomUUID(),
+        role: "employer",
+        companyName: "Company A",
+        industry: "Technology",
+        description: "Company A is a leading technology firm specializing in software development.",
+        address: "123 Main St, City, Country",
+        contacts: "+1 (123) 456-7890",
+        logo: "fixtures/logo_company_megaservice.png",
+        documents: "https://example.com/documentsA.pdf"
+      },
+      {
+        email: "employer2@example.com",
+        password: "password456",
+        token: randomUUID(),
+        role: "employer",
+        companyName: "Company B",
+        industry: "Finance",
+        description: "Company B is a financial services company providing investment solutions.",
+        address: "456 Elm St, City, Country",
+        contacts: "+1 (234) 567-8901",
+        logo: "fixtures/logo_company_megaservice.png",
+        documents: "https://example.com/documentsB.pdf"
+      },
+      {
+        email: "employer3@example.com",
+        password: "password789",
+        token: randomUUID(),
+        role: "employer",
+        companyName: "Company C",
+        industry: "Healthcare",
+        description: "Company C is a healthcare organization committed to improving patient care.",
+        address: "789 Oak St, City, Country",
+        contacts: " +1 (345) 678-9012",
+        logo: "fixtures/logo_company_megaservice.png",
+        documents: "https://example.com/documentsC.pdf"
+      }
+  );
+
+  await Tariff.create({
+    mainTitle: 'Tariff',
+    title: 'Basic',
+    description: ['Free Food', 'Apple Music'],
+  });
+
+  await LastNewsBlock.create({
+    title: 'Последние новости',
+    page: 'last-news-block',
+    cards: [
+      {
+        cardTitle: 'Природные катастрофы угрожают',
+        cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/natural-disasters',
+      },
+      {
+        cardTitle: 'Рост напряженности на Украине',
+        cardText: 'Международные обсуждения и реакции на политическую ситуацию',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/ukraine-tensions',
+      },
+      {
+        cardTitle: 'Экономические прогнозы на следующий квартал',
+        cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/economic-forecasts',
+      },
+      {
+        cardTitle: 'Новые технологии в медицине',
+        cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
+        dateTime: '2024-04-21T12:00:00Z',
+        buttonUrl: '/medical-technologies',
+      },
+    ],
+  });
 
   await db.close();
 };
