@@ -228,7 +228,14 @@ footerRouter.post('/logo', imagesUpload.single('logo'), async (req, res, next) =
       return res.status(400).json({ error: 'Логотип с таким именем уже существует' });
     }
 
-    fs.renameSync(req.file.path, logoFilePath);
+    // Добавляем проверку на наличие ошибок при перемещении файла
+    try {
+      fs.renameSync(req.file.path, logoFilePath);
+    } catch (err) {
+      // Если произошла ошибка при перемещении файла, удаляем файл и возвращаем ошибку
+      fs.unlinkSync(req.file.path);
+      return res.status(500).json({ error: 'Произошла ошибка при перемещении файла' });
+    }
 
     footer.logo = req.file.filename;
 
@@ -239,7 +246,6 @@ footerRouter.post('/logo', imagesUpload.single('logo'), async (req, res, next) =
     next(error);
   }
 });
-
 
 footerRouter.delete('/logo', async (_req, res, next) => {
   try {
