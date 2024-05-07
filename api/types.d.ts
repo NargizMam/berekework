@@ -38,12 +38,15 @@ export interface EmployerFields {
   password: string;
   token: string;
   role: string;
-  companyName: string;
   googleID?: string;
-  avatar?: string;
-  scope: string;
-  action: string;
-  foundationYear: string;
+  companyName: string;
+  industry: string;
+  description: string;
+  address: string;
+  contacts: string;
+  logo: string;
+  documents: string;
+  vacancies: Types.ObjectId[];
 }
 
 export interface UserMethods {
@@ -58,6 +61,7 @@ export interface VacancyApi {
   _id: string;
   title: string;
   description: string;
+  city: string;
   salary: {
     min: number | null;
     max: number | null;

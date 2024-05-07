@@ -22,7 +22,7 @@ export interface Moderator{
   createdAt: string;
   updatedAt: string;
 }
-export interface EmployerApi{
+export interface EmployerInfoApi{
   _id: string;
   companyName: string;
   industry: string;

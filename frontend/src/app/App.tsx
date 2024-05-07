@@ -15,6 +15,7 @@ import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
+import EmployerProfile from '../client/page/employerProfile/ui/employerProfile';
 
 const AdminRoutes = () => (
   <AdminLayout>
@@ -61,6 +62,7 @@ const App = () => {
                 <Route path="/users" element={<UserPanelPage />} />
                 <Route path="/vacancy" element={<VacancyPage />} />
                 <Route path="/tariffs" element={<TariffPanelPage />} />
+                <Route path="/employersProfile" element={<EmployerProfile/>} />
                 <Route path="*" element={'Not found'} />
               </Routes>
             </Container>

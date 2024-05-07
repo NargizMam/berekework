@@ -36,6 +36,14 @@ employerRouter.get('/', async (_req, res, next) => {
     return next(error);
   }
 });
+employerRouter.get('/:id', async (req, res, next) => {
+  try {
+    const results = await Employer.findById(req.params.id).populate('vacancies');
+    res.send(results);
+  } catch (error) {
+    return next(error);
+  }
+});
 
 employerRouter.delete('/:id', async (req, res, next) => {
   try {

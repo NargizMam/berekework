@@ -4,12 +4,12 @@ import { Moderator } from '../../../../types';
 import { getAllModerators } from '../api/moderatorsThunk';
 
 
-interface VacancyState {
+interface ModeratorState {
   moderators: Moderator[];
   moderatorsLoading: boolean;
 }
 
-const initialState: VacancyState = {
+const initialState: ModeratorState = {
   moderators: [],
   moderatorsLoading: false,
 };

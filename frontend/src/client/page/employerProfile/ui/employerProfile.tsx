@@ -1,10 +1,20 @@
-import { Avatar, Link, Typography } from '@mui/material';
-import React from 'react';
-import EmployerCabinetStyle from './EmployerCabinet-style';
-import './EmployerCabinet.css';
+import { Link, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import './employerProfile.css';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { selectEmployersProfileInfo } from '../model/employerProfileSlice';
+import { getEmployersProfileInfo } from '../app/employerProfileThunk';
 
 
-const EmployerCabinet = () => {
+const EmployerProfile = () => {
+  const profile = useAppSelector(selectEmployersProfileInfo)!;
+  const dispatch = useAppDispatch();
+  console.log('profile');
+  useEffect(() => {
+    dispatch(getEmployersProfileInfo('6638e5d5840ab0f8a88bc5ec'));
+  }, [dispatch]);
+
+  console.log(profile);
   return (
     <div>
       <Typography variant="h2">
@@ -30,4 +40,4 @@ const EmployerCabinet = () => {
   );
 };
 
-export default EmployerCabinet;
+export default EmployerProfile;

@@ -1,4 +1,4 @@
-const EmployerCabinetStyle = {
+const employerProfileStyle = {
   avatar: { width: 132, height: 132, marginBottom: '15px' },
   name: {
     lineHigth: 1.1,
@@ -14,4 +14,4 @@ const EmployerCabinetStyle = {
   },
 };
 
-export default EmployerCabinetStyle;
+export default employerProfileStyle;
