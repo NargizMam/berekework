@@ -1,8 +1,9 @@
 import express from 'express';
 import Footer from '../models/footer/Footer';
-import {imagesUpload} from "../multer";
 import path from "path";
 import * as fs from "node:fs";
+import config from "../config";
+import {imagesUpload} from "../multer";
 
 const footerRouter = express.Router();
 
@@ -203,7 +204,7 @@ footerRouter.delete('/delete-copyright', async (_req, res, next) => {
   }
 });
 
-footerRouter.put('/logo', imagesUpload.single('logo'), async (req, res, next) => {
+footerRouter.post('/logo', imagesUpload.single('logo'), async (req, res, next) => {
   try {
     const footer = await Footer.findOne();
 
@@ -211,15 +212,34 @@ footerRouter.put('/logo', imagesUpload.single('logo'), async (req, res, next) =>
       return res.status(404).json({ error: 'Footer not found' });
     }
 
-    footer.logo = req.file?.filename;
+    if (footer.logo) {
+      return res.status(400).json({ error: 'У вас уже присутствует логотип. Удалите предыдущий перед тем как добавить новый.' });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'Логотип не загружен' });
+    }
+
+    const logoFolderPath = path.join(config.publicPath, 'images');
+    const logoFilePath = path.join(logoFolderPath, req.file.filename);
+
+    if (fs.existsSync(logoFilePath)) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: 'Логотип с таким именем уже существует' });
+    }
+
+    fs.renameSync(req.file.path, logoFilePath);
+
+    footer.logo = req.file.filename;
 
     const updatedFooter = await footer.save();
 
-    res.json(updatedFooter);
+    return res.send(updatedFooter);
   } catch (error) {
     next(error);
   }
 });
+
 
 footerRouter.delete('/logo', async (_req, res, next) => {
   try {
