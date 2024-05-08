@@ -42,7 +42,7 @@ const TitleBlockStyle = {
   button: {
     textAlign: 'center',
     maxWidth: '307px',
-    margin: '0 auto',
+    margin: '0 auto 145px auto',
   },
   titleWithoutImage: {
     textAlign: 'center',

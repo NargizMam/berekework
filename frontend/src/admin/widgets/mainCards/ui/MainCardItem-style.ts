@@ -1,35 +1,27 @@
-const MainCardItemStyle = (cardIcon: string | null, cardImage: string | null) => ({
+const MainCardItemStyle = (cardIcon: string | null) => ({
   card: {
     display: 'flex',
-    borderRadius: '5px',
+    maxWidth: '100%',
+    flexBasis: 'calc(50% - 5px)',
+    borderRadius: '30px',
     alignItems: 'center',
     textDecoration: 'none',
     background: '#ECECEC',
     border: '1px solid #ECECEC',
-    padding: cardIcon ? '40px 40px 40px 124px' : '50px 0 48px 50px',
-  },
-  content: {
-    position: 'relative',
-    '&::after': {
-      content: '',
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      background: `url(${cardImage}) no-repeat right bottom`,
-      backgroundSize: 'contain',
-      width: '100%',
-      height: '100%',
-    },
+    overflow: 'hidden',
+    padding: cardIcon ? '40px 40px 40px 124px' : '50px 250px 48px 50px',
   },
   title: {
     fontSize: '20px',
     fontWeight: '600',
-    marginBottom: '20px',
     color: '#000',
-    lineHeight: '1.1',
-    margin: 0,
+    lineHeight: 1.1,
+    margin: '0 0 20px 0',
   },
   text: {
+    fontSize: '14px',
+    fontWeight: '500',
+    lineHeight: 1.4,
     color: '#777',
     margin: 0,
   },
@@ -43,8 +35,16 @@ const MainCardItemStyle = (cardIcon: string | null, cardImage: string | null) =>
       maxHeight: '54px',
     },
   },
+  image: {
+    width: '228px',
+    height: '228px',
+    transform: 'rotate(-12.28deg)',
+    bottom: '-54px',
+    right: '-60px',
+  },
   link: {
     textDecoration: 'none',
   },
 });
+
 export default MainCardItemStyle;

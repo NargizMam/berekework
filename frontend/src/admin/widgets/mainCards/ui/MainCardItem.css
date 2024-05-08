@@ -1,1 +1,54 @@
+.MainCardItem__card {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    flex-basis: calc(50% - 5px);
+    border-radius: 30px;
+    align-items: center;
+    text-decoration: none;
+    background: #ECECEC;
+    border: 1px solid #ECECEC;
+    overflow: hidden;
+}
+
+.MainCardItem__card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+}
+
+.MainCardItem__card-text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #777;
+    margin: 0;
+}
+
+.MainCardItem__card-icon {
+    max-width: 24px;
+    max-height: 24px;
+}
+
+@media (min-width: 600px) {
+    .MainCardItem__card-icon {
+        left: 40px;
+        top: 64px;
+        max-width: 54px;
+        max-height: 54px;
+    }
+}
+
+.MainCardItem__card-image {
+    position: absolute;
+    width: 228px;
+    height: 228px;
+    transform: rotate(-12.28deg);
+    bottom: -54px;
+    right: -60px;
+}
+
 
