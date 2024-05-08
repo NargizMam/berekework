@@ -1,114 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Applicant, ApplicantMutation, WorkExperience } from '../../types';
 import { Button, Grid } from '@mui/material';
+import { cities, educationTypes, jobCities, jobs } from '../constant';
 import { LoadingButton } from '@mui/lab';
-import './ApplicantForm.css';
-import WorkExperienceField from '../WorkExperience/WorkExperienceField';
-
+import React, { ReactNode } from 'react';
+import { ApplicantMutation } from '../../types';
 
 interface Props {
-  applicantForm: Applicant | null;
-  onSubmit: (mutation: ApplicantMutation) => void;
+  state: ApplicantMutation;
+  submitFormHandler: (e: React.FormEvent) => void;
+  inputChangeHandler: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
+  addField: () => void;
+  fields: ReactNode[];
   loading: boolean;
 }
 
-const ApplicantForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) => {
-  const cities: string[] = ['Бишкек', 'Ош', 'Кант', 'Токмок'];
-  const jobCities: string[] = ['Бишкек', 'Ош', 'Кант', 'Токмок'];
-  const jobs: string[] = ['Графический дизайнк', 'Юрист'];
-  const educationTypes: string[] = ['среднее общее образование', 'среднее профессиональное образование', 'высшее образование - бакалавриат;', 'высшее образование - магистратура'];
-  const [fields, setFields] = useState<React.ReactNode[]>([]);
-  const [state, setState] = useState<ApplicantMutation>({
-    firstName: '',
-    surname: '',
-    secondName: '',
-    photo: null,
-    sex: '',
-    dateOfBirth: '',
-    country: '',
-    city: '',
-    education: '',
-    aboutApplicant: '',
-    workExperience: [],
-    wantedJob: '',
-    wantedJobCity: '',
-  });
-
-  useEffect(() => {
-    if (applicantForm) {
-      setFields(
-        state.workExperience.map(work => (
-          <WorkExperienceField
-            key={work.id}
-            id={work.id}
-            job={work.job}
-            deleteField={deleteField}
-            addField={addFieldToFormState}
-          />
-        ))
-      );
-    }
-  }, [applicantForm]);
-
-  const submitFormHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(state);
-    onSubmit(state);
-  };
-
-  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    const {name, value} = e.target;
-
-    setState(prevState => {
-      return {...prevState, [name]: value};
-    });
-  };
-
-  const addFieldToFormState = (newField: WorkExperience) => {
-    const existingFieldId = state.workExperience.findIndex(field => field.id === newField.id);
-
-    if (existingFieldId !== -1) {
-      setState(prevState => ({
-        ...prevState,
-        workExperience: prevState.workExperience.map((field, index) =>
-          index === existingFieldId ? newField : field
-        )
-      }));
-    } else {
-      setState(prevState => ({
-        ...prevState,
-        workExperience: [...prevState.workExperience, newField]
-      }));
-    }
-  };
-
-  const deleteField = (id: string) => {
-    setState(prevState => ({
-      ...prevState,
-      workExperience: prevState.workExperience.filter((field) => field.id !== id)
-    }));
-    setFields(prevState => prevState.filter(form => {
-      if (React.isValidElement(form)) {
-        return form.key !== id;
-      }
-      return true;
-    }));
-  };
-  const addField = () => {
-    const fieldId = crypto.randomUUID();
-    setFields(prevState => ([
-      ...prevState,
-      <WorkExperienceField
-        key={fieldId}
-        job={null}
-        id={fieldId}
-        addField={addFieldToFormState}
-        deleteField={deleteField}
-      />
-    ]));
-  };
-
-
+const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, inputChangeHandler, addField}) => {
   return (
     <div className="applicantFormContainer">
       <form autoComplete="off" onSubmit={submitFormHandler}>
@@ -238,7 +143,9 @@ const ApplicantForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) => {
           </Grid>
           <Grid item xs>
             <Grid item xs>
-              <Button variant="contained" sx={{marginTop: '10px', backgroundColor: '#0866FF', color: '#ffff', borderRadius: '30px'}} onClick={() => addField()}>Добавить опыт
+              <Button variant="contained"
+                      sx={{marginTop: '10px', backgroundColor: '#0866FF', color: '#ffff', borderRadius: '30px'}}
+                      onClick={() => addField()}>Добавить опыт
                 работы</Button>
             </Grid>
             <Grid display="flex" mt={2} flexWrap={'wrap'}>
@@ -253,7 +160,7 @@ const ApplicantForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) => {
                 id="wantedJob"
                 value={state.wantedJob}
                 onChange={inputChangeHandler}
-                name='wantedJob'
+                name="wantedJob"
                 required
               >
                 <option className="menuItem" value="">Выберите профессию</option>
@@ -269,7 +176,7 @@ const ApplicantForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) => {
                 id="wantedJobCity"
                 value={state.wantedJobCity}
                 onChange={inputChangeHandler}
-                name='wantedJobCity'
+                name="wantedJobCity"
                 required
               >
                 <option className="menuItem" value="">Выберите город</option>
@@ -294,4 +201,4 @@ const ApplicantForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) => {
   );
 };
 
-export default ApplicantForm;
+export default Form;

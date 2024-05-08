@@ -41,7 +41,7 @@ const BlockForm: React.FC<Props> = ({block, onSubmit, loading}) => {
     const submitFormHandler = (e: React.FormEvent) => {
         e.preventDefault();
         if (state.cards.length === 0) {
-            window.alert('Хотя бы одна карточка должна быть заполнена')
+            window.alert('Хотя бы одна карточка должна быть заполнена');
         } else {
             onSubmit(state);
             setState({

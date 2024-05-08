@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Applicant } from '../types';
 import { activateApplicant, addApplicant, deleteApplicant, fetchApplicant, fetchApplicants } from './applicantThunk';
-import { RootState } from '../../../app/store/store';
+import { RootState } from '../../../../app/store/store';
 
 
 interface ApplicantState {
-  items: Applicant[];
+  items: Applicant[] | Applicant;
   item: Applicant | null;
   fetchAllLoading: boolean;
   fetchOneLoading: boolean;

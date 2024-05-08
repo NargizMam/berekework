@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { Applicant, ApplicantMutation } from '../types';
-import axiosApi from '../../../app/axiosApi';
+import axiosApi from '../../../../app/axiosApi';
 
-export const fetchApplicants = createAsyncThunk<Applicant[]>(
+export const fetchApplicants = createAsyncThunk<Applicant[] >(
   'applicant/fetchAll',
   async () => {
     const response = await axiosApi.get<Applicant[]>(`/applicants`);
@@ -12,8 +12,8 @@ export const fetchApplicants = createAsyncThunk<Applicant[]>(
 
 export const fetchApplicant = createAsyncThunk<Applicant, string>(
   'applicant/fetchOne',
-  async (_id) => {
-    const response = await axiosApi.get<Applicant>(`applicants/${_id}` );
+  async (userId) => {
+    const response = await axiosApi.get<Applicant>(`applicants?userId=${userId}` );
     return response.data;
   }
 );
@@ -31,7 +31,7 @@ export const addApplicant = createAsyncThunk<null, ApplicantMutation>(
       }
     });
 
-    return axiosApi.post('/applicants', formData);
+      return axiosApi.post('/applicants', formData);
   }
 );
 
