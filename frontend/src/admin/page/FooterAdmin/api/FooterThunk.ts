@@ -107,7 +107,7 @@ export const createLogo = createAsyncThunk(
   'footer/createLogo',
   async (logoFormData: FormData, { rejectWithValue }) => {
     try {
-      const response = await axios.put('/footer/logo', logoFormData, {
+      const response = await axiosApi.post('/footer/logo', logoFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -123,7 +123,7 @@ export const deleteLogo = createAsyncThunk(
   'footer/deleteLogo',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.delete('/footer/logo');
+      const response = await axiosApi.delete('/footer/logo');
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

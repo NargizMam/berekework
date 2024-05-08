@@ -1,9 +1,9 @@
 import express from 'express';
 import Footer from '../models/footer/Footer';
 import path from "path";
-import * as fs from "node:fs";
 import config from "../config";
-import {imagesUpload} from "../multer";
+import { logoFooterUpload } from "../multer";
+import fs from 'fs';
 
 const footerRouter = express.Router();
 
@@ -204,7 +204,7 @@ footerRouter.delete('/delete-copyright', async (_req, res, next) => {
   }
 });
 
-footerRouter.post('/logo', imagesUpload.single('logo'), async (req, res, next) => {
+footerRouter.post('/logo', logoFooterUpload.single('logo'), async (req, res, next) => {
   try {
     const footer = await Footer.findOne();
 
@@ -220,25 +220,18 @@ footerRouter.post('/logo', imagesUpload.single('logo'), async (req, res, next) =
       return res.status(400).json({ error: 'Логотип не загружен' });
     }
 
-    const logoFolderPath = path.join(config.publicPath, 'images');
+    const logoFolderPath = path.join(config.publicPath, 'logoFooter');
+
+    // const files = fs.readdirSync(logoFolderPath);
+    // if (files.length > 0) {
+    //   fs.unlinkSync(req.file.path);
+    //   return res.status(400).json({ error: 'В папке уже есть логотип. Удалите предыдущий перед тем как добавить новый.' });
+    // }
+
     const logoFilePath = path.join(logoFolderPath, req.file.filename);
-
-    if (fs.existsSync(logoFilePath)) {
-      fs.unlinkSync(req.file.path);
-      return res.status(400).json({ error: 'Логотип с таким именем уже существует' });
-    }
-
-    // Добавляем проверку на наличие ошибок при перемещении файла
-    try {
-      fs.renameSync(req.file.path, logoFilePath);
-    } catch (err) {
-      // Если произошла ошибка при перемещении файла, удаляем файл и возвращаем ошибку
-      fs.unlinkSync(req.file.path);
-      return res.status(500).json({ error: 'Произошла ошибка при перемещении файла' });
-    }
+    fs.renameSync(req.file.path, logoFilePath);
 
     footer.logo = req.file.filename;
-
     const updatedFooter = await footer.save();
 
     return res.send(updatedFooter);
@@ -246,6 +239,7 @@ footerRouter.post('/logo', imagesUpload.single('logo'), async (req, res, next) =
     next(error);
   }
 });
+
 
 footerRouter.delete('/logo', async (_req, res, next) => {
   try {
@@ -256,25 +250,25 @@ footerRouter.delete('/logo', async (_req, res, next) => {
     }
 
     if (footer.logo) {
-      const logoPath = path.join(__dirname, '..', 'public', footer.logo);
+      const logoPath = path.join(config.publicPath, 'logoFooter', footer.logo);
 
       fs.unlink(logoPath, (err) => {
         if (err) {
-          return res.status(500).json({error: 'Failed to delete logo file'});
+          return res.status(500).json({error: 'Не удалось удалить файл логотипа'});
         }
 
         footer.logo = undefined;
 
         footer.save()
             .then(() => {
-              res.json({message: 'Logo deleted successfully'});
+              res.json({message: 'Логотип успешно удален'});
             })
             .catch((_error) => {
-              res.status(500).json({error: 'Failed to update Footer document'});
+              res.status(500).json({error: 'Не удалось обновить колонтитул документа'});
             });
       });
     } else {
-      return res.status(404).json({ error: 'Logo not found' });
+      return res.status(404).json({ error: 'Логотип не неайден' });
     }
   } catch (error) {
     next(error);

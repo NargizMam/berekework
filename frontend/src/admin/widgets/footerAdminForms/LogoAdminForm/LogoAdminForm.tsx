@@ -80,7 +80,7 @@ const LogoAdminForm: React.FC<LogoFormProps> = ({ open, onClose }) => {
             </Button>
           </Grid>
           <Grid mt={3} item xs>
-            <FileInput onChange={filesInputChangeHandler} name="image" label="image" />
+            <FileInput onChange={filesInputChangeHandler} name="logo" label="Логотип" />
           </Grid>
           <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
             <Button type="submit" onClick={submitFormHandler} variant="contained" sx={{ mt: 2 }}>

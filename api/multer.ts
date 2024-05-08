@@ -22,3 +22,4 @@ export const imagesUpload = multer({ storage: createStorageConfig('images') });
 export const cardUpload = multer({ storage: createStorageConfig('cards') });
 export const avatarsUpload = multer({ storage: createStorageConfig('avatars') });
 export const logosUpload = multer({ storage: createStorageConfig('logos') });
+export const logoFooterUpload = multer({ storage: createStorageConfig('logoFooter') });
