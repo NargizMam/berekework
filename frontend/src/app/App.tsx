@@ -16,27 +16,32 @@ import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
 import EmployerProfile from '../client/page/employerProfile/ui/employerProfile';
+import WarningMessage from '../widgets/WarningMessage/WarningMessages';
+import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 
-const AdminRoutes = () => (
-  <AdminLayout>
-    <Container>
-      <Routes>
-        <Route path="/" element={<AdminMainPage />} />
-        <Route path="/header" element={<HeaderAdmin />} />
-        <Route path="/pages" element={<AdminAllPages />} />
-        <Route path="/moderators" element={<ModeratorsPage />} />
-        <Route path="/pages/new-page" element={<AdminCreatePage />} />
-        <Route path="/adminHeading" element={<HeadingAdmin />} />
-        <Route path="/adminHeading:location" element={<HeadingDetail />} />
-      </Routes>
-    </Container>
-  </AdminLayout>
-);
 
 const App = () => {
   const user = useAppSelector(selectUser);
   const location = useLocation();
 
+  const AdminRoutes = () => (
+    <AdminLayout>
+      <Container>
+        <Routes>
+          <Route path="/" element={<AdminMainPage />} />
+          <Route path="/header" element={<HeaderAdmin />} />
+          <Route path="/pages" element={<AdminAllPages />} />
+          <Route path="/moderators" element={
+            <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
+              <ModeratorsPage/>
+            </ProtectedRoute>} />
+          <Route path="/pages/new-page" element={<AdminCreatePage />} />
+          <Route path="/adminHeading" element={<HeadingAdmin />} />
+          <Route path="/adminHeading:location" element={<HeadingDetail />} />
+        </Routes>
+      </Container>
+    </AdminLayout>
+  );
   const adminRoutes = useRoutes([
     {
       path: '/admin/*',
@@ -50,6 +55,7 @@ const App = () => {
 
   return (
     <>
+      <WarningMessage/>
       {location.pathname.startsWith('/admin') ? (
         adminRoutes
       ) : (

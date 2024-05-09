@@ -9,6 +9,6 @@ export const SIDE_BAR_LINKS = [
   { id: parseFloat(Math.random().toString()), value: 'Users', path: 'users' },
   { id: parseFloat(Math.random().toString()), value: 'Vacancy', path: 'vacancy' },
   { id: parseFloat(Math.random().toString()), value: 'Tariffs', path: 'tariffs' },
-  { id: parseFloat(Math.random().toString()), value: 'Moderators', path: 'moderators' },
+  { id: parseFloat(Math.random().toString()), value: 'Employers', path: 'employers' },
 ];
 
