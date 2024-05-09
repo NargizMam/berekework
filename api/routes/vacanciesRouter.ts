@@ -15,8 +15,6 @@ vacanciesRouter.post('/', cardUpload.single('logo'), async (req, res, next) => {
     const newVacancy: VacancyMutation = {
       title,
       description,
-      logo: companyLogo,
-      company,
       city,
       salary: {
         min: salary.min ? parseFloat(salary.min) : null,
