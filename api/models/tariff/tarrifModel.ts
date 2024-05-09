@@ -5,14 +5,18 @@ const tariffSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: [String],
-    required: true,
-  },
+  tariffs: [
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: [String],
+        required: true,
+      },
+    },
+  ],
 });
 
 export const Tariff = mongoose.model('Tariff', tariffSchema);

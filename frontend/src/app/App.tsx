@@ -17,6 +17,7 @@ import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
 import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
+import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
 
 
 const App = () => {
@@ -40,6 +41,8 @@ const App = () => {
           <Route path="/employers" element={<EmployerPanelPage/>}/>
           <Route path="/employers-submit" element={<EmployerFormPage/>}/>
           <Route path="/tariffs" element={<TariffPanelPage/>}/>
+          <Route path="/tariffs-new" element={<TariffFormPage/>}/>
+          <Route path="/tariffs-submit/:id" element={<TariffFormPage/>}/>
           <Route path="/vacancy" element={<VacancyPage/>}/>
           <Route path="/users" element={<UserPanelPage/>}/>
         </Routes>

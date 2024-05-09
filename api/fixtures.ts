@@ -126,12 +126,19 @@ const run = async () => {
     scope: 'Major',
     companyName: 'NAVI',
     role: 'employer',
+    address: 'st. Peterburg',
+    avatar: 'fixtures/logo_company_cambridge.png',
+    document: 'fixtures/dummy.pdf',
   });
 
   await Tariff.create({
     mainTitle: 'Tariff',
-    title: 'Basic',
-    description: ['Free Food', 'Apple Music'],
+    tariffs: [
+      {
+        title: 'Basic',
+        description: ['Free Food', 'Apple Music'],
+      },
+    ],
   });
 
   await LastNewsBlock.create({
