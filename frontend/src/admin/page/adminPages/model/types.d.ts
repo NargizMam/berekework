@@ -12,7 +12,7 @@ export interface IPage {
   content: { [key: string]: string };
 }
 
-export interface CreatePage {
+export interface CreateEditPage {
   name: string;
   url: string;
   blocks: IPage[];

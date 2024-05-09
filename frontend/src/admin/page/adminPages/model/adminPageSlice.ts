@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createPage, fetchAllPages, fetchOnePage } from '../api/adminPageThunks';
+import { createPage, editPage, fetchAllPages, fetchOnePage } from '../api/adminPageThunks';
 import { RootState } from '../../../../app/store/store';
 import { AllPagesCRM, OnePageResponse } from './types';
 
@@ -9,6 +9,7 @@ interface AdminCreatePageState {
   creating: boolean;
   fetching: boolean;
   fetchingOne: boolean;
+  editPageLoading: boolean;
 }
 
 const initialState: AdminCreatePageState = {
@@ -17,6 +18,7 @@ const initialState: AdminCreatePageState = {
   creating: false,
   fetching: false,
   fetchingOne: false,
+  editPageLoading: false,
 };
 
 const pageSlice = createSlice({
@@ -58,6 +60,17 @@ const pageSlice = createSlice({
       .addCase(fetchAllPages.rejected, (state) => {
         state.fetching = false;
       });
+
+    builder
+      .addCase(editPage.pending, (state) => {
+        state.editPageLoading = true;
+      })
+      .addCase(editPage.fulfilled, (state) => {
+        state.editPageLoading = false;
+      })
+      .addCase(editPage.rejected, (state) => {
+        state.editPageLoading = false;
+      });
   },
 });
 
@@ -67,3 +80,4 @@ export const selectPages = (state: RootState) => state.page.pages;
 export const selectPageCreating = (state: RootState) => state.page.creating;
 export const selectPageFetchingAll = (state: RootState) => state.page.fetching;
 export const selectPageFetchingOne = (state: RootState) => state.page.fetchingOne;
+export const selectEditPageLoading = (state: RootState) => state.page.editPageLoading;

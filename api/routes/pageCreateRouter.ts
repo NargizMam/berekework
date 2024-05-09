@@ -74,4 +74,69 @@ pageCreateRouter.get('/:id', async (req, res, next) => {
   }
 });
 
+interface UpdatedPage {
+  name: string;
+  url: string;
+  components: Types.ObjectId[];
+  componentType: string[];
+}
+
+pageCreateRouter.put('/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const { name, url } = req.body;
+
+    const updatedPage: UpdatedPage = {
+      name,
+      url,
+      components: [],
+      componentType: [],
+    };
+
+    let blocks: Block[] = req.body.blocks;
+
+    const existingPage = await Page.findById(id);
+    if (!existingPage) {
+      return res.status(404).send({ error: 'Page not found' });
+    }
+
+    for (const block of blocks) {
+      const modelName = modelMapping[block.nameComponent.toLocaleLowerCase()];
+
+      if (!modelName) {
+        return res.status(404).send({ error: 'Model not found!' });
+      }
+
+      if (block.content['_id']) {
+        await modelMapping[block.nameComponent.toLocaleLowerCase()].findByIdAndDelete(block.content['_id']);
+        delete block.content['_id'];
+      }
+    }
+
+    for (const block of blocks) {
+      const modelName = modelMapping[block.nameComponent.toLocaleLowerCase()];
+
+      if (modelName) {
+        const componentInstance = new modelMapping[block.nameComponent.toLocaleLowerCase()](block.content);
+        const id = await componentInstance.save();
+        updatedPage.componentType.push(block.nameComponent);
+        updatedPage.components.push(id._id);
+        await componentInstance.save();
+      } else {
+        return res.status(422).send({
+          error: 'No such components',
+          missingComponents: blocks.filter((block) => !modelMapping[block.nameComponent]),
+        });
+      }
+    }
+
+    await Page.updateOne({ _id: id }, updatedPage);
+
+    res.status(200).send({ message: 'Page updated successfully' });
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
 export default pageCreateRouter;

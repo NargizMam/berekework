@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../../../app/axiosApi';
-import { AllPagesCRM, CreatePage, IDeleteComponents, OnePageResponse } from '../model/types';
+import { AllPagesCRM, CreateEditPage, IDeleteComponents, OnePageResponse } from '../model/types';
 
-export const createPage = createAsyncThunk<string, CreatePage>('page/create', async (data) => {
+export const createPage = createAsyncThunk<string, CreateEditPage>('page/create', async (data) => {
   const response = await axiosApi.post('/page', data);
   return response.data.id;
 });
@@ -26,3 +26,10 @@ export const deleteComponent = createAsyncThunk<void, IDeleteComponents>('compon
 
   await axiosApi.delete(`/${component.link}`, { data });
 });
+
+export const editPage = createAsyncThunk<void, { id: string; data: CreateEditPage }>(
+  'page/edit',
+  async ({ id, data }) => {
+    await axiosApi.put(`/page/${id}`, data);
+  },
+);

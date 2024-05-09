@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { deleteComponent, fetchOnePage } from '../api/adminPageThunks';
+import { deleteComponent, editPage, fetchOnePage } from '../api/adminPageThunks';
 import { selectOnePage, selectPageFetchingOne } from '../model/adminPageSlice';
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
@@ -69,10 +69,13 @@ const EditPage = () => {
     }));
   };
 
-  const onEditPage = (e: React.FormEvent) => {
+  const onEditPage = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = { name: state.name, url: state.url, blocks: page };
     console.log(result);
+
+    await dispatch(editPage({ id, data: result }));
+    await dispatch(fetchOnePage(id));
   };
 
   const onDeleteComponent = async (index: number, componentId?: string, link?: string) => {
