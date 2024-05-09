@@ -23,8 +23,8 @@ export const AdminCreatePage = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = { name: initialPageValues.name, url: initialPageValues.url, blocks: page };
-    dispatch(createPage(result));
-    dispatch(fetchAllPages());
+    await dispatch(createPage(result));
+    await dispatch(fetchAllPages());
     navigate('/admin/pages');
   };
 

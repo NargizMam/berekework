@@ -43,8 +43,6 @@ const EditPage = () => {
       onePage.componentType.map((componentName, componentIndex) => {
         const findIndex = components.findIndex((value) => value.name === componentName);
 
-        console.log(findIndex);
-
         const component = components[findIndex];
 
         setChooseComponentName((prevState) => [...prevState, component.displayName]);
@@ -61,8 +59,6 @@ const EditPage = () => {
       });
     }
   }, [onePage]);
-
-  console.log(onePage);
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,7 +80,11 @@ const EditPage = () => {
   };
 
   const imageInputChange = (location: string, index: number) => {
-    console.log('Location=', location, ` Index = ${index}`);
+    setPages((prevState) =>
+      prevState.map((pageItem, pageIndex) =>
+        pageIndex === index ? { ...pageItem, content: { ...pageItem.content, image: location } } : pageItem,
+      ),
+    );
   };
 
   return (

@@ -18,7 +18,7 @@ const ImageUpload: React.FC<Props> = ({ onChangeImage, value = '' }) => {
   const [filename, setFilename] = useState(value);
 
   // todo нужно передать именно не value а existingImage = и ее отрисовать тоже через useEffect
-  console.log('HERE');
+  // console.log('HERE');
   /*if (value.length) {
     const image = value.split('&')[1] + '.' + value.slice(-3);
     console.log('Come image', image);
