@@ -9,8 +9,8 @@ interface Props {
   onDeleteComponent: (index: number, componentId?: string, link?: string) => void;
   page: IPage[];
   chooseComponentName: IChooseComponent[];
-  setPagesData: (data: IPage[]) => void;
   imageInputChange: (location: string, index: number) => void;
+  onChangeComponentsInput: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
 }
 
 const ComponentList: React.FC<Props> = ({
@@ -19,16 +19,9 @@ const ComponentList: React.FC<Props> = ({
   onDeleteComponent,
   page,
   chooseComponentName,
-  setPagesData,
   imageInputChange,
+  onChangeComponentsInput,
 }) => {
-  const onChangeComponentsInput = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const { name, value } = e.target;
-    const data = [...page];
-    data[index].content[name] = value;
-    setPagesData(data);
-  };
-
   return (
     <>
       <Box sx={{ border: '1px solid black', borderRadius: '14px', padding: 1, margin: '10px 0' }}>

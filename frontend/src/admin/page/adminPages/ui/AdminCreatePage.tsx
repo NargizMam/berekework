@@ -49,6 +49,13 @@ export const AdminCreatePage = () => {
     setPages(data);
   };
 
+  const onChangeComponentsInput = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const { name, value } = e.target;
+    const data = [...page];
+    data[index].content[name] = value;
+    setPages(data);
+  };
+
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -68,9 +75,9 @@ export const AdminCreatePage = () => {
               index={index}
               block={component}
               chooseComponentName={chooseComponentName}
-              setPagesData={setPages}
               onDeleteComponent={deleteBlock}
               imageInputChange={imageInputChange}
+              onChangeComponentsInput={onChangeComponentsInput}
             />
           ))}
         </Grid>

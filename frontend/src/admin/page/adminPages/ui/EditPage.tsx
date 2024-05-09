@@ -89,6 +89,15 @@ const EditPage = () => {
     }
   };
 
+  const onChangeComponentsInput = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const { name, value } = e.target;
+    setPages((prevState) =>
+      prevState.map((pageItem, pageIndex) =>
+        pageIndex === index ? { ...pageItem, content: { ...pageItem.content, [name]: value } } : pageItem,
+      ),
+    );
+  };
+
   const imageInputChange = (location: string, index: number) => {
     setPages((prevState) =>
       prevState.map((pageItem, pageIndex) =>
@@ -124,9 +133,9 @@ const EditPage = () => {
                     index={index}
                     block={component}
                     chooseComponentName={chooseComponentName}
-                    setPagesData={setPages}
                     onDeleteComponent={onDeleteComponent}
                     imageInputChange={imageInputChange}
+                    onChangeComponentsInput={onChangeComponentsInput}
                   />
                 ))}
               </Grid>
