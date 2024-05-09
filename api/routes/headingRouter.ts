@@ -2,6 +2,7 @@ import express from 'express';
 import Heading from '../models/heading/headingModels';
 import { imagesUpload } from '../multer';
 import mongoose from 'mongoose';
+import Page from '../models/page/Page';
 
 const headingRouter = express.Router();
 
@@ -62,9 +63,19 @@ headingRouter.patch('/:id', imagesUpload.single('image'), async (req, res, next)
   }
 });
 
-headingRouter.delete('/:id', async (req, res, next) => {
+headingRouter.delete('/', async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const { id, pageId, index } = req.body;
+
+    const page = await Page.findById(pageId);
+
+    if (!page) {
+      return res.status(404).send({ message: 'Page not found!' });
+    }
+
+    page.componentType.splice(index, 1);
+    await page.save();
+
     await Heading.findByIdAndDelete(id);
     return res.send({ message: `Heading ${id} deleted!` });
   } catch (error) {
