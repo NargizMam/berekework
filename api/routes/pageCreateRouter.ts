@@ -139,4 +139,29 @@ pageCreateRouter.put('/:id', async (req, res, next) => {
   }
 });
 
+pageCreateRouter.delete('/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const existingPage = await Page.findById(id);
+    if (!existingPage) {
+      return res.status(404).send({ error: 'Page not found' });
+    }
+
+    for (const components of existingPage.componentType) {
+      await modelMapping[components.toLocaleLowerCase()].findByIdAndDelete();
+    }
+
+    for (let i = 0; i < existingPage.componentType.length; i++) {
+      const components = existingPage.componentType[i];
+      await modelMapping[components.toLocaleLowerCase()].findByIdAndDelete(existingPage.components[i]);
+    }
+
+    await Page.deleteOne({ _id: id });
+    return res.status(200).send({ message: 'Page deleted successfully' });
+  } catch (e) {
+    next(e);
+  }
+});
+
 export default pageCreateRouter;
