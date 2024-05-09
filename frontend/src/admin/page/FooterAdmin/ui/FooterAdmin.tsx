@@ -1,10 +1,14 @@
 import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import LinkBLockForm from '../../../widgets/footerAdminForms/LInksBlockForm/LinkBLockForm';
 import '../css/footer.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ContactsBlockForm from '../../../widgets/footerAdminForms/ContactsBlockForm/ContactsBlockForm';
 import CopyrightForm from '../../../widgets/footerAdminForms/CopyrightForm/CopyrightForm';
 import LogoAdminForm from '../../../widgets/footerAdminForms/LogoAdminForm/LogoAdminForm';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { selectFooter } from '../model/FooterSlice';
+import { fetchFooterData } from '../api/FooterThunk';
+import FooterLinksBlock from '../../../widgets/footerLInksBlock/footerLinksBlock';
 
 const style = {
   position: 'absolute' as const,
@@ -19,11 +23,13 @@ const style = {
 };
 
 const FooterAdmin: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [openLinks, setOpenLinks] = useState(false);
   const [openContact, setOpenContact] = useState(false);
   const [openCopyright, setOpenCopyright] = useState(false);
   const [openLogo, setOpenLogo] = useState(false);
+  const footer = useAppSelector(selectFooter);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -32,10 +38,23 @@ const FooterAdmin: React.FC = () => {
   const openCopyrightFunc = () => setOpenCopyright(true);
   const openLogoFunc = () => setOpenLogo(true);
 
+  useEffect(() => {
+    dispatch(fetchFooterData());
+  }, [dispatch]);
+
+  console.log(footer);
+
   return (
     <>
       <div>
         <h1>#Footer Admin</h1>
+        <div>
+          {footer.map((footerItem, index) => (
+            <div key={index}>
+              <FooterLinksBlock footerBlocks={footerItem.footerLinks} key={index}/>
+            </div>
+          ))}
+        </div>
         <Button onClick={handleOpen} variant="contained">Создайте свой футер</Button>
       </div>
       <div>

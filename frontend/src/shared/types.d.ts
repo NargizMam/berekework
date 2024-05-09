@@ -97,11 +97,13 @@ export interface VacancyBlockApiData {
 export interface ILinks {
   url: string,
   text: string,
+  _id: string,
 }
 
 export interface IFooterLinks{
   title: string,
   links: ILinks[],
+  _id: string,
 }
 
 export interface IContactsBlock {
@@ -114,7 +116,7 @@ export interface ICopyright {
 }
 
 export interface IFooter {
-  footerLinks: IFooterLinks,
+  footerLinks: IFooterLinks[],
   logo: File | null;
   socialNetworks: {
     title: string,
