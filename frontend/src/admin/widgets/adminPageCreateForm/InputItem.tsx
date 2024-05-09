@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextField } from '@mui/material';
-import { Field } from '../../page/adminPages/model/types';
 import ImageUpload from '../../shared/imageUpload/imageUpload';
+import { Field } from '../../page/adminPages/model/types';
+import { TextField } from '@mui/material';
 
 interface Input {
   field: Field;
@@ -17,7 +17,6 @@ const InputItem: React.FC<Input> = ({ field, onChange, index, imageInputChange, 
   };
 
   const onImageChange = (imageLoc: string) => {
-    console.log('ON CHANGE: ', imageLoc);
     imageInputChange(imageLoc, index);
   };
 

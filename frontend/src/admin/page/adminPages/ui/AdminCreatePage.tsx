@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Grid } from '@mui/material';
-import { useAppDispatch } from '../../../../app/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { createPage, fetchAllPages } from '../api/adminPageThunks';
 import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
 import ComponentList from '../../../widgets/adminPageCreateForm/ComponentList';
 import ModalComponents from '../../../widgets/ModalComponents/ModalComponents';
+import { selectPageCreating } from '../model/adminPageSlice';
 import { Fields, IChooseComponent, IPage } from '../model/types';
 
 export const AdminCreatePage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const pageCreating = useAppSelector(selectPageCreating);
   const [componentsField, setComponentsField] = useState<Fields[]>([]);
   const [page, setPages] = useState<IPage[]>([]);
   const [initialPageValues, setInitialPageValues] = useState({
@@ -64,6 +66,7 @@ export const AdminCreatePage = () => {
           url={initialPageValues.url}
           onInputChange={onInputChange}
           setOpenModal={setIsOpenModal}
+          buttonStatus={pageCreating}
         />
       </Box>
       <Box component={'form'} sx={{ mt: 2 }} onSubmit={onSubmit}>
@@ -82,7 +85,7 @@ export const AdminCreatePage = () => {
           ))}
         </Grid>
         <Grid item>
-          <Button variant={'contained'} type={'submit'} sx={{ margin: '10px 0' }}>
+          <Button variant={'contained'} type={'submit'} sx={{ margin: '10px 0' }} disabled={pageCreating}>
             Save
           </Button>
         </Grid>

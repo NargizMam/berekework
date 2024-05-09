@@ -4,8 +4,8 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import { components } from '../../../app/constants/components';
 import { Fields, IChooseComponent, IPage } from '../../page/adminPages/model/types';
+import { components } from '../../../app/constants/components';
 
 interface Props {
   isOpen: boolean;

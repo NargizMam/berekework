@@ -6,14 +6,13 @@ import { pageReducer } from '../../admin/page/adminPages/model/adminPageSlice';
 import { headerReducer } from '../../admin/page/headerCreate/model/headerSlice';
 import { authReducer } from '../../client/page/Auth/model/AuthSlice';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
 import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
 import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
-import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -33,7 +32,6 @@ const rootReducer = combineReducers({
   vacancy: vacancyReducer,
   moderator: moderatorsReducer,
   tariff: tariffReducer,
-  file: fileReducer,
   chooseBlock: chooseBlockReducer,
 });
 

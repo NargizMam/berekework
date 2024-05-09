@@ -2,13 +2,13 @@ import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { deleteComponent, editPage, fetchOnePage } from '../api/adminPageThunks';
-import { selectOnePage, selectPageFetchingOne } from '../model/adminPageSlice';
-import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import { selectEditPageLoading, selectOnePage, selectPageFetchingOne } from '../model/adminPageSlice';
 import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
-import { Fields, IChooseComponent, IPage } from '../model/types';
-import ModalComponents from '../../../widgets/ModalComponents/ModalComponents';
 import ComponentList from '../../../widgets/adminPageCreateForm/ComponentList';
+import ModalComponents from '../../../widgets/ModalComponents/ModalComponents';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import { components } from '../../../../app/constants/components';
+import { Fields, IChooseComponent, IPage } from '../model/types';
 
 const EditPage = () => {
   const { id } = useParams() as { id: string };
@@ -27,6 +27,7 @@ const EditPage = () => {
 
   const onePage = useAppSelector(selectOnePage);
   const onePageFetching = useAppSelector(selectPageFetchingOne);
+  const editPageLoading = useAppSelector(selectEditPageLoading);
 
   useEffect(() => {
     dispatch(fetchOnePage(id));
@@ -72,17 +73,11 @@ const EditPage = () => {
   const onEditPage = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = { name: state.name, url: state.url, blocks: page };
-    console.log(result);
-
     await dispatch(editPage({ id, data: result }));
     await dispatch(fetchOnePage(id));
   };
 
   const onDeleteComponent = async (index: number, componentId?: string, link?: string) => {
-    console.log(
-      `Delete first component by this id in api ${componentId} link=${link} Than delete from state by this ${index}}`,
-    );
-
     if (componentId && link) {
       await dispatch(deleteComponent({ componentId, link, pageId: id, index }));
       await dispatch(fetchOnePage(id));
@@ -122,6 +117,7 @@ const EditPage = () => {
                 url={state.url}
                 onInputChange={onInputChange}
                 setOpenModal={setIsOpenModal}
+                buttonStatus={editPageLoading}
               />
             </Box>
             <Box component={'form'} sx={{ mt: 2 }} onSubmit={onEditPage}>
@@ -140,7 +136,7 @@ const EditPage = () => {
                 ))}
               </Grid>
               <Grid item>
-                <Button variant={'contained'} type={'submit'} sx={{ margin: '10px 0' }}>
+                <Button variant={'contained'} type={'submit'} sx={{ margin: '10px 0' }} disabled={editPageLoading}>
                   Save
                 </Button>
               </Grid>
