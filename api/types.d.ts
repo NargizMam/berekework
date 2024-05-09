@@ -39,6 +39,11 @@ export interface EmployerFields {
   token: string;
   role: string;
   googleID?: string;
+  avatar?: string;
+  scope: string;
+  action: string;
+  foundationYear: string;
+  document: string;
   companyName: string;
   industry: string;
   description: string;
@@ -118,4 +123,9 @@ export interface Page {
 
 export interface ModelType {
   [key: string]: any;
+}
+
+export interface UploadedFiles {
+  avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
+  document?: Express.Multer.File[]; // Массив файлов для поля 'document'
 }

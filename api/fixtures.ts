@@ -89,6 +89,8 @@ const run = async () => {
         token: randomUUID(),
         role: 'admin',
       },
+    ],
+  });
   );
 
   const [employer1, employer2, employer3 ] = await Employer.create(
@@ -233,5 +235,4 @@ const run = async () => {
 
   await db.close();
 };
-
 void run();

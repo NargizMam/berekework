@@ -26,7 +26,7 @@ export const EmployerPanelPage = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Link component={RouterLink} to='/admin/new-employer'>Create</Link>
+      <Link component={RouterLink} to='/admin/employers-submit'>Create</Link>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
