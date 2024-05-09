@@ -30,6 +30,9 @@
   height: 280px;
   border-radius: 50%;
   background-color: #E9E9E9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .photoFrame {
@@ -53,4 +56,19 @@
   background-color: #0866FF;
   font-size: 24px;
   color: #FFFFFF;
+}
+
+.changeBtn {
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: #0866FF;
+  border-radius: 30px;
+  width: 90px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.changeBtn:hover {
+  color: #FFFFFF;
+  box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.75);
 }

@@ -29,7 +29,7 @@ applicantRouter.post(
     imagesUpload.single('photo'),
     async (req: RequestWithUser, res, next) => {
         try {
-            const id = req.query.id;
+            const userId = req.query.userId;
             const {
                 firstName,
                 surname,
@@ -43,11 +43,11 @@ applicantRouter.post(
                 wantedJob,
                 wantedJobCity
             } = req.body;
-            const applicant = await Applicant.findById(id);
+            const applicant = await Applicant.find({user: userId});
 
             if (applicant) {
                 const updated = await Applicant.findOneAndUpdate(
-                    {_id: id},
+                    {user: userId},
                     {
                         firstName,
                         surname,
@@ -57,7 +57,7 @@ applicantRouter.post(
                         city,
                         education,
                         aboutApplicant,
-                        workExperience,
+                        workExperience: JSON.parse(workExperience),
                         wantedJob,
                         wantedJobCity
                     },

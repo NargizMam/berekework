@@ -8,31 +8,31 @@ import FileInput from '../FileInput/FileInput';
 
 
 interface Props {
-  applicantForm: Applicant | null;
+  applicant: Applicant | null;
   onSubmit: (mutation: ApplicantMutation) => void;
   loading: boolean;
 }
 
-const ApplicantFullForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) => {
+const ApplicantFullForm: React.FC<Props> = ({applicant, onSubmit, loading}) => {
   const [fields, setFields] = useState<React.ReactNode[]>([]);
   const [state, setState] = useState<ApplicantMutation>({
-    firstName: '',
-    surname: '',
-    secondName: '',
-    photo: null,
-    sex: '',
-    dateOfBirth: '',
-    country: '',
-    city: '',
-    education: '',
-    aboutApplicant: '',
-    workExperience: [],
-    wantedJob: '',
-    wantedJobCity: '',
+    firstName: applicant?.firstName || '',
+    surname: applicant?.surname || '',
+    secondName: applicant?.secondName || '',
+    photo: applicant?.photo || null,
+    sex: applicant?.sex || '',
+    dateOfBirth: applicant?.dateOfBirth || '',
+    country: applicant?.country || '',
+    city: applicant?.city || '',
+    education: applicant?.education || '',
+    aboutApplicant: applicant?.aboutApplicant ||  '',
+    workExperience: applicant?.workExperience ||  [],
+    wantedJob: applicant?.wantedJob ||  '',
+    wantedJobCity: applicant?.wantedJobCity ||  '',
   });
 
   useEffect(() => {
-    if (applicantForm) {
+    if (applicant) {
       setFields(
         state.workExperience.map(work => (
           <WorkExperienceField
@@ -45,7 +45,7 @@ const ApplicantFullForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) 
         ))
       );
     }
-  }, [applicantForm]);
+  }, [applicant]);
 
   const submitFormHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +119,6 @@ const ApplicantFullForm: React.FC<Props> = ({applicantForm, onSubmit, loading}) 
       <div style={{marginTop: '70px'}}>
         <div className="whiteBackground"></div>
         <div className="applicantContainer">
-          {/*btn place */}
           <FileInput
             onChange={fileInputChangeHandler}
           />

@@ -36,7 +36,6 @@ export const addBlock = createAsyncThunk<
     null,
     { blockMutation: BlockMutation | Block, id?: string }
 >('block/add', async ({blockMutation, id}) => {
-    console.log(blockMutation);
     const response = await axiosApi.post(id? `/last-news-block?id=${id}` : `/last-news-block?id`, blockMutation);
     return response.data;
 });

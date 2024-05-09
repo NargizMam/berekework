@@ -7,17 +7,15 @@ import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
 import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
 import Container from '@mui/material/Container';
 import { LoginPage, RegisterPage } from '../client/page/Auth';
-import { UserPanelPage } from '../admin/page/usersPanel';
-import { VacancyPage } from '../admin/page/vacancyPanel';
-import { TariffPanelPage } from '../admin/page/tariffPanel';
 import { useAppSelector } from './store/hooks';
 import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
 import WarningMessage from '../widgets/WarningMessage/WarningMessages';
-import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import ApplicantSettings from '../client/page/Applicant/ApplicantSettings';
+import ApplicantProfile from '../client/page/Applicant/ApplicantProfile';
+import ApplicantRefactor from '../client/page/Applicant/ApplicantRefactor';
 
 
 const App = () => {
@@ -65,7 +63,9 @@ const App = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/applicantSettings" element={<ApplicantSettings />} />
+              <Route path="/newApplicant" element={<ApplicantSettings />} />
+              <Route path="/applicantProfile" element={<ApplicantProfile />} />
+              <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
               <Route path="*" element={'Not found'} />
             </Routes>
           </Container>

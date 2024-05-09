@@ -28,7 +28,7 @@ const ApplicantSchema = new mongoose.Schema({
     photo: String,
     sex: {
         type: String,
-        enum: ['жен', 'муж'],
+        enum: ['женский', 'мужской'],
         required: true,
     },
     dateOfBirth: {

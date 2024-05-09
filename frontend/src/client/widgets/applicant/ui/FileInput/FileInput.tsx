@@ -26,7 +26,6 @@ const FileInput: React.FC<Props> = ({onChange}) => {
         onChange={onFileChange}
         ref={inputRef}
       />
-
       <div className="photoFrame">
         <div className="photo"></div>
         <button className="photoBtn" onClick={activateInput}>+</button>

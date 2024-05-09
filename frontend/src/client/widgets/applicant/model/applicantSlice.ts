@@ -5,8 +5,8 @@ import { RootState } from '../../../../app/store/store';
 
 
 interface ApplicantState {
-  items: Applicant[] | Applicant;
-  item: Applicant | null;
+  items: Applicant[] ;
+  item: Applicant [];
   fetchAllLoading: boolean;
   fetchOneLoading: boolean;
   createLoading: boolean;
@@ -16,7 +16,7 @@ interface ApplicantState {
 
 const initialState: ApplicantState = {
   items: [],
-  item: null,
+  item: [],
   fetchAllLoading: false,
   fetchOneLoading: false,
   createLoading: false,

@@ -10,17 +10,17 @@ export const fetchApplicants = createAsyncThunk<Applicant[] >(
   }
 );
 
-export const fetchApplicant = createAsyncThunk<Applicant, string>(
+export const fetchApplicant = createAsyncThunk<Applicant[], string>(
   'applicant/fetchOne',
   async (userId) => {
-    const response = await axiosApi.get<Applicant>(`applicants?userId=${userId}` );
+    const response = await axiosApi.get<Applicant[]>(`applicants?userId=${userId}` );
     return response.data;
   }
 );
 
-export const addApplicant = createAsyncThunk<null, ApplicantMutation>(
+export const addApplicant = createAsyncThunk<null, { applicantMutation: ApplicantMutation; userId?: string | null }>(
   'applicant/add',
-  async (applicantMutation) => {
+  async ({ applicantMutation, userId }) => {
     const formData = new FormData();
 
     Object.entries(applicantMutation).forEach(([key, value]) => {
@@ -31,7 +31,7 @@ export const addApplicant = createAsyncThunk<null, ApplicantMutation>(
       }
     });
 
-      return axiosApi.post('/applicants', formData);
+    return axiosApi.post(userId ? `applicants?userId=${userId}` : '/applicants', formData);
   }
 );
 
