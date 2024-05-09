@@ -33,3 +33,7 @@ export const editPage = createAsyncThunk<void, { id: string; data: CreateEditPag
     await axiosApi.put(`/page/${id}`, data);
   },
 );
+
+export const deletePage = createAsyncThunk<void, string>('page/delete', async (id) => {
+  await axiosApi.delete(`/page/${id}`);
+});
