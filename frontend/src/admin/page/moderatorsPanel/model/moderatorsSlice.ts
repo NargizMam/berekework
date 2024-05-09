@@ -5,8 +5,8 @@ import { createModerator, deleteModerator, getAllModerators } from '../api/moder
 import { GlobalError, ValidationError } from '../../../../client/page/Auth/model/types';
 
 
-interface VacancyState {
-  moderators: ModeratorApi[];
+interface ModeratorState {
+  moderators: Moderator[];
   moderatorsLoading: boolean;
   createLoading: boolean;
   deleteLoading: boolean;
@@ -15,7 +15,7 @@ interface VacancyState {
   successMessage: string | null;
 }
 
-const initialState: VacancyState = {
+const initialState: ModeratorState = {
   moderators: [],
   moderatorsLoading: false,
   createLoading: false,
