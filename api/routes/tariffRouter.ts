@@ -6,9 +6,8 @@ const tariffRouter = Router();
 
 tariffRouter.post('/', async (req, res, next) => {
   try {
-    const { title, description, mainTitle } = req.body;
+    const { title, description } = req.body;
     const tariff = new Tariff({
-      mainTitle,
       tariffs: [
         {
           title,
@@ -48,12 +47,11 @@ tariffRouter.get('/:id', async (req, res, next) => {
 
 tariffRouter.patch('/:id', async (req, res, next) => {
   try {
-    const { title, description, mainTitle } = req.body;
+    const { title, description } = req.body;
     const result = await Tariff.findOneAndUpdate(
       { _id: req.params.id },
       {
-        mainTitle,
-        tariffs: [title, description],
+        tariffs: [{ title, description }],
       },
       { new: true },
     );

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const tariffSchema = new mongoose.Schema({
   mainTitle: {
     type: String,
-    required: true,
+    default: 'Тарифы',
   },
   tariffs: [
     {

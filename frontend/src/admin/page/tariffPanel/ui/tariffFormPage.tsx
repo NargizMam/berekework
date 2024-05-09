@@ -2,14 +2,14 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { TariffMutation } from '../model/types';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { createTariff, getSingleTariff } from '../api/tariffThunk';
+import { createTariff, getSingleTariff, updateTariff } from '../api/tariffThunk';
 import { useParams } from 'react-router-dom';
 import { selectTariff, selectTariffLoading } from '../model/tariffSlice';
+import { Loader } from '../../../../shared/loader';
 
 const TariffFormPage = () => {
   const [state, setState] = useState<TariffMutation>({
     title: '',
-    mainTitle: '',
     description: [],
   });
   const [description, setDescription] = useState('');
@@ -19,8 +19,19 @@ const TariffFormPage = () => {
   const { id } = useParams() as { id: string };
 
   useEffect(() => {
-    dispatch(getSingleTariff(id));
+    if(id) {
+      dispatch(getSingleTariff(id));
+    }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (id && tariff) {
+      setState((prevState) => ({
+        ...prevState,
+        ...tariff.tariffs[0],
+      }));
+    }
+  }, [id, tariff]);
 
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -41,21 +52,23 @@ const TariffFormPage = () => {
 
   const handleCreateTariff = async (event: FormEvent) => {
     event.preventDefault();
-    await dispatch(createTariff(state)).unwrap();
+    if(id) {
+      await dispatch(updateTariff({id, data: state})).unwrap();
+    } else {
+      await dispatch(createTariff(state)).unwrap();
+    }
     setState({
       title: '',
       description: [],
-      mainTitle: '',
     });
     setDescription('');
   };
 
-  // if(!loading && tariff){
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     mainTitle: tariff.mainTitle,
-  //   }));
-  // }
+  console.log(state);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <form
@@ -66,19 +79,6 @@ const TariffFormPage = () => {
       onSubmit={handleCreateTariff}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            value={state.mainTitle}
-            onChange={changeField}
-            name="mainTitle"
-            id="standard-basic"
-            label="Main Title"
-            variant="outlined"
-            required={true}
-            // error={Boolean(getFieldError('companyName'))}
-            // helperText={getFieldError('companyName')}
-          />
-        </Grid>
         <Grid item xs={12}>
           <TextField
             value={state.title}
@@ -114,7 +114,7 @@ const TariffFormPage = () => {
         </Grid>
         <Grid item xs={6}>
           <Button type="submit" variant="contained">
-            Create
+            {id ? 'Updated' : 'Create'}
           </Button>
         </Grid>
       </Grid>

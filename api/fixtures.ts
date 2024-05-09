@@ -172,12 +172,6 @@ const run = async () => {
     ],
   });
 
-  await Tariff.create({
-    mainTitle: 'Tariff',
-    title: 'Basic',
-    description: ['Free Food', 'Apple Music'],
-  });
-
   await LastNewsBlock.create({
     title: 'Последние новости',
     page: 'last-news-block',

@@ -10,9 +10,19 @@ export const getAllTariff = createAsyncThunk<TariffsApi[]>('tariff/getAll', asyn
   const response = await axiosApi.get<TariffsApi[]>('/tariff');
   return response.data;
 });
-export const getSingleTariff = createAsyncThunk<TariffsApi, string>('tariff/getSingle', async ( id ) => {
+
+export const getSingleTariff = createAsyncThunk<TariffsApi, string>('tariff/getSingle', async (id) => {
   const response = await axiosApi.get<TariffsApi>(`/tariff/${id}`);
   return response.data;
+});
+
+interface TariffUpdate {
+  id: string;
+  data: TariffMutation;
+}
+
+export const updateTariff = createAsyncThunk<void, TariffUpdate>('tariff/update', async ({ id, data }) => {
+  await axiosApi.patch(`/tariff/${id}`, data);
 });
 
 export const deleteTariff = createAsyncThunk<void, string>('tariff/delete', async (id) => {

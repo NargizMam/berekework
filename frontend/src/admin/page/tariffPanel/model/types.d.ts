@@ -6,12 +6,10 @@ export interface Tariff {
 
 export interface TariffsApi {
   _id: string;
-  mainTitle: string;
   tariffs: Tariff[];
 }
 
 export interface TariffMutation {
-  mainTitle: string;
   title: string;
   description: string[];
 }
