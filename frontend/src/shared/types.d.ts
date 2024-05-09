@@ -2,6 +2,7 @@ export interface Components {
   id: string;
   image: string;
   name: string;
+  link: string;
   displayName: string;
   fields: {
     [key: string]: {

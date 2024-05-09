@@ -6,7 +6,7 @@ import { createPage, fetchAllPages } from '../api/adminPageThunks';
 import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
 import ComponentList from '../../../widgets/adminPageCreateForm/ComponentList';
 import ModalComponents from '../../../widgets/ModalComponents/ModalComponents';
-import { Fields, IPage } from '../model/types';
+import { Fields, IChooseComponent, IPage } from '../model/types';
 
 export const AdminCreatePage = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export const AdminCreatePage = () => {
     url: '',
   });
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [chooseComponentName, setChooseComponentName] = useState<string[]>([]);
+  const [chooseComponentName, setChooseComponentName] = useState<IChooseComponent[]>([]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,9 +84,7 @@ export const AdminCreatePage = () => {
         isOpen={isOpenModal}
         setIsOpen={setIsOpenModal}
         onChangePages={(page) => setPages((prevState) => [...prevState, page])}
-        onChangeComponentDisplayName={(displayName) =>
-          setChooseComponentName((prevState) => [...prevState, displayName])
-        }
+        onChangeComponentDisplayName={(data) => setChooseComponentName((prevState) => [...prevState, data])}
         onChangeComponentField={(fields) => setComponentsField((prevState) => [...prevState, fields])}
       />
     </>

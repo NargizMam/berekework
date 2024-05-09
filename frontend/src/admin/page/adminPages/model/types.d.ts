@@ -35,3 +35,15 @@ export interface AllPagesCRM {
 export interface Fields {
   [key: string]: Field;
 }
+
+export interface IChooseComponent {
+  name: string;
+  url: string;
+}
+
+export interface IDeleteComponents {
+  componentId: string;
+  link: string;
+  pageId: string;
+  index: number;
+}

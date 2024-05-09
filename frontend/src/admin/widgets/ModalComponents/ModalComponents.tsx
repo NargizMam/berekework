@@ -5,13 +5,13 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { components } from '../../../app/constants/components';
-import { Fields, IPage } from '../../page/adminPages/model/types';
+import { Fields, IChooseComponent, IPage } from '../../page/adminPages/model/types';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   onChangePages: (page: IPage) => void;
-  onChangeComponentDisplayName: (displayName: string) => void;
+  onChangeComponentDisplayName: (data: IChooseComponent) => void;
   onChangeComponentField: (field: Fields) => void;
 }
 
@@ -24,7 +24,7 @@ const ModalComponents: React.FC<Props> = ({
 }) => {
   const onSelectComponent = (index: number) => {
     const selectComponent = components[index];
-    onChangeComponentDisplayName(selectComponent.displayName);
+    onChangeComponentDisplayName({ name: selectComponent.name, url: selectComponent.link });
 
     onChangeComponentField(selectComponent.fields);
     const oneFieldObject = [];

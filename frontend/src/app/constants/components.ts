@@ -5,6 +5,7 @@ export const components: Components[] = [
     id: 'heading2313213',
     image: '',
     name: 'Heading',
+    link: 'heading',
     displayName: 'Заголовок',
     fields: {
       title: {
@@ -37,6 +38,7 @@ export const components: Components[] = [
     id: 'tariff2313213',
     image: '',
     name: 'Tariff',
+    link: 'tariff',
     displayName: 'Тарифы',
     fields: {
       mainTitle: {
@@ -62,38 +64,6 @@ export const components: Components[] = [
         typeField: 'short-text',
         required: false,
         placeholder: 'Put url',
-      },
-    },
-  },
-  {
-    id: '1233',
-    image: '',
-    name: 'MainBlockTest',
-    displayName: 'Test Main block',
-    fields: {
-      title_test: {
-        type: 'string',
-        fieldName: 'title_test',
-        value: '',
-        typeField: 'short-text',
-        required: true,
-        placeholder: 'Put test title',
-      },
-      text_test: {
-        type: 'string',
-        fieldName: 'text_test',
-        value: '',
-        typeField: 'long-text',
-        required: true,
-        placeholder: 'Put test text',
-      },
-      description_test: {
-        type: 'string',
-        fieldName: 'description_test',
-        value: '',
-        typeField: 'long-text',
-        required: true,
-        placeholder: 'Put test description',
       },
     },
   },

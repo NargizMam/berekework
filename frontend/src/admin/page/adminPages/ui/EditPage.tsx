@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { fetchOnePage } from '../api/adminPageThunks';
+import { deleteComponent, fetchOnePage } from '../api/adminPageThunks';
 import { selectOnePage, selectPageFetchingOne } from '../model/adminPageSlice';
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import ComponentAdder from '../../../widgets/adminPageCreateForm/ComponentAdder';
-import { Fields, IPage } from '../model/types';
+import { Fields, IChooseComponent, IPage } from '../model/types';
 import ModalComponents from '../../../widgets/ModalComponents/ModalComponents';
 import ComponentList from '../../../widgets/adminPageCreateForm/ComponentList';
 import { components } from '../../../../app/constants/components';
@@ -14,7 +14,7 @@ const EditPage = () => {
   const { id } = useParams() as { id: string };
 
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [chooseComponentName, setChooseComponentName] = useState<string[]>([]);
+  const [chooseComponentName, setChooseComponentName] = useState<IChooseComponent[]>([]);
 
   const [state, setState] = useState({
     name: '',
@@ -45,7 +45,7 @@ const EditPage = () => {
 
         const component = components[findIndex];
 
-        setChooseComponentName((prevState) => [...prevState, component.displayName]);
+        setChooseComponentName((prevState) => [...prevState, { name: component.name, url: component.link }]);
         setComponentsField((prevState) => [...prevState, component.fields]);
 
         setPages((prevState) => [
@@ -75,8 +75,15 @@ const EditPage = () => {
     console.log(result);
   };
 
-  const onDeleteComponent = (index: number, componentId?: string) => {
-    console.log(`Delete first component by this id in api ${componentId}  Than delete from state by this ${index}}`);
+  const onDeleteComponent = async (index: number, componentId?: string, link?: string) => {
+    console.log(
+      `Delete first component by this id in api ${componentId} link=${link} Than delete from state by this ${index}}`,
+    );
+
+    if (componentId && link) {
+      await dispatch(deleteComponent({ componentId, link, pageId: id, index }));
+      await dispatch(fetchOnePage(id));
+    }
   };
 
   const imageInputChange = (location: string, index: number) => {
@@ -130,9 +137,7 @@ const EditPage = () => {
               isOpen={isOpenModal}
               setIsOpen={setIsOpenModal}
               onChangePages={(page) => setPages((prevState) => [...prevState, page])}
-              onChangeComponentDisplayName={(displayName) =>
-                setChooseComponentName((prevState) => [...prevState, displayName])
-              }
+              onChangeComponentDisplayName={(data) => setChooseComponentName((prevState) => [...prevState, data])}
               onChangeComponentField={(fields) => setComponentsField((prevState) => [...prevState, fields])}
             />
           </>
