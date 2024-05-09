@@ -1,5 +1,5 @@
-import {EmployerFields, EmployerModel} from '../../types';
-import mongoose, {Types} from "mongoose";
+import {EmployerFields} from '../../types';
+import mongoose from "mongoose";
 
 
 const employerSchema = new mongoose.Schema<EmployerFields>({

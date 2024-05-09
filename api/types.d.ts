@@ -52,7 +52,6 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
-export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
 
 export interface VacancyApi {
   _id: string;

@@ -11,7 +11,7 @@ employerRouter.post(
     '/',
     multiUpload.fields([
       { name: 'document', maxCount: 1 },
-      { name: 'logos', maxCount: 1 },
+      { name: 'logo', maxCount: 1 },
       { name: 'avatar', maxCount: 1 },
     ]),
     async (req, res, next) => {

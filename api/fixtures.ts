@@ -37,23 +37,38 @@ const run = async () => {
 
 
 
-  await User.create({
+ const [superadmin,user1, user2, user3, admin] = await User.create({
     email: 'admin@gmail.com',
     password: 'admin',
     token: randomUUID(),
     role: 'superadmin',
-  });
+  },
+      {
+        email: "employer1@example.com",
+        password: "password123",
+        token: randomUUID(),
+        role: "employer",
+      },
+     {
+       email: "employer2@example.com",
+       password: "password456",
+       token: randomUUID(),
+       role: "employer",
+     },
+     {
+       email: "employer3@example.com",
+       password: "password789",
+       token: randomUUID(),
+       role: "employer",
+     },
+     {
+       email: 'moderator2@gmail.com',
+       password: 'moderator2',
+       token: randomUUID(),
+       role: 'admin',
+     },
 
-  await Employer.create({
-    email: 'employer@gmail.com',
-    password: 'employer',
-    token: randomUUID(),
-    action: 'Game organization',
-    foundationYear: '2012',
-    scope: 'Major',
-    companyName: 'NAVI',
-    role: 'employer',
-  });
+      );
 
   await Tariff.create({
     mainTitle: 'Tariff',
@@ -83,22 +98,13 @@ const run = async () => {
         dateTime: '2024-04-21T12:00:00Z',
         buttonUrl: '/economic-forecasts',
       },
-      {
-        email: 'moderator2@gmail.com',
-        password: 'moderator2',
-        token: randomUUID(),
-        role: 'admin',
-      },
+
     ],
   });
-  );
 
   const [employer1, employer2, employer3 ] = await Employer.create(
       {
-        email: "employer1@example.com",
-        password: "password123",
-        token: randomUUID(),
-        role: "employer",
+        user: user2._id,
         companyName: "Company A",
         industry: "Technology",
         description: "Company A is a leading technology firm specializing in software development.",
@@ -108,10 +114,7 @@ const run = async () => {
         documents: "https://example.com/documentsA.pdf"
       },
       {
-        email: "employer2@example.com",
-        password: "password456",
-        token: randomUUID(),
-        role: "employer",
+        user: user3._id,
         companyName: "Company B",
         industry: "Finance",
         description: "Company B is a financial services company providing investment solutions.",
@@ -121,17 +124,14 @@ const run = async () => {
         documents: "https://example.com/documentsB.pdf"
       },
       {
-        email: "employer3@example.com",
-        password: "password789",
-        token: randomUUID(),
-        role: "employer",
+        user: user1._id,
         companyName: "Company C",
         industry: "Healthcare",
         description: "Company C is a healthcare organization committed to improving patient care.",
         address: "789 Oak St, City, Country",
         contacts: " +1 (345) 678-9012",
         logo: "fixtures/logo_company_megaservice.png",
-        documents: "https://example.com/documentsC.pdf"
+        documents: "https://example.com/documentsC.pdf",
       }
   );
   await Vacancy.create(
@@ -183,9 +183,7 @@ const run = async () => {
         employer: employer2.id
       },
       {
-        logo: 'fixtures/logo_company_cambridge.png',
         title: 'Преподаватель английского языка',
-        company: 'Cambridge School',
         city: 'Бишкек',
         salary: {
           min: 15000,
