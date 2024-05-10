@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import {Document, Model, Types} from 'mongoose';
 
 export interface mainCardContainerType {
   _id: string;
@@ -38,12 +38,20 @@ export interface EmployerFields {
   password: string;
   token: string;
   role: string;
-  companyName: string;
   googleID?: string;
   avatar?: string;
   scope: string;
   action: string;
   foundationYear: string;
+  document: string;
+  companyName: string;
+  industry: string;
+  description: string;
+  address: string;
+  contacts: string;
+  logo: string;
+  documents: string;
+  vacancies: Types.ObjectId[];
 }
 
 export interface UserMethods {
@@ -58,15 +66,13 @@ export interface VacancyApi {
   _id: string;
   title: string;
   description: string;
-  logo: string | null;
-  company: string;
   city: string;
   salary: {
     min: number | null;
     max: number | null;
   };
   url: string;
-  employer: string;
+  employer: Types.ObjectId;
 }
 
 export type VacancyMutation = Omit<VacancyApi, '_id'>;
@@ -117,4 +123,9 @@ export interface Page {
 
 export interface ModelType {
   [key: string]: any;
+}
+
+export interface UploadedFiles {
+  avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
+  document?: Express.Multer.File[]; // Массив файлов для поля 'document'
 }

@@ -5,6 +5,9 @@ export interface Employer {
   action: string;
   companyName: string;
   scope: string;
+  address: string;
+  avatar: string;
+  document: string;
   foundationYear: string;
 }
 
@@ -15,4 +18,7 @@ export interface EmployerMutation {
   companyName: string;
   scope: string;
   foundationYear: string;
+  document: File | null;
+  address: string;
+  avatar: File | null;
 }

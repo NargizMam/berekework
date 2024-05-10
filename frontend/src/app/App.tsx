@@ -15,8 +15,10 @@ import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
+import EmployerProfile from '../client/page/employerProfile/ui/employerProfile';
 import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
+import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
 
 
 const App = () => {
@@ -37,6 +39,13 @@ const App = () => {
           <Route path="/pages/new-page" element={<AdminCreatePage />} />
           <Route path="/adminHeading" element={<HeadingAdmin />} />
           <Route path="/adminHeading:location" element={<HeadingDetail />} />
+          <Route path="/employers" element={<EmployerPanelPage/>}/>
+          <Route path="/employers-submit" element={<EmployerFormPage/>}/>
+          <Route path="/tariffs" element={<TariffPanelPage/>}/>
+          <Route path="/tariffs-new" element={<TariffFormPage/>}/>
+          <Route path="/tariffs-submit/:id" element={<TariffFormPage/>}/>
+          <Route path="/vacancy" element={<VacancyPage/>}/>
+          <Route path="/users" element={<UserPanelPage/>}/>
         </Routes>
       </Container>
     </AdminLayout>
@@ -59,14 +68,18 @@ const App = () => {
         adminRoutes
       ) : (
         <ClientLayout>
-          <Container>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="*" element={'Not found'} />
-            </Routes>
-          </Container>
+            <Container>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/users" element={<UserPanelPage />} />
+                <Route path="/vacancy" element={<VacancyPage />} />
+                <Route path="/tariffs" element={<TariffPanelPage />} />
+                <Route path="/employersProfile" element={<EmployerProfile/>} />
+                <Route path="*" element={'Not found'} />
+              </Routes>
+            </Container>
         </ClientLayout>
       )}
     </>

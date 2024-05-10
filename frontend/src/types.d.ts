@@ -22,6 +22,18 @@ export interface ModeratorApi{
   createdAt: string;
   updatedAt: string;
 }
+export interface EmployerInfoApi{
+  _id: string;
+  companyName: string;
+  industry: string;
+  description: string;
+  address: string;
+  contacts: string;
+  logo: string;
+  documents: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface Moderator{
   name: string;
   email: string;
