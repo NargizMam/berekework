@@ -238,7 +238,6 @@ footerRouter.post('/logo', logoFooterUpload.single('logo'), async (req, res, nex
     }
 });
 
-
 footerRouter.delete('/logo', async (_req, res, next) => {
     try {
         const footer = await Footer.findOne();

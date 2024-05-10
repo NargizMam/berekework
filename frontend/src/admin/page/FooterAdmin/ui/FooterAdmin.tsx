@@ -10,6 +10,8 @@ import { selectFooter } from '../model/FooterSlice';
 import { fetchFooterData } from '../api/FooterThunk';
 import FooterLinksBlock from '../../../widgets/footerLInksBlock/footerLinksBlock';
 import FooterContactsBlock from '../../../widgets/footerContactsBlock/footerContactsBlock';
+import FooterLogo from '../../../widgets/footerLogo/footerLogo';
+import FooterCopyrightAdmin from '../../../widgets/footerCopyrightAdmin/footerCopyrightAdmin';
 
 const style = {
   position: 'absolute' as const,
@@ -61,7 +63,23 @@ const FooterAdmin: React.FC = () => {
           <h2>Блок с контактными данными:</h2>
           {footer.map((footerItem, index) => (
             <div key={index}>
-              <FooterContactsBlock contactBlockItems={footerItem.contactDetails} key={index}/>
+              <FooterContactsBlock contactBlock={footerItem.contactDetails} key={index}/>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h2>Лого:</h2>
+          {footer.map((footerItem, index) => (
+            <div key={index}>
+              <FooterLogo image={footerItem.logo} key={index}/>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h2>Копирайт</h2>
+          {footer.map((footerItem, index) => (
+            <div key={index}>
+              <FooterCopyrightAdmin text={footerItem.copyright} key={index}/>
             </div>
           ))}
         </div>
@@ -75,7 +93,7 @@ const FooterAdmin: React.FC = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
               Выберите компонент который хотите создать:
             </Typography>
             <Grid container>

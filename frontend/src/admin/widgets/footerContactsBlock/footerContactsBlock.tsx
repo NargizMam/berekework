@@ -1,14 +1,14 @@
-import { IContactsBlock } from '../../../shared/types';
 import React from 'react';
+import { IContactsBlock } from '../../../shared/types';
 
 interface FooterContactsBlock {
-  contactBlockItems: IContactsBlock[];
+  contactBlock: IContactsBlock[];
 }
 
-const FooterContactsBlock: React.FC<FooterContactsBlock> = ({contactBlockItems}) => {
+const FooterContactsBlock: React.FC<FooterContactsBlock> = ({contactBlock}) => {
   return (
     <div className="footerLinksBlocks">
-      {contactBlockItems.map((block, index) => (
+      {contactBlock.map((block, index) => (
         <div className="footerLinksBlock" key={index}>
           <h1>{block.title}</h1>
           <ul className="links-list">
