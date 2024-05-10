@@ -16,6 +16,7 @@ export interface ICreateVacancyForm {
 
 export interface Country {
   name: string;
+  cities: string[];
 }
 
 export interface ApiAnswer {
