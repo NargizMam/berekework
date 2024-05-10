@@ -43,6 +43,9 @@ const TitleBlockStyle = {
     textAlign: 'center',
     maxWidth: '307px',
     margin: '0 auto 145px auto',
+    '@media (max-width: 900px)': {
+      marginBottom: '32px',
+    },
   },
   titleWithoutImage: {
     textAlign: 'center',

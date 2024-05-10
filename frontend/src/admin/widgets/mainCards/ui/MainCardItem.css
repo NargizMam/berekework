@@ -1,45 +1,48 @@
-/*.MainCardItem__card {*/
-/*    box-sizing: border-box;*/
-/*    position: relative;*/
-/*    display: flex;*/
-/*    max-width: 100%;*/
-/*    flex-basis: calc(50% - 5px);*/
-/*    border-radius: 30px;*/
-/*    align-items: center;*/
-/*    text-decoration: none;*/
-/*    background: #ECECEC;*/
-/*    border: 1px solid #ECECEC;*/
-/*    overflow: hidden;*/
-/*}*/
-
-.MainCardItem__cardWithImage,
-.MainCardItem__cardWithIcon {
+.MainCardWithImage,
+.MainCardWithIcon {
     box-sizing: border-box;
     display: flex;
     position: relative;
     flex-basis: calc(50% - 5px);
     min-width: 272px;
     border-radius: 30px;
-    align-items: center;
     text-decoration: none;
     background: #ECECEC;
     border: 1px solid #ECECEC;
     overflow: hidden;
 }
 
-.MainCardItem__cardWithImage {
+.MainCardWithImage {
     padding: 50px 50px 48px 50px;
 }
 
-.MainCardItem__cardWithIcon {
-    padding: 40px 40px 40px 124px;
+.MainCardWithIcon__icon-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #fff;
+    margin-top: 24px;
 }
 
-.MainCardItem__card-content {
+.MainCardWithIcon {
+    display: flex;
+    gap: 24px;
+    padding: 40px;
+}
+
+.MainCardWithImage__content {
     max-width: 62%;
 }
 
-.MainCardItem__card-title {
+.MainCardWithIcon__content{
+    max-width: 100%;
+}
+
+.MainCard__title {
     font-size: 20px;
     font-weight: 600;
     color: #000;
@@ -47,7 +50,7 @@
     margin: 0 0 20px 0;
 }
 
-.MainCardItem__card-text {
+.MainCard__text {
     font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
@@ -55,66 +58,46 @@
     margin: 0;
 }
 
-.MainCardItem__card-icon {
+.MainCardWithIcon__icon {
     max-width: 24px;
     max-height: 24px;
 }
 
-/*@media (min-width: 600px) {*/
-/*    .MainCardItem__card-icon {*/
-/*        left: 40px;*/
-/*        top: 64px;*/
-/*        max-width: 54px;*/
-/*        max-height: 54px;*/
-/*    }*/
-/*}*/
-
-.MainCardItem__card-image {
+.MainCardWithImage__image {
     position: absolute;
-    /*max-width: 228px;*/
-    /*max-height: 228px;*/
     bottom: -54px;
     right: -60px;
     transform: rotate(-12.28deg);
     max-width: 36%;
-
-    /*bottom: -27%;*/
-    /*right: -9.45%;*/
-
-
 }
+
 @media (max-width: 1200px) {
-    .MainCardItem__card-content {
+    .MainCardWithImage__content {
         max-width: 70%;
     }
 }
 
 @media (max-width: 960px) {
-
-    .MainCardItem__card-content {
-        max-width: 70%;
-    }
-
-    .MainCardItem__cardWithImage {
+    .MainCardWithImage {
         padding: 24px;
     }
 
-    .MainCardItem__card-image {
-        /*bottom: -8.50%;*/
-        /*max-width: 36%;*/
-        /*bottom: -10%;*/
-        /*right: -9.5%;*/
-    }
-}
-
-@media (max-width: 900px) {
-    .MainCardItem__card-image {
-        max-width: 36%;
-        bottom: -12%;
+    .MainCardWithImage__image {
+        bottom: -8.50%;
         right: -9.5%;
     }
 
+    .MainCardWithIcon {
+        flex-wrap: wrap;
+        padding: 24px;
+    }
+
+    .MainCardWithIcon__icon-wrapper {
+        margin-top: 0;
+    }
 }
+
+
 
 
 

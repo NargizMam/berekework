@@ -172,13 +172,15 @@ const run = async () => {
       title: 'Вакансии в Кыргызстане',
       text: 'Ищете работу? У нас есть вакансии в Кыргызстане для вас! Присоединяйтесь к нам и найдите свою идеальную позицию!',
       image: '/fixtures/image_maincard_folder.png',
-      // icon: '/fixtures/icon_maincard_clock',
+      // icon: '/fixtures/icon_maincard_clock.png',
+      URLpath: '#',
     },
     {
       title: 'Вакансии за рубежом',
       text: 'Ищете работу за границей? У нас есть вакансии! Присоединяйтесь и найдите свою международную возможность!',
       image: '/fixtures/image_maincard_suitcase.png',
-      // icon: '/fixtures/icon_maincard_key',
+      // icon: '/fixtures/icon_maincard_key.png',
+      URLpath: '#',
     },
   ]);
 
