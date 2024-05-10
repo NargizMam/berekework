@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectFooter } from '../model/FooterSlice';
 import { fetchFooterData } from '../api/FooterThunk';
 import FooterLinksBlock from '../../../widgets/footerLInksBlock/footerLinksBlock';
+import FooterContactsBlock from '../../../widgets/footerContactsBlock/footerContactsBlock';
 
 const style = {
   position: 'absolute' as const,
@@ -48,10 +49,19 @@ const FooterAdmin: React.FC = () => {
     <>
       <div>
         <h1>#Footer Admin</h1>
-        <div>
+        <div style={{marginTop: '70px'}}>
+          <h2>Блоки с ссылками:</h2>
           {footer.map((footerItem, index) => (
             <div key={index}>
               <FooterLinksBlock footerBlocks={footerItem.footerLinks} key={index}/>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h2>Блок с контактными данными:</h2>
+          {footer.map((footerItem, index) => (
+            <div key={index}>
+              <FooterContactsBlock contactBlockItems={footerItem.contactDetails} key={index}/>
             </div>
           ))}
         </div>

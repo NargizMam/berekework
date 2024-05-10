@@ -8,8 +8,6 @@ interface FooterLinksBlockProps {
 
 const FooterLinksBlock: React.FC<FooterLinksBlockProps> = ({ footerBlocks }) => {
 
-  console.log(footerBlocks);
-
   return (
     <div className="footerLinksBlocks">
       {footerBlocks.map((block, index) => (
