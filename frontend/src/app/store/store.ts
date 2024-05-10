@@ -49,6 +49,7 @@ const rootReducer = combineReducers({
   file: fileReducer,
   chooseBlock: chooseBlockReducer,
   employer: employersProfileReducer,
+  employerAdmin: employerReducer,
   warningMessage: warningMessageReducer,
 });
 

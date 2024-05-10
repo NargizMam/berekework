@@ -1,9 +1,25 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../../../app/axiosApi';
 import { TariffMutation, TariffsApi } from '../model/types';
+import { isAxiosError } from 'axios';
+import { ValidationError } from '../../../../types';
 
-export const createTariff = createAsyncThunk<void, TariffMutation>('tariff/create', async (tariff) => {
-  await axiosApi.post('/tariff', tariff);
+export const createTariff = createAsyncThunk<
+  void,
+  TariffMutation,
+  {
+    rejectValue: ValidationError;
+  }
+>('tariff/create', async (tariff, { rejectWithValue }) => {
+  try {
+    await axiosApi.post('/tariff', tariff);
+  } catch (error) {
+    if (isAxiosError(error) && error.response && error.response.status === 422) {
+      return rejectWithValue(error.response.data);
+    }
+
+    throw error;
+  }
 });
 
 export const getAllTariff = createAsyncThunk<TariffsApi[]>('tariff/getAll', async () => {
