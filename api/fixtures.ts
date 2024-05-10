@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import config from './config';
 import Vacancy from './models/vacancy/Vacancy';
 import User from './models/users/userModel';
-import {randomUUID} from 'crypto';
+import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
 import LastNewsBlock from './models/lastNews/LastNewsBlock';
 import Employer from './models/employer/employerModel';
@@ -34,28 +34,11 @@ const run = async () => {
     await dropCollection(db, collectionName);
   }
 
-
-
-
   await User.create({
     email: 'admin@gmail.com',
     password: 'admin',
     token: randomUUID(),
     role: 'superadmin',
-  });
-
-  await Employer.create({
-    email: 'employer@gmail.com',
-    password: 'employer',
-    token: randomUUID(),
-    action: 'Game organization',
-    foundationYear: '2012',
-    scope: 'Major',
-    companyName: 'NAVI',
-    role: 'employer',
-    address: 'st. Peterburg',
-    avatar: 'fixtures/logo_company_cambridge.png',
-    document: 'fixtures/dummy.pdf',
   });
 
   await Tariff.create({
@@ -98,109 +81,108 @@ const run = async () => {
       },
     ],
   });
-  );
 
-  const [employer1, employer2, employer3 ] = await Employer.create(
-      {
-        email: "employer1@example.com",
-        password: "password123",
-        token: randomUUID(),
-        role: "employer",
-        companyName: "Company A",
-        industry: "Technology",
-        description: "Company A is a leading technology firm specializing in software development.",
-        address: "123 Main St, City, Country",
-        contacts: "+1 (123) 456-7890",
-        logo: "fixtures/logo_company_megaservice.png",
-        documents: "https://example.com/documentsA.pdf"
-      },
-      {
-        email: "employer2@example.com",
-        password: "password456",
-        token: randomUUID(),
-        role: "employer",
-        companyName: "Company B",
-        industry: "Finance",
-        description: "Company B is a financial services company providing investment solutions.",
-        address: "456 Elm St, City, Country",
-        contacts: "+1 (234) 567-8901",
-        logo: "fixtures/logo_company_megaservice.png",
-        documents: "https://example.com/documentsB.pdf"
-      },
-      {
-        email: "employer3@example.com",
-        password: "password789",
-        token: randomUUID(),
-        role: "employer",
-        companyName: "Company C",
-        industry: "Healthcare",
-        description: "Company C is a healthcare organization committed to improving patient care.",
-        address: "789 Oak St, City, Country",
-        contacts: " +1 (345) 678-9012",
-        logo: "fixtures/logo_company_megaservice.png",
-        documents: "https://example.com/documentsC.pdf"
-      }
+  const [employer1, employer2, employer3] = await Employer.create(
+    {
+      email: 'employer1@example.com',
+      password: 'password123',
+      token: randomUUID(),
+      role: 'employer',
+      companyName: 'Company A',
+      industry: 'Technology',
+      description: 'Company A is a leading technology firm specializing in software development.',
+      address: '123 Main St, City, Country',
+      contacts: '+1 (123) 456-7890',
+      logo: 'fixtures/logo_company_megaservice.png',
+      documents: 'fixtures/dummy.pdf',
+    },
+    {
+      email: 'employer2@example.com',
+      password: 'password456',
+      token: randomUUID(),
+      role: 'employer',
+      companyName: 'Company B',
+      industry: 'Finance',
+      description: 'Company B is a financial services company providing investment solutions.',
+      address: '456 Elm St, City, Country',
+      contacts: '+1 (234) 567-8901',
+      logo: 'fixtures/logo_company_megaservice.png',
+      documents: 'https://example.com/documentsB.pdf',
+    },
+    {
+      email: 'employer3@example.com',
+      password: 'password789',
+      token: randomUUID(),
+      role: 'employer',
+      companyName: 'Company C',
+      industry: 'Healthcare',
+      description: 'Company C is a healthcare organization committed to improving patient care.',
+      address: '789 Oak St, City, Country',
+      contacts: ' +1 (345) 678-9012',
+      logo: 'fixtures/logo_company_megaservice.png',
+      documents: 'https://example.com/documentsC.pdf',
+    },
   );
   await Vacancy.create(
-      {
-        title: 'Менеджер по продажам услуг',
-        city: 'Бишкек',
-        salary: {
-          min: 25000,
-          max: 35000,
-        },
-        url: '/vacancies',
-        employer: employer1.id
+    {
+      title: 'Менеджер по продажам услуг',
+      city: 'Бишкек',
+      salary: {
+        min: 25000,
+        max: 35000,
       },
-      {
-        title: 'Менеджер по продажам услуг',
-        city: 'Бишкек',
-        salary: {
-          min: 25000,
-          max: 35000,
-        },
-        url: '/vacancies',
-        employer: employer1.id
+      url: '/vacancies',
+      employer: employer1.id,
+    },
+    {
+      title: 'Менеджер по продажам услуг',
+      city: 'Бишкек',
+      salary: {
+        min: 25000,
+        max: 35000,
       },
-      {
-        title: 'Менеджер по продажам услуг',
-        city: 'Бишкек',
-        salary: {
-          min: 25000,
-          max: 35000,
-        },
-        url: '/vacancies',
-        employer: employer1.id
+      url: '/vacancies',
+      employer: employer1.id,
+    },
+    {
+      title: 'Менеджер по продажам услуг',
+      city: 'Бишкек',
+      salary: {
+        min: 25000,
+        max: 35000,
       },
-      {
-        title: 'Аналитик данных',
-        city: 'Бишкек',
-        salary: 'з/п не указана',
-        url: '/vacancies',
-        employer: employer2.id
+      url: '/vacancies',
+      employer: employer1.id,
+    },
+    {
+      title: 'Аналитик данных',
+      city: 'Бишкек',
+      salary: 'з/п не указана',
+      url: '/vacancies',
+      employer: employer2.id,
+    },
+    {
+      title: 'Инженер по ремонту компьютерной техники',
+      city: 'Бишкек',
+      salary: {
+        min: 25000,
+        max: 40000,
       },
-      {
-        title: 'Инженер по ремонту компьютерной техники',
-        city: 'Бишкек',
-        salary: {
-          min: 25000,
-          max: 40000,
-        },
-        url: '/vacancies',
-        employer: employer2.id
+      url: '/vacancies',
+      employer: employer2.id,
+    },
+    {
+      logo: 'fixtures/logo_company_cambridge.png',
+      title: 'Преподаватель английского языка',
+      company: 'Cambridge School',
+      city: 'Бишкек',
+      salary: {
+        min: 15000,
+        max: 50000,
       },
-      {
-        logo: 'fixtures/logo_company_cambridge.png',
-        title: 'Преподаватель английского языка',
-        company: 'Cambridge School',
-        city: 'Бишкек',
-        salary: {
-          min: 15000,
-          max: 50000,
-        },
-        url: '/vacancies',
-        employer: employer3.id
-      },
+      url: '/vacancies',
+      employer: employer3.id,
+    },
   );
 
   await LastNewsBlock.create({
