@@ -27,7 +27,7 @@
   font-size: 16px;
   border-radius: 35px;
   line-height: 1.25;
-  color: #8E8E8E;
+  color: #8e8e8e;
   padding-left: 30px;
   width: 380px;
   height: 70px;
@@ -52,6 +52,8 @@ button.sendBtn {
 textarea.field {
   padding-top: 20px;
   padding-right: 20px;
+  min-height: 150px;
+  max-width: 95%;
 }
 
 select.field {
@@ -62,9 +64,10 @@ select.field {
   background: transparent;
 }
 
-.salarySection {
+.dableSection {
   display: flex;
-  gap: 25px
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
 .selectWrapper {
@@ -89,5 +92,26 @@ select.field {
 }
 
 .field[type='number'] {
-  -moz-appearance: textfield; 
+  -moz-appearance: textfield;
+}
+
+@media screen and (max-width: 650px) {
+  .CreateVacancyForm {
+    padding: 0 10px;
+  }
+  .field {
+    width: 100%;
+  }
+
+  select.field {
+    width: 100%;
+  }
+
+  .selectWrapper {
+    width: 100%;
+  }
+
+  .dableSection {
+    flex-direction: column;
+  }
 }
