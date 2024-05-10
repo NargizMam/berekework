@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
-import { educationTypes, workTypes } from '../model/constants';
+import { countries, educationTypes, workTypes } from '../model/constants';
 import CreateVacancyFormStyle from './CreateVacancyForm-style';
 import { ICreateVacancyForm, Vacancy } from '../model/types';
 import TextAriaField from '../../textAriaField/ui/TextAriaField';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectCities, selectCountries, selectError, selectIsLoading } from '../model/createVacancyFormSlice';
-import { getCountries, postVacancy } from '../model/createVacancyFormThuncks';
+import { selectError, selectIsLoading } from '../model/createVacancyFormSlice';
+import { postVacancy } from '../model/createVacancyFormThuncks';
 import { Loader } from '../../../../shared/loader/ui/Loader';
 import './CreateVacancyForm.css';
 
@@ -19,10 +19,10 @@ interface Flag {
 
 export const CreateVacancyForm = () => {
   const dispatch = useAppDispatch();
-  const countries = useAppSelector(selectCountries);
-  const cities = useAppSelector(selectCities);
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
+
+  const [cities, setCities] = useState<string[]>([]);
 
   const [state, setState] = useState<ICreateVacancyForm>({
     vacancyTitle: '',
@@ -56,10 +56,6 @@ export const CreateVacancyForm = () => {
     }
   });
 
-  useEffect(() => {
-    dispatch(getCountries());
-  }, []);
-
   const inputChangeHandler = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -67,6 +63,12 @@ export const CreateVacancyForm = () => {
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
+    if (name === 'country') {
+      const index = countries.findIndex((item) => item.name === value);
+      if (index >= 0) {
+        setCities(countries[index].cities);
+      }
+    }
     setState((prevState) => {
       return { ...prevState, [name]: value };
     });
