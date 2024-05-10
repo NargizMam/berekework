@@ -1,32 +1,27 @@
 import mongoose, { Types } from 'mongoose';
 import express from 'express';
 import { cardUpload } from '../multer';
-import Vacancy from '../models/Vacancy';
+import Vacancy from '../models/vacancy/Vacancy';
 import { VacancyMutation } from '../types';
+import { RequestWithEmployer } from '../middleware/employerAuth';
+import LastNewsBlock from '../models/lastNews/LastNewsBlock';
 
 const vacanciesRouter = express.Router();
-vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
-  const { title, description, company, city, salary, url } = req.body;
-  let companyLogo: string | null = null;
-
-  const files = req.files as Express.Multer.File[];
-
-  files.forEach((file) => {
-    companyLogo = file.fieldname === 'logo' ? file.filename : companyLogo;
-  });
+vacanciesRouter.post('/', cardUpload.single('logo'), async (req, res, next) => {
+  const { title, description, logo, company, city, salary, url, employer } = req.body;
+  const companyLogo = req.file ? req.file.filename : null;
 
   try {
     const newVacancy: VacancyMutation = {
       title,
       description,
-      logo: companyLogo,
-      company: company,
       city,
       salary: {
         min: salary.min ? parseFloat(salary.min) : null,
         max: salary.max ? parseFloat(salary.max) : null,
       },
       url,
+      employer,
     };
 
     const vacancy = new Vacancy(newVacancy);
@@ -42,9 +37,16 @@ vacanciesRouter.post('/', cardUpload.any(), async (req, res, next) => {
   }
 });
 
-vacanciesRouter.get('/', async (req, res, next) => {
+vacanciesRouter.get('/', async (req: RequestWithEmployer, res, next) => {
   try {
-    const results = await Vacancy.find().sort({ createdAt: -1 });
+    let filter = {};
+    const employerId = req.query.employerId;
+
+    if (employerId) {
+      filter = { employer: employerId };
+    }
+
+    const results = await Vacancy.find(filter).sort({ createdAt: -1 });
 
     return res.send(results);
   } catch (e) {
@@ -73,15 +75,9 @@ vacanciesRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-vacanciesRouter.patch('/:id', cardUpload.any(), async (req, res, next) => {
+vacanciesRouter.patch('/:id', cardUpload.single('logo'), async (req, res, next) => {
   const { title, description, company, city, salary, url } = req.body;
-  let companyLogo: string | null = null;
-
-  const files = req.files as Express.Multer.File[];
-
-  files.forEach((file) => {
-    companyLogo = file.fieldname === 'logo' ? file.filename : companyLogo;
-  });
+  const companyLogo = req.file ? req.file.filename : null;
 
   try {
     const _id = req.params.id;

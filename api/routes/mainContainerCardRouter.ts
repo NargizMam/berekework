@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import mainContainerCard from "../models/mainContainerCardModel";
+import mainContainerCard from "../models/mainContainerCard/mainContainerCardModel";
 import { cardUpload } from "../multer";
 import { mainCardContainerTypeWithoutId } from "../types";
 import mongoose from "mongoose";
@@ -71,7 +71,7 @@ async (req: Request, res: Response, next: NextFunction) => {
 
     if (!existedCard) {
       return res.status(404).send({ error: 'Card not found' });
-    };
+    }
 
     Object.assign(existedCard, { 
       title, 

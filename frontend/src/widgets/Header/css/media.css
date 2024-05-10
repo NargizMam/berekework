@@ -1,0 +1,53 @@
+@media screen and (min-width: 830px) {
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .container {
+    max-width: 1280px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  .main-mav-web {
+    display: flex;
+    list-style: none;
+  }
+
+  .main-nav-login {
+    display: none;
+  }
+
+  .main-nav-item {
+    margin: 0 10px;
+  }
+
+  .main-nav-close {
+    display: none;
+  }
+
+  .main-nav-open {
+    display: none;
+  }
+
+  .burger-button {
+    display: none;
+  }
+
+  .main-nav-list {
+    display: flex;
+  }
+
+  .login {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 650px) {
+ .main-nav-list {
+   display: flex;
+   justify-content: space-between;
+ }
+}

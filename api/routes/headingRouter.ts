@@ -5,12 +5,6 @@ import mongoose from 'mongoose';
 
 const headingRouter = express.Router();
 
-headingRouter.post('/draft', async (req, res, next) => {
-  const heading = new Heading();
-  await heading.save();
-  return res.send(heading);
-});
-
 headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
   try {
     const heading = new Heading({

@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import {Document, Model, Types} from 'mongoose';
 
 export interface mainCardContainerType {
   _id: string;
@@ -9,7 +9,7 @@ export interface mainCardContainerType {
   URLpath: string | null;
 }
 
-export type mainCardContainerTypeWithoutId = Omit<mainCardContainerType, '_id'>
+export type mainCardContainerTypeWithoutId = Omit<mainCardContainerType, '_id'>;
 
 export interface NavbarItemFields {
   nameNav: string;
@@ -28,10 +28,29 @@ export interface UserFields {
   password: string;
   token: string;
   role: string;
-  displayName?: string;
   googleID?: string;
-  githubID?: string;
   avatar?: string;
+}
+
+export interface EmployerFields {
+  email: string;
+  password: string;
+  token: string;
+  role: string;
+  googleID?: string;
+  avatar?: string;
+  scope: string;
+  action: string;
+  foundationYear: string;
+  document: string;
+  companyName: string;
+  industry: string;
+  description: string;
+  address: string;
+  contacts: string;
+  logo: string;
+  documents: string;
+  vacancies: Types.ObjectId[];
 }
 
 export interface UserMethods {
@@ -40,19 +59,19 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
+export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
 
 export interface VacancyApi {
   _id: string;
   title: string;
   description: string;
-  logo: string | null;
-  company: string;
   city: string;
   salary: {
     min: number | null;
     max: number | null;
   };
   url: string;
+  employer: Types.ObjectId;
 }
 
 export type VacancyMutation = Omit<VacancyApi, '_id'>;
@@ -69,3 +88,43 @@ export interface VacanciesBlockApi {
 
 export type VacanciesBlockMutation = Omit<VacanciesBlockApi, '_id'>;
 
+// Header
+export interface NavbarItemFields {
+  nameNav: string;
+  link: string;
+  isDrop: boolean;
+  access: string;
+  nestedMenu: [
+    {
+      nestedNameNav: string;
+      nestedLink: string;
+    },
+  ];
+}
+
+//Admin page create
+
+export interface Block {
+  nameComponent: string;
+  content: { [key: string]: string };
+}
+export interface ComponentModelType extends Document {
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface Page {
+  name: string;
+  url: string;
+  blocks: Block[];
+}
+
+export interface ModelType {
+  [key: string]: any;
+}
+
+export interface UploadedFiles {
+  avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
+  document?: Express.Multer.File[]; // Массив файлов для поля 'document'
+}
