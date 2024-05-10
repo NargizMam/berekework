@@ -1,15 +1,42 @@
-.MainCardItem__card {
+/*.MainCardItem__card {*/
+/*    box-sizing: border-box;*/
+/*    position: relative;*/
+/*    display: flex;*/
+/*    max-width: 100%;*/
+/*    flex-basis: calc(50% - 5px);*/
+/*    border-radius: 30px;*/
+/*    align-items: center;*/
+/*    text-decoration: none;*/
+/*    background: #ECECEC;*/
+/*    border: 1px solid #ECECEC;*/
+/*    overflow: hidden;*/
+/*}*/
+
+.MainCardItem__cardWithImage,
+.MainCardItem__cardWithIcon {
     box-sizing: border-box;
-    position: relative;
     display: flex;
-    max-width: 100%;
+    position: relative;
     flex-basis: calc(50% - 5px);
+    min-width: 272px;
     border-radius: 30px;
     align-items: center;
     text-decoration: none;
     background: #ECECEC;
     border: 1px solid #ECECEC;
     overflow: hidden;
+}
+
+.MainCardItem__cardWithImage {
+    padding: 50px 50px 48px 50px;
+}
+
+.MainCardItem__cardWithIcon {
+    padding: 40px 40px 40px 124px;
+}
+
+.MainCardItem__card-content {
+    max-width: 62%;
 }
 
 .MainCardItem__card-title {
@@ -33,22 +60,61 @@
     max-height: 24px;
 }
 
-@media (min-width: 600px) {
-    .MainCardItem__card-icon {
-        left: 40px;
-        top: 64px;
-        max-width: 54px;
-        max-height: 54px;
-    }
-}
+/*@media (min-width: 600px) {*/
+/*    .MainCardItem__card-icon {*/
+/*        left: 40px;*/
+/*        top: 64px;*/
+/*        max-width: 54px;*/
+/*        max-height: 54px;*/
+/*    }*/
+/*}*/
 
 .MainCardItem__card-image {
     position: absolute;
-    width: 228px;
-    height: 228px;
-    transform: rotate(-12.28deg);
+    /*max-width: 228px;*/
+    /*max-height: 228px;*/
     bottom: -54px;
     right: -60px;
+    transform: rotate(-12.28deg);
+    max-width: 36%;
+
+    /*bottom: -27%;*/
+    /*right: -9.45%;*/
+
+
 }
+@media (max-width: 1200px) {
+    .MainCardItem__card-content {
+        max-width: 70%;
+    }
+}
+
+@media (max-width: 960px) {
+
+    .MainCardItem__card-content {
+        max-width: 70%;
+    }
+
+    .MainCardItem__cardWithImage {
+        padding: 24px;
+    }
+
+    .MainCardItem__card-image {
+        /*bottom: -8.50%;*/
+        /*max-width: 36%;*/
+        /*bottom: -10%;*/
+        /*right: -9.5%;*/
+    }
+}
+
+@media (max-width: 900px) {
+    .MainCardItem__card-image {
+        max-width: 36%;
+        bottom: -12%;
+        right: -9.5%;
+    }
+
+}
+
 
 
