@@ -25,6 +25,7 @@ import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/modera
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
 import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
 import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
+import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
 
 
 const usersPersistConfig = {
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   chooseBlock: chooseBlockReducer,
   warningMessage: warningMessageReducer,
   employer: employerReducer,
+  createVacancyForm: createVacancyFormReducer,
 });
 
 export const store = configureStore({
