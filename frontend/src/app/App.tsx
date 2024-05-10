@@ -7,15 +7,21 @@ import { AdminAllPages, AdminCreatePage } from '../admin/page/adminPages';
 import { HeadingAdmin, HeadingDetail } from '../admin/page/HeadingAdmin';
 import Container from '@mui/material/Container';
 import { LoginPage, RegisterPage } from '../client/page/Auth';
+import { UserPanelPage } from '../admin/page/usersPanel';
+import { VacancyPage } from '../admin/page/vacancyPanel';
+import { TariffPanelPage } from '../admin/page/tariffPanel';
 import { useAppSelector } from './store/hooks';
 import { selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
+import EmployerProfile from '../client/page/employerProfile/ui/employerProfile';
 import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import ApplicantSettings from '../client/page/Applicant/ApplicantSettings';
 import ApplicantProfile from '../client/page/Applicant/ApplicantProfile';
 import ApplicantRefactor from '../client/page/Applicant/ApplicantRefactor';
+import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
+import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
 
 
 const App = () => {
@@ -36,6 +42,13 @@ const App = () => {
           <Route path="/pages/new-page" element={<AdminCreatePage />} />
           <Route path="/adminHeading" element={<HeadingAdmin />} />
           <Route path="/adminHeading:location" element={<HeadingDetail />} />
+          <Route path="/employers" element={<EmployerPanelPage/>}/>
+          <Route path="/employers-submit" element={<EmployerFormPage/>}/>
+          <Route path="/tariffs" element={<TariffPanelPage/>}/>
+          <Route path="/tariffs-new" element={<TariffFormPage/>}/>
+          <Route path="/tariffs-submit/:id" element={<TariffFormPage/>}/>
+          <Route path="/vacancy" element={<VacancyPage/>}/>
+          <Route path="/users" element={<UserPanelPage/>}/>
         </Routes>
       </Container>
     </AdminLayout>
@@ -66,6 +79,10 @@ const App = () => {
               <Route path="/newApplicant" element={<ApplicantSettings />} />
               <Route path="/applicantProfile" element={<ApplicantProfile />} />
               <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
+              <Route path="/users" element={<UserPanelPage />} />
+              <Route path="/vacancy" element={<VacancyPage />} />
+              <Route path="/tariffs" element={<TariffPanelPage />} />
+              <Route path="/employersProfile" element={<EmployerProfile/>} />
               <Route path="*" element={'Not found'} />
             </Routes>
           </Container>

@@ -208,5 +208,4 @@ const run = async () => {
 
   await db.close();
 };
-
 void run();

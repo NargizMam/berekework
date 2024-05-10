@@ -25,6 +25,7 @@ import { employerReducer } from '../../admin/page/employerPanel/model/employerSl
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
 import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice';
+import { employersProfileReducer } from '../../client/page/employerProfile/model/employerProfileSlice';
 import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
 
 
@@ -49,8 +50,8 @@ const rootReducer = combineReducers({
   applicant: applicantReducer,
   file: fileReducer,
   chooseBlock: chooseBlockReducer,
+  employer: employersProfileReducer,
   warningMessage: warningMessageReducer,
-  employer: employerReducer,
 });
 
 export const store = configureStore({
