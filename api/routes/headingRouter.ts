@@ -1,14 +1,12 @@
 import express from 'express';
-import Heading from '../models/heading/headingModels';
-import { imagesUpload } from '../multer';
-import mongoose from 'mongoose';
+import FirstHeading from '../models/heading/firstHeadingModel';
 import Page from '../models/page/Page';
 
 const headingRouter = express.Router();
 
-headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
+/*headingRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
   try {
-    const heading = new Heading({
+    const heading = new FirstHeading({
       title: req.body.title,
       location: req.body.location,
       image: req.file ? req.file.filename : null,
@@ -32,12 +30,12 @@ headingRouter.get('/:location?', async (req, res, next) => {
   try {
     let results;
     if (req.params.location) {
-      results = await Heading.findOne({ location: req.params.location });
+      results = await FirstHeading.findOne({ location: req.params.location });
       if (!results) {
         return res.status(404).send({ message: 'Heading not found' });
       }
     } else {
-      results = await Heading.find();
+      results = await FirstHeading.find();
     }
     return res.send(results);
   } catch (error) {
@@ -47,7 +45,7 @@ headingRouter.get('/:location?', async (req, res, next) => {
 
 headingRouter.patch('/:id', imagesUpload.single('image'), async (req, res, next) => {
   try {
-    const result = await Heading.findByIdAndUpdate(
+    const result = await FirstHeading.findByIdAndUpdate(
       { _id: req.params.id },
       {
         title: req.body.title,
@@ -61,12 +59,11 @@ headingRouter.patch('/:id', imagesUpload.single('image'), async (req, res, next)
   } catch (error) {
     return next(error);
   }
-});
+});*/
 
 headingRouter.delete('/', async (req, res, next) => {
   try {
     const { id, pageId, index } = req.body;
-
     const page = await Page.findById(pageId);
 
     if (!page) {
@@ -76,7 +73,7 @@ headingRouter.delete('/', async (req, res, next) => {
     page.componentType.splice(index, 1);
     await page.save();
 
-    await Heading.findByIdAndDelete(id);
+    await FirstHeading.findByIdAndDelete(id);
     return res.send({ message: `Heading ${id} deleted!` });
   } catch (error) {
     return next(error);

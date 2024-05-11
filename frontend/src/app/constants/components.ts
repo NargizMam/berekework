@@ -4,7 +4,7 @@ export const components: Components[] = [
   {
     id: 'heading2313213',
     image: '',
-    name: 'Heading',
+    name: 'FirstHeading',
     link: 'heading',
     displayName: 'Заголовок',
     fields: {
