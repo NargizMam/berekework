@@ -16,7 +16,6 @@ export const register = createAsyncThunk<AuthResponse, RegisterMutation, { rejec
       if (isAxiosError(error) && error.response && error.response.status === 422) {
         return rejectWithValue(error.response.data);
       }
-
       throw error;
     }
   },
