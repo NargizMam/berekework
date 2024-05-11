@@ -2,6 +2,7 @@ import express from 'express';
 import FirstHeading from '../models/heading/firstHeadingModel';
 import Page from '../models/page/Page';
 import SecondHeading from '../models/heading/secondHeadingModel';
+import ThirdHeading from '../models/heading/thirdHeadingModel';
 
 const headingRouter = express.Router();
 
@@ -82,7 +83,7 @@ headingRouter.delete('/', async (req, res, next) => {
     }
 
     if (third) {
-      await SecondHeading.findByIdAndDelete(id);
+      await ThirdHeading.findByIdAndDelete(id);
       return res.send({ message: `Third Heading ${id} deleted!` });
     }
 
