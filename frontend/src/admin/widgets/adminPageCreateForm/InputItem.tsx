@@ -25,6 +25,7 @@ const InputItem: React.FC<Input> = ({ field, onChange, index, imageInputChange, 
       return (
         <TextField
           label={field.placeholder}
+          type={field.type}
           name={field.fieldName}
           required={field.required}
           value={value}

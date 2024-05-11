@@ -1,6 +1,7 @@
 import express from 'express';
 import FirstHeading from '../models/heading/firstHeadingModel';
 import Page from '../models/page/Page';
+import SecondHeading from '../models/heading/secondHeadingModel';
 
 const headingRouter = express.Router();
 
@@ -64,6 +65,8 @@ headingRouter.patch('/:id', imagesUpload.single('image'), async (req, res, next)
 headingRouter.delete('/', async (req, res, next) => {
   try {
     const { id, pageId, index } = req.body;
+    const second = req.query.second;
+    const third = req.query.third;
     const page = await Page.findById(pageId);
 
     if (!page) {
@@ -73,8 +76,18 @@ headingRouter.delete('/', async (req, res, next) => {
     page.componentType.splice(index, 1);
     await page.save();
 
+    if (second) {
+      await SecondHeading.findByIdAndDelete(id);
+      return res.send({ message: `Second Heading ${id} deleted!` });
+    }
+
+    if (third) {
+      await SecondHeading.findByIdAndDelete(id);
+      return res.send({ message: `Third Heading ${id} deleted!` });
+    }
+
     await FirstHeading.findByIdAndDelete(id);
-    return res.send({ message: `Heading ${id} deleted!` });
+    return res.send({ message: `First Heading ${id} deleted!` });
   } catch (error) {
     return next(error);
   }
