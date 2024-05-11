@@ -7,6 +7,7 @@ export interface Employer {
   scope: string;
   address: string;
   avatar: string;
+  document: string;
   foundationYear: string;
 }
 
