@@ -4,7 +4,7 @@ import ThirdHeading from '../models/heading/thirdHeadingModel';
 import { ModelType } from '../types';
 
 export const modelMapping: ModelType = {
-  firstHeading: FirstHeading,
-  secondHeading: SecondHeading,
-  thirdHeading: ThirdHeading,
+  FirstHeading: FirstHeading,
+  SecondHeading: SecondHeading,
+  ThirdHeading: ThirdHeading,
 };

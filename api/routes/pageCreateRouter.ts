@@ -20,10 +20,10 @@ pageCreateRouter.post('/', async (req, res, next) => {
     const blocks: Block[] = req.body.blocks;
 
     for (const block of blocks) {
-      const modelName = modelMapping[block.nameComponent.toLocaleLowerCase()];
+      const modelName = modelMapping[block.nameComponent];
 
       if (modelName) {
-        const componentInstance = new modelMapping[block.nameComponent.toLocaleLowerCase()](block.content);
+        const componentInstance = new modelMapping[block.nameComponent](block.content);
         const id = await componentInstance.save();
         newPage.componentType.push(block.nameComponent);
         newPage.components.push(id._id);
@@ -101,23 +101,23 @@ pageCreateRouter.put('/:id', async (req, res, next) => {
     }
 
     for (const block of blocks) {
-      const modelName = modelMapping[block.nameComponent.toLocaleLowerCase()];
+      const modelName = modelMapping[block.nameComponent];
 
       if (!modelName) {
         return res.status(404).send({ error: 'Model not found!' });
       }
 
       if (block.content['_id']) {
-        await modelMapping[block.nameComponent.toLocaleLowerCase()].findByIdAndDelete(block.content['_id']);
+        await modelMapping[block.nameComponent].findByIdAndDelete(block.content['_id']);
         delete block.content['_id'];
       }
     }
 
     for (const block of blocks) {
-      const modelName = modelMapping[block.nameComponent.toLocaleLowerCase()];
+      const modelName = modelMapping[block.nameComponent];
 
       if (modelName) {
-        const componentInstance = new modelMapping[block.nameComponent.toLocaleLowerCase()](block.content);
+        const componentInstance = new modelMapping[block.nameComponent](block.content);
         const id = await componentInstance.save();
         updatedPage.componentType.push(block.nameComponent);
         updatedPage.components.push(id._id);
