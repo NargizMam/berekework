@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import LastNewsCardItemStyle from './LastNewsCardItem-style';
 
@@ -54,18 +54,12 @@ const LastNewsCardItem: React.FC<Props> = ({ cardTitle, cardText, dateTime, butt
 
   if (buttonUrl) {
     return (
-      <Grid item xs={12} sm={4} md={4} sx={LastNewsCardItemStyle.container}>
-        <Link to={buttonUrl} style={{ textDecoration: 'none' }}>
-          {card}
-        </Link>
-      </Grid>
+      <Link to={buttonUrl} style={{ textDecoration: 'none' }}>
+        {card}
+      </Link>
     );
   } else {
-    return (
-      <Grid item xs={12} sm={4} md={4} sx={LastNewsCardItemStyle.container}>
-        {card}
-      </Grid>
-    );
+    return <div>{card}</div>;
   }
 };
 
