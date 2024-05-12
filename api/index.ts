@@ -15,6 +15,7 @@ import lastNewsBlockRouter from './routes/lastNewsBlock';
 import pageCreateRouter from './routes/pageCreateRouter';
 import employerRouter from './routes/employerRouter';
 import applicationsRouter from './routes/applicationsRouter';
+import applicantRouter from "./routes/applicantRouter";
 import imageUploadRouter from "./routes/imageUploadRouter";
 import employeesCardRouter from './routes/employeesCardRouter';
 
@@ -37,6 +38,7 @@ app.use('/last-news-block', lastNewsBlockRouter);
 app.use('/page', pageCreateRouter);
 app.use('/upload-image', imageUploadRouter);
 app.use('/applications', applicationsRouter);
+app.use('/applicants', applicantRouter);
 app.use('/employees-card', employeesCardRouter);
 
 const run = async () => {

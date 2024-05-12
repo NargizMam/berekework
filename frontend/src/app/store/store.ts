@@ -20,6 +20,7 @@ import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
 import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
 import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
+import { applicantReducer } from '../../client/widgets/applicant/model/applicantSlice';
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   vacancy: vacancyReducer,
   moderator: moderatorsReducer,
   tariff: tariffReducer,
+  applicant: applicantReducer,
   file: fileReducer,
   chooseBlock: chooseBlockReducer,
   employer: employersProfileReducer,

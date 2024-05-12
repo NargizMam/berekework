@@ -1,0 +1,64 @@
+.applicantFormContainer {
+  background-color: #ffffff;
+  border-radius: 30px;
+  width: 850px;
+  padding: 40px 50px;
+}
+
+.labelForField {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #000000;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.field {
+  font-family: "Montserrat", sans-serif;
+  border: #E9E9E9 solid 2px;
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 35px;
+  line-height: 20px;
+  padding-left: 30px;
+  width: 380px;
+  height: 70px;
+  background-color: #ffffff;
+
+}
+
+.field:focus {
+  outline: none;
+  border-color: #0866FF;
+}
+
+input[type="date"] {
+  width: 205px;
+}
+
+textarea.field {
+  width: 770px;
+  height: 330px;
+}
+
+button.sendBtn {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  background-color: #0866FF;
+  border-radius: 30px;
+  height: 70px;
+  margin-top: 50px;
+}
+
+textarea.field{
+  padding-top: 20px;
+  padding-right: 20px;
+}
+
+select.field {
+  width: 420px;
+}
