@@ -4,7 +4,7 @@ import { TariffMutation } from '../model/types';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { createTariff, getSingleTariff, updateTariff } from '../api/tariffThunk';
 import { useParams } from 'react-router-dom';
-import { selectTariff, selectTariffLoading } from '../model/tariffSlice';
+import { selectTariff, selectTariffError, selectTariffLoading } from '../model/tariffSlice';
 import { Loader } from '../../../../shared/loader';
 
 const TariffFormPage = () => {
@@ -15,11 +15,13 @@ const TariffFormPage = () => {
   const [description, setDescription] = useState('');
   const tariff = useAppSelector(selectTariff);
   const loading = useAppSelector(selectTariffLoading);
+  const error = useAppSelector(selectTariffError);
+  const [errorDesc, setErrorDesc] = useState(false);
   const dispatch = useAppDispatch();
   const { id } = useParams() as { id: string };
 
   useEffect(() => {
-    if(id) {
+    if (id) {
       dispatch(getSingleTariff(id));
     }
   }, [dispatch, id]);
@@ -52,8 +54,12 @@ const TariffFormPage = () => {
 
   const handleCreateTariff = async (event: FormEvent) => {
     event.preventDefault();
-    if(id) {
-      await dispatch(updateTariff({id, data: state})).unwrap();
+    if (state.description.length === 0) {
+      setErrorDesc(true);
+      return false;
+    }
+    if (id) {
+      await dispatch(updateTariff({ id, data: state })).unwrap();
     } else {
       await dispatch(createTariff(state)).unwrap();
     }
@@ -64,7 +70,13 @@ const TariffFormPage = () => {
     setDescription('');
   };
 
-  console.log(state);
+  const getFieldError = (fieldName: string) => {
+    try {
+      return error?.error[fieldName].message;
+    } catch {
+      return undefined;
+    }
+  };
 
   if (loading) {
     return <Loader />;
@@ -88,8 +100,8 @@ const TariffFormPage = () => {
             label="Title"
             variant="outlined"
             required={true}
-            // error={Boolean(getFieldError('companyName'))}
-            // helperText={getFieldError('companyName')}
+            error={Boolean(getFieldError('title'))}
+            helperText={getFieldError('title')}
           />
         </Grid>
         <Grid item xs={12}>
@@ -104,8 +116,8 @@ const TariffFormPage = () => {
               id="standard-basic"
               label="description"
               variant="outlined"
-              // error={Boolean(getFieldError('scope'))}
-              // helperText={getFieldError('scope')}
+              error={Boolean(getFieldError('description'))}
+              helperText={errorDesc ? 'Description dont empty' : getFieldError('description')}
             />
             <Button onClick={addDescription} type="button" variant="outlined">
               Add
