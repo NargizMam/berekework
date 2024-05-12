@@ -23,7 +23,6 @@ export interface NavbarItemFields {
     },
   ];
 }
-
 export interface UserFields {
   email: string;
   password: string;
@@ -31,26 +30,35 @@ export interface UserFields {
   role: string;
   googleID?: string;
   avatar?: string;
+  name?: string;
+  surname?: string;
+  patronymic?: string;
+  gender?: 'male' | 'female';
+  dateOfBirth?: string;
+  country?: string;
+  city?: string;
+  education?: string;
+  aboutMe?: string;
+  job?: string;
+  preferredCity?: string;
+  contact: {
+    phone?: string;
+    whatsapp?: string;
+    telegram?: string;
+  };
+  documents?: string[];
 }
 
 export interface EmployerFields {
-  email: string;
-  password: string;
-  token: string;
-  role: string;
-  googleID?: string;
-  avatar?: string;
-  scope: string;
-  action: string;
-  foundationYear: string;
-  document: string;
+  user: Types.ObjectId;
   companyName: string;
   industry: string;
   description: string;
   address: string;
   contacts: string;
   logo: string;
-  documents: string;
+  documents: string[];
+  foundationYear: string;
   vacancies: Types.ObjectId[];
 }
 
@@ -60,7 +68,6 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
-export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
 
 export interface VacancyApi {
   _id: string;
@@ -125,7 +132,19 @@ export interface ModelType {
   [key: string]: any;
 }
 
+export interface EmployeesDataType {
+  name: string,
+  photo?: string,
+  profession: string,
+  age: number,
+  country: string,
+  city: string,
+  education?: string,
+  experience?: string,
+}
+
 export interface UploadedFiles {
   avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
   document?: Express.Multer.File[]; // Массив файлов для поля 'document'
+  logo?: Express.Multer.File[]; // Массив файлов для поля 'logo'
 }

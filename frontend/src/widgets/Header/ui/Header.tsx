@@ -1,15 +1,13 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import '../css/style.css';
 import '../css/media.css';
 import logo from '../images/logo-company.png';
-import {useAppDispatch, useAppSelector} from '../../../app/store/hooks';
-import {selectHeader} from '../../../admin/page/headerCreate/model/headerSlice';
-import {fetchHeader} from '../../../admin/page/headerCreate/api/headerThunks';
-import {NavLink} from "react-router-dom";
-import {selectUser} from "../../../client/page/Auth/model/AuthSlice";
-import {Button} from "@mui/material";
-import LogoutIcon from '@mui/icons-material/Logout';
-import {logout} from "../../../client/page/Auth/api/AuthThunk";
+import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { selectHeader } from '../../../admin/page/headerCreate/model/headerSlice';
+import { fetchHeader } from '../../../admin/page/headerCreate/api/headerThunks';
+import { NavLink } from 'react-router-dom';
+import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
+import UserMenu from '../UserMenu';
 
 
 const Header = () => {
@@ -21,10 +19,6 @@ const Header = () => {
     useEffect(() => {
         dispatch(fetchHeader());
     }, [dispatch]);
-
-    const handleLogout = () => {
-        dispatch(logout());
-    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -71,13 +65,9 @@ const Header = () => {
                     </ul>
                 </nav>
                 {!user ?
-                    <NavLink to='/login' className="login">Войти</NavLink>
-
+                  (<NavLink to='/login' className="login">Войти</NavLink>)
                     :
-                    <Button color="inherit" onClick={handleLogout}>
-                        <LogoutIcon/>
-                    </Button>
-                }
+                  (<UserMenu user={user}/>)}
             </div>
         </div>
     );

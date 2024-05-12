@@ -1,15 +1,16 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose, {Types} from 'mongoose';
 import express from 'express';
-import { cardUpload } from '../multer';
+import {cardUpload} from '../multer';
 import Vacancy from '../models/vacancy/Vacancy';
 import { VacancyMutation } from '../types';
 import { RequestWithEmployer } from '../middleware/employerAuth';
-import LastNewsBlock from '../models/lastNews/LastNewsBlock';
+import Employer from "../models/employer/employerModel";
 
 const vacanciesRouter = express.Router();
-vacanciesRouter.post('/', cardUpload.single('logo'), async (req, res, next) => {
-  const { title, description, logo, company, city, salary, url, employer } = req.body;
-  const companyLogo = req.file ? req.file.filename : null;
+vacanciesRouter.post('/', async (req, res, next) => {
+  const { title, description, city, salary, url, employer } = req.body;
+
+  const employerId: Types.ObjectId = new Types.ObjectId(employer as string);
 
   try {
     const newVacancy: VacancyMutation = {
@@ -21,11 +22,17 @@ vacanciesRouter.post('/', cardUpload.single('logo'), async (req, res, next) => {
         max: salary.max ? parseFloat(salary.max) : null,
       },
       url,
-      employer,
+      employer: employerId,
     };
 
     const vacancy = new Vacancy(newVacancy);
     await vacancy.save();
+    const employerToUpdate = await Employer.findById(employerId);
+    if (!employerToUpdate) {
+      return res.status(404).send({ message: 'Employer not found' });
+    }
+    employerToUpdate.vacancies.push(vacancy._id);
+    await employerToUpdate.save();
 
     return res.send(vacancy);
   } catch (e) {

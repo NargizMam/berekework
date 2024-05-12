@@ -71,21 +71,21 @@ const App = () => {
         adminRoutes
       ) : (
         <ClientLayout>
-          <Container>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/newApplicant" element={<ApplicantSettings />} />
-              <Route path="/applicantProfile" element={<ApplicantProfile />} />
-              <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
-              <Route path="/users" element={<UserPanelPage />} />
-              <Route path="/vacancy" element={<VacancyPage />} />
-              <Route path="/tariffs" element={<TariffPanelPage />} />
-              <Route path="/employersProfile" element={<EmployerProfile/>} />
-              <Route path="*" element={'Not found'} />
-            </Routes>
-          </Container>
+            <Container>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/users" element={<UserPanelPage />} />
+                <Route path="/vacancy" element={<VacancyPage />} />
+                <Route path="/tariffs" element={<TariffPanelPage />} />
+                <Route path="/employersProfile/:id" element={<EmployerProfile/>} />
+                <Route path="/newApplicant" element={<ApplicantSettings />} />
+                <Route path="/applicantProfile" element={<ApplicantProfile />} />
+                <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
+                <Route path="*" element={'Not found'} />
+              </Routes>
+            </Container>
         </ClientLayout>
       )}
     </>

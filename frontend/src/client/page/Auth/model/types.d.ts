@@ -25,3 +25,14 @@ export interface User {
   role: string;
   avatar: string;
 }
+export interface ValidationError {
+  errors: {
+    [key: string]: {
+      name: string;
+      message: string;
+    }
+  },
+  message: string;
+  name: string;
+  _message: string;
+}
