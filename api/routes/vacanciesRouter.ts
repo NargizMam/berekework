@@ -2,8 +2,8 @@ import mongoose, {Types} from 'mongoose';
 import express from 'express';
 import {cardUpload} from '../multer';
 import Vacancy from '../models/vacancy/Vacancy';
-import {VacancyMutation} from '../types';
-import {RequestWithEmployer} from '../middleware/employerAuth';
+import { VacancyMutation } from '../types';
+import { RequestWithEmployer } from '../middleware/employerAuth';
 import Employer from "../models/employer/employerModel";
 
 const vacanciesRouter = express.Router();

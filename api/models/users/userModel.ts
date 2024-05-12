@@ -37,6 +37,29 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     enum: ['user', 'admin', 'superadmin', 'employer'],
   },
   avatar: String,
+  name: String,
+  surname: String,
+  patronymic: String,
+  gender: {
+    type: String,
+    enum: ['male', 'female'],
+  },
+  dateOfBirth: String,
+  country: String,
+  city: String,
+  education: String,
+  aboutMe: {
+    type: String,
+    minlength: 100,
+  },
+  job: String,
+  preferredCity: String,
+  contact: {
+    phone: String,
+    whatsapp: String,
+    telegram: String,
+  },
+  documents: [String],
 });
 
 userSchema.methods.checkPassword = function (password: string) {

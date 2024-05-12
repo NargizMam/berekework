@@ -2,7 +2,7 @@ import { Router } from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 
-import { imagesUpload } from '../multer';
+import { imagesUpload, documentsUpload } from '../multer';
 
 const userRouter = Router();
 
@@ -112,6 +112,63 @@ userRouter.delete('/:id', async (req, res, next) => {
     } catch (e) {
       return next(e);
     }
+  }
+});
+
+userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('documents'), async (req, res, next) => {
+  try {
+    let avatar: string | undefined | null = undefined;
+
+    if (req.body.avatar === 'delete') {
+      avatar = null;
+    } else if (req.file) {
+      avatar = req.file.filename;
+    }
+
+    let documents: string[];
+
+    if (req.body.documents) {
+      documents = req.body.documents.filter((document: string) => document !== 'delete');
+    } else {
+      documents = [];
+    }
+
+    const result = await User.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          name: req.body.name || null,
+          surname: req.body.surname || null,
+          patronymic: req.body.patronymic || null,
+          gender: req.body.gender || null,
+          dateOfBirth: req.body.dateOfBirth || null,
+          country: req.body.country || null,
+          city: req.body.city || null,
+          education: req.body.education || null,
+          aboutMe: req.body.aboutMe || null,
+          job: req.body.job || null,
+          preferredCity: req.body.preferredCity || null,
+          contact: {
+            phone: req.body.contact.phone || null,
+            whatsapp: req.body.contact.whatsapp || null,
+            telegram: req.body.contact.telegram || null,
+          },
+          avatar,
+          documents,
+        },
+      },
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).send({ message: 'User not found!' });
+    }
+
+    return res.send({ message: 'ok' });
+  } catch (e) {
+    if (e instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(e);
+    }
+    next(e);
   }
 });
 
