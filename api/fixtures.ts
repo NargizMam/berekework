@@ -75,14 +75,10 @@ const run = async () => {
         dateTime: '2024-04-21T12:00:00Z',
         buttonUrl: '/economic-forecasts',
       },
-      {
-        email: 'moderator2@gmail.com',
-        password: 'moderator2',
-        token: randomUUID(),
-        role: 'admin',
-      },
+
     ],
   });
+
 
   const [employer1, employer2, employer3] = await Employer.create(
     {

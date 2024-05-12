@@ -33,23 +33,15 @@ export interface UserFields {
 }
 
 export interface EmployerFields {
-  email: string;
-  password: string;
-  token: string;
-  role: string;
-  googleID?: string;
-  avatar?: string;
-  scope: string;
-  action: string;
-  foundationYear: string;
-  document: string;
+  user: Types.ObjectId;
   companyName: string;
   industry: string;
   description: string;
   address: string;
   contacts: string;
   logo: string;
-  documents: string;
+  documents: string[];
+  foundationYear: string;
   vacancies: Types.ObjectId[];
 }
 
@@ -59,7 +51,6 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
-export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
 
 export interface VacancyApi {
   _id: string;
@@ -127,4 +118,5 @@ export interface ModelType {
 export interface UploadedFiles {
   avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
   document?: Express.Multer.File[]; // Массив файлов для поля 'document'
+  logo?: Express.Multer.File[]; // Массив файлов для поля 'logo'
 }

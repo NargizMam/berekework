@@ -1,3 +1,5 @@
+import { VacancyCardApiData } from './shared/types';
+
 export interface Header {
   logo: string,
   name: string,
@@ -31,6 +33,7 @@ export interface EmployerInfoApi{
   contacts: string;
   logo: string;
   documents: string;
+  vacancies: VacancyCardApiData[];
   createdAt: string;
   updatedAt: string;
 }

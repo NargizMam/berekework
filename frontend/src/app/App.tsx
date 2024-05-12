@@ -76,7 +76,7 @@ const App = () => {
                 <Route path="/users" element={<UserPanelPage />} />
                 <Route path="/vacancy" element={<VacancyPage />} />
                 <Route path="/tariffs" element={<TariffPanelPage />} />
-                <Route path="/employersProfile" element={<EmployerProfile/>} />
+                <Route path="/employersProfile/:id" element={<EmployerProfile/>} />
                 <Route path="*" element={'Not found'} />
               </Routes>
             </Container>
