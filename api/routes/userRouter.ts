@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 
@@ -18,7 +18,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
       user.generateToken();
       await user.save();
       return res.send({ message: 'Admin was created!' });
-    }else{
+    } else {
       const user = new User({
         email: req.body.email,
         password: req.body.password,
@@ -72,49 +72,46 @@ userRouter.get('/', async (req, res, next) => {
     return next(error);
   }
 });
-userRouter.delete('/:id', async (req, res,next) => {
-  if(req.params) {
 
+userRouter.delete('/:id', async (req, res, next) => {
+  if (req.params.id !== 'sessions') {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
         return res.send('Модератор возможно был удален!');
       }
       return res.send('Модератор удачно удален!');
-    }
-    catch (e) {
+    } catch (e) {
       next(e);
     }
-  }
-});
+  } else {
+    try {
+      const headerValue = req.get('Authorization');
+      const successMessage = { message: 'Success!' };
 
-userRouter.delete('/sessions', async (req, res, next) => {
-  try {
-    const headerValue = req.get('Authorization');
-    const successMessage = { message: 'Success!' };
+      if (!headerValue) {
+        return res.send({ ...successMessage, stage: 'No header' });
+      }
 
-    if (!headerValue) {
-      return res.send({ ...successMessage, stage: 'No header' });
+      const [_bearer, token] = headerValue.split(' ');
+
+      if (!token) {
+        return res.send({ ...successMessage, stage: 'No token' });
+      }
+
+      const user = await User.findOne({ token });
+
+      if (!user) {
+        return res.send({ ...successMessage, stage: 'No user' });
+      }
+
+      user.generateToken();
+      await user.save();
+
+      return res.send({ ...successMessage, stage: 'Success' });
+    } catch (e) {
+      return next(e);
     }
-
-    const [_bearer, token] = headerValue.split(' ');
-
-    if (!token) {
-      return res.send({ ...successMessage, stage: 'No token' });
-    }
-
-    const user = await User.findOne({ token });
-
-    if (!user) {
-      return res.send({ ...successMessage, stage: 'No user' });
-    }
-
-    user.generateToken();
-    await user.save();
-
-    return res.send({ ...successMessage, stage: 'Success' });
-  } catch (e) {
-    return next(e);
   }
 });
 

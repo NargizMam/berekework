@@ -1,11 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-
 import config from './config';
+
 import mainContainerCardRouter from './routes/mainContainerCardRouter';
 import headingRouter from './routes/headingRouter';
 import headerRouter from './routes/headerRouter';
+import galleryVideoRouter from './routes/galleryVideoRouter';
 import userRouter from './routes/userRouter';
 import vacanciesRouter from './routes/vacanciesRouter';
 import vacanciesBlockRouter from './routes/vacanciesBlockRouter';
@@ -26,6 +27,7 @@ app.use('/user', userRouter);
 app.use('/employer', employerRouter);
 app.use('/mainContainerCard', mainContainerCardRouter);
 app.use('/header', headerRouter);
+app.use('/gallery-video', galleryVideoRouter);
 app.use('/heading', headingRouter);
 app.use('/vacancies', vacanciesRouter);
 app.use('/vacanciesBlock', vacanciesBlockRouter);

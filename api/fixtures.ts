@@ -43,20 +43,6 @@ const run = async () => {
     role: 'superadmin',
   });
 
-  // await Employer.create({
-  //   email: 'employer@gmail.com',
-  //   password: 'employer',
-  //   token: randomUUID(),
-  //   action: 'Game organization',
-  //   foundationYear: '2012',
-  //   scope: 'Major',
-  //   companyName: 'NAVI',
-  //   role: 'employer',
-  //   address: 'st. Peterburg',
-  //   avatar: 'fixtures/logo_company_cambridge.png',
-  //   document: 'fixtures/dummy.pdf',
-  // });
-
   await Tariff.create({
     mainTitle: 'Tariff',
     tariffs: [
@@ -110,7 +96,7 @@ const run = async () => {
       address: '123 Main St, City, Country',
       contacts: '+1 (123) 456-7890',
       logo: 'fixtures/logo_company_megaservice.png',
-      documents: 'https://example.com/documentsA.pdf',
+      documents: 'fixtures/dummy.pdf',
     },
     {
       email: 'employer2@example.com',
