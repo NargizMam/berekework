@@ -24,5 +24,7 @@ export const videosUpload = multer({ storage: createStorageConfig('videos') });
 export const cardUpload = multer({ storage: createStorageConfig('cards') });
 export const avatarsUpload = multer({ storage: createStorageConfig('avatars') });
 export const logosUpload = multer({ storage: createStorageConfig('logos') });
+
 export const documentsUpload = multer({ storage: createStorageConfig('documents') });
 export const multiUpload = multer({ storage: createStorageConfig('employers') });
+export const employeesUpload = multer({ storage: createStorageConfig('employees') });

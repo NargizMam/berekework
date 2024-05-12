@@ -16,6 +16,7 @@ import pageCreateRouter from './routes/pageCreateRouter';
 import employerRouter from './routes/employerRouter';
 import applicationsRouter from './routes/applicationsRouter';
 import imageUploadRouter from "./routes/imageUploadRouter";
+import employeesCardRouter from './routes/employeesCardRouter';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/last-news-block', lastNewsBlockRouter);
 app.use('/page', pageCreateRouter);
 app.use('/upload-image', imageUploadRouter);
 app.use('/applications', applicationsRouter);
+app.use('/employees-card', employeesCardRouter);
 
 const run = async () => {
   await mongoose.connect(config.mongoose.db);

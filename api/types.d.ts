@@ -132,6 +132,17 @@ export interface ModelType {
   [key: string]: any;
 }
 
+export interface EmployeesDataType {
+  name: string,
+  photo?: string,
+  profession: string,
+  age: number,
+  country: string,
+  city: string,
+  education?: string,
+  experience?: string,
+}
+
 export interface UploadedFiles {
   avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
   document?: Express.Multer.File[]; // Массив файлов для поля 'document'
