@@ -2,11 +2,11 @@ export interface Employer {
   _id: string;
   email: string;
   role: string;
-  action: string;
+  industry: string;
   companyName: string;
-  scope: string;
+  description: string;
   address: string;
-  avatar: string;
+  logo: string;
   document: string;
   foundationYear: string;
 }
@@ -14,11 +14,11 @@ export interface Employer {
 export interface EmployerMutation {
   email: string;
   password: string;
-  action: string;
+  industry: string;
   companyName: string;
-  scope: string;
+  description: string;
   foundationYear: string;
   document: File | null;
   address: string;
-  avatar: File | null;
+  logo: File | null;
 }

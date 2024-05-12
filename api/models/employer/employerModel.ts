@@ -37,39 +37,38 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
   },
   companyName: {
     type: String,
-    required: true
+    required: true,
   },
   industry: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   address: {
     type: String,
-    required: true
+    required: true,
   },
   contacts: {
     type: String,
-    required: true
+    required: true,
   },
   logo: {
     type: String,
-    required: true
+    required: true,
   },
   documents: {
     type: String,
-    required: true
+    required: true,
   },
   vacancies: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Vacancy'
-    }
-  ]
-
+      ref: 'Vacancy',
+    },
+  ],
 });
 
 employerSchema.methods.checkPassword = function (password: string) {

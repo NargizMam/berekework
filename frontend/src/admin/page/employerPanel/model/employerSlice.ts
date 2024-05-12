@@ -47,6 +47,6 @@ const employerSlice = createSlice({
 });
 
 export const employerReducer = employerSlice.reducer;
-export const selectEmployers = (state: RootState) => state.employer.employers;
-export const selectEmployerLoading = (state: RootState) => state.employer.employersLoading;
-export const selectEmployerError = (state: RootState) => state.employer.employerError;
+export const selectEmployers = (state: RootState) => state.employerAdmin.employers;
+export const selectEmployerLoading = (state: RootState) => state.employerAdmin.employersLoading;
+export const selectEmployerError = (state: RootState) => state.employerAdmin.employerError;

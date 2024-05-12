@@ -11,12 +11,12 @@ export const EmployerFormPage = () => {
     email: '',
     password: '',
     companyName: '',
-    scope: '',
-    action: '',
+    industry: '',
+    description: '',
     foundationYear: '',
     document: null,
     address: '',
-    avatar: null,
+    logo: null,
   });
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectEmployerError);
@@ -42,19 +42,19 @@ export const EmployerFormPage = () => {
       email: '',
       password: '',
       companyName: '',
-      scope: '',
-      action: '',
+      industry: '',
+      description: '',
       foundationYear: '',
       document: null,
       address: '',
-      avatar: null,
+      logo: null,
     });
   };
 
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (files && files[0]) {
-      if (name === 'avatar'){
+      if (name === 'logo'){
         setFilenameImage(files[0].name);
       } else if (name === 'document') {
         setFilename(files[0].name);
@@ -152,11 +152,11 @@ export const EmployerFormPage = () => {
         </Grid>
         <Grid item xs={6}>
           <TextField
-            value={state.scope}
+            value={state.industry}
             onChange={changeField}
-            name="scope"
+            name="industry"
             id="standard-basic"
-            label="Scope"
+            label="industry"
             variant="outlined"
             required={true}
             error={Boolean(getFieldError('scope'))}
@@ -165,11 +165,11 @@ export const EmployerFormPage = () => {
         </Grid>
         <Grid item xs={6}>
           <TextField
-            value={state.action}
+            value={state.description}
             onChange={changeField}
-            name="action"
+            name="description"
             id="standard-basic"
-            label="Action"
+            label="description"
             variant="outlined"
             required={true}
             error={Boolean(getFieldError('action'))}
@@ -239,7 +239,7 @@ export const EmployerFormPage = () => {
           <input
             style={{ display: 'none' }}
             type="file"
-            name="avatar"
+            name="logo"
             onChange={changeFileFiled}
             ref={imageSelect}
           />
