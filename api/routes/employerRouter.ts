@@ -1,36 +1,64 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import mongoose from 'mongoose';
 import Employer from '../models/employer/employerModel';
-import { imagesUpload } from '../multer';
+import {multiUpload} from '../multer';
+import {UploadedFiles} from '../types';
+import User from "../models/users/userModel";
 
 const employerRouter = Router();
 
-employerRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
-  try {
-    const employer = new Employer({
-      email: req.body.email,
-      password: req.body.password,
-      companyName: req.body.companyName,
-      action: req.body.action,
-      scope: req.body.scope,
-      foundationYear: req.body.foundationYear,
-      avatar: req.file ? req.file.filename : null,
-    });
-    employer.generateToken();
-    await employer.save();
-    return res.send({ message: 'Employer is ready!', employer });
-  } catch (error) {
-    if (error instanceof mongoose.Error.ValidationError) {
-      return res.status(422).send(error);
-    }
+employerRouter.post(
+    '/',
+    multiUpload.fields([
+      { name: 'document', maxCount: 1 },
+      { name: 'logo', maxCount: 1 },
+      { name: 'avatar', maxCount: 1 },
+    ]),
+    async (req, res, next) => {
 
-    return next(error);
-  }
-});
+      try {
+        const files: UploadedFiles = req.files as UploadedFiles;
+        const user = new User({
+          email: req.body.email,
+          password: req.body.password,
+          role: 'employer'
+        });
+        user.generateToken();
+        await user.save();
+
+        const employer = new Employer({
+          user: user._id,
+          companyName: req.body.companyName,
+          industry: req.body.industry,
+          description: req.body.description,
+          address: req.body.address,
+          contacts: req.body.contacts,
+          documents: files['document'] ? files['document'][0].filename : null,
+          logo: files['logo'] ? files['logo'][0].filename : null,
+          foundationYear: req.body.foundationYear,
+        });
+        await employer.save();
+        return res.send({ message: 'Employer is ready!', employer });
+      } catch (error) {
+        if (error instanceof mongoose.Error.ValidationError) {
+          return res.status(422).send(error);
+        }
+        return next(error);
+      }
+    },
+);
 
 employerRouter.get('/', async (_req, res, next) => {
   try {
     const results = await Employer.find();
+    res.send(results);
+  } catch (error) {
+    return next(error);
+  }
+});
+employerRouter.get('/:id', async (req, res, next) => {
+  try {
+    const results = await Employer.findById(req.params.id).populate('vacancies');
     res.send(results);
   } catch (error) {
     return next(error);

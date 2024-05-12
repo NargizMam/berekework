@@ -6,6 +6,8 @@ import React from 'react';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { useAppSelector } from '../../store/hooks';
+import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 
 export interface SideNavProps {
   open?: boolean;
@@ -14,6 +16,7 @@ export interface SideNavProps {
 
 export const SideNavAdmin: React.FC<SideNavProps> = ({ open, onClose }) => {
   const theme = useTheme();
+  const user = useAppSelector(selectUser);
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
@@ -74,6 +77,24 @@ export const SideNavAdmin: React.FC<SideNavProps> = ({ open, onClose }) => {
               </ListItemButton>
             </ListItem>
           ))}
+
+          {user?.role === 'superadmin' &&
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                to={'/admin/moderators'}
+                sx={{
+                  marginBottom: isMobileScreen ? '2px' : '10px',
+                  width: '100%',
+                }}
+              >
+                <ListItemIcon>
+                  <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }}/>
+                </ListItemIcon>
+                <ListItemText primary='Moderators' sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
+              </ListItemButton>
+            </ListItem>
+          }
         </List>
       </Box>
       <Divider sx={{ borderColor: '#000' }} />

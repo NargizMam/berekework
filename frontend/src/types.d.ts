@@ -1,3 +1,5 @@
+import { VacancyCardApiData } from './shared/types';
+
 export interface Header {
   logo: string,
   name: string,
@@ -13,14 +15,32 @@ export interface Header {
     }]
   }]
 }
-export interface Moderator{
+export interface ModeratorApi{
   _id: string;
   name: string;
   email: string;
-  password: string;
   role: string;
+  password: string;
   createdAt: string;
   updatedAt: string;
+}
+export interface EmployerInfoApi{
+  _id: string;
+  companyName: string;
+  industry: string;
+  description: string;
+  address: string;
+  contacts: string;
+  logo: string;
+  documents: string;
+  vacancies: VacancyCardApiData[];
+  createdAt: string;
+  updatedAt: string;
+}
+export interface Moderator{
+  name: string;
+  email: string;
+  password: string;
 }
 
 export interface ValidationError {
