@@ -19,6 +19,8 @@ const createStorageConfig = (subFolder: string) =>
   });
 
 export const imagesUpload = multer({ storage: createStorageConfig('images') });
+export const videosUpload = multer({ storage: createStorageConfig('videos') });
+
 export const cardUpload = multer({ storage: createStorageConfig('cards') });
 export const avatarsUpload = multer({ storage: createStorageConfig('avatars') });
 export const logosUpload = multer({ storage: createStorageConfig('logos') });

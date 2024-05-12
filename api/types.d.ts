@@ -23,7 +23,6 @@ export interface NavbarItemFields {
     },
   ];
 }
-
 export interface UserFields {
   email: string;
   password: string;
