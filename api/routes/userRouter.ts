@@ -2,7 +2,7 @@ import { Router } from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 
-import { imagesUpload, multiUpload } from '../multer';
+import { imagesUpload, documentsUpload } from '../multer';
 
 const userRouter = Router();
 
@@ -72,8 +72,9 @@ userRouter.get('/', async (req, res, next) => {
     return next(error);
   }
 });
+
 userRouter.delete('/:id', async (req, res, next) => {
-  if (req.params) {
+  if (req.params.id !== 'sessions') {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
@@ -83,40 +84,38 @@ userRouter.delete('/:id', async (req, res, next) => {
     } catch (e) {
       next(e);
     }
+  } else {
+    try {
+      const headerValue = req.get('Authorization');
+      const successMessage = { message: 'Success!' };
+
+      if (!headerValue) {
+        return res.send({ ...successMessage, stage: 'No header' });
+      }
+
+      const [_bearer, token] = headerValue.split(' ');
+
+      if (!token) {
+        return res.send({ ...successMessage, stage: 'No token' });
+      }
+
+      const user = await User.findOne({ token });
+
+      if (!user) {
+        return res.send({ ...successMessage, stage: 'No user' });
+      }
+
+      user.generateToken();
+      await user.save();
+
+      return res.send({ ...successMessage, stage: 'Success' });
+    } catch (e) {
+      return next(e);
+    }
   }
 });
 
-userRouter.delete('/sessions', async (req, res, next) => {
-  try {
-    const headerValue = req.get('Authorization');
-    const successMessage = { message: 'Success!' };
-
-    if (!headerValue) {
-      return res.send({ ...successMessage, stage: 'No header' });
-    }
-
-    const [_bearer, token] = headerValue.split(' ');
-
-    if (!token) {
-      return res.send({ ...successMessage, stage: 'No token' });
-    }
-
-    const user = await User.findOne({ token });
-
-    if (!user) {
-      return res.send({ ...successMessage, stage: 'No user' });
-    }
-
-    user.generateToken();
-    await user.save();
-
-    return res.send({ ...successMessage, stage: 'Success' });
-  } catch (e) {
-    return next(e);
-  }
-});
-
-userRouter.patch('/:id', imagesUpload.single('avatar'), multiUpload.array('documents'), async (req, res, next) => {
+userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('documents'), async (req, res, next) => {
   try {
     let avatar: string | undefined | null = undefined;
 

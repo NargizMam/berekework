@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import {Document, Model, Types} from 'mongoose';
 
 export interface mainCardContainerType {
   _id: string;
@@ -23,7 +23,6 @@ export interface NavbarItemFields {
     },
   ];
 }
-
 export interface UserFields {
   email: string;
   password: string;
@@ -51,16 +50,16 @@ export interface UserFields {
 }
 
 export interface EmployerFields {
-  email: string;
-  password: string;
-  token: string;
-  role: string;
+  user: Types.ObjectId;
   companyName: string;
-  googleID?: string;
-  avatar?: string;
-  scope: string;
-  action: string;
+  industry: string;
+  description: string;
+  address: string;
+  contacts: string;
+  logo: string;
+  documents: string[];
   foundationYear: string;
+  vacancies: Types.ObjectId[];
 }
 
 export interface UserMethods {
@@ -69,21 +68,18 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
-export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
 
 export interface VacancyApi {
   _id: string;
   title: string;
   description: string;
-  logo: string | null;
-  company: string;
   city: string;
   salary: {
     min: number | null;
     max: number | null;
   };
   url: string;
-  employer: string;
+  employer: Types.ObjectId;
 }
 
 export type VacancyMutation = Omit<VacancyApi, '_id'>;
@@ -134,4 +130,10 @@ export interface Page {
 
 export interface ModelType {
   [key: string]: any;
+}
+
+export interface UploadedFiles {
+  avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
+  document?: Express.Multer.File[]; // Массив файлов для поля 'document'
+  logo?: Express.Multer.File[]; // Массив файлов для поля 'logo'
 }

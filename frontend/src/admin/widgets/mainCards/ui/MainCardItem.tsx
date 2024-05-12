@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import MainCardItemStyle from './MainCardItem-style';
 import { API_URL } from '../../../../app/constants/links';
+import './MainCardItem.css';
 
 export interface Props {
   _id?: string;
@@ -11,49 +10,59 @@ export interface Props {
   image?: string;
   icon?: string;
   URLpath?: string;
-  numImages: number;
 }
 
-const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath, numImages }) => {
-  const cardIcon = icon ? API_URL + '/cards/' + icon : null;
-  const cardImage = image ? API_URL + '/cards/' + image : null;
+const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath }) => {
+  const cardIcon = icon ? API_URL + icon : null;
+  const cardImage = image ? API_URL + image : null;
 
-  const styles = MainCardItemStyle(cardImage, cardIcon);
-  const iconElement = cardIcon ? <CardMedia component="img" sx={styles.icon} image={cardIcon} alt="{title}" /> : null;
+  const iconElement = cardIcon ? (
+    <div className="MainCardWithIcon__icon-wrapper">
+      <img className="MainCardWithIcon__icon" src={cardIcon} alt={title} />
+    </div>
+  ) : null;
 
-  const cardContent = (
-    <CardContent sx={styles.content}>
-      <Typography variant="h5" sx={styles.title}>
-        {title}
-      </Typography>
-      <Typography variant="body2" sx={styles.text}>
-        {text}
-      </Typography>
-    </CardContent>
+  const imageElement = cardImage ? <img className="MainCardWithImage__image" src={cardImage} alt={title} /> : null;
+
+  const mainCardWithIconContent = (
+    <div className="MainCardWithIcon__content">
+      <h5 className="MainCard__title">{title}</h5>
+      <p className="MainCard__text">{text}</p>
+    </div>
   );
 
-  const cardBody = (
-    <Card sx={styles.card}>
+  const mainCardWithImageContent = (
+    <div className="MainCardWithImage__content">
+      <h5 className="MainCard__title">{title}</h5>
+      <p className="MainCard__text">{text}</p>
+    </div>
+  );
+
+  const cardWithIcon = URLpath ? (
+    <Link to={URLpath} className="MainCardWithIcon">
       {iconElement}
-      {cardContent}
-    </Card>
+      {mainCardWithIconContent}
+    </Link>
+  ) : (
+    <div className="MainCardItemWithIcon">
+      {iconElement}
+      {mainCardWithIconContent}
+    </div>
   );
 
-  if (URLpath) {
-    return (
-      <Grid item md={numImages === 1 ? 12 : 6} sm={12} xs={12}>
-        <Link to={URLpath} style={{ textDecoration: 'none' }}>
-          {cardBody}
-        </Link>
-      </Grid>
-    );
-  } else {
-    return (
-      <Grid item md={numImages === 1 ? 12 : 6} sm={12} xs={12}>
-        {cardBody}
-      </Grid>
-    );
-  }
+  const cardWithImage = URLpath ? (
+    <Link to={URLpath} className="MainCardWithImage">
+      {mainCardWithImageContent}
+      {imageElement}
+    </Link>
+  ) : (
+    <div className="MainCardWithImage">
+      {mainCardWithImageContent}
+      {imageElement}
+    </div>
+  );
+
+  return cardImage ? cardWithImage : cardWithIcon;
 };
 
 export default MainCardItem;

@@ -21,7 +21,7 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
       >
         <MainNavAdmin/>
         <main>
-          <Container maxWidth='md' style={{marginLeft: '15%'}}>
+          <Container>
             {children}
             <Outlet/>
           </Container>
