@@ -6,11 +6,14 @@ const tariffRouter = Router();
 
 tariffRouter.post('/', async (req, res, next) => {
   try {
-    const { title, description, mainTitle } = req.body;
+    const { title, description } = req.body;
     const tariff = new Tariff({
-      title,
-      description,
-      mainTitle,
+      tariffs: [
+        {
+          title,
+          description,
+        },
+      ],
     });
 
     await tariff.save();
@@ -44,13 +47,11 @@ tariffRouter.get('/:id', async (req, res, next) => {
 
 tariffRouter.patch('/:id', async (req, res, next) => {
   try {
-    const { title, description, mainTitle } = req.body;
+    const { title, description } = req.body;
     const result = await Tariff.findOneAndUpdate(
       { _id: req.params.id },
       {
-        title,
-        description,
-        mainTitle,
+        tariffs: [{ title, description }],
       },
       { new: true },
     );

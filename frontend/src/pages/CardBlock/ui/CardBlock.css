@@ -1,8 +1,8 @@
 .CardBlock {
   display: grid; 
   grid-template-columns: repeat(2, 1fr); 
-  justify-content: 'space-between'; 
-  gap: 10;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 @media screen and (max-width: 949px) {
