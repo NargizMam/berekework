@@ -8,11 +8,23 @@
   border-radius: 5px;
   padding: 16px;
   width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.div-list {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+	flex-grow: 1;
+	margin-top: auto;
+	align-items: stretch;
 }
 
 .links-list {
   list-style-type: none;
   padding: 0;
+	margin-top: auto;
 }
 
 .links-list li {
@@ -26,6 +38,23 @@
   font-size: 18px;
 }
 
+.footer-content-block {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .links-list li a:hover {
   text-decoration: underline;
+}
+
+.edit-icon {
+	color: yellow;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.delete-icon {
+	color: red;
+	cursor: pointer;
 }
