@@ -17,6 +17,9 @@ import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
 import EmployerProfile from '../client/page/employerProfile/ui/employerProfile';
 import WarningMessage from '../widgets/WarningMessage/WarningMessages';
+import ApplicantSettings from '../client/page/Applicant/ApplicantSettings';
+import ApplicantProfile from '../client/page/Applicant/ApplicantProfile';
+import ApplicantRefactor from '../client/page/Applicant/ApplicantRefactor';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
 
@@ -76,7 +79,10 @@ const App = () => {
                 <Route path="/users" element={<UserPanelPage />} />
                 <Route path="/vacancy" element={<VacancyPage />} />
                 <Route path="/tariffs" element={<TariffPanelPage />} />
-                <Route path="/employersProfile" element={<EmployerProfile/>} />
+                <Route path="/employersProfile/:id" element={<EmployerProfile/>} />
+                <Route path="/newApplicant" element={<ApplicantSettings />} />
+                <Route path="/applicantProfile" element={<ApplicantProfile />} />
+                <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
                 <Route path="*" element={'Not found'} />
               </Routes>
             </Container>

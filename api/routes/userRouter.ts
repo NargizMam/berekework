@@ -1,8 +1,8 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 
-import { imagesUpload } from '../multer';
+import { imagesUpload, documentsUpload } from '../multer';
 
 const userRouter = Router();
 
@@ -18,7 +18,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
       user.generateToken();
       await user.save();
       return res.send({ message: 'Admin was created!' });
-    }else{
+    } else {
       const user = new User({
         email: req.body.email,
         password: req.body.password,
@@ -72,49 +72,103 @@ userRouter.get('/', async (req, res, next) => {
     return next(error);
   }
 });
-userRouter.delete('/:id', async (req, res,next) => {
-  if(req.params) {
 
+userRouter.delete('/:id', async (req, res, next) => {
+  if (req.params.id !== 'sessions') {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
         return res.send('Модератор возможно был удален!');
       }
       return res.send('Модератор удачно удален!');
-    }
-    catch (e) {
+    } catch (e) {
       next(e);
+    }
+  } else {
+    try {
+      const headerValue = req.get('Authorization');
+      const successMessage = { message: 'Success!' };
+
+      if (!headerValue) {
+        return res.send({ ...successMessage, stage: 'No header' });
+      }
+
+      const [_bearer, token] = headerValue.split(' ');
+
+      if (!token) {
+        return res.send({ ...successMessage, stage: 'No token' });
+      }
+
+      const user = await User.findOne({ token });
+
+      if (!user) {
+        return res.send({ ...successMessage, stage: 'No user' });
+      }
+
+      user.generateToken();
+      await user.save();
+
+      return res.send({ ...successMessage, stage: 'Success' });
+    } catch (e) {
+      return next(e);
     }
   }
 });
 
-userRouter.delete('/sessions', async (req, res, next) => {
+userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('documents'), async (req, res, next) => {
   try {
-    const headerValue = req.get('Authorization');
-    const successMessage = { message: 'Success!' };
+    let avatar: string | undefined | null = undefined;
 
-    if (!headerValue) {
-      return res.send({ ...successMessage, stage: 'No header' });
+    if (req.body.avatar === 'delete') {
+      avatar = null;
+    } else if (req.file) {
+      avatar = req.file.filename;
     }
 
-    const [_bearer, token] = headerValue.split(' ');
+    let documents: string[];
 
-    if (!token) {
-      return res.send({ ...successMessage, stage: 'No token' });
+    if (req.body.documents) {
+      documents = req.body.documents.filter((document: string) => document !== 'delete');
+    } else {
+      documents = [];
     }
 
-    const user = await User.findOne({ token });
+    const result = await User.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          name: req.body.name || null,
+          surname: req.body.surname || null,
+          patronymic: req.body.patronymic || null,
+          gender: req.body.gender || null,
+          dateOfBirth: req.body.dateOfBirth || null,
+          country: req.body.country || null,
+          city: req.body.city || null,
+          education: req.body.education || null,
+          aboutMe: req.body.aboutMe || null,
+          job: req.body.job || null,
+          preferredCity: req.body.preferredCity || null,
+          contact: {
+            phone: req.body.contact.phone || null,
+            whatsapp: req.body.contact.whatsapp || null,
+            telegram: req.body.contact.telegram || null,
+          },
+          avatar,
+          documents,
+        },
+      },
+    );
 
-    if (!user) {
-      return res.send({ ...successMessage, stage: 'No user' });
+    if (result.matchedCount === 0) {
+      return res.status(404).send({ message: 'User not found!' });
     }
 
-    user.generateToken();
-    await user.save();
-
-    return res.send({ ...successMessage, stage: 'Success' });
+    return res.send({ message: 'ok' });
   } catch (e) {
-    return next(e);
+    if (e instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(e);
+    }
+    next(e);
   }
 });
 

@@ -62,8 +62,8 @@ export const EmployerPanelPage = () => {
               <TableCell>Email</TableCell>
               <TableCell>Company Name</TableCell>
               <TableCell>Logo</TableCell>
-              <TableCell>Action</TableCell>
-              <TableCell>Scope</TableCell>
+              <TableCell>Industry</TableCell>
+              <TableCell>Description</TableCell>
               <TableCell>Address</TableCell>
               <TableCell>Document</TableCell>
               <TableCell>Foundation Year</TableCell>
@@ -80,13 +80,13 @@ export const EmployerPanelPage = () => {
                   {employer.companyName}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <img src={API_URL + '/' + employer.avatar} alt="Logo" />
+                  <img src={API_URL + '/' + employer.logo} alt="Logo" />
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {employer.action}
+                  {employer.industry}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {employer.scope}
+                  {employer.description}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {employer.address}

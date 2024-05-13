@@ -8,7 +8,7 @@ export interface VacancyCardApiData {
   title: string;
   description?: string;
   logo?: string;
-  company: string;
+  company?: string;
   city: string;
   salary?: {
     min?: number;
@@ -18,10 +18,10 @@ export interface VacancyCardApiData {
 
 interface Props {
   data: VacancyCardApiData;
-  viseble: boolean;
+  visible: boolean;
 }
 
-export const VacancyCard: React.FC<Props> = ({ data, viseble }) => {
+export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
   const image = data.logo ? (
     <Box sx={VacancyCardStyle.imageWrapper}>
       <img src={data.logo} alt={data.title} />
@@ -37,7 +37,7 @@ export const VacancyCard: React.FC<Props> = ({ data, viseble }) => {
     salary = `до ${data.salary.max} сом`;
   }
   return (
-    <div className="VacancyCard" style={{ display: viseble ? 'flex' : 'none' }}>
+    <div className="VacancyCard" style={{ display: visible ? 'flex' : 'none' }}>
       {image}
       <Typography variant="h5" sx={VacancyCardStyle.title}>
         {data.title}
