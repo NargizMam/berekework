@@ -27,6 +27,7 @@ const FooterLinksBlock: React.FC<FooterLinksBlockProps> = ({ footerBlocks }) => 
 	const dispatch = useAppDispatch();
 	const [open, setOpen] = useState(false);
 	const [selectedBlock, setSelectedBlock] = useState<IFooterLinks | null>(null);
+	const [editedTitle, setEditedTitle] = useState('');
 	const [editedLinks, setEditedLinks] = useState<ILinks[]>([]);
 	
 	const onDelete = async (linkId: string) => {
@@ -43,6 +44,7 @@ const FooterLinksBlock: React.FC<FooterLinksBlockProps> = ({ footerBlocks }) => 
 	
 	const handleOpen = (block: IFooterLinks) => {
 		setSelectedBlock(block);
+		setEditedTitle(block.title);
 		setEditedLinks(block.links);
 		setOpen(true);
 	};
@@ -50,7 +52,12 @@ const FooterLinksBlock: React.FC<FooterLinksBlockProps> = ({ footerBlocks }) => 
 	const handleClose = () => {
 		setOpen(false);
 		setSelectedBlock(null);
+		setEditedTitle('');
 		setEditedLinks([]);
+	};
+	
+	const handleTitleChange = (value: string) => {
+		setEditedTitle(value);
 	};
 	
 	const handleLinkChange = (index: number, field: keyof ILinks, value: string) => {
@@ -63,6 +70,7 @@ const FooterLinksBlock: React.FC<FooterLinksBlockProps> = ({ footerBlocks }) => 
 	// 	if (selectedBlock) {
 	// 		const updatedBlock: IFooterLinks = {
 	// 			...selectedBlock,
+	// 			title: editedTitle,
 	// 			links: editedLinks
 	// 		};
 	//
@@ -114,6 +122,14 @@ const FooterLinksBlock: React.FC<FooterLinksBlockProps> = ({ footerBlocks }) => 
 							Edit the fields you want to change:
 						</Typography>
 						<Grid mt={5} container spacing={2}>
+							<Grid item xs={12}>
+								<TextField
+									fullWidth
+									label='Title'
+									value={editedTitle}
+									onChange={(e) => handleTitleChange(e.target.value)}
+								/>
+							</Grid>
 							{editedLinks.map((link, index) => (
 								<React.Fragment key={link._id}>
 									<Grid item xs={12}>
@@ -135,7 +151,7 @@ const FooterLinksBlock: React.FC<FooterLinksBlockProps> = ({ footerBlocks }) => 
 								</React.Fragment>
 							))}
 						</Grid>
-						<Button variant='contained' color='primary'>
+						<Button variant='contained' color='primary' sx={{ mt: 2 }}>
 							Save Changes
 						</Button>
 					</Box>
