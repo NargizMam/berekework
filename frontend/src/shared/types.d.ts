@@ -97,11 +97,13 @@ export interface VacancyBlockApiData {
 export interface ILinks {
   url: string,
   text: string,
+	_id: string,
 }
 
 export interface IFooterLinks{
   title: string,
   links: ILinks[],
+	_id: string,
 }
 
 export interface IContactsBlock {

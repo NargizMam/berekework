@@ -59,7 +59,7 @@ const FooterAdmin: React.FC = () => {
 						</div>
 					))}
 				</div>
-				<div>
+				<div style={{ marginTop: '100px' }}>
 					<h2>Блок с контактными данными:</h2>
 					{footer.map((footerItem, index) => (
 						<div key={index}>
@@ -67,7 +67,7 @@ const FooterAdmin: React.FC = () => {
 						</div>
 					))}
 				</div>
-				<div>
+				<div style={{ marginTop: '100px' }}>
 					<h2>Лого:</h2>
 					{footer.map((footerItem, index) => (
 						<div key={index}>
@@ -75,7 +75,7 @@ const FooterAdmin: React.FC = () => {
 						</div>
 					))}
 				</div>
-				<div>
+				<div style={{ marginTop: '100px' }}>
 					<h2>Копирайт</h2>
 					{footer.map((footerItem, index) => (
 						<div key={index}>
@@ -84,7 +84,7 @@ const FooterAdmin: React.FC = () => {
 					))}
 				</div>
 				<Button
-					sx={{marginTop: "50px"}}
+					sx={{ marginTop: '50px' }}
 					onClick={handleOpen}
 					variant='contained'>
 					Создайте свой футер

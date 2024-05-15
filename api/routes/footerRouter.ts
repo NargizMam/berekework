@@ -107,6 +107,34 @@ footerRouter.post('/new-contacts-block', async (req, res, next) => {
 	}
 })
 
+footerRouter.put('/edit-links/:id', async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const { title, links } = req.body;
+		
+		const existingFooter = await Footer.findOne();
+		if (!existingFooter) {
+			return res.status(404).send('Footer not found');
+		}
+		
+		const footerLink = existingFooter.footerLinks.id(id);
+		if (!footerLink) {
+			return res.status(404).send('Footer link block not found');
+		}
+		
+		footerLink.title = title;
+		footerLink.links = links;
+		
+		await existingFooter.save();
+		
+		return res.send(existingFooter);
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+});
+
+
 footerRouter.delete('/footerLinks/:linkId', async (req, res, next) => {
 	try {
 		const { linkId } = req.params

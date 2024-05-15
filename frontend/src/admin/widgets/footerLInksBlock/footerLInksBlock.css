@@ -1,41 +1,41 @@
 .footerLinksBlocks {
-  display: flex;
+	display: flex;
 }
 
 .footerLinksBlock {
-  margin: 0 40px 30px 0;
-  border: 3px solid black;
-  border-radius: 5px;
-  padding: 16px;
-  width: 100%;
+	margin: 0 40px 30px 0;
+	border: 3px solid black;
+	border-radius: 5px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
+	text-align: center;
+	padding: 20px;
+	height: auto;
 }
 
-.div-list {
-	display: flex;
-	flex-direction: column;
-	border: 1px solid black;
-	flex-grow: 1;
-	margin-top: auto;
-	align-items: stretch;
+.footerLinksBlock h1 {
+	height: 100px;
+	margin: 0;
 }
 
 .links-list {
-  list-style-type: none;
-  padding: 0;
-	margin-top: auto;
+	list-style-type: none;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	text-align: start;
 }
 
 .links-list li {
-  margin: 0;
+	margin: 0;
 }
 
 .links-list li a {
-  color: black;
-  text-decoration: none;
-  margin: 0;
-  font-size: 18px;
+	color: black;
+	text-decoration: none;
+	margin: 0;
+	font-size: 18px;
 }
 
 .footer-content-block {
@@ -45,7 +45,7 @@
 }
 
 .links-list li a:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .edit-icon {
@@ -57,4 +57,9 @@
 .delete-icon {
 	color: red;
 	cursor: pointer;
+}
+
+.icons-block {
+	margin-top: auto;
+	text-align: end;
 }
