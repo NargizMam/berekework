@@ -1,5 +1,5 @@
 export interface Card {
-  id: string,
+  _id: string,
   cardTitle: string,
   cardText: string,
   dateTime: Date,

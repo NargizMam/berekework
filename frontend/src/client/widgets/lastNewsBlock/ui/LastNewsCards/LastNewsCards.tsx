@@ -22,7 +22,7 @@ export const LastNewsCards: React.FC<Props> = ({ cards, pageSize, startIndex, is
     <Grid container spacing={1} direction="row" sx={LastNewsCardsStyle.container}>
       {cardsToDisplay.map((card) => (
         <LastNewsCardItem
-          key={card.id}
+          key={card._id}
           cardTitle={card.cardTitle}
           cardText={card.cardText}
           dateTime={card.dateTime}
