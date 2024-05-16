@@ -20,7 +20,7 @@ export const VacancyBlock: React.FC<Props> = ({data}) => {
       <Typography variant="h2" sx={VacancyBlockStyle.title}>Последние Вакансии</Typography>
       <div className="VacancyBlock__flex">
         {data.map((data, index) => (
-          <VacancyCard key={data._id} data={data} visible={index >= currentRow? false : true}/>
+          <VacancyCard key={data._id} data={data} visible={index < currentRow}/>
         ))}
       </div>
       <div className="VacancyBlock__buttonWrapper">
