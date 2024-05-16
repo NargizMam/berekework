@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import config from './config';
 import Vacancy from './models/vacancy/Vacancy';
+import VacanciesBlock from './models/vacancy/VacanciesBlock';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
@@ -35,7 +36,18 @@ const run = async () => {
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
   }
-
+  
+  
+  
+  await VacanciesBlock.create({
+    title: 'Последние вакансии',
+    button: {
+      url: '/',
+      text: 'Смотреть еще',
+    },
+    location: '/',
+  });
+  
   await User.create({
     email: 'admin@gmail.com',
     password: 'admin',
@@ -45,42 +57,11 @@ const run = async () => {
 
   await Tariff.create({
     mainTitle: 'Tariff',
-    tariffs: [
-      {
-        title: 'Basic',
-        description: ['Free Food', 'Apple Music'],
-      },
-    ],
+    title: 'Basic',
+    description: ['Free Food', 'Apple Music'],
   });
 
-  await LastNewsBlock.create({
-    title: 'Последние новости',
-    page: 'last-news-block',
-    cards: [
-      {
-        cardTitle: 'Природные катастрофы угрожают',
-        cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/natural-disasters',
-      },
-      {
-        cardTitle: 'Рост напряженности на Украине',
-        cardText: 'Международные обсуждения и реакции на политическую ситуацию',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/ukraine-tensions',
-      },
-      {
-        cardTitle: 'Экономические прогнозы на следующий квартал',
-        cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/economic-forecasts',
-      },
-
-    ],
-  });
-
-
-  const [employer1, employer2, employer3] = await Employer.create(
+ const [employer1, employer2, employer3] = await Employer.create(
     {
       email: 'employer1@example.com',
       password: 'password123',
@@ -121,6 +102,7 @@ const run = async () => {
       documents: 'https://example.com/documentsC.pdf',
     },
   );
+
   await Vacancy.create(
     {
       title: 'Менеджер по продажам услуг',

@@ -25,7 +25,7 @@ const HomePage = () => {
         <VacancyBlock
           data={[
             {
-              _id: '132',
+              _id: '1',
               title: 'Менеджер по продажам',
               description: '',
               logo: 'logo',
@@ -37,7 +37,7 @@ const HomePage = () => {
               },
             },
             {
-              _id: '132',
+              _id: '2',
               title: 'Менеджер по продажам',
               description: '',
               logo: 'logo',
@@ -49,7 +49,7 @@ const HomePage = () => {
               },
             },
             {
-              _id: '132',
+              _id: '3',
               title: 'Менеджер по продажам',
               description: '',
               logo: 'logo',

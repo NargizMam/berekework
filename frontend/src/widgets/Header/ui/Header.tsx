@@ -28,7 +28,7 @@ const Header = () => {
         <nav>
             <ul className="main-mav-web">
                 {header?.navbarItems && header.navbarItems.map((item) => (
-                    <li key={item.nameNav} className="main-nav-item">
+                    <li key={item._id} className="main-nav-item">
                         <a className="main-nav-link" href={item.link}>{item.nameNav}</a>
                     </li>
                 ))}
@@ -57,9 +57,9 @@ const Header = () => {
                 {nav}
                 <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
                     <ul className="main-nav-list">
-                        {links.map(() => (
-                            <li className="main-nav-item">
-                                <a className="main-nav-link" ></a>
+                        {links.map((_item, index) => (
+                            <li key={index} className="main-nav-item">
+                                <a href="#" className="main-nav-link" ></a>
                             </li>
                         ))}
                     </ul>
