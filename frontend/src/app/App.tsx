@@ -21,6 +21,7 @@ import ApplicantSettings from '../client/page/Applicant/ApplicantSettings';
 import ApplicantProfile from '../client/page/Applicant/ApplicantProfile';
 import ApplicantRefactor from '../client/page/Applicant/ApplicantRefactor';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
+import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/PotentialEmployeesPage';
 import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
 
 
@@ -80,6 +81,7 @@ const App = () => {
                 <Route path="/vacancy" element={<VacancyPage />} />
                 <Route path="/tariffs" element={<TariffPanelPage />} />
                 <Route path="/employersProfile/:id" element={<EmployerProfile/>} />
+                <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
                 <Route path="/newApplicant" element={<ApplicantSettings />} />
                 <Route path="/applicantProfile" element={<ApplicantProfile />} />
                 <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
