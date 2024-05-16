@@ -9,18 +9,6 @@ export interface LoginMutation {
   password: string;
 }
 
-export interface ValidationError {
-  error: {
-    [key: string]: {
-      name: string;
-      message: string;
-    };
-  };
-  message: string;
-  name: string;
-  _message: string;
-}
-
 export interface GlobalError {
   error: string;
 }
@@ -36,4 +24,15 @@ export interface User {
   token: string;
   role: string;
   avatar: string;
+}
+export interface ValidationError {
+  errors: {
+    [key: string]: {
+      name: string;
+      message: string;
+    }
+  },
+  message: string;
+  name: string;
+  _message: string;
 }

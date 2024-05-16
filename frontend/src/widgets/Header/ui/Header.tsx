@@ -1,15 +1,13 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import '../css/style.css';
 import '../css/media.css';
 import logo from '../images/logo-company.png';
-import {useAppDispatch, useAppSelector} from '../../../app/store/hooks';
-import {selectHeader} from '../../../admin/page/headerCreate/model/headerSlice';
-import {fetchHeader} from '../../../admin/page/headerCreate/api/headerThunks';
-import {NavLink} from "react-router-dom";
-import {selectUser} from "../../../client/page/Auth/model/AuthSlice";
-import {Button} from "@mui/material";
-import LogoutIcon from '@mui/icons-material/Logout';
-import {logout} from "../../../client/page/Auth/api/AuthThunk";
+import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { selectHeader } from '../../../admin/page/headerCreate/model/headerSlice';
+import { fetchHeader } from '../../../admin/page/headerCreate/api/headerThunks';
+import { NavLink } from 'react-router-dom';
+import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
+import UserMenu from '../UserMenu';
 
 
 const Header = () => {
@@ -22,10 +20,6 @@ const Header = () => {
         dispatch(fetchHeader());
     }, [dispatch]);
 
-    const handleLogout = () => {
-        dispatch(logout());
-    };
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -34,7 +28,7 @@ const Header = () => {
         <nav>
             <ul className="main-mav-web">
                 {header?.navbarItems && header.navbarItems.map((item) => (
-                    <li key={item.nameNav} className="main-nav-item">
+                    <li key={item._id} className="main-nav-item">
                         <a className="main-nav-link" href={item.link}>{item.nameNav}</a>
                     </li>
                 ))}
@@ -63,21 +57,17 @@ const Header = () => {
                 {nav}
                 <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
                     <ul className="main-nav-list">
-                        {links.map(() => (
-                            <li className="main-nav-item">
-                                <a className="main-nav-link" ></a>
+                        {links.map((_item, index) => (
+                            <li key={index} className="main-nav-item">
+                                <a href="#" className="main-nav-link" ></a>
                             </li>
                         ))}
                     </ul>
                 </nav>
                 {!user ?
-                    <NavLink to='/login' className="login">Войти</NavLink>
-
+                  (<NavLink to='/login' className="login">Войти</NavLink>)
                     :
-                    <Button color="inherit" onClick={handleLogout}>
-                        <LogoutIcon/>
-                    </Button>
-                }
+                  (<UserMenu user={user}/>)}
             </div>
         </div>
     );

@@ -6,13 +6,28 @@ import { pageReducer } from '../../admin/page/adminPages/model/adminPageSlice';
 import { headerReducer } from '../../admin/page/headerCreate/model/headerSlice';
 import { authReducer } from '../../client/page/Auth/model/AuthSlice';
 import storage from 'redux-persist/lib/storage';
-import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+import {
+  persistReducer,
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+  persistStore,
+} from 'redux-persist';
 import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
 import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
 import { tariffReducer } from '../../admin/page/tariffPanel/model/tariffSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
+import { applicantReducer } from '../../client/widgets/applicant/model/applicantSlice';
+import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
+import { employersProfileReducer } from '../../client/page/employerProfile/model/employerProfileSlice';
+import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
+import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
+
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -32,7 +47,12 @@ const rootReducer = combineReducers({
   vacancy: vacancyReducer,
   moderator: moderatorsReducer,
   tariff: tariffReducer,
+  applicant: applicantReducer,
   chooseBlock: chooseBlockReducer,
+  employer: employersProfileReducer,
+  employerAdmin: employerReducer,
+  warningMessage: warningMessageReducer,
+  createVacancyForm: createVacancyFormReducer,
 });
 
 export const store = configureStore({
