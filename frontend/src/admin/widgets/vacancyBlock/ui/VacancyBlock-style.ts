@@ -10,7 +10,7 @@ const VacancyBlockStyle = {
     },
   },
   button: {
-    color: '#FFFFFF',
+    color: '#FFFFF',
     fontWeight: 600,
     fontSize: '20px',
     lineHeight: 1,
