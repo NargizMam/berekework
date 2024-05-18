@@ -1,4 +1,4 @@
-import {Document, Model, Types} from 'mongoose';
+import { Document, Model, Types } from 'mongoose';
 
 export interface mainCardContainerType {
   _id: string;
@@ -33,15 +33,16 @@ export interface UserFields {
   name?: string;
   surname?: string;
   patronymic?: string;
-  gender?: 'male' | 'female';
+  gender?: string;
   dateOfBirth?: string;
   country?: string;
   city?: string;
   education?: string;
   aboutMe?: string;
-  job?: string;
+  workExperience?: { field: string; duration: string }[];
+  preferredJob?: string;
   preferredCity?: string;
-  contact: {
+  contacts?: {
     phone?: string;
     whatsapp?: string;
     telegram?: string;
@@ -74,7 +75,6 @@ export interface UserMethods {
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
 export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
-
 
 export interface VacancyApi {
   _id: string;
@@ -140,14 +140,14 @@ export interface ModelType {
 }
 
 export interface EmployeesDataType {
-  name: string,
-  photo?: string,
-  profession: string,
-  age: number,
-  country: string,
-  city: string,
-  education?: string,
-  experience?: string,
+  name: string;
+  photo?: string;
+  profession: string;
+  age: number;
+  country: string;
+  city: string;
+  education?: string;
+  experience?: string;
 }
 
 export interface UploadedFiles {

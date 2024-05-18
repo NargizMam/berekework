@@ -3,7 +3,7 @@ import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 
 import { imagesUpload, documentsUpload } from '../multer';
-import Employer from "../models/employer/employerModel";
+import Employer from '../models/employer/employerModel';
 
 const userRouter = Router();
 
@@ -138,6 +138,14 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
       documents = [];
     }
 
+    const contacts = req.body.contacts
+      ? {
+          phone: req.body.contacts.phone || null,
+          whatsapp: req.body.contacts.whatsapp || null,
+          telegram: req.body.contacts.telegram || null,
+        }
+      : null;
+
     const result = await User.updateOne(
       { _id: req.params.id },
       {
@@ -151,13 +159,10 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
           city: req.body.city || null,
           education: req.body.education || null,
           aboutMe: req.body.aboutMe || null,
-          job: req.body.job || null,
+          workExperience: req.body.workExperience || [],
+          preferredJob: req.body.job || null,
           preferredCity: req.body.preferredCity || null,
-          contact: {
-            phone: req.body.contact.phone || null,
-            whatsapp: req.body.contact.whatsapp || null,
-            telegram: req.body.contact.telegram || null,
-          },
+          contacts,
           avatar,
           documents,
         },

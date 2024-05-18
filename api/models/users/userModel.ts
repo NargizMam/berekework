@@ -52,9 +52,17 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     type: String,
     minlength: 100,
   },
-  job: String,
+  workExperience: {
+    type: [
+      {
+        field: String,
+        duration: String,
+      },
+    ],
+  },
+  preferredJob: String,
   preferredCity: String,
-  contact: {
+  contacts: {
     phone: String,
     whatsapp: String,
     telegram: String,
