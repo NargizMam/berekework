@@ -12,6 +12,7 @@ export interface ICreateVacancyForm {
   maxSalary: string;
   education: srring;
   employmentType: string;
+  employer: string;
 }
 
 export interface Country {
@@ -41,4 +42,5 @@ export interface Vacancy {
   };
   education: srring;
   employmentType: string;
+  employer: string | undefined;
 }

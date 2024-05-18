@@ -8,8 +8,11 @@ import TextAriaField from '../../textAriaField/ui/TextAriaField';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectError, selectIsLoading } from '../model/createVacancyFormSlice';
 import { postVacancy } from '../model/createVacancyFormThuncks';
-import { Loader } from '../../../../shared/loader/ui/Loader';
+import { Loader } from '../../../../shared/loader';
 import './CreateVacancyForm.css';
+import { selectUser } from '../../../page/Auth/model/AuthSlice';
+import { openErrorMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
+import ErrorMessage from '../../../../widgets/WarningMessage/ErrorMessage';
 
 interface Flag {
   aboutVacancy: boolean;
@@ -17,28 +20,35 @@ interface Flag {
   workConditions: boolean;
 }
 
-export const CreateVacancyForm = () => {
+interface Props {
+  setOpenForm: (open: boolean) => void;
+}
+
+const initialState = {
+  vacancyTitle: '',
+  aboutVacancy: '',
+  responsibilities: '',
+  workConditions: '',
+  country: '',
+  city: '',
+  fieldOfWork: '',
+  minAge: '',
+  maxAge: '',
+  minSalary: '',
+  maxSalary: '',
+  education: '',
+  employmentType: '',
+  employer: ''
+};
+
+export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
-
+  const user = useAppSelector(selectUser);
   const [cities, setCities] = useState<string[]>([]);
 
-  const [state, setState] = useState<ICreateVacancyForm>({
-    vacancyTitle: '',
-    aboutVacancy: '',
-    responsibilities: '',
-    workConditions: '',
-    country: '',
-    city: '',
-    fieldOfWork: '',
-    minAge: '',
-    maxAge: '',
-    minSalary: '',
-    maxSalary: '',
-    education: '',
-    employmentType: '',
-  });
+  const [state, setState] = useState<ICreateVacancyForm>(initialState);
 
   const [isFull, setIsFull] = useState<Flag>({
     aboutVacancy: true,
@@ -46,15 +56,15 @@ export const CreateVacancyForm = () => {
     workConditions: true,
   });
 
-  const [isDesabled, setIsDesabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+  const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
 
   useEffect(() => {
     if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
-      setIsDesabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+      setIsDisabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
     } else {
-      setIsDesabled(true);
+      setIsDisabled(true);
     }
-  });
+  }, [isFull]);
 
   const inputChangeHandler = (
     e:
@@ -79,13 +89,14 @@ export const CreateVacancyForm = () => {
       return { ...prevState, [name]: value };
     });
   };
+
   const changeFlag = (name: string, flag: boolean) => {
     setIsFull((prev) => {
       return { ...prev, [name]: flag };
     });
   };
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     const createData: Vacancy = {
       vacancyTitle: state.vacancyTitle,
@@ -105,12 +116,20 @@ export const CreateVacancyForm = () => {
       },
       education: state.education,
       employmentType: state.employmentType,
+      employer: user && user.role === 'employer' ? user._id : undefined
     };
-    dispatch(postVacancy(createData));
+    try {
+      await dispatch(postVacancy(createData)).unwrap();
+      setState(initialState);
+      setOpenForm(false);
+    } catch (e) {
+      dispatch(openErrorMessage());
+    }
   };
 
   return (
     <>
+      {error && <ErrorMessage errorMessage={error.message}/>}
       {isLoading ? (
         <Loader />
       ) : (
@@ -166,7 +185,7 @@ export const CreateVacancyForm = () => {
               changeFlag={changeFlag}
             />
             <div>
-              <label className="labelForField" htmlFor="cicountrytcountryy">
+              <label className="labelForField" htmlFor="country">
                 <Typography sx={CreateVacancyFormStyle.lable}>Страна</Typography>
               </label>
               <span className="selectWrapper">
@@ -360,7 +379,7 @@ export const CreateVacancyForm = () => {
               color="primary"
               variant="contained"
               loading={isLoading}
-              disabled={isDesabled}
+              disabled={isDisabled}
             >
               <Typography>Сохранить</Typography>
             </LoadingButton>
