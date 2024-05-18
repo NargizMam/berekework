@@ -5,7 +5,6 @@ import VacanciesBlock from './models/vacancy/VacanciesBlock';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
-import LastNewsBlock from './models/lastNews/LastNewsBlock';
 import Employer from './models/employer/employerModel';
 import mainContainerCard from './models/mainContainerCard/mainContainerCardModel';
 
@@ -29,16 +28,13 @@ const run = async () => {
     'users',
     'employers',
     'tariffs',
-    'lastnewsblocks',
     'maincontainercards',
   ];
 
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
   }
-  
-  
-  
+
   await VacanciesBlock.create({
     title: 'Последние вакансии',
     button: {
@@ -47,7 +43,7 @@ const run = async () => {
     },
     location: '/',
   });
-  
+
   await User.create({
     email: 'admin@gmail.com',
     password: 'admin',
@@ -61,7 +57,7 @@ const run = async () => {
     description: ['Free Food', 'Apple Music'],
   });
 
- const [employer1, employer2, employer3] = await Employer.create(
+  const [employer1, employer2, employer3] = await Employer.create(
     {
       email: 'employer1@example.com',
       password: 'password123',
@@ -164,37 +160,6 @@ const run = async () => {
       employer: employer3.id,
     },
   );
-
-  await LastNewsBlock.create({
-    title: 'Последние новости',
-    page: 'last-news-block',
-    cards: [
-      {
-        cardTitle: 'Природные катастрофы угрожают',
-        cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/natural-disasters',
-      },
-      {
-        cardTitle: 'Рост напряженности на Украине',
-        cardText: 'Международные обсуждения и реакции на политическую ситуацию',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/ukraine-tensions',
-      },
-      {
-        cardTitle: 'Экономические прогнозы на следующий квартал',
-        cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/economic-forecasts',
-      },
-      {
-        cardTitle: 'Новые технологии в медицине',
-        cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/medical-technologies',
-      },
-    ],
-  });
 
   await mainContainerCard.create([
     {

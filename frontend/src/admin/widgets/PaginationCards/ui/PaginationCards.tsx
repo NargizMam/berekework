@@ -9,17 +9,28 @@ interface Props {
   isForwardDisabled: boolean;
 }
 
+const paginationButtonStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '50%',
+  backgroundColor: '#D2D2D2',
+  width: '50px',
+  height: '50px',
+  '&:disabled': {
+    backgroundColor: '#E0E0E0',
+  },
+};
+
 export const PaginationCards: React.FC<Props> = ({ onBack, onForward, isBackDisabled, isForwardDisabled }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <IconButton onClick={onBack} disabled={isBackDisabled}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
+      <IconButton sx={paginationButtonStyle} onClick={onBack} disabled={isBackDisabled}>
         <ArrowBackIos />
       </IconButton>
-      <IconButton onClick={onForward} disabled={isForwardDisabled}>
+      <IconButton sx={paginationButtonStyle} onClick={onForward} disabled={isForwardDisabled}>
         <ArrowForwardIos />
       </IconButton>
     </Box>
   );
 };
-
-

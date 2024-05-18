@@ -45,7 +45,7 @@ const LastNewsBlock: React.FC<LastNewsBlockProps> = ({ title, data }: LastNewsBl
   };
 
   const handleForward = () => {
-    setStartIndex(startIndex + pageSize);
+    setStartIndex(Math.min(startIndex + pageSize, data.length - pageSize));
   };
 
   // if (isLoading) {
