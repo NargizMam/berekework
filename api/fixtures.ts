@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
 import config from './config';
 import Vacancy from './models/vacancy/Vacancy';
-import VacanciesBlock from './models/vacancy/VacanciesBlock';
 import User from './models/users/userModel';
-import { randomUUID } from 'crypto';
+import {randomUUID} from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
 import LastNewsBlock from './models/lastNews/LastNewsBlock';
 import Employer from './models/employer/employerModel';
@@ -185,7 +184,7 @@ const run = async () => {
   );
 
   // Create employers
-  const [employer1, employer2, employer3] = await Employer.create(
+  const [employer1, employer2] = await Employer.create(
       {
         email: 'employer1@example.com',
         password: 'password123',
