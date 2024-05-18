@@ -3,6 +3,7 @@ import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 
 import { imagesUpload, documentsUpload } from '../multer';
+import Employer from "../models/employer/employerModel";
 
 const userRouter = Router();
 
@@ -39,7 +40,12 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
 
 userRouter.post('/sessions', async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    let user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      user = await Employer.findOne({ email: req.body.email });
+    }
+
     if (!user) {
       return res.status(422).send({ error: 'Email and password not correct!' });
     }
@@ -58,7 +64,6 @@ userRouter.post('/sessions', async (req, res, next) => {
     return next(error);
   }
 });
-
 userRouter.get('/', async (req, res, next) => {
   try {
     if (req.query && req.query.role) {

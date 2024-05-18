@@ -8,7 +8,7 @@ import { VacancyCard } from '../../../../admin/widgets/vacancyCard';
 import { useParams } from 'react-router-dom';
 import { selectEmployerLoading } from '../../../../admin/page/employerPanel/model/employerSlice';
 import './employerProfile.css';
-
+import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 
 const EmployerProfile = () => {
   const dispatch = useAppDispatch();
@@ -20,21 +20,21 @@ const EmployerProfile = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    {id && dispatch(getEmployersProfileInfo(id))}
-  }, [dispatch]);
+    if (id) {
+      dispatch(getEmployersProfileInfo(id));
+    }
+  }, [dispatch, id]);
 
   return (
     <div>
-      <div style={{position: 'fixed', top: 'auto', right: 20, zIndex: 999, margin: '5px'}}>
+      <div style={{ position: 'fixed', top: 'auto', right: 20, zIndex: 999, margin: '5px' }}>
         <Button variant="outlined" onClick={() => setOpenForm(true)}>Create vacancy</Button>
       </div>
-      {loading && <Loader/>}
+      {loading && <Loader />}
       {profile ? (
         <>
-          <Typography variant="h2">
-            {profile.companyName}
-          </Typography>
-          <img src={image} alt="Логотип компании" height="100px"/>
+          <Typography variant="h2">{profile.companyName}</Typography>
+          <img src={image} alt="Логотип компании" height="100px" />
           <Typography variant="body1">
             <strong>Сфера деятельности:</strong> {profile.industry}
           </Typography>
@@ -50,17 +50,24 @@ const EmployerProfile = () => {
           <a href={profile.documents} download>
             Скачать документы
           </a>
-          {profile.vacancies.length > 0 ?
-            (profile.vacancies.map(vacancy => (
-              <VacancyCard
-                key={vacancy._id}
-                data={vacancy}/>
-            ))) : (<h6>Добавьте свои вакансии</h6>)
-          }
+          {profile.vacancies.length > 0 ? (
+            profile.vacancies.map((vacancy) => (
+              <VacancyCard key={vacancy._id} data={vacancy} />
+            ))
+          ) : (
+            <h6>Добавьте свои вакансии</h6>
+          )}
         </>
-      ) : (<h1>Данные работодателя еще не введены</h1>)}
+      ) : (
+        <h1>Данные работодателя еще не введены</h1>
+      )}
 
-      {openForm && <h1>Here will be form for vacancies</h1>}
+      {openForm && (
+        <>
+          <Typography variant="h4">Создайте свои вакансии</Typography>
+          <CreateVacancyForm setOpenForm={setOpenForm} />
+        </>
+      )}
     </div>
   );
 };
