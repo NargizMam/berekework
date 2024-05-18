@@ -50,7 +50,12 @@ export interface UserFields {
 }
 
 export interface EmployerFields {
-  user: Types.ObjectId;
+  email: string;
+  password: string;
+  token: string;
+  role: string;
+  googleID?: string;
+  avatar?: string;
   companyName: string;
   industry: string;
   description: string;
@@ -68,6 +73,8 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
+export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
+
 
 export interface VacancyApi {
   _id: string;

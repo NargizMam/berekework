@@ -3,14 +3,6 @@ import { model, Schema } from 'mongoose';
 const vacancySchema = new Schema(
   {
     // Значение которое будет в карточке
-    logoCompany: {
-      type: String,
-      required: true,
-    },
-    nameCompany: {
-      type: String,
-      required: true,
-    },
     vacancyTitle: {
       type: String,
       required: true,
@@ -67,7 +59,6 @@ const vacancySchema = new Schema(
     employer: {
       type: Schema.Types.ObjectId,
       ref: 'Employer',
-      required: true,
     },
   },
   { timestamps: true },
