@@ -16,7 +16,10 @@ interface User {
   city?: string;
   education?: string;
   aboutMe?: string;
-  workExperience?: { field: string; duration: string }[];
+  workExperience?: {
+    field: string;
+    duration: string;
+  };
   preferredJob?: string;
   preferredCity?: string;
   contacts?: {

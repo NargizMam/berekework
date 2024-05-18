@@ -159,7 +159,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
           city: req.body.city || null,
           education: req.body.education || null,
           aboutMe: req.body.aboutMe || null,
-          workExperience: req.body.workExperience || [],
+          workExperience: req.body.workExperience || null,
           preferredJob: req.body.job || null,
           preferredCity: req.body.preferredCity || null,
           contacts,
