@@ -43,7 +43,7 @@ vacancyRouter.post('/',  employerAuth, async (req: RequestWithEmployer, res, nex
       },
       education,
       employmentType,
-      employer: req.body.employer._id,
+      employer: req.body.employer,
     });
 
     await vacancyBlock.save();
