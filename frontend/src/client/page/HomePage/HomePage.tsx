@@ -7,8 +7,6 @@ import ChooseSpecialistBlock from '../../widgets/specialistBlock/ui/ChooseSpecia
 const HomePage = () => {
   return (
     <>
-      {/*<MainCards/>*/}
-      <LastNewsBlock />
       <div style={{ marginTop: 100 }}>
         <TitleBlock
           data={{
@@ -65,13 +63,36 @@ const HomePage = () => {
       </div>
       <ChooseSpecialistBlock />
       <LastNewsBlock
+        title="Последние новости"
         data={[
           {
-            id: '132',
-            cartTitle: '',
-            cardText: '',
-            dateTime: '',
-            buttonUrl: '',
+            _id: '1',
+            cardTitle: 'Природные катастрофы угрожают. Природные катастрофы угрожают',
+            cardText:
+              'Извержения вулканов и землетрясения: что делать и как подготовиться? Извержения вулканов и землетрясения: что делать и как подготовиться?',
+            dateTime: '2024-04-21T12:00:00Z',
+            buttonUrl: '/natural-disasters',
+          },
+          {
+            _id: '2',
+            cardTitle: 'Рост напряженности на Украине',
+            cardText: 'Международные обсуждения и реакции на политическую ситуацию',
+            dateTime: '2024-04-21T12:00:00Z',
+            buttonUrl: '/ukraine-tensions',
+          },
+          {
+            _id: '3',
+            cardTitle: 'Экономические прогнозы на следующий квартал',
+            cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
+            dateTime: '2024-04-21T12:00:00Z',
+            buttonUrl: '/economic-forecasts',
+          },
+          {
+            _id: '4',
+            cardTitle: 'Новые технологии в медицине',
+            cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
+            dateTime: '2024-04-21T12:00:00Z',
+            buttonUrl: '/medical-technologies',
           },
         ]}
       />

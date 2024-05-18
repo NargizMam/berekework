@@ -1,22 +1,19 @@
 const LastNewsCardItemStyle = {
-  container: {
-    minWidth: '272px',
-  },
   card: {
-    boxShadow: 'none',
-    border: '1px solid #ECECEC',
-    borderRadius: '30px',
-    background: '#ECECEC',
-  },
-  cardAction: {},
-  content: {
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
     fontFamily: 'Montserrat, sans-serif',
     color: '#000',
     padding: '24px',
     fontWeight: '500',
-    height: '100%',
+    border: '1px solid #ECECEC',
+    borderRadius: '30px',
+    background: '#ECECEC',
+    minWidth: '272px',
+    flexBasis: '420px',
+    boxShadow: 'none',
+    textDecoration: 'none',
 
     '@media (min-width: 900px)': {
       padding: '40px',
@@ -40,7 +37,8 @@ const LastNewsCardItemStyle = {
     },
   },
   createdAt: {
-    marginTop: '0 auto',
+    marginTop: 'auto',
+    alignItems: 'center',
     '@media (min-width: 1200px)': {
       display: 'flex',
       justifyContent: 'space-between',

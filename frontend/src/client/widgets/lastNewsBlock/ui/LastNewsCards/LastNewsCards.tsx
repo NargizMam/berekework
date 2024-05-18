@@ -1,13 +1,13 @@
-import { Grid } from '@mui/material';
 import LastNewsCardItem from './LastNewsCardItem';
 import LastNewsCardsStyle from './LastNewsCards-style';
-import { Card } from '../../../../../admin/widgets/lastNews/cards/cardTypes';
 import React from 'react';
+import { Box } from '@mui/material';
+import { LastNewsCard } from '../LastNewsBlock';
 
 interface Props {
   startIndex: number;
   pageSize?: number;
-  cards: Card[];
+  cards: LastNewsCard[];
   isPaginationEnabled: boolean;
 }
 
@@ -19,7 +19,7 @@ export const LastNewsCards: React.FC<Props> = ({ cards, pageSize, startIndex, is
   }
 
   return (
-    <Grid container spacing={1} direction="row" sx={LastNewsCardsStyle.container}>
+    <Box sx={LastNewsCardsStyle.container}>
       {cardsToDisplay.map((card) => (
         <LastNewsCardItem
           key={card._id}
@@ -29,7 +29,7 @@ export const LastNewsCards: React.FC<Props> = ({ cards, pageSize, startIndex, is
           buttonUrl={card.buttonUrl}
         />
       ))}
-    </Grid>
+    </Box>
   );
 };
 

@@ -1,13 +1,11 @@
 const LastNewsCardsStyle = {
   container: {
-    flexWrap: 'noWrap',
-    overflowX: 'auto',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-
-    '@media (min-width: 900px)': {
-      flexWrap: 'wrap',
-      overflowX: 'hidden',
-    },
+    boxSizing: 'border-box',
+    display: 'flex',
+    // flexDirection: 'flex-basis',
+    gap: '10px',
+    margin: '0 auto',
+    overflowY: 'auto',
   },
 };
 
