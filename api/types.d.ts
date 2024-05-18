@@ -41,7 +41,7 @@ export interface UserFields {
   education?: string;
   aboutMe?: string;
   workExperience?: {
-    field: string;
+    fieldOfWork: string;
     duration: string;
   };
   preferredJob?: string;
@@ -51,7 +51,7 @@ export interface UserFields {
     whatsapp?: string;
     telegram?: string;
   };
-  documents?: string[];
+  documents?: string[] | null;
 }
 
 export interface EmployerFields {

@@ -17,7 +17,7 @@ interface User {
   education?: string;
   aboutMe?: string;
   workExperience?: {
-    field: string;
+    fieldOfWork: string;
     duration: string;
   };
   preferredJob?: string;
