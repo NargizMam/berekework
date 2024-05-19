@@ -6,6 +6,28 @@ interface User {
   _id: string;
   email: string;
   role: string;
+  avatar?: string;
+  name?: string;
+  surname?: string;
+  patronymic?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  country?: string;
+  city?: string;
+  education?: string;
+  aboutMe?: string;
+  workExperience?: {
+    fieldOfWork: string;
+    duration: string;
+  };
+  preferredJob?: string;
+  preferredCity?: string;
+  contacts?: {
+    phone?: string;
+    whatsapp?: string;
+    telegram?: string;
+  };
+  documents?: string[];
 }
 
 interface UsersState {

@@ -52,14 +52,20 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     type: String,
     minlength: 100,
   },
-  job: String,
+  workExperience: {
+    fieldOfWork: String,
+    duration: String,
+  },
+  preferredJob: String,
   preferredCity: String,
-  contact: {
+  contacts: {
     phone: String,
     whatsapp: String,
     telegram: String,
   },
-  documents: [String],
+  documents: {
+    type: [String],
+  },
 });
 
 userSchema.methods.checkPassword = function (password: string) {

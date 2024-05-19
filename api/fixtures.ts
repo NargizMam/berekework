@@ -8,6 +8,7 @@ import Employer from './models/employer/employerModel';
 import mainContainerCard from './models/mainContainerCard/mainContainerCardModel';
 import LastNewsBlock from './models/lastNews/LastNewsBlock';
 
+
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
     await db.dropCollection(collectionName);
@@ -45,12 +46,71 @@ const run = async () => {
   //   location: '/',
   // });
 
-  await User.create({
-    email: 'admin@gmail.com',
-    password: 'admin',
-    token: randomUUID(),
-    role: 'superadmin',
-  });
+  const [_superadmin, _user1, _user2] = await User.create([
+    {
+      email: 'superadmin@example.com',
+      password: 'password123',
+      token: randomUUID(),
+      role: 'superadmin',
+    },
+    {
+      email: 'user1@example.com',
+      password: 'password123',
+      token: randomUUID(),
+      role: 'user',
+      avatar: '/fixtures/avatar.jpg',
+      name: 'Арсен',
+      surname: 'Белеков',
+      patronymic: 'Кызаев',
+      gender: 'male',
+      dateOfBirth: '2006-10-03',
+      country: 'Кыргызстан',
+      city: 'Бишкек',
+      education: 'Высшее',
+      aboutMe:
+        'Опытный графический дизайнер с креативным подходом к работе и отличными навыками работы в команде. Я имею более 5 лет опыта работы в различных проектах, включая разработку брендбуков, рекламных материалов и дизайна интерфейсов. Мои сильные стороны включают внимательность к деталям, умение работать в команде и быстро адаптироваться к изменениям.',
+      workExperience: {
+        fieldOfWork: 'Графический дизайн',
+        duration: '5 лет',
+      },
+      preferredJob: 'Графический дизайнер',
+      preferredCity: 'Бишкек',
+      contacts: {
+        phone: '+996123456789',
+        whatsapp: '+996123456789',
+        telegram: '@user1',
+      },
+    },
+    {
+      email: 'user2@example.com',
+      password: 'password123',
+      token: randomUUID(),
+      role: 'user',
+      avatar: '/fixtures/avatar.jpg',
+      name: 'Иван',
+      surname: 'Иванов',
+      patronymic: 'Иванович',
+      gender: 'male',
+      dateOfBirth: '2000-05-15',
+      country: 'Кыргызстан',
+      city: 'Ош',
+      education: 'Среднее',
+      aboutMe:
+        'Маркетолог с более чем 3-летним опытом работы в разработке стратегий и продвижении брендов. Специализируюсь на анализе рынка, планировании и реализации маркетинговых кампаний. Мои ключевые навыки включают стратегическое мышление, креативный подход к решению задач и отличные коммуникативные навыки. Я стремлюсь к постоянному развитию и улучшению своих профессиональных качеств.',
+      workExperience: {
+        fieldOfWork: 'Маркетинг',
+        duration: '3 года',
+      },
+      preferredJob: 'Маркетолог',
+      preferredCity: 'Ош',
+      contacts: {
+        phone: '+996987654321',
+        whatsapp: '+996987654321',
+        telegram: '@user2',
+      },
+    },
+  ]);
+
 
   await Tariff.create({
     mainTitle: 'Tariff',

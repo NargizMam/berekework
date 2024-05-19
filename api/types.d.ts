@@ -23,6 +23,7 @@ export interface NavbarItemFields {
     },
   ];
 }
+
 export interface UserFields {
   email: string;
   password: string;
@@ -39,14 +40,18 @@ export interface UserFields {
   city?: string;
   education?: string;
   aboutMe?: string;
-  job?: string;
+  workExperience?: {
+    fieldOfWork: string;
+    duration: string;
+  };
+  preferredJob?: string;
   preferredCity?: string;
-  contact: {
+  contacts?: {
     phone?: string;
     whatsapp?: string;
     telegram?: string;
   };
-  documents?: string[];
+  documents?: string[] | null;
 }
 
 export interface EmployerFields {
@@ -69,12 +74,12 @@ export interface EmployerFields {
 
 export interface UserMethods {
   generateToken(): void;
+
   checkPassword(password: string): Promise<boolean>;
 }
 
 export type UserModel = Model<UserFields, unknown, UserMethods>;
 export type EmployerModel = Model<EmployerFields, unknown, UserMethods>;
-
 
 export interface VacancyApi {
   _id: string;
@@ -123,6 +128,7 @@ export interface Block {
   nameComponent: string;
   content: { [key: string]: string };
 }
+
 export interface ComponentModelType extends Document {
   title: string;
   description: string;

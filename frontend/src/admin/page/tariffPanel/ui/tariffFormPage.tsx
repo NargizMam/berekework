@@ -52,6 +52,16 @@ const TariffFormPage = () => {
     setDescription('');
   };
 
+  const deleteDescription = (id: number) => {
+    setState((prevState) => {
+      const filterDesc = prevState.description.filter((_, index) => index !== id);
+      return {
+        ...prevState,
+        description: filterDesc,
+      };
+    });
+  };
+
   const handleCreateTariff = async (event: FormEvent) => {
     event.preventDefault();
     if (state.description.length === 0) {
@@ -107,7 +117,16 @@ const TariffFormPage = () => {
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
             {state.description.map((desc, index) => (
-              <Typography key={index}>{desc}</Typography>
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+                <Typography key={index}>{desc}</Typography>
+                <Button onClick={() => deleteDescription(index)} type="button" variant="outlined">
+                  delete
+                </Button>
+              </Box>
             ))}
             <TextField
               value={description}

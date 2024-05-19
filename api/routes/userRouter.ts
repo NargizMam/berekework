@@ -3,7 +3,7 @@ import User from '../models/users/userModel';
 import mongoose from 'mongoose';
 
 import { imagesUpload, documentsUpload } from '../multer';
-import Employer from "../models/employer/employerModel";
+import Employer from '../models/employer/employerModel';
 
 const userRouter = Router();
 
@@ -122,6 +122,12 @@ userRouter.delete('/:id', async (req, res, next) => {
 
 userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('documents'), async (req, res, next) => {
   try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found!' });
+    }
+
     let avatar: string | undefined | null = undefined;
 
     if (req.body.avatar === 'delete') {
@@ -130,12 +136,46 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
       avatar = req.file.filename;
     }
 
-    let documents: string[];
+    let documents: string[] | null;
 
     if (req.body.documents) {
       documents = req.body.documents.filter((document: string) => document !== 'delete');
     } else {
       documents = [];
+    }
+
+    const contacts = req.body.contacts
+      ? {
+          phone: req.body.contacts.phone || null,
+          whatsapp: req.body.contacts.whatsapp || null,
+          telegram: req.body.contacts.telegram || null,
+        }
+      : null;
+
+    if (user.role !== 'admin' && user.role !== 'superadmin') {
+      const requiredFields = [
+        'name',
+        'surname',
+        'gender',
+        'dateOfBirth',
+        'country',
+        'city',
+        'education',
+        'aboutMe',
+        'workExperience',
+        'preferredJob',
+        'preferredCity',
+        'contacts.phone',
+      ];
+
+      for (const field of requiredFields) {
+        // Проверка вложенных полей, таких как contacts.phone
+        const value = field.includes('.') ? req.body[field.split('.')[0]]?.[field.split('.')[1]] : req.body[field];
+
+        if (!value) {
+          return res.status(400).send({ message: `${field} is required` });
+        }
+      }
     }
 
     const result = await User.updateOne(
@@ -151,13 +191,10 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
           city: req.body.city || null,
           education: req.body.education || null,
           aboutMe: req.body.aboutMe || null,
-          job: req.body.job || null,
+          workExperience: req.body.workExperience || null,
+          preferredJob: req.body.preferredJob || null,
           preferredCity: req.body.preferredCity || null,
-          contact: {
-            phone: req.body.contact.phone || null,
-            whatsapp: req.body.contact.whatsapp || null,
-            telegram: req.body.contact.telegram || null,
-          },
+          contacts,
           avatar,
           documents,
         },
@@ -176,5 +213,4 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
     next(e);
   }
 });
-
 export default userRouter;
