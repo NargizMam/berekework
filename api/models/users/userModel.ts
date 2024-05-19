@@ -63,7 +63,9 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     whatsapp: String,
     telegram: String,
   },
-  documents: [String],
+  documents: {
+    type: [String],
+  },
 });
 
 userSchema.methods.checkPassword = function (password: string) {

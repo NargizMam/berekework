@@ -46,7 +46,7 @@ const run = async () => {
   // });
 
   // Create users
-  const [superadmin, user1, user2] = await User.create([
+  const [_superadmin, _user1, _user2] = await User.create([
     {
       email: 'superadmin@example.com',
       password: 'password123',
