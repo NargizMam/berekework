@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectEmployersProfileInfo } from '../model/employerProfileSlice';
@@ -17,7 +17,7 @@ const EmployerProfile = () => {
   const loading = useAppSelector(selectEmployerLoading);
   const apiURL = 'http://localhost:8000';
   const image = apiURL + '/' + profile?.logo;
-  const { id } = useParams();
+  const {id} = useParams();
 
   useEffect(() => {
     if (id) {
@@ -27,37 +27,45 @@ const EmployerProfile = () => {
 
   return (
     <div>
-      <div style={{ position: 'fixed', top: 'auto', right: 20, zIndex: 999, margin: '5px' }}>
-        <Button variant="outlined" onClick={() => setOpenForm(true)}>Create vacancy</Button>
+      <div className='createVacancyContainer' >
+        <Button variant="outlined" onClick={() => setOpenForm(true)}>Создать вакансию</Button>
       </div>
-      {loading && <Loader />}
+      {loading && <Loader/>}
       {profile ? (
-        <>
-          <Typography variant="h2">{profile.companyName}</Typography>
-          <img src={image} alt="Логотип компании" height="100px" />
-          <Typography variant="body1">
+        <Grid mt={6}>
+          <div className='companyHeader'>
+            <img className="companyLogo" src={image} alt="Логотип компании" height="100px"/>
+            <Typography ml={2} variant="h4">{profile.companyName}</Typography>
+          </div>
+          <p className="companyInfo">
             <strong>Сфера деятельности:</strong> {profile.industry}
-          </Typography>
-          <Typography variant="body1">
+          </p>
+          <p className="companyInfo">
             <strong>Описание:</strong> {profile.description}
-          </Typography>
-          <Typography variant="body1">
+          </p>
+          <p className="companyInfo">
             <strong>Адрес:</strong> {profile.address}
-          </Typography>
-          <Typography variant="body1">
+          </p>
+          <p className="companyInfo">
             <strong>Контакты:</strong> {profile.contacts}
-          </Typography>
-          <a href={profile.documents} download>
+          </p>
+          <a className="companyLink" href={profile.documents} download>
             Скачать документы
           </a>
-          {profile.vacancies.length > 0 ? (
-            profile.vacancies.map((vacancy) => (
-              <VacancyCard key={vacancy._id} data={vacancy} />
-            ))
-          ) : (
-            <h6>Добавьте свои вакансии</h6>
-          )}
-        </>
+          <Grid mt={6} mb={6}>
+            <Typography mb={2} variant='h5'> Ваши вакансии:</Typography>
+            {profile.vacancies.length > 0 ? (
+              profile.vacancies.map((vacancy) => (
+                <Grid mb={2}>
+                  <VacancyCard key={vacancy._id} data={vacancy}/>
+                </Grid>
+              ))
+            ) : (
+              <h6>Добавьте свои вакансии</h6>
+            )}
+          </Grid>
+
+        </Grid>
       ) : (
         <h1>Данные работодателя еще не введены</h1>
       )}
@@ -65,7 +73,7 @@ const EmployerProfile = () => {
       {openForm && (
         <>
           <Typography variant="h4">Создайте свои вакансии</Typography>
-          <CreateVacancyForm setOpenForm={setOpenForm} />
+          <CreateVacancyForm setOpenForm={setOpenForm}/>
         </>
       )}
     </div>
