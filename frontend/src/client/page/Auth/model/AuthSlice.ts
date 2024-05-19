@@ -37,7 +37,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(register.rejected, (state, { payload: error }) => {
       state.registerLoading = false;
-      state.registerError = error || null;
+      state.registerError = error;
     });
     builder.addCase(login.pending, (state) => {
       state.loginLoading = true;

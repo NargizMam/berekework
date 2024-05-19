@@ -13,11 +13,13 @@ export interface Employer {
 
 export interface EmployerMutation {
   email: string;
+  avatar: string;
   password: string;
   industry: string;
   companyName: string;
   description: string;
   foundationYear: string;
+  contacts: string;
   document: File | null;
   address: string;
   logo: File | null;
