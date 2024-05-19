@@ -40,23 +40,18 @@ export const EmployerPanelPage = () => {
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
       <Box sx={{display: 'flex', justifyContent: 'right'}}>
         <Link
-          sx={{
-            background: 'green',
-            padding: '5px',
-            color: '#fff',
-            borderRadius: '5px',
-          }}
+          sx={{ position: 'fixed', top: '14%', right: 100, zIndex: 999 , border: '1px solid #ccc', p: 1, borderRadius: '5px'}}
           underline="none"
           component={RouterLink}
           to="/admin/employers-submit"
         >
           <Typography>
-            Create
+            Create employer
           </Typography>
         </Link>
       </Box>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 , mt: 4}} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Email</TableCell>
