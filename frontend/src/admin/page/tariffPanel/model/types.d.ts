@@ -6,6 +6,7 @@ export interface Tariff {
 
 export interface TariffsApi {
   _id: string;
+  mainTitle: string;
   tariffs: Tariff[];
 }
 

@@ -23,6 +23,7 @@ import ApplicantRefactor from '../client/page/Applicant/ApplicantRefactor';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/PotentialEmployeesPage';
 import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
+import RatesBLock from '../client/widgets/tariff/ui/ratesBLock';
 
 
 const App = () => {
@@ -79,7 +80,7 @@ const App = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/users" element={<UserPanelPage />} />
                 <Route path="/vacancy" element={<VacancyPage />} />
-                <Route path="/tariffs" element={<TariffPanelPage />} />
+                <Route path="/tariffs" element={<RatesBLock />} />
                 <Route path="/employersProfile/:id" element={<EmployerProfile/>} />
                 <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
                 <Route path="/newApplicant" element={<ApplicantSettings />} />
