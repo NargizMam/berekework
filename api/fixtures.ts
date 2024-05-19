@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 import config from './config';
 import Vacancy from './models/vacancy/Vacancy';
+import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
 import Tariff from './models/tariff/tarrifModel';
 import Employer from './models/employer/employerModel';
 import mainContainerCard from './models/mainContainerCard/mainContainerCardModel';
 import LastNewsBlock from './models/lastNews/LastNewsBlock';
-import User from './models/users/userModel';
+
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -45,7 +46,6 @@ const run = async () => {
   //   location: '/',
   // });
 
-  // Create users
   const [_superadmin, _user1, _user2] = await User.create([
     {
       email: 'superadmin@example.com',
@@ -110,6 +110,7 @@ const run = async () => {
       },
     },
   ]);
+
 
   await Tariff.create({
     mainTitle: 'Tariff',

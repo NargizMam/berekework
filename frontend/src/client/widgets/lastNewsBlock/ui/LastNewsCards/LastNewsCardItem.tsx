@@ -1,15 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Box, Card, CardContent, Typography } from '@mui/material';
+import { Box, Card, Link, Typography } from '@mui/material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import LastNewsCardItemStyle from './LastNewsCardItem-style';
 
 export interface Props {
-  id?: string;
   cardTitle: string;
   cardText: string;
-  dateTime: Date;
+  dateTime: string;
   buttonUrl?: string;
 }
 
@@ -37,29 +36,25 @@ const LastNewsCardItem: React.FC<Props> = ({ cardTitle, cardText, dateTime, butt
   );
 
   const card = (
-    <Card sx={LastNewsCardItemStyle.card}>
-      {/*<CardActionArea sx={LastNewsCardItemStyle.cardAction}>*/}
-      <CardContent sx={LastNewsCardItemStyle.content}>
-        <Typography variant="body1" sx={LastNewsCardItemStyle.title}>
-          {cardTitle}
-        </Typography>
-        <Typography variant="body2" sx={LastNewsCardItemStyle.text}>
-          {cardText}
-        </Typography>
-        {createdAt}
-      </CardContent>
-      {/*</CardActionArea>*/}
-    </Card>
+    <>
+      <Typography variant="body1" sx={LastNewsCardItemStyle.title}>
+        {cardTitle}
+      </Typography>
+      <Typography variant="body2" sx={LastNewsCardItemStyle.text}>
+        {cardText}
+      </Typography>
+      {createdAt}
+    </>
   );
 
   if (buttonUrl) {
     return (
-      <Link to={buttonUrl} style={{ textDecoration: 'none' }}>
+      <Link component={RouterLink} to={buttonUrl} sx={LastNewsCardItemStyle.card}>
         {card}
       </Link>
     );
   } else {
-    return <div>{card}</div>;
+    return <Card sx={LastNewsCardItemStyle.card}>{card}</Card>;
   }
 };
 

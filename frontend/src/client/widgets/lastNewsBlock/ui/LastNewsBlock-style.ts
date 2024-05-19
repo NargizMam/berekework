@@ -1,5 +1,6 @@
 const LastNewsBlockStyle = {
   block: {
+    boxSizing: 'border-box',
     flexDirection: 'column',
     maxWidth: '1310px',
     padding: '0 15px',
@@ -8,7 +9,7 @@ const LastNewsBlockStyle = {
     height: '100%',
     overflowY: 'hidden',
     '@media (min-width: 1200px)': {
-      marginBottom: '100px',
+      marginBottom: '108px',
     },
   },
   row: {
@@ -23,7 +24,7 @@ const LastNewsBlockStyle = {
     fontWeight: '700',
     lineHeight: '1.3',
     fontSize: '32px',
-    marginBottom: '32px',
+    marginBottom: '30px',
     '@media (min-width: 900px)': {
       marginBottom: 0,
     },
