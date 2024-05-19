@@ -12,6 +12,13 @@
     margin: 0 0 60px 0;
 }
 
+.PotentialEmployeesPageCardsBlock__subtitle-no-cards {
+    font-size: 18px;
+    font-weight: 500;
+    color: #777777;
+    margin: 0;
+}
+
 .PotentialEmployeesPageCardsBlock__cards {
     display: flex;
     flex-wrap: wrap;

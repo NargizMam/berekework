@@ -23,6 +23,9 @@ interface Props {
 }
 
 const PotentialEmployeesPageCard: React.FC<Props> = ({ data }) => {
+  if (!data.name || !data.surname) {
+    return null;
+  }
   const education = data.education ? data.education : 'Не указано';
   const workExperience = data.workExperience ? `${data.workExperience.duration}` : 'Не указано';
   const image = data.avatar ? API_URL + data.avatar : null;
@@ -56,7 +59,7 @@ const PotentialEmployeesPageCard: React.FC<Props> = ({ data }) => {
         <div className="PotentialEmployeesPageCard__photo-wrapper">{avatar}</div>
         <div className="PotentialEmployeesPageCard__info">
           <h5 className="PotentialEmployeesPageCard__name">
-            {data.name || 'Имя не указано'} {data.surname || 'Фамилия не указана'}
+            {data.name} {data.surname}
           </h5>
           <span className="PotentialEmployeesPageCard__profession">{data.preferredJob || 'не указано'}</span>
 

@@ -26,6 +26,15 @@ const PotentialEmployeesPageCardsBlock = () => {
   return (
     <div className="PotentialEmployeesPageCardsBlock__container">
       <h2 className="PotentialEmployeesPageCardsBlock__title">Сотрудники</h2>
+      {users.length === 0 ? (
+        <p className="PotentialEmployeesPageCardsBlock__subtitle-no-cards">Нет сотрудников для отображения</p>
+      ) : (
+        <div className="PotentialEmployeesPageCardsBlock__cards">
+          {users.map((user) => (
+            <PotentialEmployeesPageCard key={user._id} data={user} />
+          ))}
+        </div>
+      )}
       <div className="PotentialEmployeesPageCardsBlock__cards">
         {users.map((user) => (
           <PotentialEmployeesPageCard key={user._id} data={user} />
