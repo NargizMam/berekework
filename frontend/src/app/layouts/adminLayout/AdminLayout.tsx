@@ -13,11 +13,13 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-
+  const isLargeScreen = useMediaQuery(theme.breakpoints.between('md','xl'));
+  console.log(isSmallScreen, isMediumScreen);
   const getPadding = () => {
-    if (isSmallScreen) return '5%';
-    if (isMediumScreen) return '15%';
-    return '30%';
+    if (isSmallScreen) return '30%';
+    if (isMediumScreen) return '18%';
+    if (isLargeScreen) return '18%';
+    return '0%';
   };
 
   return (
@@ -32,7 +34,7 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
       >
         <MainNavAdmin/>
         <main>
-          <Container maxWidth="xl" sx={{ px: getPadding() }}>
+          <Container maxWidth="xl" sx={{ mx: getPadding() }}>
             {children}
             <Outlet/>
           </Container>
