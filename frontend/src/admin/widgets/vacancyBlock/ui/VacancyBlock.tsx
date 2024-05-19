@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import VacancyBlockStyle from './VacancyBlock-style';
 import { selectBlock, selectIsLoading, selectVacancy, selectisLoadingCard } from '../model/VacancyBlockSlice';
 import { getVacancyBlock, getVacancyCard } from '../model/VacancyBlockThunks';
-import './VacancyBlock.css';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
-import { VacancyCardApiData } from '../../../../shared/types';
 import { VacancyCard } from '../../vacancyCard';
+import { VacancyCardApiData } from '../types';
+import VacancyBlockStyle from './VacancyBlock-style';
+import './VacancyBlock.css';
 
 export const VacancyBlock = () => {
   const dispatch = useAppDispatch();
@@ -29,19 +29,21 @@ export const VacancyBlock = () => {
         <Typography variant="h2" sx={VacancyBlockStyle.title}>
           {block.title}
         </Typography>
-        <div className="VacancyBlock__flex">
-          {isLoadingCard ? (
-            <Loader/>
-          ) : (
-            vacancyCard.map((data: VacancyCardApiData, index: number) => {
+
+        {isLoadingCard ? (
+          <Loader />
+        ) : (
+          <div className="VacancyBlock__flex">
+            {vacancyCard.map((data: VacancyCardApiData, index: number) => {
               if (index < 6) {
                 return <VacancyCard key={data._id} data={data} />;
               } else {
                 return null;
               }
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
+
         <div className="VacancyBlock__buttonWrapper">
           <Link className="VacancyBlock__button" to={block.button.url}>
             <Typography sx={VacancyBlockStyle.button}>{block.button.text}</Typography>
@@ -51,5 +53,5 @@ export const VacancyBlock = () => {
     );
   }
 
-  return <>{isLoading ? <Loader/> : render}</>;
+  return <>{isLoading ? <Loader /> : render}</>;
 };

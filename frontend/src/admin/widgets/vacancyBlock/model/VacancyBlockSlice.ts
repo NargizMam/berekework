@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getVacancyBlock, getVacancyCard } from './VacancyBlockThunks';
-import { VacancyBlockApiData, VacancyCardApiData } from '../../../../shared/types';
+import { VacancyBlockApiData, VacancyCardApiData } from '../types';
 import { RootState } from '../../../../app/store/store';
 
 interface VacancyBlockState {
