@@ -2,12 +2,23 @@ import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import MainNavAdmin from './MainNavAdmin';
 import Container from '@mui/material/Container';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+
+  const getPadding = () => {
+    if (isSmallScreen) return '5%';
+    if (isMediumScreen) return '15%';
+    return '30%';
+  };
 
   return (
     <>
@@ -21,7 +32,7 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
       >
         <MainNavAdmin/>
         <main>
-          <Container>
+          <Container maxWidth="xl" sx={{ px: getPadding() }}>
             {children}
             <Outlet/>
           </Container>
@@ -29,6 +40,6 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
       </Container>
     </>
   );
-
 };
+
 export default AdminLayout;

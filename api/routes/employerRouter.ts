@@ -1,8 +1,8 @@
 import {Router} from 'express';
 import mongoose from 'mongoose';
-import Employer from '../models/employer/employerModel';
 import {multiUpload} from '../multer';
 import {UploadedFiles} from '../types';
+import Employer from "../models/employer/employerModel";
 
 const employerRouter = Router();
 

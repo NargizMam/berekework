@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../../client/page/Auth/api/AuthThunk';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import logo from '../../../widgets/Header/images/logo-company.png';
+import Tooltip from '@mui/material/Tooltip';
 
 const MainNavAdmin = (): React.JSX.Element => {
   const theme = useTheme();
@@ -47,7 +48,7 @@ const MainNavAdmin = (): React.JSX.Element => {
   }, [isMobileScreen]);
 
   return (
-    <Box component="header" display='flex' position="relative">
+    <Box component="header" display="flex" position="relative">
       <Stack
         direction="row"
         spacing={2}
@@ -73,10 +74,12 @@ const MainNavAdmin = (): React.JSX.Element => {
         direction="row"
         spacing={5}
       >
-        <a href="/">
-          <img src={logo} alt="logo"/>
-        </a>
-        <Avatar src="/assets/avatar.png" sx={{cursor: 'pointer'}} onClick={handleClickAvatar} />
+        <Tooltip title="Вернуться на главную">
+          <a href="/">
+            <img src={logo} alt="logo"/>
+          </a>
+        </Tooltip>
+        <Avatar src="/assets/avatar.png" sx={{cursor: 'pointer'}} onClick={handleClickAvatar}/>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu} keepMounted>
           {user ? (
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
