@@ -20,6 +20,7 @@ pageCreateRouter.post('/', async (req, res, next) => {
     const blocks: Block[] = req.body.blocks;
 
     for (const block of blocks) {
+      console.log(block.nameComponent.toLocaleLowerCase());
       const modelName = modelMapping[block.nameComponent.toLocaleLowerCase()];
 
       if (modelName) {

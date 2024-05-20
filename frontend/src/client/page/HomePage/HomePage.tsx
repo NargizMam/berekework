@@ -1,23 +1,34 @@
 // import { MainCards } from '../../../admin/widgets/mainCards';
 import LastNewsBlock from '../../widgets/lastNewsBlock/ui/LastNewsBlock';
-import { TitleBlock } from '../../../admin/widgets/titleBlock';
+// import { TitleBlock } from '../../../admin/widgets/titleBlock';
 import { VacancyBlock } from '../../../widgets/vacancyBlock';
 import ChooseSpecialistBlock from '../../widgets/specialistBlock/ui/ChooseSpecialistBlock';
+import { usePrismicDocumentByUID, SliceZone } from '@prismicio/react';
+import { StartScreen } from '../../../admin/widgets/titleBlock/ui/StartScreen';
 
 const HomePage = () => {
+  const [document] = usePrismicDocumentByUID('pages', 'ps5');
+  console.log(document);
+
   return (
     <>
       <div style={{ marginTop: 100 }}>
-        <TitleBlock
-          data={{
-            title: 'Найди работу, которая делает каждый день интересным',
-            location: '/eqq',
-            button: {
-              url: '/',
-              text: 'Перейти к вакансиям',
-            },
+        <SliceZone
+          slices={document?.data.body}
+          components={{
+            startscreen: StartScreen,
           }}
         />
+        {/*<TitleBlock*/}
+        {/*  data={{*/}
+        {/*    title: 'Найди работу, которая делает каждый день интересным',*/}
+        {/*    location: '/eqq',*/}
+        {/*    button: {*/}
+        {/*      url: '/',*/}
+        {/*      text: 'Перейти к вакансиям',*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*/>*/}
       </div>
       <div style={{ marginTop: 100 }}>
         <VacancyBlock
