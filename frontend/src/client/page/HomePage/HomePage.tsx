@@ -3,23 +3,30 @@ import LastNewsBlock from '../../widgets/lastNewsBlock/ui/LastNewsBlock';
 import { TitleBlock } from '../../../admin/widgets/titleBlock';
 import { VacancyBlock } from '../../../widgets/vacancyBlock';
 import ChooseSpecialistBlock from '../../widgets/specialistBlock/ui/ChooseSpecialistBlock';
+import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 
 const HomePage = () => {
+  const [document] = usePrismicDocumentByUID('pages', 'ps5');
+
+  console.log(document);
+
   return (
     <>
       <div style={{ marginTop: 100 }}>
-        <TitleBlock
-          data={{
-            title: 'Найди работу, которая делает каждый день интересным',
-            location: '/eqq',
-            button: {
-              url: '/',
-              text: 'Перейти к вакансиям',
-            },
+        <SliceZone
+          slices={document?.data.body}
+          components={{
+            titleblock: TitleBlock,
           }}
         />
       </div>
       <div style={{ marginTop: 100 }}>
+        {/*<SliceZone*/}
+        {/*  slices={document?.data.body}*/}
+        {/*  components={{*/}
+        {/*    startscreen: StartScreen,*/}
+        {/*  }}*/}
+        {/*/>*/}
         <VacancyBlock
           data={[
             {
