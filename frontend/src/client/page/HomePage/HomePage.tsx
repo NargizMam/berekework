@@ -1,7 +1,7 @@
 // import { MainCards } from '../../../admin/widgets/mainCards';
 import LastNewsBlock from '../../widgets/lastNewsBlock/ui/LastNewsBlock';
 import { TitleBlock } from '../../../admin/widgets/titleBlock';
-import { VacancyBlock } from '../../../widgets/vacancyBlock';
+import { VacancyBlock } from '../../../admin/widgets/vacancyBlock';
 import ChooseSpecialistBlock from '../../widgets/specialistBlock/ui/ChooseSpecialistBlock';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 
@@ -27,46 +27,7 @@ const HomePage = () => {
         {/*    startscreen: StartScreen,*/}
         {/*  }}*/}
         {/*/>*/}
-        <VacancyBlock
-          data={[
-            {
-              _id: '1',
-              title: 'Менеджер по продажам',
-              description: '',
-              logo: 'logo',
-              company: 'Satcom',
-              city: 'Бишкек',
-              salary: {
-                min: 25000,
-                max: 35000,
-              },
-            },
-            {
-              _id: '2',
-              title: 'Менеджер по продажам',
-              description: '',
-              logo: 'logo',
-              company: 'Satcom',
-              city: 'Бишкек',
-              salary: {
-                min: 25000,
-                max: 35000,
-              },
-            },
-            {
-              _id: '3',
-              title: 'Менеджер по продажам',
-              description: '',
-              logo: 'logo',
-              company: 'Satcom',
-              city: 'Бишкек',
-              salary: {
-                min: 25000,
-                max: 35000,
-              },
-            },
-          ]}
-        />
+        <VacancyBlock/>
       </div>
       <ChooseSpecialistBlock />
       <LastNewsBlock
