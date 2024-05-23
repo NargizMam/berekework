@@ -17,6 +17,7 @@ const HomePage = () => {
           components={{
             titleblock: TitleBlock,
             maincard: MainCards,
+            choosespecialist: ChooseSpecialistBlock,
           }}
         />
       </div>
@@ -68,7 +69,6 @@ const HomePage = () => {
           ]}
         />
       </div>
-      <ChooseSpecialistBlock />
       <LastNewsBlock
         title="Последние новости"
         data={[
