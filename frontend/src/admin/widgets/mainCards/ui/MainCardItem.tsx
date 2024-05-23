@@ -48,7 +48,7 @@ const MainCardItem: React.FC<MainCardApiData> = ({ title, description, image, ic
       {mainCardWithIconContent}
     </Link>
   ) : (
-    <div className="MainCardItemWithIcon">
+    <div className="MainCardWithIcon">
       {iconElement}
       {mainCardWithIconContent}
     </div>
