@@ -23,6 +23,7 @@ import ApplicantRefactor from '../client/page/Applicant/ApplicantRefactor';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/PotentialEmployeesPage';
 import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
+import { ForEmployerPage } from '../client/page/ForEmployerPage';
 // import { RatesBLock } from '../client/widgets/tariff/ui/ratesBLock';
 
 
@@ -73,7 +74,7 @@ const App = () => {
         adminRoutes
       ) : (
         <ClientLayout>
-            <Container>
+            <Container maxWidth="xl">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<RegisterPage />} />
@@ -86,6 +87,7 @@ const App = () => {
                 <Route path="/newApplicant" element={<ApplicantSettings />} />
                 <Route path="/applicantProfile" element={<ApplicantProfile />} />
                 <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
+                <Route path='/for-employer' element={<ForEmployerPage/>}/>
                 <Route path="*" element={'Not found'} />
               </Routes>
             </Container>
