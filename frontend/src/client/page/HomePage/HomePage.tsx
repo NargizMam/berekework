@@ -9,8 +9,6 @@ import { RatesBLock } from '../../widgets/tariff/ui/ratesBLock';
 const HomePage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'ps5');
 
-  console.log(document);
-
   return (
     <>
       <div style={{ marginTop: 100 }}>

@@ -10,7 +10,7 @@ const ClientLayout: React.FC<React.PropsWithChildren> = ({children}) => {
         <Header/>
       </header>
       <main >
-        <Container>
+        <Container maxWidth="xl">
           {children}
         </Container>
       </main>
