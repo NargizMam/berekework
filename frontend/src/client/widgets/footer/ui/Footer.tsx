@@ -1,146 +1,89 @@
 import '../css/footer.css';
 import '../css/footerMedia.css';
-import img from '../images/footer-logo.png';
-import facebook from '../images/facebook.png';
-import instagram from '../images/instagram.png';
-import telegram from '../images/telegram.png';
-import whatsapp from '../images/whatsapp.png';
+import { PrismicRichText, useSinglePrismicDocument } from '@prismicio/react';
 
 const Footer = () => {
-  return (
-    <div className="footer">
-      <div className="container">
-        <div className="footer-top">
-          <div>
-            <h6 className="footer-title">Главная</h6>
-            <nav className="footer-nav">
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  К вакансиям
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Последние вакансии
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Специалист
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Новости
-                </a>
-              </li>
-            </nav>
-          </div>
-          <div>
-            <h6 className="footer-title">О нас</h6>
-            <nav className="footer-nav">
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Наша компания
-                </a>
-              </li>
-              <li>
-                <a href="#" className="footer-nav-link">
-                  О нас
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Наши ценности
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Из преимуществ
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Наши сотрудники
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Галерея
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Видео
-                </a>
-              </li>
-            </nav>
-          </div>
-          <div>
-            <h6 className="footer-title">Вакансии</h6>
-            <nav className="footer-nav">
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Все вакансии
-                </a>
-              </li>
-            </nav>
-          </div>
-          <div>
-            <h6 className="footer-title">Для работадателей</h6>
-            <nav className="footer-nav">
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Ищешь работника
-                </a>
-              </li>
-              <li className="footer-nav-item">
-                <a href="#" className="footer-nav-link">
-                  Тарифы
-                </a>
-              </li>
-            </nav>
-          </div>
-        </div>
-        <div className="footer-bottom container">
-          <img src={img} alt="logo-footer" className="logo-footer" />
-          <div className="footer-bottom-text-content">
-            <div className="footer-icon-div">
-              <h6 className="footer-title">Мы в соц сетях</h6>
-              <nav className="footer-nav footer-icon-bottom">
-                <li className="footer-bottom-nav-item">
-                  <a href="#" className="footer-nav-link">
-                    <img className="icon-img" src={facebook} alt="facebook" />
-                  </a>
-                </li>
-                <li className="footer-bottom-nav-item">
-                  <a href="#" className="footer-nav-link">
-                    <img src={telegram} alt="facebook" />
-                  </a>
-                </li>
-                <li className="footer-bottom-nav-item">
-                  <a href="#"  className="footer-nav-link">
-                    <img src={instagram} alt="facebook" />
-                  </a>
-                </li>
-                <li className="footer-bottom-nav-item">
-                  <a href="#"  className="footer-nav-link">
-                    <img src={whatsapp} alt="facebook" />
-                  </a>
-                </li>
-              </nav>
-            </div>
-            <div className="footer-contacts">
-              <h6 className="footer-title">Контактные данные</h6>
-              <p className="footer-contacts-content">+ 996 707 34-22-70</p>
-              <p className="footer-contacts-content">berekework@gmail.com</p>
-            </div>
-          </div>
-        </div>
-        <p className="footer-bottom-text">© 2022-2024. АО «BerekeWork», официальный сайт.</p>
-      </div>
-    </div>
-  );
+	const [document] = useSinglePrismicDocument('footer');
+	
+	if (!document) {
+		console.log('Document not loaded'); // Debug message
+		return null; // Или любой другой индикатор загрузки
+	}
+	
+	const data = document.data;
+	
+	console.log('Document loaded', data); // Debug message
+	
+	return (
+		<div className='footer'>
+			<div className='container'>
+				<div className='footer-top'>
+					{data.body.map((section, index) => (
+						<div key={index}>
+							{section.primary.links_block_title && (
+								<h6 className='footer-title'>
+									<PrismicRichText field={section.primary.links_block_title} />
+								</h6>
+							)}
+							<nav className='footer-nav'>
+								{section.items.map((item, index) => (
+									<li key={index} className='footer-nav-item'>
+										<a href={item.reference_path} className='footer-nav-link'>
+											{item.links_name}
+										</a>
+									</li>
+								))}
+							</nav>
+						</div>
+					))}
+				</div>
+				<div className='footer-bottom container'>
+					{data['logo-footer']?.url && (
+						<img src={data['logo-footer'].url} alt={data['logo-footer'].alt || 'logo-footer'} className='logo-footer' />
+					)}
+					<div className='footer-bottom-text-content'>
+						{data.body.map((section, index) => {
+							if (section.slice_type === 'social_media_block') {
+								return (
+									<div key={index} className='footer-icon-div'>
+										{section.primary.title_media_block && (
+											<h6 className='footer-title'>
+												<PrismicRichText field={section.primary.title_media_block} />
+											</h6>
+										)}
+										<nav className='footer-nav footer-icon-bottom'>
+											{section.items.map((item, index) => (
+												<li key={index} className='footer-bottom-nav-item'>
+													<a href={item.link_social_media.url} className='footer-nav-link'>
+														<img className='icon-img' src={item.social_media_icon.url} alt={item.social_media_icon.alt || 'social icon'} />
+													</a>
+												</li>
+											))}
+										</nav>
+									</div>
+								);
+							} else if (section.slice_type === 'contacts_block') {
+								return (
+									<div key={index} className='footer-contacts'>
+										{section.primary.title_contacts_block && (
+											<h6 className='footer-title'>
+												<PrismicRichText field={section.primary.title_contacts_block} />
+											</h6>
+										)}
+										{section.items.map((item, index) => (
+											<p key={index} className='footer-contacts-content'>{item.contact_details}</p>
+										))}
+									</div>
+								);
+							}
+							return null;
+						})}
+					</div>
+				</div>
+				<p className='footer-bottom-text'>{data.copyright}</p>
+			</div>
+		</div>
+	);
 };
 
 export default Footer;
