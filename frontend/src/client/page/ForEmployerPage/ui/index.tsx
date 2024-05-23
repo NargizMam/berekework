@@ -6,8 +6,6 @@ import { MainCards } from '../../../../admin/widgets/mainCards';
 export const ForEmployerPage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'foremployer');
 
-  console.log(document);
-
   return (
     <>
       <SliceZone
