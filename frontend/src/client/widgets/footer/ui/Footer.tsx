@@ -6,13 +6,13 @@ const Footer = () => {
 	const [document] = useSinglePrismicDocument('footer');
 	
 	if (!document) {
-		console.log('Document not loaded'); // Debug message
-		return null; // Или любой другой индикатор загрузки
+		console.log('Document not loaded');
+		return null;
 	}
 	
 	const data = document.data;
 	
-	console.log('Document loaded', data); // Debug message
+	console.log('Document loaded', data);
 	
 	return (
 		<div className='footer'>
