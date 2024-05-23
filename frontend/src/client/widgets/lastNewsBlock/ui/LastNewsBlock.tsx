@@ -1,79 +1,87 @@
-import React, { useState } from 'react';
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography} from '@mui/material';
 import LastNewsBlockStyle from './LastNewsBlock-style';
-import { PaginationCards } from '../../../../admin/widgets/PaginationCards';
+// import { PaginationCards } from '../../../../admin/widgets/PaginationCards';
 import LastNewsCards from './LastNewsCards/LastNewsCards';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+// import RatesCard from '../../tariff/ui/ratesCard';
 
-export interface LastNewsCard {
-  _id: string;
-  cardTitle: string;
-  cardText: string;
-  dateTime: string;
-  buttonUrl?: string;
+interface LastNewsBlock {
+  items: {
+    lastnewsdatetime: string;
+    lastnewsdesc: string;
+    lastnewslink: {
+      target: string;
+      url: string;
+    };
+    lastnewstitle: string;
+  }[];
+}
+interface Props {
+  slice: LastNewsBlock;
 }
 
-interface LastNewsBlockProps {
-  title: string;
-  data: LastNewsCard[];
-}
+const LastNewsBlock: React.FC<Props> = ({slice}) => {
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [maxSteps, setMaxSteps] = useState<number>(0);
+  const [cardsOnPage, setCardOnPage] = useState<number>(0);
 
-const LastNewsBlock: React.FC<LastNewsBlockProps> = ({ title, data }: LastNewsBlockProps) => {
-  const [startIndex, setStartIndex] = useState(0);
-  const pageSize = 3;
+  useEffect(() => {
+    if (slice.items.length > 0) {
+      if (window.innerWidth < 700) {
+        setMaxSteps(slice.items.length);
+        setCardOnPage(1);
+      } else if (window.innerWidth < 1300) {
+        setMaxSteps(slice.items.length / 2);
+        setCardOnPage(2);
+      } else {
+        setMaxSteps(slice.items.length / 3);
+        setCardOnPage(3);
+      }
+    }
+  }, [slice.items.length]);
 
-  // const block = useAppSelector(selectBlock);
-  // const isLoading = useAppSelector(selectBlocksLoading);
-  // const dispatch = useAppDispatch();
-  const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
-
-  // useEffect(() => {
-  //   dispatch(getLastNewsBlock());
-  // }, [dispatch]);
-  //
-  // if (!block) {
-  //   return;
-  // }
-  //
-  // const cards = block.cards;
-
-  const isBackDisabled = startIndex === 0;
-  const isForwardDisabled = startIndex + pageSize >= data.length;
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
   const handleBack = () => {
-    setStartIndex(Math.max(0, startIndex - pageSize));
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleForward = () => {
-    setStartIndex(Math.min(startIndex + pageSize, data.length - pageSize));
-  };
+  const hasNextCards = activeStep < maxSteps - 1;
+  const hasPreviousCards = activeStep > 0;
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
+  if (slice.items.length === 0) {
+    return <div>Нет доступных тарифов.</div>;
+  }
 
   return (
     <>
-      <Box sx={LastNewsBlockStyle.block}>
+      <Box sx={LastNewsBlockStyle.block} style={{marginTop: '30px'}}>
         <Box sx={LastNewsBlockStyle.row}>
           <Typography variant="h2" sx={LastNewsBlockStyle.title}>
-            {title}
+            Последние новости
           </Typography>
-          {!isTablet && (
-            <PaginationCards
-              onBack={handleBack}
-              onForward={handleForward}
-              isBackDisabled={isBackDisabled}
-              isForwardDisabled={isForwardDisabled}
-            />
-          )}
+          <div className="lastNewsButtons">
+            <button className="titleButton" onClick={handleBack} disabled={!hasPreviousCards}>
+              <NavigateBeforeIcon sx={{fontSize: 24}}/>
+            </button>
+            <button className="titleButton" onClick={handleNext} disabled={!hasNextCards}>
+              <NavigateNextIcon sx={{fontSize: 24}}/>
+            </button>
+          </div>
         </Box>
-        <LastNewsCards
-          cards={data}
-          startIndex={startIndex}
-          pageSize={isTablet ? undefined : pageSize}
-          isPaginationEnabled={!isTablet}
-        />
+        {slice.items.length > 0 ? (
+          <div className="rateBlock">
+            {slice.items.slice(activeStep * cardsOnPage, (activeStep + 1) * cardsOnPage).map((news, index) => (
+              <LastNewsCards key={index} title={news.lastnewstitle} description={news.lastnewsdesc} date={news.lastnewsdatetime} link={news.lastnewslink} />
+            ))}
+          </div>
+        ) : (
+          <div>Нет доступных новостей.</div>
+        )}
       </Box>
     </>
   );
