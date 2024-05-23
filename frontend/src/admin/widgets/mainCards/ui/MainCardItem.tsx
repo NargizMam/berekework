@@ -1,45 +1,49 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { API_URL } from '../../../../app/constants/links';
 import './MainCardItem.css';
 
-export interface Props {
-  _id?: string;
+export interface MainCardApiData {
   title: string;
-  text: string;
-  image?: string;
-  icon?: string;
-  URLpath?: string;
+  description: string;
+  image?: {
+    url: string;
+    alt: string;
+  };
+  icon?: {
+    url: string;
+    alt: string;
+  };
+  link?: string;
 }
 
-const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath }) => {
-  const cardIcon = icon ? API_URL + icon : null;
-  const cardImage = image ? API_URL + image : null;
+const MainCardItem: React.FC<MainCardApiData> = ({ title, description, image, icon, link }) => {
+  const cardIcon = icon ? icon.url : null;
+  const cardImage = image ? image.url : null;
 
   const iconElement = cardIcon ? (
     <div className="MainCardWithIcon__icon-wrapper">
-      <img className="MainCardWithIcon__icon" src={cardIcon} alt={title} />
+      <img className="MainCardWithIcon__icon" src={cardIcon} alt={icon?.alt} />
     </div>
   ) : null;
 
-  const imageElement = cardImage ? <img className="MainCardWithImage__image" src={cardImage} alt={title} /> : null;
+  const imageElement = cardImage ? <img className="MainCardWithImage__image" src={cardImage} alt={image?.alt} /> : null;
 
   const mainCardWithIconContent = (
     <div className="MainCardWithIcon__content">
       <h5 className="MainCard__title">{title}</h5>
-      <p className="MainCard__text">{text}</p>
+      <p className="MainCard__description">{description}</p>
     </div>
   );
 
   const mainCardWithImageContent = (
     <div className="MainCardWithImage__content">
       <h5 className="MainCard__title">{title}</h5>
-      <p className="MainCard__text">{text}</p>
+      <p className="MainCard__description">{description}</p>
     </div>
   );
 
-  const cardWithIcon = URLpath ? (
-    <Link to={URLpath} className="MainCardWithIcon">
+  const cardWithIcon = link ? (
+    <Link to={link} className="MainCardWithIcon">
       {iconElement}
       {mainCardWithIconContent}
     </Link>
@@ -50,8 +54,8 @@ const MainCardItem: React.FC<Props> = ({ title, text, image, icon, URLpath }) =>
     </div>
   );
 
-  const cardWithImage = URLpath ? (
-    <Link to={URLpath} className="MainCardWithImage">
+  const cardWithImage = link ? (
+    <Link to={link} className="MainCardWithImage">
       {mainCardWithImageContent}
       {imageElement}
     </Link>

@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material';
 import TitleBlockStyle from './TitleBlock-style';
 import './TitleBlock.css';
 import { LinkButtonWithArrow } from '../../../../shared/linkButtonWithArrow';
-import MainCards from '../../mainCards/ui/MainCards';
 import React from 'react';
 
 export interface TitleBlockApiData {
@@ -28,7 +27,9 @@ interface Props {
 
 export const TitleBlock: React.FC<Props> = ({ slice }) => {
   const description = slice.primary.titledescription ? (
-    <Typography sx={slice.primary.titleimage?.url ? TitleBlockStyle.description : TitleBlockStyle.descriptionWithoutImage}>
+    <Typography
+      sx={slice.primary.titleimage?.url ? TitleBlockStyle.description : TitleBlockStyle.descriptionWithoutImage}
+    >
       {slice.primary.titledescription}
     </Typography>
   ) : null;
@@ -47,7 +48,10 @@ export const TitleBlock: React.FC<Props> = ({ slice }) => {
     <>
       <Box sx={TitleBlockStyle.block}>
         <Box sx={slice.primary.titleimage?.url ? TitleBlockStyle.infoBlock : {}}>
-          <Typography variant="h1" sx={slice.primary.titleimage?.url ? TitleBlockStyle.title : TitleBlockStyle.titleWithoutImage}>
+          <Typography
+            variant="h1"
+            sx={slice.primary.titleimage?.url ? TitleBlockStyle.title : TitleBlockStyle.titleWithoutImage}
+          >
             {slice.primary.titletext}
           </Typography>
           {description}
@@ -55,7 +59,6 @@ export const TitleBlock: React.FC<Props> = ({ slice }) => {
         {image}
       </Box>
       {button}
-      <MainCards />
     </>
   );
 };
