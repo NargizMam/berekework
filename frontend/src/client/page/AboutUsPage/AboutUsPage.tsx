@@ -26,7 +26,7 @@ const AboutUsPage = () => {
   const getMainTitle = (slice: MainTileProps) => {
     return (
       <div key={slice.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          {slice.items.map((item, index) => (
+          {slice.items && slice.items.map((item, index) => (
             <div key={index}>
               {item.aboutustitle.map((title, i) => (
                 <div key={i}>
@@ -36,7 +36,7 @@ const AboutUsPage = () => {
             </div>
           ))}
         <div>
-          {slice.items.map((item, index) => (
+          {slice.items && slice.items.map((item, index) => (
             <img key={index} src={item.aboutusimage.url} alt={item.aboutusimage.alt || 'Image'} style={{ marginLeft: '20px' }} />
           ))}
         </div>
