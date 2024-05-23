@@ -1,4 +1,4 @@
-@media (min-width: 400px) {
+@media (min-width: 520px) {
   .footer-top {
     display: flex;
     flex-wrap: wrap;
@@ -26,6 +26,7 @@
     display: flex;
     justify-content: space-between;
   }
+	
 }
 
 

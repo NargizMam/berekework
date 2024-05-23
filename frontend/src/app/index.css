@@ -65,6 +65,12 @@ button:focus-visible {
 	}
 }
 
+@media (min-width: 320px) {
+	html, body {
+		overflow-x: hidden;
+	}
+}
+
 .page-container {
 	display: flex;
 	flex-direction: column;
