@@ -1,110 +1,109 @@
 .rateCard {
-    background-color: #FFE585;
-    min-width: 340px;
-    max-height: 720px;
-    border-radius: 30px;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-decoration: none;
+  background-color: #FFE585;
+  min-width: 340px;
+  max-height: 720px;
+  border-radius: 30px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .rateCardTitle {
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-    line-height: 22px;
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  line-height: 22px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.rateCardTextBlocks{
+  display: flex;
+  flex-direction: column;
+  gap: 10px 0;
+  flex-grow: 1;
 }
 
 .rateCardTextBlock {
-    display: flex;
-    margin: 0 10px 15px 0;
+  display: flex;
 }
 
 .rateCardText {
-    font-family: "Montserrat", sans-serif;
-    margin: 0;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 500;
-    color: #000000;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #000000;
 }
 
 @media (min-width: 700px) {
-    .rateCard {
-        width: 300px;
-        max-height: 780px;
-    }
+  .rateCard {
+    width: 300px;
+    max-height: 780px;
+  }
 
-    .cardBtnText {
-        margin-left: 5%;
-    }
+  .cardBtnText {
+    margin-left: 5%;
+  }
 
-    .cardButton {
-        background-color: #FFFFFF;
-        border-radius: 40px;
-        margin-top: auto;
-        padding: 5px 5px 5px 100px;
-        height: 60px;
-        width: 200px;
-        display: flex;
-        align-items: center;
-    }
+  .cardButton {
+    background-color: #FFFFFF;
+    border-radius: 40px;
+    margin-top: auto;
+    padding: 5px 5px 5px 100px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+  }
 
-    .cardBtnText {
-        font-family: "Montserrat", sans-serif;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 20px;
-        margin-left: 3%;
-    }
+  .cardBtnText {
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-left: 3%;
+  }
 
-    .cardLink {
-        margin-left: auto;
-        display: inline-block;
-        height: 60px;
-        width: 60px;
-        background-color: #FFE585;
-        border-radius: 50%;
-    }
+  .cardLink {
+    margin-left: auto;
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+    background-color: #FFE585;
+    border-radius: 50%;
+  }
 
-    .northEastIcon {
-        color: #292D32;
-        position: relative;
-        top: 12px;
-        left: 14px;
-    }
+  .northEastIcon {
+    color: #292D32;
+    position: relative;
+    top: 12px;
+    left: 14px;
+  }
 }
 
 @media (min-width: 820px) {
-    .rateCard {
-        width: 360px;
-    }
+  .rateCard {
+    width: 360px;
+  }
 }
 
 @media (min-width: 900px) {
-    .rateCard {
-        width: 420px;
-        height: 720px;
+  .rateCard {
+    width: 420px;
+    height: 720px;
 
-    }
+  }
 
-    .rateCardTitle {
-        font-size: 20px;
-        margin-bottom: 30px;
-    }
+  .rateCardTitle {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
 
-    .rateCardTextBlock {
-        margin: 0 30px 20px 10px;
-    }
-
-    .cardButton {
-        width: 280px;
-    }
-
-    .cardBtnText {
-        margin-left: 18%;
-    }
+  .cardBtnText {
+    margin-left: 18%;
+  }
 }
 
