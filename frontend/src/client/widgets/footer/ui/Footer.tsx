@@ -12,8 +12,6 @@ const Footer = () => {
 	
 	const data = document.data;
 	
-	console.log('Document loaded', data);
-	
 	return (
 		<div className='footer'>
 			<div className='container'>
