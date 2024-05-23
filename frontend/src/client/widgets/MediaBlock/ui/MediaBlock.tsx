@@ -1,11 +1,15 @@
-import MediaCard, { MediaCardApiData } from './MediaCard/MediaCard';
 import React, { useState } from 'react';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import MediaCard, { MediaCardApiData } from './MediaCard/MediaCard';
 import { PaginationCards } from '../../../../admin/widgets/PaginationCards';
+import MediaBlockStyle from './MediaBlock-style';
 
 export interface MediaBlockApiData {
   primary: {
-    title: string;
+    title: Array<{
+      type: string;
+      text: string;
+    }>;
   };
   items: MediaCardApiData[];
 }
@@ -39,19 +43,23 @@ const MediaBlock: React.FC<Props> = ({ slice }) => {
   };
 
   return (
-    <Box sx={{ marginBottom: '50px' }}>
-      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
-        {slice.primary.title}
-      </Typography>
-      {!isTablet && isPaginationEnabled && (
-        <PaginationCards
-          onBack={handleBack}
-          onForward={handleForward}
-          isBackDisabled={isBackDisabled}
-          isForwardDisabled={isForwardDisabled}
-        />
-      )}
-      <Box>
+    <Box sx={MediaBlockStyle.container}>
+      <Box sx={MediaBlockStyle.row}>
+        {slice.primary.title.map((title, index) => (
+          <Typography key={index} variant="h4" sx={MediaBlockStyle.title}>
+            {title.text}
+          </Typography>
+        ))}
+        {!isTablet && isPaginationEnabled && (
+          <PaginationCards
+            onBack={handleBack}
+            onForward={handleForward}
+            isBackDisabled={isBackDisabled}
+            isForwardDisabled={isForwardDisabled}
+          />
+        )}
+      </Box>
+      <Box sx={MediaBlockStyle.cards}>
         {cardsToDisplay.map((item, index) => (
           <MediaCard key={index} image={item.image} video={item.video} />
         ))}

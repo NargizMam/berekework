@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, CardMedia, Modal } from '@mui/material';
-import iconPay from '../../images/icon-play.png';
+import iconPlay from '../../images/icon-play.png';
+import MediaCardStyle from './MediaCard-style';
 
 export interface MediaCardApiData {
   image?: {
@@ -12,12 +13,16 @@ export interface MediaCardApiData {
     alt: string;
   };
 }
+
 const MediaCard: React.FC<MediaCardApiData> = ({ image, video }) => {
   const [open, setOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<{ type: 'image' | 'video'; url: string } | null>(null);
+  const [modalContent, setModalContent] = useState<{
+    type: 'image' | 'video';
+    url: string;
+  } | null>(null);
 
-  const handleOpen = (content: { type: 'image' | 'video'; url: string }) => {
-    setModalContent(content);
+  const handleOpen = (type: 'image' | 'video', url: string) => {
+    setModalContent({ type, url });
     setOpen(true);
   };
   const handleClose = () => {
@@ -28,43 +33,46 @@ const MediaCard: React.FC<MediaCardApiData> = ({ image, video }) => {
   const imageUrl = image ? image.url : null;
   const videoUrl = video ? video.url : null;
 
+  const modal = (
+    <Modal open={open} onClose={handleClose}>
+      <Box sx={MediaCardStyle.modal}>
+        {modalContent?.type === 'image' ? (
+          <CardMedia sx={MediaCardStyle.image} component="img" image={modalContent.url} alt={image?.alt} />
+        ) : (
+          <iframe
+            width="100%"
+            height="500"
+            src={modalContent?.url}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={video?.alt}
+          ></iframe>
+        )}
+      </Box>
+    </Modal>
+  );
+
   const imageElement = imageUrl ? (
-    <CardMedia component="img" className="MediaCard__image" image={imageUrl} alt={image?.alt} />
+    <Box sx={MediaCardStyle.card} onClick={() => handleOpen('image', imageUrl)}>
+      <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt} />
+    </Box>
   ) : null;
 
   const videoElement = videoUrl ? (
-    <Box
-      onClick={() => handleOpen({ type: 'video', url: videoUrl })}
-      style={{ cursor: 'pointer', position: 'relative' }}
-    >
-      <CardMedia component="img" className="MediaCard__video" image={videoUrl} alt={video?.alt} />
-      <Box>
-        <CardMedia component="img" image={iconPay} alt="play" />
+    <Box sx={MediaCardStyle.card} onClick={() => handleOpen('video', videoUrl)}>
+      <CardMedia component="img" image={videoUrl} alt={video?.alt} />
+      <Box sx={MediaCardStyle.iconPlayWrapper}>
+        <img src={iconPlay} alt="play" />
       </Box>
     </Box>
   ) : null;
 
   return (
-    <div>
+    <>
       {imageElement}
       {videoElement}
-      <Modal open={open} onClose={handleClose} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box sx={{ width: '80%', bgcolor: 'background.paper', boxShadow: 24, p: 4, position: 'relative' }}>
-          {modalContent?.type === 'image' ? (
-            <CardMedia component="img" image={modalContent.url} alt={image?.alt} style={{ width: '100%' }} />
-          ) : (
-            <iframe
-              width="100%"
-              height="500"
-              src={modalContent?.url}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={video?.alt}
-            ></iframe>
-          )}
-        </Box>
-      </Modal>
-    </div>
+      {modal}
+    </>
   );
 };
 
