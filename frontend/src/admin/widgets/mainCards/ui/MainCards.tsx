@@ -11,10 +11,7 @@ interface Props {
 }
 
 export const MainCards: React.FC<Props> = ({ slice }) => {
-  console.log('Slice data:', slice);
   const { items } = slice;
-
-  console.log('MainCards items:', items);
   return (
     <div className="Main-cards__container">
       {items.map((mainCard, index) => (

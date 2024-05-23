@@ -4,6 +4,7 @@ import { VacancyBlock } from '../../../widgets/vacancyBlock';
 import ChooseSpecialistBlock from '../../widgets/specialistBlock/ui/ChooseSpecialistBlock';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { MainCards } from '../../../admin/widgets/mainCards';
+import { RatesBLock } from '../../widgets/tariff/ui/ratesBLock';
 
 const HomePage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'ps5');
@@ -102,6 +103,12 @@ const HomePage = () => {
             buttonUrl: '/medical-technologies',
           },
         ]}
+      />
+      <SliceZone
+        slices={document?.data.body}
+        components={{
+          tariff: RatesBLock
+        }}
       />
     </>
   );
