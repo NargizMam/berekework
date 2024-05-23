@@ -26,6 +26,7 @@ interface Props {
 }
 
 export const TitleBlock: React.FC<Props> = ({ slice }) => {
+  console.log();
   const description = slice.primary.titledescription ? (
     <Typography
       sx={slice.primary.titleimage?.url ? TitleBlockStyle.description : TitleBlockStyle.descriptionWithoutImage}
