@@ -22,9 +22,12 @@ const MediaCard: React.FC<MediaCardApiData> = ({ image, video }) => {
   } | null>(null);
 
   const handleOpen = (type: 'image' | 'video', url: string) => {
-    setModalContent({ type, url });
-    setOpen(true);
+    if (url) {
+      setModalContent({ type, url });
+      setOpen(true);
+    }
   };
+
   const handleClose = () => {
     setOpen(false);
     setModalContent(null);
