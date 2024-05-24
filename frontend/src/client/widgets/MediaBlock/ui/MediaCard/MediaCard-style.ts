@@ -14,7 +14,15 @@ const MediaCardStyle = {
     width: '100%',
     height: '100%',
   },
-  iconPlayWrapper: {},
+  iconPlayWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '60px',
+    height: '60px',
+    borderRadius: '50%',
+    background: '#fff',
+  },
   modal: {
     position: 'absolute',
     top: '50%',
