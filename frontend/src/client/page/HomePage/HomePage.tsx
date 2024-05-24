@@ -1,14 +1,13 @@
-// import { MainCards } from '../../../admin/widgets/mainCards';
 import LastNewsBlock from '../../widgets/lastNewsBlock/ui/LastNewsBlock';
 import { TitleBlock } from '../../../admin/widgets/titleBlock';
 import { VacancyBlock } from '../../../admin/widgets/vacancyBlock';
 import ChooseSpecialistBlock from '../../widgets/specialistBlock/ui/ChooseSpecialistBlock';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
+import { MainCards } from '../../../admin/widgets/mainCards';
+import { RatesBLock } from '../../widgets/tariff/ui/ratesBLock';
 
 const HomePage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'ps5');
-
-  console.log(document);
 
   return (
     <>
@@ -17,6 +16,7 @@ const HomePage = () => {
           slices={document?.data.body}
           components={{
             titleblock: TitleBlock,
+            maincard: MainCards,
           }}
         />
       </div>
@@ -62,6 +62,12 @@ const HomePage = () => {
             buttonUrl: '/medical-technologies',
           },
         ]}
+      />
+      <SliceZone
+        slices={document?.data.body}
+        components={{
+          tariff: RatesBLock
+        }}
       />
     </>
   );

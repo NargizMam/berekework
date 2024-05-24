@@ -1,42 +1,44 @@
 .rateBlockTitle {
-    font-family: "Montserrat", sans-serif;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 60px;
-    color: #000000;
-    margin-bottom: 50px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 60px;
+  color: #000000;
+  margin-bottom: 50px;
 }
 
 .titlePart {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .titleButtons {
-    margin-left: auto;
-    display: flex;
-    justify-content: space-between;
-    width: 110px;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  width: 110px;
 }
 
 .titleButton {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    background-color: #D2D2D2;
-    border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #D2D2D2;
+  border: none;
 }
 
 
-
 @media (min-width: 700px) {
-    .rateBlockTitle {
-        font-size: 46px;
-        margin-bottom: 50px;
-    }
-    .rateBlock {
-        display: flex;
-        justify-content: space-between;
-    }
+  .rateBlockTitle {
+    font-size: 46px;
+    margin-bottom: 50px;
+  }
+
+  .rateBlock {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 10px;
+  }
 }
 
