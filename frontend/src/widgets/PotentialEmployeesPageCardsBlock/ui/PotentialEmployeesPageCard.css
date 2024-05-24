@@ -1,146 +1,147 @@
 .PotentialEmployeesPageCard__card {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    flex-basis: calc(50% - 5px);
-    background: #E9E9E9;
-    border-radius: 30px;
-    color: #8E8E8E;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1;
-    padding: 40px;
-    min-width: 272px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Make sure the content and button are spaced out */
+  box-sizing: border-box;
+  flex-basis: calc(50% - 5px);
+  background: #E9E9E9;
+  border-radius: 30px;
+  color: #8E8E8E;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 40px;
+  min-width: 272px;
+  margin-bottom: 5px;
 }
 
 .PotentialEmployeesPageCard__content {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-bottom: 40px;
+  flex-grow: 1; /* Make the content area grow to fill space */
 }
 
 .PotentialEmployeesPageCard__info {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  flex-grow: 1; /* Make the info area grow to fill space */
 }
 
 .PotentialEmployeesPageCard__name {
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 1;
-    color: #000;
-    margin: 0;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1;
+  color: #000;
+  margin: 0;
 }
 
 .PotentialEmployeesPageCard__photo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 120px;
-    background: #FFFF;
-    border-radius: 50%;
-    overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  background: #FFFF;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .PotentialEmployeesPageCard__photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .PotentialEmployeesPageCard__row {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 42px
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 42px;
 }
 
 .PotentialEmployeesPageCard__location,
 .PotentialEmployeesPageCard__age {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .PotentialEmployeesPageCard__age::before {
-    content: "";
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-image: url('../images/person-icon.png');
-    background-size: cover;
-    margin-right: 10px;
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('../images/person-icon.png');
+  background-size: cover;
+  margin-right: 10px;
 }
 
-
 .PotentialEmployeesPageCard__location::before {
-    content: "";
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-image: url('../images/location-icon.png');
-    background-size: cover;
-    margin-right: 10px;
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('../images/location-icon.png');
+  background-size: cover;
+  margin-right: 10px;
 }
 
 .PotentialEmployeesPageCard__education,
 .PotentialEmployeesPageCard__experience {
-    color: #000;
+  color: #000;
 }
 
 .PotentialEmployeesPageCard__button {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1;
-    color: #000;
-    background: #FFF;
-    border-radius: 30px;
-    border: 1px solid #fff;
-    padding: 25px 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  color: #000;
+  background: #FFF;
+  border-radius: 30px;
+  border: 1px solid #fff;
+  padding: 25px 0;
+  width: 100%; /* Set the button width to 100% */
+  margin-top: auto; /* Push the button to the bottom */
 }
 
 @media (max-width: 980px) {
-    .PotentialEmployeesPageCard__card {
-        padding: 24px;
-    }
+  .PotentialEmployeesPageCard__card {
+    padding: 24px;
+  }
 
-    .PotentialEmployeesPageCard__content {
-        gap: 24px;
-        margin-bottom: 24px;
-    }
+  .PotentialEmployeesPageCard__content {
+    gap: 24px;
+    margin-bottom: 24px;
+  }
 
-    .PotentialEmployeesPageCard__photo-wrapper {
-        width: 56px;
-        height: 56px;
-    }
+  .PotentialEmployeesPageCard__photo-wrapper {
+    width: 56px;
+    height: 56px;
+  }
 
-    .PotentialEmployeesPageCard__row {
-        gap: 16px;
-    }
+  .PotentialEmployeesPageCard__row {
+    gap: 16px;
+  }
 
-    .PotentialEmployeesPageCard__info {
-        gap: 16px;
-    }
+  .PotentialEmployeesPageCard__info {
+    gap: 16px;
+  }
 
-    .PotentialEmployeesPageCard__name {
-        font-size: 20px;
-    }
+  .PotentialEmployeesPageCard__name {
+    font-size: 20px;
+  }
 
-    .PotentialEmployeesPageCard__button {
-        font-size: 16px;
-        padding: 8px 0;
-    }
+  .PotentialEmployeesPageCard__button {
+    font-size: 16px;
+    padding: 8px 0;
+  }
 }
 
 @media (max-width: 649px) {
-    .PotentialEmployeesPageCard__card {
-        flex-basis: 100%;
-    }
+  .PotentialEmployeesPageCard__card {
+    flex-basis: 100%;
+  }
 }
-
-
-
-
