@@ -7,7 +7,6 @@ import { MainCards } from '../../../admin/widgets/mainCards';
 
 const HomePage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'ps5');
-  console.log(document?.data);
   return (
     <>
       <div style={{ marginTop: 100 }}>
