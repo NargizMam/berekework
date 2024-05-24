@@ -70,7 +70,12 @@ export const RatesBLock: React.FC<Props> = ({ slice }) => {
       {slice.items.length > 0 ? (
         <div className="rateBlock">
           {slice.items.slice(activeStep * cardsOnPage, (activeStep + 1) * cardsOnPage).map((tariff, index) => (
-            <RatesCard key={index} title={tariff.tarifftitle} description={tariff.tariffdescription} link={tariff.tarriflink} />
+            <RatesCard
+              key={`${index} + ${tariff.tarifftitle}`}
+              title={tariff.tarifftitle}
+              description={tariff.tariffdescription}
+              link={tariff.tarriflink}
+            />
           ))}
         </div>
       ) : (

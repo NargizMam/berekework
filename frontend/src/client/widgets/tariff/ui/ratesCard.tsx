@@ -28,8 +28,8 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
     <Box className="rateCard">
       <p className="rateCardTitle">{title}</p>
       <div className="rateCardTextBlocks">
-        {description.map((desc) => (
-          <div className="rateCardTextBlock">
+        {description.map((desc, index) => (
+          <div className="rateCardTextBlock" key={index + 'rateCard'}>
             <CheckIcon sx={{ width: '20px', height: '20px', marginRight: '20px' }} />
             <p className="rateCardText">{desc.text}</p>
           </div>
