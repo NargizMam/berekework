@@ -97,7 +97,7 @@ const AboutUsPage = () => {
 
   const getSubtitle = (slice: SubtitleProps) => {
     return (
-      <div key={slice.id}>
+      <div key={slice.id} style={{marginTop: '7%'}}>
         {slice.items.map((item, index) => (
           <h1 key={index}>{item.subtitle[0].text}</h1>
         ))}

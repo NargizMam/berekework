@@ -43,7 +43,7 @@ const MediaBlock: React.FC<Props> = ({ slice }) => {
   };
 
   return (
-    <Box sx={MediaBlockStyle.container}>
+    <Box sx={MediaBlockStyle.container} style={{marginTop: '7%'}}>
       <Box sx={MediaBlockStyle.row}>
         {slice.primary.title.map((title, index) => (
           <Typography key={index} variant="h4" sx={MediaBlockStyle.title}>
