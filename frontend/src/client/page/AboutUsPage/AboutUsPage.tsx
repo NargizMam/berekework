@@ -65,7 +65,10 @@ const AboutUsPage = () => {
   const getMainTitle = (slice: MainTileProps) => {
     const { aboutusimage, aboutustitle } = slice.primary;
     return (
-      <div key={slice.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '7%' }}>
+      <div
+        key={slice.id}
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '7%' }}
+      >
         <div>{aboutustitle && aboutustitle.map((title, index) => <h1 key={index}>{title.text}</h1>)}</div>
         <div>
           <img
@@ -81,9 +84,7 @@ const AboutUsPage = () => {
   const getAboutUsInfo = (slice: AboutUsInfoProps) => {
     return (
       <div key={slice.id} style={{ margin: '7% auto' }}>
-        {slice.primary.infotitle && slice.primary.infotitle[0] && (
-          <h1>{slice.primary.infotitle[0].text}</h1>
-        )}
+        {slice.primary.infotitle && slice.primary.infotitle[0] && <h1>{slice.primary.infotitle[0].text}</h1>}
 
         {slice.items.map((item, index) => (
           <div key={index} style={{ marginBottom: '20px' }}>
@@ -97,7 +98,7 @@ const AboutUsPage = () => {
 
   const getSubtitle = (slice: SubtitleProps) => {
     return (
-      <div key={slice.id} style={{marginTop: '7%'}}>
+      <div key={slice.id} style={{ marginTop: '7%' }}>
         {slice.items.map((item, index) => (
           <h1 key={index}>{item.subtitle[0].text}</h1>
         ))}
@@ -111,11 +112,12 @@ const AboutUsPage = () => {
         <SliceZone
           slices={document.data.body}
           components={{
-            aboutusmaintitle: ({ slice }) => getMainTitle(slice),
+            // aboutusmaintitle: ({ slice }) => getMainTitle(slice),
             aboutusinfo: ({ slice }) => getAboutUsInfo(slice),
             subtitle: ({ slice }) => getSubtitle(slice),
             maincard: MainCards,
             galleryblock: MediaBlock,
+            videoblock: MediaBlock,
           }}
         />
       </Container>

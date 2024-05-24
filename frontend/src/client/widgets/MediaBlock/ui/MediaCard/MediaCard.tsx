@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, CardMedia, Modal } from '@mui/material';
+import ReactPlayer from 'react-player';
 import iconPlay from '../../images/icon-play.png';
 import MediaCardStyle from './MediaCard-style';
 
@@ -20,6 +21,7 @@ const MediaCard: React.FC<MediaCardApiData> = ({ image, video }) => {
     type: 'image' | 'video';
     url: string;
   } | null>(null);
+  const [videoThumbnail, setVideoThumbnail] = useState<string | null>(null);
 
   const handleOpen = (type: 'image' | 'video', url: string) => {
     if (url) {
@@ -33,47 +35,66 @@ const MediaCard: React.FC<MediaCardApiData> = ({ image, video }) => {
     setModalContent(null);
   };
 
-  const imageUrl = image ? image.url : null;
+  const extractVideoFrame = () => {
+    const videoElement = document.createElement('video');
+    videoElement.src = video?.url || '';
+    videoElement.crossOrigin = 'anonymous'; // Добавлено для разрешения проблем с CORS
+    videoElement.addEventListener('loadeddata', () => {
+      videoElement.currentTime = Math.random() * (videoElement.duration || 0);
+    });
+    videoElement.addEventListener('seeked', () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoElement.videoWidth;
+      canvas.height = videoElement.videoHeight;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL('image/png');
+        setVideoThumbnail(dataURL);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (video && !image && video.url) {
+      extractVideoFrame();
+    }
+  }, [video]);
+
+  const imageUrl = image ? image.url : videoThumbnail;
   const videoUrl = video ? video.url : null;
 
   const modal = (
     <Modal open={open} onClose={handleClose}>
       <Box sx={MediaCardStyle.modal}>
         {modalContent?.type === 'image' ? (
-          <CardMedia sx={MediaCardStyle.image} component="img" image={modalContent.url} alt={image?.alt} />
+          <CardMedia
+            sx={MediaCardStyle.image}
+            component="img"
+            image={modalContent.url}
+            alt={modalContent?.type === 'image' ? image?.alt : ''}
+          />
         ) : (
-          <iframe
-            width="100%"
-            height="500"
-            src={modalContent?.url}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title={video?.alt}
-          ></iframe>
+          <ReactPlayer url={modalContent?.url} controls width="100%" height="100%" />
         )}
       </Box>
     </Modal>
   );
 
-  const imageElement = imageUrl ? (
-    <Box sx={MediaCardStyle.card} onClick={() => handleOpen('image', imageUrl)}>
-      <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt} />
-    </Box>
-  ) : null;
-
-  const videoElement = videoUrl ? (
-    <Box sx={MediaCardStyle.card} onClick={() => handleOpen('video', videoUrl)}>
-      <CardMedia component="img" image={videoUrl} alt={video?.alt} />
-      <Box sx={MediaCardStyle.iconPlayWrapper}>
-        <img src={iconPlay} alt="play" />
-      </Box>
+  const mediaElement = imageUrl ? (
+    <Box sx={MediaCardStyle.card} onClick={() => handleOpen(videoUrl ? 'video' : 'image', videoUrl || imageUrl)}>
+      <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt || video?.alt || ''} />
+      {videoUrl && (
+        <Box sx={MediaCardStyle.iconPlayWrapper}>
+          <img src={iconPlay} alt="play" />
+        </Box>
+      )}
     </Box>
   ) : null;
 
   return (
     <>
-      {imageElement}
-      {videoElement}
+      {mediaElement}
       {modal}
     </>
   );

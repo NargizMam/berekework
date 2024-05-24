@@ -30,7 +30,6 @@ const MediaBlockStyle = {
     margin: '0 auto',
     overflowY: 'auto',
   },
-  card: {},
 };
 
 export default MediaBlockStyle;
