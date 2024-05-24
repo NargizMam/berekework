@@ -1,6 +1,6 @@
 import '../css/footer.css';
 import '../css/footerMedia.css';
-import { PrismicRichText, useSinglePrismicDocument } from '@prismicio/react';
+import { useSinglePrismicDocument } from '@prismicio/react';
 
 const Footer = () => {
 	const [document] = useSinglePrismicDocument('footer');
@@ -12,6 +12,8 @@ const Footer = () => {
 	
 	const data = document.data;
 	
+	console.log('Document loaded', data);
+	
 	return (
 		<div className='footer'>
 			<div className='container'>
@@ -20,7 +22,7 @@ const Footer = () => {
 						<div key={index}>
 							{section.primary.links_block_title && (
 								<h6 className='footer-title'>
-									<PrismicRichText field={section.primary.links_block_title} />
+									{section.primary.links_block_title}
 								</h6>
 							)}
 							<nav className='footer-nav'>
@@ -46,7 +48,7 @@ const Footer = () => {
 									<div key={index} className='footer-icon-div'>
 										{section.primary.title_media_block && (
 											<h6 className='footer-title'>
-												<PrismicRichText field={section.primary.title_media_block} />
+												{section.primary.title_media_block}
 											</h6>
 										)}
 										<nav className='footer-nav footer-icon-bottom'>
@@ -65,7 +67,7 @@ const Footer = () => {
 									<div key={index} className='footer-contacts'>
 										{section.primary.title_contacts_block && (
 											<h6 className='footer-title'>
-												<PrismicRichText field={section.primary.title_contacts_block} />
+												{section.primary.title_contacts_block}
 											</h6>
 										)}
 										{section.items.map((item: any, index: number) => (
