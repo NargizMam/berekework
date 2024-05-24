@@ -8,7 +8,7 @@ import { RatesBLock } from '../../widgets/tariff/ui/ratesBLock';
 
 const HomePage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'ps5');
-
+  console.log(document?.data);
   return (
     <>
       <div style={{ marginTop: 100 }}>
@@ -17,6 +17,7 @@ const HomePage = () => {
           components={{
             titleblock: TitleBlock,
             maincard: MainCards,
+            lastnews: LastNewsBlock,
           }}
         />
       </div>
@@ -69,39 +70,39 @@ const HomePage = () => {
         />
       </div>
       <ChooseSpecialistBlock />
-      <LastNewsBlock
-        title="Последние новости"
-        data={[
-          {
-            _id: '1',
-            cardTitle: 'Природные катастрофы угрожают',
-            cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
-            dateTime: '2024-04-21T12:00:00Z',
-            buttonUrl: '/natural-disasters',
-          },
-          {
-            _id: '2',
-            cardTitle: 'Рост напряженности на Украине',
-            cardText: 'Международные обсуждения и реакции на политическую ситуацию',
-            dateTime: '2024-04-21T12:00:00Z',
-            buttonUrl: '/ukraine-tensions',
-          },
-          {
-            _id: '3',
-            cardTitle: 'Экономические прогнозы на следующий квартал',
-            cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
-            dateTime: '2024-04-21T12:00:00Z',
-            buttonUrl: '/economic-forecasts',
-          },
-          {
-            _id: '4',
-            cardTitle: 'Новые технологии в медицине',
-            cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
-            dateTime: '2024-04-21T12:00:00Z',
-            buttonUrl: '/medical-technologies',
-          },
-        ]}
-      />
+      {/*<LastNewsBlock*/}
+      {/*  title="Последние новости"*/}
+      {/*  data={[*/}
+      {/*    {*/}
+      {/*      _id: '1',*/}
+      {/*      cardTitle: 'Природные катастрофы угрожают',*/}
+      {/*      cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',*/}
+      {/*      dateTime: '2024-04-21T12:00:00Z',*/}
+      {/*      buttonUrl: '/natural-disasters',*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      _id: '2',*/}
+      {/*      cardTitle: 'Рост напряженности на Украине',*/}
+      {/*      cardText: 'Международные обсуждения и реакции на политическую ситуацию',*/}
+      {/*      dateTime: '2024-04-21T12:00:00Z',*/}
+      {/*      buttonUrl: '/ukraine-tensions',*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      _id: '3',*/}
+      {/*      cardTitle: 'Экономические прогнозы на следующий квартал',*/}
+      {/*      cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',*/}
+      {/*      dateTime: '2024-04-21T12:00:00Z',*/}
+      {/*      buttonUrl: '/economic-forecasts',*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      _id: '4',*/}
+      {/*      cardTitle: 'Новые технологии в медицине',*/}
+      {/*      cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',*/}
+      {/*      dateTime: '2024-04-21T12:00:00Z',*/}
+      {/*      buttonUrl: '/medical-technologies',*/}
+      {/*    },*/}
+      {/*  ]}*/}
+      {/*/>*/}
       <SliceZone
         slices={document?.data.body}
         components={{
