@@ -2,7 +2,6 @@
     box-sizing: border-box;
     display: flex;
     gap: 10px;
-    max-width: 1280px;
     margin: 0 auto;
     overflow-y: auto;
 }
