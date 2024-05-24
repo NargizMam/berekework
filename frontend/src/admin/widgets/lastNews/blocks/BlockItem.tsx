@@ -40,7 +40,7 @@ const BlockItem: React.FC<Props> = ({blockId, title, cards}) => {
              </Grid>
              <Grid display='flex'>
                  {cards.map(card =>(
-                     <Grid key={card.id} sx={{ maxWidth: 345, backgroundColor: '#ccc', margin: 2 }}>
+                     <Grid key={card._id} sx={{ maxWidth: 345, backgroundColor: '#ccc', margin: 2 }}>
                          <CardContent>
                              <Typography gutterBottom variant="h6" component="div">
                                  Заголовок:  {card.cardTitle}

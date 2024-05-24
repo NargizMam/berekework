@@ -50,7 +50,7 @@ export const ModeratorsForm: React.FC<Props> = ({close}) => {
       >
         {error && (
         <Alert severity="error" sx={{mt: 3, width: '100%'}}>
-          {error?.message}
+          {error?.error}
         </Alert>
       )}
         <Typography component="h1" variant="h5">

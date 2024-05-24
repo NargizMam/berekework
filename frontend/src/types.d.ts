@@ -44,12 +44,12 @@ export interface Moderator{
 }
 
 export interface ValidationError {
-  error: {
+  errors: {
     [key: string]: {
       name: string;
       message: string;
-    };
-  };
+    }
+  },
   message: string;
   name: string;
   _message: string;

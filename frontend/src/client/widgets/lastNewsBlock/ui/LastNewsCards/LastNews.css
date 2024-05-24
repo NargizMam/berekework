@@ -1,0 +1,96 @@
+.newsCard {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  padding: 24px;
+  font-weight: 500;
+  border: 1px solid #ECECEC;
+  border-radius: 30px;
+  background: #ECECEC;
+  min-width: 272px;
+  flex-basis: 420px;
+  box-shadow: none;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.newsCardTitle {
+  font-size: 20px;
+  line-height: 1.1;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+.lastNewsButtons {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 110px;
+}
+
+.titleButton {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #D2D2D2;
+  border: none;
+}
+
+.newsCardText {
+  margin: 0 0 16px 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.cardDateText {
+  font-size: 14px;
+  line-height: 26px;
+  margin: 5px 0;
+}
+
+.lastNewsDateTimeLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardBtnLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #D2D2D2;
+  color: #292D32;
+}
+
+@media (min-width: 400px) {
+
+
+  .lastNewsDateTimeLink {
+    flex-direction: row;
+  }
+
+  .cardBtnLink {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #D2D2D2;
+    color: #292D32;
+  }
+
+}
+
+@media (min-width: 560px) {
+  .lastNewsButtons {
+    margin-left: auto;
+  }
+}
+
+
+

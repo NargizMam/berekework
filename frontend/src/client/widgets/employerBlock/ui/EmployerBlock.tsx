@@ -5,26 +5,26 @@ import './EmployerBlock.css';
 import EmployerBlockStyle from './EmployerBlock-style';
 
 export interface EmployerBlockApiData {
-  title: string;
-  employers: EmployerCardApiData[];
-  location: string;
+  title: { text: string }[];
+  body:  EmployerCardApiData[];
 }
 
 interface Props {
-  data: EmployerBlockApiData;
+  slice: EmployerBlockApiData;
 }
 
-const EmployerBlock: React.FC<Props> = ({ data }) => {
+const EmployerBlock: React.FC<Props> = ({ slice }) => {
   const [currentRow, setCurrentRow] = useState(5);
   const [currentWrap, setCurrentWrap] = useState(false);
   let button;
+  console.log(slice);
 
   const showMore = () => {
     setCurrentRow((prev) => prev + 5);
     setCurrentWrap(true);
   };
 
-  if (data.employers.length > 5) {
+  if (slice?.body.length > 5) {
     button = (
       <div className="EmployerBlock__buttonWrapper">
         <button className="EmployerBlock__button" onClick={showMore}>
@@ -36,7 +36,7 @@ const EmployerBlock: React.FC<Props> = ({ data }) => {
   return (
     <>
       <div>
-        <Typography sx={EmployerBlockStyle.title}>{data.title}</Typography>
+        <Typography sx={EmployerBlockStyle.title}>{slice?.title[0].text}</Typography>
       </div>
       <div
         className="EmployerBlock__flex"
@@ -44,8 +44,8 @@ const EmployerBlock: React.FC<Props> = ({ data }) => {
           flexWrap: currentWrap ? 'wrap' : 'nowrap',
         }}
       >
-        {data.employers.map((data, index) => (
-          <EmployerCard key={data._id} data={data} viseble={index >= currentRow ? false : true} />
+        {slice.body.map((data, index) => (
+          <EmployerCard key={data.id} data={data} viseble={index >= currentRow ? false : true} />
         ))}
       </div>
       {button}

@@ -13,7 +13,7 @@ interface Props {
 
 const CardForm: React.FC<Props> = ({card, cardId, addCard, deleteCard}) => {
   const [cardState, setCardState] = useState<Card>({
-    id: cardId,
+    _id: cardId,
     cardTitle: card?.cardTitle || '',
     cardText: card?.cardText || '',
     buttonUrl: card?.buttonUrl || '',
@@ -86,7 +86,7 @@ const CardForm: React.FC<Props> = ({card, cardId, addCard, deleteCard}) => {
           <CheckIcon/>
         </IconButton>
         :
-        <IconButton onClick={() => handleDeleteCard(cardState.id)} aria-label="delete" color="primary">
+        <IconButton onClick={() => handleDeleteCard(cardState._id)} aria-label="delete" color="primary">
           <DeleteIcon/>
         </IconButton>
       }
