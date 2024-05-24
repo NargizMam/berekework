@@ -1,0 +1,107 @@
+.ourValuesBlockTitle {
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 60px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.ourValuesCardBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.ourValuesCard {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 30px;
+  min-width: 250px;
+  height: 230px;
+  background: #ECECEC;
+  margin-bottom: 10px;
+  border-radius: 30px;
+}
+
+.ourValuesImgFrame {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
+.ourValuesCardTitle {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  margin: 0;
+}
+
+.ourValuesCardText {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  color: #8E8E8E;
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .ourValuesBlockTitle {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+
+  .ourValuesCardBlock {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .ourValuesCard {
+    width: 300px;
+    height: 215px;
+    margin-right: 10px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .ourValuesCard {
+    width: 360px;
+  }
+}
+
+
+@media (min-width: 1200px) {
+  .ourValuesBlockTitle {
+    font-size: 46px;
+    margin-bottom: 60px;
+  }
+
+  .ourValuesCard {
+    width: 420px;
+    height: 235px;
+  }
+
+  .ourValuesImgFrame {
+    width: 40px;
+    height: 54px;
+  }
+
+  .ourValuesCardTitle {
+    font-size: 20px;
+  }
+
+  .ourValuesCardText {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .ourValuesCardBlock {
+    flex-wrap: nowrap;
+  }
+}
