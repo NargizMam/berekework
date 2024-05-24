@@ -17,6 +17,7 @@ export const EmployerFormPage = () => {
     document: null,
     address: '',
     logo: null,
+    avatar: null
   });
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectEmployerError);
@@ -48,6 +49,7 @@ export const EmployerFormPage = () => {
       document: null,
       address: '',
       logo: null,
+      avatar: null
     });
   };
 
@@ -96,7 +98,7 @@ export const EmployerFormPage = () => {
 
   const getFieldError = (fieldName: string) => {
     try {
-      return error?.error[fieldName].message;
+      return error?.errors[fieldName].message;
     } catch {
       return undefined;
     }

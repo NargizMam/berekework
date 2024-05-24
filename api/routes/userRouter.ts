@@ -34,7 +34,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
       return res.status(422).send(error);
     }
 
-    return next(error);
+    next(error);
   }
 });
 

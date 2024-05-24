@@ -6,7 +6,7 @@ import { GlobalError, ValidationError } from '../../../../client/page/Auth/model
 
 
 interface ModeratorState {
-  moderators: Moderator[];
+  moderators: ModeratorApi[];
   moderatorsLoading: boolean;
   createLoading: boolean;
   deleteLoading: boolean;

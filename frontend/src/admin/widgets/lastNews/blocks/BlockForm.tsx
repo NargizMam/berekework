@@ -54,7 +54,7 @@ const BlockForm: React.FC<Props> = ({block, onSubmit, loading}) => {
     };
 
     const addCardToBlockState = (newCard: Card) => {
-        const existingCardId = state.cards.findIndex(card => card.id === newCard.id);
+        const existingCardId = state.cards.findIndex(card => card.id === newCard._id);
 
         if (existingCardId !== -1) {
             setState(prevState => ({
