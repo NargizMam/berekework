@@ -1,6 +1,7 @@
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { MainCards } from '../../../admin/widgets/mainCards';
 import Container from '@mui/material/Container';
+import MediaBlock from '../../widgets/MediaBlock/ui/MediaBlock';
 
 interface MainTileProps {
   id: string;
@@ -52,14 +53,17 @@ const AboutUsPage = () => {
   const getMainTitle = (slice: MainTileProps) => {
     const { aboutusimage, aboutustitle } = slice.primary;
     return (
-      <div key={slice.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5%'}}>
+      <div
+        key={slice.id}
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5%' }}
+      >
+        <div>{aboutustitle && aboutustitle.map((title, index) => <h1 key={index}>{title.text}</h1>)}</div>
         <div>
-          {aboutustitle && aboutustitle.map((title, index) => (
-            <h1 key={index}>{title.text}</h1>
-          ))}
-        </div>
-        <div>
-          <img src={aboutusimage.url} alt={aboutusimage.alt || 'Image'} style={{ marginLeft: '20px', marginBottom: '5%' }} />
+          <img
+            src={aboutusimage.url}
+            alt={aboutusimage.alt || 'Image'}
+            style={{ marginLeft: '20px', marginBottom: '5%' }}
+          />
         </div>
       </div>
     );
@@ -67,18 +71,12 @@ const AboutUsPage = () => {
 
   const getAboutUsInfo = (slice: AboutUsInfoProps) => {
     return (
-      <div key={slice.id} style={{marginTop: '5%'}}>
-        {slice.primary.infotitle && slice.primary.infotitle[0] && (
-          <h1>{slice.primary.infotitle[0].text}</h1>
-        )}
+      <div key={slice.id} style={{ marginTop: '5%' }}>
+        {slice.primary.infotitle && slice.primary.infotitle[0] && <h1>{slice.primary.infotitle[0].text}</h1>}
         {slice.items.map((item, index) => (
           <div key={index} style={{ marginBottom: '20px' }}>
-            {item.infodescriptiontitle && item.infodescriptiontitle[0] && (
-              <h2>{item.infodescriptiontitle[0].text}</h2>
-            )}
-            {item.infodescription && item.infodescription[0] && (
-              <p>{item.infodescription[0].text}</p>
-            )}
+            {item.infodescriptiontitle && item.infodescriptiontitle[0] && <h2>{item.infodescriptiontitle[0].text}</h2>}
+            {item.infodescription && item.infodescription[0] && <p>{item.infodescription[0].text}</p>}
           </div>
         ))}
       </div>
@@ -94,6 +92,7 @@ const AboutUsPage = () => {
             aboutusmaintitle: ({ slice }) => getMainTitle(slice),
             aboutusinfo: ({ slice }) => getAboutUsInfo(slice),
             maincard: MainCards,
+            galleryblock: MediaBlock,
           }}
         />
       </Container>
