@@ -4,7 +4,6 @@ import { VacancyBlock } from '../../../admin/widgets/vacancyBlock';
 import ChooseSpecialistBlock from '../../widgets/specialistBlock/ui/ChooseSpecialistBlock';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { MainCards } from '../../../admin/widgets/mainCards';
-import { RatesBLock } from '../../widgets/tariff/ui/ratesBLock';
 
 const HomePage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'ps5');
@@ -31,12 +30,6 @@ const HomePage = () => {
         {/*/>*/}
         <VacancyBlock/>
       </div>
-      <SliceZone
-        slices={document?.data.body}
-        components={{
-          tariff: RatesBLock
-        }}
-      />
     </>
   );
 };
