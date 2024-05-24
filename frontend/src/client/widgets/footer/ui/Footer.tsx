@@ -6,7 +6,6 @@ const Footer = () => {
 	const [document] = useSinglePrismicDocument('footer');
 	
 	if (!document) {
-		console.log('Document not loaded');
 		return null;
 	}
 	
