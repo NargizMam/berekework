@@ -33,9 +33,10 @@ applicantRouter.post(
             const {
                 firstName,
                 surname,
-                photo,
+                secondName,
                 sex,
                 dateOfBirth,
+                country,
                 city,
                 education,
                 aboutApplicant,
@@ -45,15 +46,17 @@ applicantRouter.post(
             } = req.body;
             const applicant = await Applicant.find({user: userId});
 
-            if (applicant) {
+            if (applicant.length > 0) {
                 const updated = await Applicant.findOneAndUpdate(
                     {user: userId},
                     {
                         firstName,
                         surname,
-                        photo,
+                        secondName,
+                        photo: req.file ? req.file.filename : req.body.photo,
                         sex,
                         dateOfBirth,
+                        country,
                         city,
                         education,
                         aboutApplicant,
@@ -64,6 +67,7 @@ applicantRouter.post(
                     {new: true}
                 );
                 return res.send(updated);
+
             } else {
                 const data = {
                     user: req.user?._id,
@@ -83,6 +87,7 @@ applicantRouter.post(
 
                 const newApplicant = new Applicant(data);
                 await newApplicant.save();
+                console.log(newApplicant);
                 return res.send(newApplicant);
             }
         } catch (e) {

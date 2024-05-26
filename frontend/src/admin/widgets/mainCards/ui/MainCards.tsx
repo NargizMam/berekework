@@ -1,32 +1,29 @@
-import MainCardItem from './MainCardItem';
-import { useEffect } from 'react';
-import { selectMainCards } from '../model/mainCardsSlice';
-import { fetchMainCards } from '../model/mainCardsThunks';
-import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import MainCardItem, { MainCardApiData } from './MainCardItem';
 import './MainCards.css';
+import React from 'react';
 
-export const MainCards = () => {
-  const dispatch = useAppDispatch();
-  const mainCards = useAppSelector(selectMainCards);
+interface MainCardsApiData {
+  items: MainCardApiData[];
+}
 
-  useEffect(() => {
-    dispatch(fetchMainCards());
-  }, [dispatch]);
+interface Props {
+  slice: MainCardsApiData;
+}
 
+export const MainCards: React.FC<Props> = ({ slice }) => {
+  const { items } = slice;
   return (
     <div className="Main-cards__container">
-      {mainCards.map((mainCard) => (
+      {items.map((mainCard, index) => (
         <MainCardItem
-          key={mainCard._id}
+          key={index}
           title={mainCard.title}
-          text={mainCard.text}
+          description={mainCard.description}
           image={mainCard.image}
-          URLpath={mainCard.URLpath}
+          link={mainCard.link}
           icon={mainCard.icon}
         />
       ))}
     </div>
   );
 };
-
-export default MainCards;

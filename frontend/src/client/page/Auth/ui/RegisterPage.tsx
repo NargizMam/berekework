@@ -30,7 +30,7 @@ export const RegisterPage = () => {
 
   const getFieldError = (fieldName: string) => {
     try {
-      return error?.error[fieldName].message;
+      return error?.errors[fieldName].message;
     } catch {
       return undefined;
     }

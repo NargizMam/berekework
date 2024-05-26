@@ -16,8 +16,8 @@ export const createEmployer = createAsyncThunk<
     formData.append('email', employer.email);
     formData.append('password', employer.password);
     formData.append('companyName', employer.companyName);
-    formData.append('scope', employer.scope);
-    formData.append('action', employer.action);
+    formData.append('industry', employer.industry);
+    formData.append('description', employer.description);
     formData.append('foundationYear', employer.foundationYear);
     formData.append('address', employer.address);
     if(employer.document) {

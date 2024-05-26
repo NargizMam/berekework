@@ -30,7 +30,6 @@ export const addApplicant = createAsyncThunk<null, { applicantMutation: Applican
         formData.append(key, value);
       }
     });
-
     return axiosApi.post(userId ? `applicants?userId=${userId}` : '/applicants', formData);
   }
 );

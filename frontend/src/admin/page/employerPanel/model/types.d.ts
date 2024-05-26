@@ -21,4 +21,5 @@ export interface EmployerMutation {
   document: File | null;
   address: string;
   logo: File | null;
+  avatar: File | null;
 }

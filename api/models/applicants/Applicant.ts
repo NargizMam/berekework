@@ -28,7 +28,7 @@ const ApplicantSchema = new mongoose.Schema({
     photo: String,
     sex: {
         type: String,
-        enum: ['женский', 'мужской'],
+        enum: ['жен', 'муж'],
         required: true,
     },
     dateOfBirth: {
@@ -37,11 +37,11 @@ const ApplicantSchema = new mongoose.Schema({
     },
     country: {
         type: String,
-        default: false,
+        required: true
     },
     city: {
         type: String,
-        default: false,
+        required: false,
     },
     education: {
         type: String,

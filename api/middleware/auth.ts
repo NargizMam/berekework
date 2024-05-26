@@ -14,14 +14,13 @@ const auth = async (req: RequestWithUser, res: Response, next: NextFunction) => 
     return res.status(401).send({ error: 'No Authorization header present' });
   }
 
-  const [_bearer, token] = headerValue.split(' '); // "Bearer token"
+  const [_bearer, token] = headerValue.split(' ');
 
   if (!token) {
     return res.status(401).send({ error: 'No token present' });
   }
 
   const user = await User.findOne({ token });
-
   if (!user) {
     return res.status(401).send({ error: 'Wrong token!' });
   }
