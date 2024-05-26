@@ -1,7 +1,10 @@
 .Main-cards__container {
-    box-sizing: border-box;
-    display: flex;
-    gap: 10px;
-    margin: 0 auto;
-    overflow-y: auto;
+  box-sizing: border-box;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.MainCards__SwiperSlide {
+  min-width: 272px;
+  height: auto;
 }
