@@ -1,0 +1,132 @@
+.applicantContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 70px;
+}
+
+.photo {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background-color: #E9E9E9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photoBtn {
+  position: relative;
+  z-index: 2;
+  left: 75%;
+  bottom: 35px;
+  height: 30px;
+  width: 30px;
+  border-radius: 40px;
+  border: none;
+  background-color: #0866FF;
+  font-size: 24px;
+  color: #FFFFFF;
+}
+
+.profileTitle {
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
+  margin: 30px 0;
+}
+
+.applicantInfo {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #8E8E8E;
+  margin: 0 0 30px 0;
+  max-width: 850px;
+}
+
+.infoBlock {
+  display: flex;
+}
+
+.changeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 70px;
+  background: #0866FF;
+  border-radius: 30px;
+  color: #FFFFFF;
+  font-size: 14px;
+  margin-top: 40px;
+  margin-bottom: 160px;
+}
+
+.changeBtn:hover {
+  color: #FFFFFF;
+}
+
+@media (min-width: 1100px) {
+  .profileContainer {
+    margin-top: 70px;
+  }
+
+  .whiteBackground {
+    background-color: #ffffff;
+    position: absolute;
+    height: 150px;
+    width: 100%;
+  }
+
+  .applicantContainer {
+    background-color: #E9E9E9;
+  }
+
+  .photoFrame {
+    position: relative;
+    z-index: 2;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: #ffffff;
+  }
+
+  .FIO {
+    font-size: 36px;
+    line-height: 30px;
+    margin: 40px 0;
+  }
+
+  .applicantInfo {
+    font-size: 16px;
+    line-height: 20px;
+    margin: 0 0 40px 0;
+    max-width: 850px;
+  }
+
+  .infoBlock {
+    display: flex;
+  }
+
+  .applicantSettingsHeader {
+    font-family: "Montserrat", sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 30px;
+    margin-top: 100px;
+    margin-bottom: 70px;
+  }
+
+  .changeBtn {
+    width: 850px;
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+}

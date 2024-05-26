@@ -2,6 +2,7 @@ import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { MainCards } from '../../../admin/widgets/mainCards';
 import Container from '@mui/material/Container';
 import MediaBlock from '../../widgets/MediaBlock/ui/MediaBlock';
+import OurValuesBlock from '../../widgets/ourValues/ui/ourValuesBlock';
 
 interface MainTileProps {
   id: string;
@@ -116,6 +117,7 @@ const AboutUsPage = () => {
             aboutusinfo: ({ slice }) => getAboutUsInfo(slice),
             subtitle: ({ slice }) => getSubtitle(slice),
             maincard: MainCards,
+            ourvalues: OurValuesBlock,
             galleryblock: MediaBlock,
             videoblock: MediaBlock,
           }}

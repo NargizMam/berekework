@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Applicant, ApplicantMutation, WorkExperience } from '../../types';
+import { Applicant, ApplicantMutation, WorkExperience } from '../../../types';
 import './ApplicantForm.css';
 import WorkExperienceField from '../WorkExperience/WorkExperienceField';
 import Form from './Form';
 import { Grid } from '@mui/material';
 import FileInput from '../FileInput/FileInput';
+import dayjs from 'dayjs';
 
 
 interface Props {
@@ -21,7 +22,7 @@ const ApplicantFullForm: React.FC<Props> = ({applicant, onSubmit, loading}) => {
     secondName: applicant?.secondName || '',
     photo: applicant?.photo || null,
     sex: applicant?.sex || '',
-    dateOfBirth: applicant?.dateOfBirth || '',
+    dateOfBirth: applicant ? dayjs(applicant.dateOfBirth).format('YYYY-MM-DD') : '',
     country: applicant?.country || '',
     city: applicant?.city || '',
     education: applicant?.education || '',
@@ -111,6 +112,10 @@ const ApplicantFullForm: React.FC<Props> = ({applicant, onSubmit, loading}) => {
       setState(prevState => ({
         ...prevState, [name]: files[0]
       }));
+    } else if (state.photo) {
+      setState(prevState => ({
+        ...prevState, [name]: applicant?.photo
+      }));
     }
   };
 
@@ -120,9 +125,10 @@ const ApplicantFullForm: React.FC<Props> = ({applicant, onSubmit, loading}) => {
         <div className="whiteBackground"></div>
         <div className="applicantContainer">
           <FileInput
+            photo={state.photo}
             onChange={fileInputChangeHandler}
           />
-          <h3 className="applicantSettingsHeader">Настройки профиля</h3>
+          <p className="profileTitle">Настройки профиля</p>
           <Grid sx={{maxWidth: '850px'}}>
             <Form
               state={state}

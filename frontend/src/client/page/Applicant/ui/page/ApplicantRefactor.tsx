@@ -1,14 +1,14 @@
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../app/store/hooks';
 import { useEffect } from 'react';
-import { selectUser } from '../Auth/model/AuthSlice';
+import { selectUser } from '../../../Auth/model/AuthSlice';
 import {
   selectApplicantsLoading,
   selectOneApplicant,
-} from '../../widgets/applicant/model/applicantSlice';
-import { addApplicant, fetchApplicant } from '../../widgets/applicant/model/applicantThunk';
-import { ApplicantMutation } from '../../widgets/applicant/types';
+} from '../../model/applicantSlice';
+import { addApplicant, fetchApplicant } from '../../model/applicantThunk';
+import { ApplicantMutation } from '../../types';
 import { useNavigate } from 'react-router-dom';
-import ApplicantFullForm from '../../widgets/applicant/ui/Applicant/ApplicantFullForm';
+import ApplicantFullForm from '../components/Applicant/ApplicantFullForm';
 
 
 const ApplicantRefactor = () => {
@@ -32,7 +32,7 @@ const ApplicantRefactor = () => {
       if (user) {
         await dispatch(addApplicant({ applicantMutation, userId: user._id })).unwrap();
       }
-      navigate('/');
+      navigate('/applicantProfile');
     } catch {
       //
     }

@@ -1,76 +1,101 @@
-import { useEffect, useState } from 'react';
-import '../css/style.css';
-import '../css/media.css';
-import logo from '../images/logo-company.png';
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
-import { selectHeader } from '../../../admin/page/headerCreate/model/headerSlice';
-import { fetchHeader } from '../../../admin/page/headerCreate/api/headerThunks';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useAppSelector } from '../../../app/store/hooks';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import UserMenu from '../UserMenu';
+import { useSinglePrismicDocument } from '@prismicio/react';
+import { Typography } from '@mui/material';
+import '../css/style.css';
+import '../css/media.css';
 
+interface HeaderProps {
+  body: [
+    {
+      id: string;
+      items: [
+        {
+          name_link: string;
+          navbar_link: string;
+        },
+      ];
+    },
+  ];
+  header_logo: {
+    url: string;
+    alt: string;
+    dimensions: {
+      width: number;
+      height: number;
+    };
+  };
+  logo_link: string;
+}
 
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const dispatch = useAppDispatch();
-    const header = useAppSelector(selectHeader);
-    const user = useAppSelector(selectUser);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const user = useAppSelector(selectUser);
 
-    useEffect(() => {
-        dispatch(fetchHeader());
-    }, [dispatch]);
+  const [document] = useSinglePrismicDocument('header');
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+  const headerPrismicResponse: HeaderProps | undefined = document?.data as HeaderProps;
 
-    const nav = (
-        <nav>
-            <ul className="main-mav-web">
-                {header?.navbarItems && header.navbarItems.map((item) => (
-                    <li key={item._id} className="main-nav-item">
-                        <a className="main-nav-link" href={item.link}>{item.nameNav}</a>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    );
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-    const links = [(
-      <>
-        <a>Главная</a>
-        <a>О нас</a>
-        <a>Вакансии</a>
-        <a>Для работодателей</a>
-      </>
-    )];
+  const nav = (
+    <nav>
+      <ul className="main-mav-web">
+        {headerPrismicResponse?.body[0].items &&
+          headerPrismicResponse.body[0].items.map((item, index) => (
+            <li key={index + headerPrismicResponse?.body[0].id} className="main-nav-item">
+              <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
+                {item.name_link}
+              </Typography>
+            </li>
+          ))}
+      </ul>
+    </nav>
+  );
 
   return (
-        <div className="header">
-            <div className="header-content container">
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <a href="/">
-                        <img src={logo} alt="logo"/>
-                    </a>
-                    <button className="burger-button" type="button" onClick={toggleMenu}></button>
-                </div>
-                {nav}
-                <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
-                    <ul className="main-nav-list">
-                        {links.map((_item, index) => (
-                            <li key={index} className="main-nav-item">
-                                <a href="#" className="main-nav-link" ></a>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-                {!user ?
-                  (<NavLink to='/login' className="login">Войти</NavLink>)
-                    :
-                  (<UserMenu user={user}/>)}
-            </div>
+    <div className="header">
+      <div className="header-content container">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {headerPrismicResponse?.header_logo && (
+            <a href={headerPrismicResponse?.logo_link}>
+              <img
+                src={headerPrismicResponse?.header_logo.url}
+                alt={headerPrismicResponse?.header_logo.alt}
+                style={{ width: 220, height: 56 }}
+              />
+            </a>
+          )}
+          <button className="burger-button" type="button" onClick={toggleMenu}></button>
         </div>
-    );
+        {nav}
+        <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
+          <ul className="main-nav-list">
+            {headerPrismicResponse?.body[0].items &&
+              headerPrismicResponse.body[0].items.map((item, index) => (
+                <li key={index + 'navDrop'} className="main-nav-item">
+                  <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
+                    {item.name_link}
+                  </Typography>
+                </li>
+              ))}
+          </ul>
+        </nav>
+        {!user ? (
+          <NavLink to="/login" className="login">
+            Войти
+          </NavLink>
+        ) : (
+          <UserMenu user={user} />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Header;
