@@ -194,7 +194,7 @@ const EmployerRegisterForm = () => {
           <Button
             variant="contained"
             component="label"
-            sx={{ mt: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
+            sx={{ mt: 2,  borderRadius: '30px' }}
           >
             Загрузить аватар
             <input
@@ -213,7 +213,7 @@ const EmployerRegisterForm = () => {
           <Button
             variant="contained"
             component="label"
-            sx={{ mt: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
+            sx={{ mt: 2,  borderRadius: '30px' }}
           >
             Загрузить документ
             <input
@@ -232,7 +232,7 @@ const EmployerRegisterForm = () => {
           <Button
             variant="contained"
             component="label"
-            sx={{ mt: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
+            sx={{ mt: 2,  borderRadius: '30px' }}
           >
             Загрузить логотип
             <input
@@ -253,9 +253,9 @@ const EmployerRegisterForm = () => {
         type="submit"
         fullWidth
         variant="contained"
-        sx={{ mt: 3, mb: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
+        sx={{ mt: 3, py: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
       >
-        Войти
+        Зарегистрироваться
       </LoadingButton>
     </Box>
   );

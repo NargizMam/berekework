@@ -135,9 +135,9 @@ const UserRegisterForm = () => {
         type="submit"
         fullWidth
         variant="contained"
-        sx={{ mt: 3, mb: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
+        sx={{ mt: 3, py: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
       >
-        Войти
+        Зарегистрироваться
       </LoadingButton>
     </Box>
   );

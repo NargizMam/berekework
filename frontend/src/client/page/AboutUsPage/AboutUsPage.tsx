@@ -71,6 +71,7 @@ const AboutUsPage = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          color: 'black',
           marginBottom: '7%',
           flexDirection: { xs: 'column', md: 'row' },
           textAlign: { xs: 'center', md: 'left' },
@@ -82,6 +83,7 @@ const AboutUsPage = () => {
               variant="h3"
               sx={{
                 fontWeight: 'bold',
+                color: 'black',
                 fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem' },
               }}
               key={title.text}
@@ -115,6 +117,7 @@ const AboutUsPage = () => {
             sx={{
               fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
               fontWeight: 'bold',
+              color: 'black',
               marginBottom: '20px'
             }}
           >
@@ -130,7 +133,9 @@ const AboutUsPage = () => {
                 sx={{
                   fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },
                   fontWeight: 'bold',
-                  marginBottom: '10px'
+                  color: 'black',
+                  marginBottom: '10px',
+                  pl: '15px'
                 }}
               >
                 {item.infodescriptiontitle[0].text}
@@ -140,6 +145,7 @@ const AboutUsPage = () => {
               <Typography
                 variant="body1"
                 sx={{
+                  color: 'black',
                   fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
                 }}
               >
@@ -156,7 +162,7 @@ const AboutUsPage = () => {
     return (
       <Box key={slice.id} sx={{ my: '7%' }}>
         {slice.items.map((item, index) => (
-          <Typography variant="h4" key={index} sx={{ fontWeight: 'bold', fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' } }}>
+          <Typography variant="h4" key={index} sx={{ fontWeight: 'bold', color: 'black', fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' } }}>
             {item.subtitle[0].text}
           </Typography>
         ))}

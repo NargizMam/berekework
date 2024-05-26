@@ -40,6 +40,9 @@ export const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
+        <Typography component="h1" variant="h5" sx={{mb:2}}>
+          Регистрация
+        </Typography>
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -66,9 +69,6 @@ export const RegisterPage = () => {
           <ToggleButton value="applicant" sx={{ borderRadius: '30px 0 0 30px' }}>Поиск работы</ToggleButton>
           <ToggleButton value="employer" sx={{ borderRadius: '0 30px 30px 0' }}>Поиск сотрудников</ToggleButton>
         </ToggleButtonGroup>
-        <Typography component="h1" variant="h5">
-          Регистрация
-        </Typography>
         {alignment === 'applicant' ? <UserRegisterForm /> : <EmployerRegisterForm />}
         <Button
           fullWidth
@@ -86,7 +86,7 @@ export const RegisterPage = () => {
           }}
           onClick={handleGoogleButtonClick}
         >
-          <GoogleIcon sx={{ mr: 1 }} /> Войти с помощью Google
+          <GoogleIcon sx={{ mr: 1, py: 1}} /> Войти с помощью Google
         </Button>
         {showGoogleLogin && (
           <GoogleLogin
@@ -108,4 +108,3 @@ export const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
