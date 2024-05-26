@@ -36,6 +36,8 @@ const UserMenu: React.FC<Props> = ({ user }) => {
   const getProfile = () => {
     if (user.role === 'employer') {
       return navigate(`/employersProfile/${user._id}`);
+    } else if (user.role === 'user') {
+      return navigate(`/applicantProfile`);
     }
     navigate('/');
   };
