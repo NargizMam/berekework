@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Box, CardMedia, Modal } from '@mui/material';
+import { Box, CardMedia, Modal, IconButton } from '@mui/material';
 import ReactPlayer from 'react-player';
+import CloseIcon from '@mui/icons-material/Close';
 import iconPlay from '../../images/icon-play.png';
 import MediaCardStyle from './MediaCard-style';
 
@@ -39,18 +40,23 @@ const MediaCard: React.FC<MediaCardApiData> = ({ image, video }) => {
 
   const modal = (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={MediaCardStyle.modal}>
-        {modalContent?.type === 'image' ? (
-          <CardMedia
-            sx={MediaCardStyle.image}
-            component="img"
-            image={modalContent.url}
-            alt={modalContent?.type === 'image' ? image?.alt : ''}
-          />
-        ) : (
-          <ReactPlayer url={modalContent?.url} controls width="100%" height="100%" />
-        )}
-      </Box>
+      <>
+        <Box sx={MediaCardStyle.modal}>
+          {modalContent?.type === 'image' ? (
+            <CardMedia
+              sx={MediaCardStyle.image}
+              component="img"
+              image={modalContent.url}
+              alt={modalContent?.type === 'image' ? image?.alt : ''}
+            />
+          ) : (
+            <ReactPlayer url={modalContent?.url} controls width="100%" height="100%" />
+          )}
+        </Box>
+        <IconButton sx={MediaCardStyle.closeButton} onClick={handleClose}>
+          <CloseIcon />
+        </IconButton>
+      </>
     </Modal>
   );
 

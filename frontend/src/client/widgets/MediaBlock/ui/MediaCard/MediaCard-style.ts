@@ -50,14 +50,20 @@ const MediaCardStyle = {
     padding: '16px',
     outline: 0,
     overflow: 'hidden',
-    ['@media (max-width:600px)']: {
+    '@media (max-width:600px)': {
       width: '90%',
       padding: '16px',
     },
-    ['@media (min-width:600px) and (max-width:960px)']: {
+    '@media (min-width:600px) and (max-width:960px)': {
       width: '70%',
       padding: '24px',
     },
+  },
+  closeButton: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    zIndex: 1300, // Убедитесь, что кнопка выше модального окна
   },
 };
 

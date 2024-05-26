@@ -113,13 +113,13 @@ const AboutUsPage = () => {
         <SliceZone
           slices={document.data.body}
           components={{
-            // aboutusmaintitle: ({ slice }) => getMainTitle(slice),
+            aboutusmaintitle: ({ slice }) => getMainTitle(slice),
             aboutusinfo: ({ slice }) => getAboutUsInfo(slice),
             subtitle: ({ slice }) => getSubtitle(slice),
             maincard: MainCards,
             ourvalues: OurValuesBlock,
-            galleryblock: MediaBlock,
-            videoblock: MediaBlock,
+            galleryblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '180px' }} />,
+            videoblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '100px' }} />,
           }}
         />
       </Container>
