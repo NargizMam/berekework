@@ -59,11 +59,9 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
   },
   logo: {
     type: String,
-    required: true,
   },
   documents: [{
     type: String,
-    required: true,
   }],
   vacancies: [
     {
