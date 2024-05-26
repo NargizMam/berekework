@@ -10,6 +10,7 @@ const MediaCardStyle = {
     overflow: 'hidden',
     cursor: 'pointer',
     position: 'relative',
+    height: '100%',
   },
   image: {
     width: '100%',

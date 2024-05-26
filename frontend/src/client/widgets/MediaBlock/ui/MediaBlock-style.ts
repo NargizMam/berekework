@@ -1,6 +1,7 @@
 const MediaBlockStyle = {
   container: {
     maxWidth: '1280px',
+    margin: '0 auto',
     '@media (max-width: 960px)': {
       marginBottom: '70px',
     },
