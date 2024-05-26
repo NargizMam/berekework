@@ -2,7 +2,7 @@ import { Button, Grid } from '@mui/material';
 import { cities, educationTypes, jobCities, jobs } from '../constant';
 import { LoadingButton } from '@mui/lab';
 import React, { ReactNode } from 'react';
-import { ApplicantMutation } from '../../types';
+import { ApplicantMutation } from '../../../types';
 
 interface Props {
   state: ApplicantMutation;
@@ -16,10 +16,11 @@ interface Props {
 const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, inputChangeHandler, addField}) => {
   return (
     <div className="applicantFormContainer">
-      <form autoComplete="off" onSubmit={submitFormHandler}>
-        <Grid container direction="column" spacing={2}>
-          <Grid item container justifyContent="space-between" mb={2}>
-            <Grid item xs>
+      <form style={{display: "flex", flexDirection: 'column', alignItems: 'center'}} autoComplete="off" onSubmit={submitFormHandler}>
+        <div className='formContainer'>
+          {/*fio*/}
+          <div className='inputContainer'>
+            <Grid item xs >
               <label className="labelForField" htmlFor="firstName">Имя</label>
               <input
                 className="field"
@@ -41,7 +42,8 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 required
               />
             </Grid>
-          </Grid>
+          </div>
+          {/*отчество*/}
           <Grid item xs>
             <label className="labelForField" htmlFor="secondName">Отчество</label>
             <input
@@ -53,7 +55,8 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               required
             />
           </Grid>
-          <Grid item container justifyContent="space-between" mb={2}>
+          {/*пол и возраст*/}
+          <div className="inputContainer">
             <Grid item xs={7}>
               <label className="labelForField" htmlFor="sex">Пол</label>
               <select
@@ -81,8 +84,9 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 required
               />
             </Grid>
-          </Grid>
-          <Grid item container justifyContent="space-between" mb={2}>
+          </div>
+          {/*страна и город*/}
+          <div className='inputContainer'>
             <Grid item xs>
               <label className="labelForField" htmlFor="country">Страна</label>
               <select
@@ -94,7 +98,7 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 required
               >
                 <option className="menuItem" value="">Выберите страну</option>
-                <option className="menuItem" value="KG">Кыргызстан</option>
+                <option className="menuItem" value="Кыргызстан">Кыргызстан</option>
               </select>
             </Grid>
             <Grid item xs>
@@ -113,7 +117,8 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 ))}
               </select>
             </Grid>
-          </Grid>
+          </div>
+          {/* образование */}
           <Grid item xs>
             <label className="labelForField" htmlFor="education">Образование</label>
             <select
@@ -130,6 +135,7 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               ))}
             </select>
           </Grid>
+          {/* о себе */}
           <Grid item xs>
             <label className="labelForField" htmlFor="aboutApplicant">О себе</label>
             <textarea
@@ -141,6 +147,7 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               required
             />
           </Grid>
+          {/* опыт работы */}
           <Grid item xs>
             <Grid item xs>
               <Button variant="contained"
@@ -152,7 +159,8 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               {fields.map(field => field)}
             </Grid>
           </Grid>
-          <Grid item container justifyContent="space-between" mb={2}>
+          {/* ищу работу */}
+          <div className='inputContainer'>
             <Grid item xs>
               <label className="labelForField" htmlFor="wantedJob">Ищу работу в сфере:</label>
               <select
@@ -185,8 +193,8 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 ))}
               </select>
             </Grid>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
         <LoadingButton
           className="sendBtn"
           type="submit"

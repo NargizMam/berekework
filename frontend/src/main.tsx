@@ -24,5 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </ThemeProvider>
       </BrowserRouter>
     </PersistGate>
-  </Provider>,
+  </Provider>
 );

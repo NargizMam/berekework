@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
-import { WorkExperience } from '../../types';
+import { WorkExperience } from '../../../types';
 
 interface Props {
   id: string;
@@ -43,9 +43,10 @@ const WorkExperienceField: React.FC<Props> = ({
 
 
   return (
-    <Grid item container spacing={2} mb={2}>
+    <div className='workExpWrapper'>
       <Grid item xs={6}>
         <input
+          style={{marginLeft: '8px'}}
           className="field"
           id="job"
           value={state.job}
@@ -53,16 +54,18 @@ const WorkExperienceField: React.FC<Props> = ({
           name="job"
         />
       </Grid>
-      {!isAdded ?
-        <IconButton onClick={addFieldToFormState} aria-label="delete" color="primary">
-          <CheckIcon/>
-        </IconButton>
-        :
-        <IconButton onClick={() => handleDeleteField(state.id)} aria-label="delete" color="primary">
-          <DeleteIcon/>
-        </IconButton>
-      }
-    </Grid>
+      <Grid>
+        {!isAdded ?
+          <IconButton onClick={addFieldToFormState} aria-label="delete" color="primary">
+            <CheckIcon/>
+          </IconButton>
+          :
+          <IconButton onClick={() => handleDeleteField(state.id)} aria-label="delete" color="primary">
+            <DeleteIcon/>
+          </IconButton>
+        }
+      </Grid>
+    </div>
   );
 };
 
