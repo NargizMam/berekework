@@ -10,19 +10,23 @@ import appTheme from './app/appTheme';
 import { addInterceptors } from './app/axiosApi';
 import { PrismicProvider } from '@prismicio/react';
 import { prismicClient } from './app/prismicClient';
+import { GOOGLE_CLIENT_ID } from './constants';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 addInterceptors(store);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <BrowserRouter>
-        <ThemeProvider theme={appTheme}>
-          <PrismicProvider client={prismicClient}>
-            <App />
-          </PrismicProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </PersistGate>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <ThemeProvider theme={appTheme}>
+            <PrismicProvider client={prismicClient}>
+              <App/>
+            </PrismicProvider>
+          </ThemeProvider>
+        </BrowserRouter>
+      </PersistGate>
+    </GoogleOAuthProvider>
   </Provider>,
 );

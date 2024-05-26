@@ -83,7 +83,7 @@ export const LoginPage = () => {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link component={RouterLink} to="/register" variant="body2">
-                Зарегестрироваться
+                Зарегистрироваться
               </Link>
             </Grid>
           </Grid>

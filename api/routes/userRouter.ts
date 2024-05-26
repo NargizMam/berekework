@@ -25,7 +25,8 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
     } else {
       const user = new User({
         email: req.body.email,
-        displayName: req.body.displayName,
+        name: req.body.name,
+        surname: req.body.surname,
         password: req.body.password,
         avatar: req.file ? req.file.filename : null,
       });

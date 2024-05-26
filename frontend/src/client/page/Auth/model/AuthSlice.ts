@@ -1,6 +1,6 @@
 import { AuthResponse, GlobalError, User, ValidationError } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, register } from '../api/AuthThunk';
+import { googleAuth, login, register } from '../api/AuthThunk';
 import { RootState } from '../../../../app/store/store';
 
 interface AuthState {
@@ -38,6 +38,17 @@ export const authSlice = createSlice({
     builder.addCase(register.rejected, (state, { payload: error }) => {
       state.registerLoading = false;
       state.registerError = error || null;
+    });
+    builder.addCase(googleAuth.pending, (state) => {
+      state.loginLoading = true;
+    });
+    builder.addCase(googleAuth.fulfilled, (state, {payload: data}) => {
+      state.loginLoading = false;
+      state.user = data.user;
+    });
+    builder.addCase(googleAuth.rejected, (state, {payload: error}) => {
+      state.loginLoading = false;
+      state.loginError = error || null;
     });
     builder.addCase(login.pending, (state) => {
       state.loginLoading = true;
