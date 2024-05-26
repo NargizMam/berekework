@@ -57,11 +57,9 @@ interface SubtitleProps {
 
 const AboutUsPage = () => {
   const [document] = usePrismicDocumentByUID('about_us', 'aboutusmain');
-
   if (!document) {
     return <div>Loading...</div>;
   }
-  console.log(document.data.body);
 
   const getMainTitle = (slice: MainTileProps) => {
     const { aboutusimage, aboutustitle } = slice.primary;

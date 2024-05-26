@@ -31,7 +31,6 @@ import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 const App = () => {
   const user = useAppSelector(selectUser);
   const location = useLocation();
-
   const AdminRoutes = () => (
     <AdminLayout>
       <Container>
@@ -78,8 +77,8 @@ const App = () => {
             <Container maxWidth="xl">
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage/>} />
                 <Route path="/users" element={<UserPanelPage />} />
                 <Route path="/vacancy" element={<VacancyPage />} />
                 <Route path="/about-us" element={<AboutUsPage />} />

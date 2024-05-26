@@ -1,40 +1,19 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { RegisterMutation } from '../model/types';
-import { Box, Button, Grid, TextField, InputAdornment, IconButton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectRegisterError, selectRegisterLoading } from '../model/AuthSlice';
+import UserRegisterForm from './UserRegisterForm';
+import EmployerRegisterForm from './EmployerRegisterForm';
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { googleAuth } from '../api/AuthThunk';
+import { useAppDispatch } from '../../../../app/store/hooks';
 import { useNavigate } from 'react-router-dom';
-import { LoadingButton } from '@mui/lab';
-import {  useGoogleLogin } from '@react-oauth/google';
-import { googleAuth, register } from '../api/AuthThunk';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import GoogleIcon from '@mui/icons-material/Google';
 
 export const RegisterPage = () => {
-  const [state, setState] = useState<RegisterMutation>({
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
-    avatar: null,
-  });
-  const [alignment, setAlignment] = useState('jobSearch');
-  const [showPassword, setShowPassword] = useState(false);
-
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectRegisterError);
   const navigate = useNavigate();
-  const loading = useAppSelector(selectRegisterLoading);
-
-  const changeFields = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  const [alignment, setAlignment] = useState('applicant');
+  const [showGoogleLogin, setShowGoogleLogin] = useState(false);
 
   const handleAlignment = (newAlignment: string) => {
     if (newAlignment !== null) {
@@ -42,38 +21,14 @@ export const RegisterPage = () => {
     }
   };
 
-  const getFieldError = (fieldName: string) => {
-    try {
-      return error?.errors[fieldName].message;
-    } catch {
-      return undefined;
-    }
-  };
-
-  const submitFormHandler = async (event: FormEvent) => {
-    event.preventDefault();
-    await dispatch(register(state)).unwrap();
-    navigate('/');
-  };
-
-  const googleLoginHandler = async (tokenResponse: any) => {
-    const credential = tokenResponse.credential;
+  const googleLoginHandler = async (credential: string) => {
     await dispatch(googleAuth(credential)).unwrap();
     navigate('/');
   };
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
+  const handleGoogleButtonClick = () => {
+    setShowGoogleLogin(true);
   };
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
-  const googleLogin = useGoogleLogin({
-    onSuccess: googleLoginHandler,
-    onError: () => console.log('Login failed!'),
-  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -85,9 +40,6 @@ export const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5">
-          Регистрация
-        </Typography>
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -96,7 +48,7 @@ export const RegisterPage = () => {
           aria-label="Platform"
           sx={{
             marginBottom: 2,
-            padding: 1,
+            borderRadius: '30px',
             overflow: 'hidden',
             '& .MuiToggleButton-root': {
               border: 'none',
@@ -111,104 +63,49 @@ export const RegisterPage = () => {
             },
           }}
         >
-          <ToggleButton value="jobSearch" sx={{ borderRadius: '30px'}}>Поиск работы</ToggleButton>
-          <ToggleButton value="employeeSearch" sx={{ borderRadius: '30px' }}>Поиск сотрудников</ToggleButton>
+          <ToggleButton value="applicant" sx={{ borderRadius: '30px 0 0 30px' }}>Поиск работы</ToggleButton>
+          <ToggleButton value="employer" sx={{ borderRadius: '0 30px 30px 0' }}>Поиск сотрудников</ToggleButton>
         </ToggleButtonGroup>
-
-        <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Имя"
-                name="name"
-                value={state.name}
-                onChange={changeFields}
-                autoComplete="given-name"
-                error={Boolean(getFieldError('name'))}
-                helperText={getFieldError('name')}
-                InputProps={{
-                  style: { borderRadius: '30px' },
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Фамилия"
-                name="surname"
-                value={state.surname}
-                onChange={changeFields}
-                autoComplete="family-name"
-                error={Boolean(getFieldError('surname'))}
-                helperText={getFieldError('surname')}
-                InputProps={{
-                  style: { borderRadius: '30px' },
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Email"
-                name="email"
-                value={state.email}
-                onChange={changeFields}
-                autoComplete="new-email"
-                error={Boolean(getFieldError('email'))}
-                helperText={getFieldError('email')}
-                InputProps={{
-                  style: { borderRadius: '30px' },
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="password"
-                label="Пароль"
-                type={showPassword ? 'text' : 'password'}
-                value={state.password}
-                onChange={changeFields}
-                autoComplete="new-password"
-                error={Boolean(getFieldError('password'))}
-                helperText={getFieldError('password')}
-                InputProps={{
-                  style: { borderRadius: '30px' },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-          <LoadingButton
-            loading={loading}
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
-          >
-            Войти
-          </LoadingButton>
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ backgroundColor: '#4285F4', color: 'white', borderRadius: '30px', mt: 2 }}
-            onClick={() => googleLogin()}
-          >
-            Войти с помощью Google
-          </Button>
-        </Box>
+        <Typography component="h1" variant="h5">
+          Регистрация
+        </Typography>
+        {alignment === 'applicant' ? <UserRegisterForm /> : <EmployerRegisterForm />}
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{
+            backgroundColor: '#4285F4',
+            color: 'white',
+            borderRadius: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+            mt: 2,
+            textTransform: 'none'
+          }}
+          onClick={handleGoogleButtonClick}
+        >
+          <GoogleIcon sx={{ mr: 1 }} /> Войти с помощью Google
+        </Button>
+        {showGoogleLogin && (
+          <GoogleLogin
+            onSuccess={(credentialResponse: CredentialResponse) => {
+              if (credentialResponse.credential) {
+                void googleLoginHandler(credentialResponse.credential);
+              }
+              setShowGoogleLogin(false);
+            }}
+            onError={() => {
+              console.log('Login failed!');
+              setShowGoogleLogin(false);
+            }}
+            useOneTap
+          />
+        )}
       </Box>
     </Container>
   );
 };
+
+export default RegisterPage;
