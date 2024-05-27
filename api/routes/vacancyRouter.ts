@@ -5,10 +5,8 @@ import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
 
 const vacancyRouter = express.Router();
 
-vacancyRouter.post('/',  employerAuth, async (req: RequestWithEmployer, res, next) => {
+vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next) => {
   const {
-    logoCompany,
-    nameCompany,
     vacancyTitle,
     salary,
     city,
@@ -24,8 +22,6 @@ vacancyRouter.post('/',  employerAuth, async (req: RequestWithEmployer, res, nex
 
   try {
     const vacancyBlock = new Vacancy({
-      logoCompany,
-      nameCompany,
       vacancyTitle,
       salary: {
         minSalary: salary.minSalary,
@@ -59,6 +55,15 @@ vacancyRouter.post('/',  employerAuth, async (req: RequestWithEmployer, res, nex
 
 vacancyRouter.get('/', async (req, res, next) => {
   try {
+    const vacancyPage = req.query.vacancyPage;
+
+    if (vacancyPage) {
+      const result = await Vacancy.find()
+        .select('vacancyTitle salary city')
+        .populate('employer', '-_id companyName logo');
+      return res.send(result);
+    }
+
     const result = await Vacancy.find();
 
     return res.send(result);
@@ -69,7 +74,7 @@ vacancyRouter.get('/', async (req, res, next) => {
 
 vacancyRouter.get('/:id', async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
 
     const result = await Vacancy.findById(id);
     return res.send(result);
@@ -81,8 +86,6 @@ vacancyRouter.get('/:id', async (req, res, next) => {
 vacancyRouter.put('/:id', async (req, res, next) => {
   const { id } = req.params;
   const {
-    logoCompany,
-    nameCompany,
     vacancyTitle,
     salary,
     city,
@@ -97,27 +100,29 @@ vacancyRouter.put('/:id', async (req, res, next) => {
   } = req.body;
 
   try {
-    const updatedVacancy = await Vacancy.findByIdAndUpdate(id, {
-      logoCompany,
-      nameCompany,
-      vacancyTitle,
-      salary: {
-        minSalary: salary.minSalary,
-        maxSalary: salary.maxSalary,
+    const updatedVacancy = await Vacancy.findByIdAndUpdate(
+      id,
+      {
+        vacancyTitle,
+        salary: {
+          minSalary: salary.minSalary,
+          maxSalary: salary.maxSalary,
+        },
+        city,
+        aboutVacancy,
+        responsibilities,
+        workConditions,
+        country,
+        fieldOfWork,
+        age: {
+          minAge: age.minAge,
+          maxAge: age.maxAge,
+        },
+        education,
+        employmentType,
       },
-      city,
-      aboutVacancy,
-      responsibilities,
-      workConditions,
-      country,
-      fieldOfWork,
-      age: {
-        minAge: age.minAge,
-        maxAge: age.maxAge,
-      },
-      education,
-      employmentType,
-    }, { new: true });
+      { new: true },
+    );
 
     if (!updatedVacancy) {
       return res.status(404).send({ message: 'Vacancy not found' });
