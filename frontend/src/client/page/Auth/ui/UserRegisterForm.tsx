@@ -9,14 +9,16 @@ import { selectRegisterError, selectRegisterLoading } from '../model/AuthSlice';
 import { register } from '../api/AuthThunk';
 import { useNavigate } from 'react-router-dom';
 
+const initialState = {
+  name: '',
+  surname: '',
+  email: '',
+  password: '',
+  avatar: null,
+}
+
 const UserRegisterForm = () => {
-  const [state, setState] = useState<RegisterMutation>({
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
-    avatar: null,
-  });
+  const [state, setState] = useState<RegisterMutation>(initialState);
   const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -135,7 +137,7 @@ const UserRegisterForm = () => {
         type="submit"
         fullWidth
         variant="contained"
-        sx={{ mt: 3, py: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
+        sx={{ my: 3, py: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
       >
         Зарегистрироваться
       </LoadingButton>

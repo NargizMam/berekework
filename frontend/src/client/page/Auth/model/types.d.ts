@@ -1,9 +1,9 @@
 export interface RegisterMutation {
+  name: string;
+  surname: string;
   email: string;
   password: string;
   avatar: File | null;
-  name: string;
-  surname: string;
 }
 
 export interface LoginMutation {
