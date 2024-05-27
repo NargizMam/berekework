@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { API_URL } from '../../../../../../app/constants/links';
 
 interface Props {
-  photo: string | null;
+  photo: string | null | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -24,7 +24,7 @@ const FileInput: React.FC<Props> = ({onChange, photo}) => {
       inputRef.current.click();
     }
   };
-
+  console.log(photo);
   return (
     <>
       <input
@@ -35,13 +35,13 @@ const FileInput: React.FC<Props> = ({onChange, photo}) => {
         ref={inputRef}
       />
       <div className="photoFrame">
-
-        {photo ?
-          <img className="photo" src={API_URL + '/' + photo} alt="Photo"/>
-          :
-          <div className="photo"></div>
-        }
-        {preview && <img src={preview} alt="Preview" className="photo"/>}
+        {preview ? (
+          <img src={preview} alt="Preview" className="photo"/>
+        ) : (
+          photo && (
+            <img className="photo" src={`${API_URL}/${photo}`} alt="Photo"/>
+          )
+        )}
         <button className="photoBtn" onClick={activateInput}>+</button>
       </div>
     </>
