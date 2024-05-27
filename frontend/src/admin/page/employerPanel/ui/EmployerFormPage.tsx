@@ -60,15 +60,12 @@ export const EmployerFormPage = () => {
         setFilenameImage(files[0].name);
       } else if (name === 'document') {
         setFilename(files[0].name);
+        setErrorDocument(getExtension(files[0].name)?.toLowerCase() !== 'pdf');
       }
       setState((prevState) => ({
         ...prevState,
         [name]: files[0],
       }));
-    }
-
-    if (name === 'document') {
-      setErrorDocument(getExtension(filename)?.toLowerCase() !== 'pdf');
     }
   };
 
@@ -219,8 +216,8 @@ export const EmployerFormPage = () => {
                 label="document"
                 value={filename || ''}
                 onClick={() => selectFile('document')}
-                error={!errorDocument}
-                helperText={!errorDocument ? 'PDF format!' : null}
+                error={errorDocument}
+                helperText={errorDocument ? 'PDF format!' : null}
               />
             </Grid>
             <Grid item>
