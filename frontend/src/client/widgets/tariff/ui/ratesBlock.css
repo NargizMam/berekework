@@ -27,7 +27,6 @@
   border: none;
 }
 
-
 @media (min-width: 700px) {
   .rateBlockTitle {
     font-size: 46px;
@@ -37,8 +36,16 @@
   .rateBlock {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     gap: 0 10px;
   }
 }
 
+@media (min-width: 1040px) {
+  .rateBlock {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 10px;
+  }
+}

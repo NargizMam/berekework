@@ -3,9 +3,7 @@ import config from './config';
 import Vacancy from './models/vacancy/Vacancy';
 import User from './models/users/userModel';
 import { randomUUID } from 'crypto';
-import Tariff from './models/tariff/tarrifModel';
 import Employer from './models/employer/employerModel';
-import LastNewsBlock from './models/lastNews/LastNewsBlock';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -33,15 +31,6 @@ const run = async () => {
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
   }
-
-  // await VacanciesBlock.create({
-  //   title: 'Последние вакансии',
-  //   button: {
-  //     url: '/',
-  //     text: 'Смотреть еще',
-  //   },
-  //   location: '/',
-  // });
 
   const [_superadmin, _user1, _user2] = await User.create([
     {
@@ -107,12 +96,6 @@ const run = async () => {
       },
     },
   ]);
-
-  await Tariff.create({
-    mainTitle: 'Tariff',
-    title: 'Basic',
-    description: ['Free Food', 'Apple Music'],
-  });
 
   const [vac1, vac2, vac3, vac4, vac5, vac6] = await Vacancy.create(
     {
@@ -303,37 +286,6 @@ const run = async () => {
 
   await Vacancy.updateMany({ _id: { $in: [vac1._id, vac2._id, vac3._id] } }, { employer: employer1._id });
   await Vacancy.updateMany({ _id: { $in: [vac4._id, vac5._id, vac6._id] } }, { employer: employer2._id });
-
-  await LastNewsBlock.create({
-    title: 'Последние новости',
-    page: 'last-news-block',
-    cards: [
-      {
-        cardTitle: 'Природные катастрофы угрожают',
-        cardText: 'Извержения вулканов и землетрясения: что делать и как подготовиться?',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/natural-disasters',
-      },
-      {
-        cardTitle: 'Рост напряженности на Украине',
-        cardText: 'Международные обсуждения и реакции на политическую ситуацию',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/ukraine-tensions',
-      },
-      {
-        cardTitle: 'Экономические прогнозы на следующий квартал',
-        cardText: 'Какие изменения ожидаются в мировой экономике и на рынках?',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/economic-forecasts',
-      },
-      {
-        cardTitle: 'Новые технологии в медицине',
-        cardText: 'Искусственный интеллект, биотехнологии и перспективы лечения заболеваний',
-        dateTime: '2024-04-21T12:00:00Z',
-        buttonUrl: '/medical-technologies',
-      },
-    ],
-  });
 
   await db.close();
 };
