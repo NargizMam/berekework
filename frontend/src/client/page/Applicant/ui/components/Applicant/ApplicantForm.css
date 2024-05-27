@@ -1,0 +1,161 @@
+.applicantFormContainer {
+  width: 350px;
+  padding: 40px 50px;
+}
+
+.labelForField {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #000000;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  font-family: "Montserrat", sans-serif;
+  border: #E9E9E9 solid 2px;
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 35px;
+  line-height: 20px;
+  padding-left: 30px;
+  width: 250px;
+  height: 70px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+
+}
+
+select.field {
+  width: 300px;
+  height: 70px;
+}
+
+textarea.field{
+  height: 360px;
+  width: 270px;
+}
+
+button.sendBtn {
+  min-width: 300px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  background-color: #0866FF;
+  border-radius: 30px;
+  height: 70px;
+  margin-top: 50px;
+  text-transform: lowercase;
+}
+
+.workExpWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 600px) {
+  .field {
+    width: 400px;
+  }
+
+  select.field {
+    width: 450px;
+  }
+
+  textarea.field{
+    width: 380px;
+  }
+}
+
+@media (min-width: 800px) {
+  .field {
+    width: 600px;
+  }
+
+  select.field {
+    width: 650px;
+  }
+
+  textarea.field{
+    width: 580px;
+  }
+
+  button.sendBtn {
+    width: 650px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .applicantFormContainer {
+    background-color: #ffffff;
+    border-radius: 30px;
+    width: 650px;
+    padding: 40px 50px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .applicantFormContainer {
+    width: 850px;
+  }
+
+  div.inputContainer {
+    flex-direction: row;
+  }
+
+  .formContainer {
+    align-items: start;
+  }
+
+  .field {
+    padding-left: 30px;
+    width: 380px;
+    margin-right: 10px;
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: #0866FF;
+  }
+
+  input[type="date"] {
+    width: 205px;
+  }
+
+  textarea.field {
+    width: 770px;
+    height: 330px;
+  }
+
+  button.sendBtn {
+    width: 870px;
+    font-weight: 600;
+    font-size: 20px;
+    height: 70px;
+    margin-top: 50px;
+  }
+
+  textarea.field{
+    padding-top: 20px;
+    padding-right: 20px;
+  }
+
+  select.field {
+    width: 420px;
+  }
+}

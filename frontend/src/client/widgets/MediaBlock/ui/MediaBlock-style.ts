@@ -1,7 +1,6 @@
 const MediaBlockStyle = {
   container: {
     maxWidth: '1280px',
-    margin: '0 auto 180px',
     '@media (max-width: 960px)': {
       marginBottom: '70px',
     },
@@ -24,13 +23,17 @@ const MediaBlockStyle = {
       fontSize: '32px',
     },
   },
+  paragraph: {
+    fontWeight: '500',
+    fontSize: '18x',
+    color: '#777',
+  },
   cards: {
     display: 'flex',
     gap: '10px',
     margin: '0 auto',
     overflowY: 'auto',
   },
-  card: {},
 };
 
 export default MediaBlockStyle;

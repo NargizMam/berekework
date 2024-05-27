@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { countries, educationTypes, workTypes } from '../model/constants';
 import CreateVacancyFormStyle from './CreateVacancyForm-style';
-import { ICreateVacancyForm, Vacancy } from '../model/types';
+import { ICreateVacancyForm, Vacancy, VacancyEdtiData } from '../model/types';
 import TextAriaField from '../../textAriaField/ui/TextAriaField';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectError, selectIsLoading } from '../model/createVacancyFormSlice';
-import { postVacancy } from '../model/createVacancyFormThuncks';
+import { clearEditVacancy, selectEditVacancy, selectError, selectIsLoading } from '../model/createVacancyFormSlice';
+import { postVacancy, updateVacancy } from '../model/createVacancyFormThuncks';
 import { Loader } from '../../../../shared/loader';
 import './CreateVacancyForm.css';
 import { selectUser } from '../../../page/Auth/model/AuthSlice';
@@ -38,13 +38,14 @@ const initialState = {
   maxSalary: '',
   education: '',
   employmentType: '',
-  employer: ''
+  employer: '',
 };
 
 export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
+  const editVacancy = useAppSelector(selectEditVacancy);
   const user = useAppSelector(selectUser);
   const [cities, setCities] = useState<string[]>([]);
 
@@ -57,6 +58,28 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
   });
 
   const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+
+  useEffect(() => {
+    const editData: ICreateVacancyForm = {
+      vacancyTitle: editVacancy?.vacancyTitle || '',
+      aboutVacancy: editVacancy?.aboutVacancy || '',
+      responsibilities: editVacancy?.responsibilities || '',
+      workConditions: editVacancy?.workConditions || '',
+      country: editVacancy?.country || '',
+      city: editVacancy?.city || '',
+      fieldOfWork: editVacancy?.fieldOfWork || '',
+      minAge: editVacancy?.age.minAge.toString() || '',
+      maxAge: editVacancy?.age.maxAge.toString() || '',
+      minSalary: editVacancy?.salary.minSalary.toString() || '',
+      maxSalary: editVacancy?.salary.maxSalary.toString() || '',
+      education: editVacancy?.education,
+      employmentType: editVacancy?.employmentType || '',
+      employer: '',
+    };
+    if (editVacancy) {
+      setState(editData);
+    }
+  }, [editVacancy, dispatch]);
 
   useEffect(() => {
     if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
@@ -98,7 +121,7 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    const createData: Vacancy = {
+    const stateData: Vacancy = {
       vacancyTitle: state.vacancyTitle,
       aboutVacancy: state.aboutVacancy,
       responsibilities: state.responsibilities,
@@ -116,10 +139,19 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
       },
       education: state.education,
       employmentType: state.employmentType,
-      employer: user && user.role === 'employer' ? user._id : undefined
+      employer: user && user.role === 'employer' ? user._id : undefined,
     };
     try {
-      await dispatch(postVacancy(createData)).unwrap();
+      if (editVacancy) {
+        const editData: VacancyEdtiData = {
+          id: editVacancy._id,
+          vacancy: stateData,
+        };
+        await dispatch(updateVacancy(editData)).unwrap();
+      } else {
+        await dispatch(postVacancy(stateData)).unwrap();
+      }
+      dispatch(clearEditVacancy());
       setState(initialState);
       setOpenForm(false);
     } catch (e) {
@@ -129,7 +161,7 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
 
   return (
     <>
-      {error && <ErrorMessage errorMessage={error.message}/>}
+      {error && <ErrorMessage errorMessage={error.message} />}
       {isLoading ? (
         <Loader />
       ) : (

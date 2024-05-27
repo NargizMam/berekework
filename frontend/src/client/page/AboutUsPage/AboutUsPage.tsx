@@ -171,19 +171,22 @@ const AboutUsPage = () => {
   };
 
   return (
-    <Container maxWidth="lg">
-      <SliceZone
-        slices={document.data.body}
-        components={{
-          aboutusmaintitle: ({ slice }) => getMainTitle(slice),
-          aboutusinfo: ({ slice }) => getAboutUsInfo(slice),
-          subtitle: ({ slice }) => getSubtitle(slice),
-          maincard: MainCards,
-          ourvalues: OurValuesBlock,
-          galleryblock: MediaBlock,
-        }}
-      />
-    </Container>
+    <>
+      <Container>
+        <SliceZone
+          slices={document.data.body}
+          components={{
+            aboutusmaintitle: ({ slice }) => getMainTitle(slice),
+            aboutusinfo: ({ slice }) => getAboutUsInfo(slice),
+            subtitle: ({ slice }) => getSubtitle(slice),
+            maincard: MainCards,
+            ourvalues: OurValuesBlock,
+            galleryblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '180px' }} />,
+            videoblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '100px' }} />,
+          }}
+        />
+      </Container>
+    </>
   );
 };
 

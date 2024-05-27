@@ -44,3 +44,30 @@ export interface Vacancy {
   employmentType: string;
   employer: string | undefined;
 }
+
+export interface VacancyWithId {
+  _id: string;
+  vacancyTitle: string;
+  aboutVacancy: string;
+  responsibilities: string;
+  workConditions: string;
+  country: string;
+  city: string;
+  fieldOfWork: string;
+  salary: {
+    minSalary: number;
+    maxSalary: number;
+  };
+  age: {
+    minAge: number;
+    maxAge: number;
+  };
+  education: srring;
+  employmentType: string;
+  employer: string | undefined;
+}
+
+export interface VacancyEdtiData {
+  id: string;
+  vacancy: Vacancy;
+}

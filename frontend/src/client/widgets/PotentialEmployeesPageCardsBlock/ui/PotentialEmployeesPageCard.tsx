@@ -1,6 +1,6 @@
 import React from 'react';
 import './PotentialEmployeesPageCard.css';
-import { API_URL } from '../../../app/constants/links';
+import { API_URL } from '../../../../app/constants/links';
 
 export interface PotentialEmployeesPageCardProps {
   _id?: string;
