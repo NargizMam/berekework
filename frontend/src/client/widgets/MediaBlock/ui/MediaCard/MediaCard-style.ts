@@ -5,12 +5,14 @@ const MediaCardStyle = {
     boxSizing: 'border-box',
     flexBasis: '420px',
     minWidth: '272px',
-    maxHeight: '262px',
     borderRadius: '30px',
     overflow: 'hidden',
     cursor: 'pointer',
     position: 'relative',
     height: '100%',
+    '@media (min-width: 1281px)': {
+      maxHeight: '262px',
+    },
   },
   image: {
     width: '100%',
@@ -55,7 +57,7 @@ const MediaCardStyle = {
       width: '90%',
       padding: '16px',
     },
-    '@media (min-width:600px) and (max-width:960px)': {
+    '@media (min-width:600px) and (max-width:900px)': {
       width: '70%',
       padding: '24px',
     },
@@ -64,7 +66,7 @@ const MediaCardStyle = {
     position: 'absolute',
     top: '10px',
     right: '10px',
-    zIndex: 1300, // Убедитесь, что кнопка выше модального окна
+    zIndex: 1300,
   },
 };
 
