@@ -25,8 +25,8 @@ import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/Potent
 import TariffFormPage from '../admin/page/tariffPanel/ui/tariffFormPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
+import { VacancyPageClient } from '../client/page/VacancyPage';
 // import { RatesBLock } from '../client/widgets/tariff/ui/ratesBLock';
-
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -39,20 +39,24 @@ const App = () => {
           <Route path="/" element={<AdminMainPage />} />
           <Route path="/header" element={<HeaderAdmin />} />
           <Route path="/pages" element={<AdminAllPages />} />
-          <Route path="/moderators" element={
-            <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
-              <ModeratorsPage/>
-            </ProtectedRoute>} />
+          <Route
+            path="/moderators"
+            element={
+              <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
+                <ModeratorsPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/pages/new-page" element={<AdminCreatePage />} />
           <Route path="/adminHeading" element={<HeadingAdmin />} />
           <Route path="/adminHeading:location" element={<HeadingDetail />} />
-          <Route path="/employers" element={<EmployerPanelPage/>}/>
-          <Route path="/employers-submit" element={<EmployerFormPage/>}/>
-          <Route path="/tariffs" element={<TariffPanelPage/>}/>
-          <Route path="/tariffs-new" element={<TariffFormPage/>}/>
-          <Route path="/tariffs-submit/:id" element={<TariffFormPage/>}/>
-          <Route path="/vacancy" element={<VacancyPage/>}/>
-          <Route path="/users" element={<UserPanelPage/>}/>
+          <Route path="/employers" element={<EmployerPanelPage />} />
+          <Route path="/employers-submit" element={<EmployerFormPage />} />
+          <Route path="/tariffs" element={<TariffPanelPage />} />
+          <Route path="/tariffs-new" element={<TariffFormPage />} />
+          <Route path="/tariffs-submit/:id" element={<TariffFormPage />} />
+          <Route path="/vacancy" element={<VacancyPage />} />
+          <Route path="/users" element={<UserPanelPage />} />
         </Routes>
       </Container>
     </AdminLayout>
@@ -70,29 +74,29 @@ const App = () => {
 
   return (
     <>
-      <WarningMessage/>
+      <WarningMessage />
       {location.pathname.startsWith('/admin') ? (
         adminRoutes
       ) : (
         <ClientLayout>
-            <Container maxWidth="xl">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/users" element={<UserPanelPage />} />
-                <Route path="/vacancy" element={<VacancyPage />} />
-                <Route path="/about-us" element={<AboutUsPage />} />
-                {/*<Route path="/tariffs" element={<RatesBLock />} />*/}
-                <Route path="/employersProfile/:id" element={<EmployerProfile/>} />
-                <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
-                <Route path="/newApplicant" element={<ApplicantSettings />} />
-                <Route path="/applicantProfile" element={<ApplicantProfile />} />
-                <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
-                <Route path='/for-employer' element={<ForEmployerPage/>}/>
-                <Route path="*" element={'Not found'} />
-              </Routes>
-            </Container>
+          <Container maxWidth="xl" sx={{ border: '1px solid red' }}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/users" element={<UserPanelPage />} />
+              <Route path="/vacancy" element={<VacancyPageClient />} />
+              <Route path="/about-us" element={<AboutUsPage />} />
+              {/*<Route path="/tariffs" element={<RatesBLock />} />*/}
+              <Route path="/employersProfile/:id" element={<EmployerProfile />} />
+              <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
+              <Route path="/newApplicant" element={<ApplicantSettings />} />
+              <Route path="/applicantProfile" element={<ApplicantProfile />} />
+              <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
+              <Route path="/for-employer" element={<ForEmployerPage />} />
+              <Route path="*" element={'Not found'} />
+            </Routes>
+          </Container>
         </ClientLayout>
       )}
     </>

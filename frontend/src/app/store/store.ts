@@ -18,6 +18,7 @@ import { fileReducer } from '../../admin/page/adminPages/model/imageUploadSlice'
 import { employersProfileReducer } from '../../client/page/employerProfile/model/employerProfileSlice';
 import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
 import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
+import { vacancyClientReducer } from '../../client/page/VacancyPage/model/vacancySlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   employerAdmin: employerReducer,
   warningMessage: warningMessageReducer,
   createVacancyForm: createVacancyFormReducer,
+  vacancyClient: vacancyClientReducer,
 });
 
 export const store = configureStore({
