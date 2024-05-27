@@ -5,6 +5,7 @@ import { EmployeesDataType } from '../types';
 import mongoose from 'mongoose';
 import path from 'path';
 import * as fs from 'fs';
+import { FileCleaner } from '../helpers/cleaner';
 
 const employeesCardRouter = Router();
 
@@ -62,8 +63,7 @@ employeesCardRouter.put('/:id', employeesUpload.single('image'),
         return res.status(404).send({ error: 'Card not found' });
       }
 
-      const oldPhotoPath = path.join(__dirname, '../public', existedCard.photo ? 
-      existedCard.photo : '');
+      FileCleaner(existedCard.photo ? existedCard.photo : '');
 
       Object.assign(existedCard, {
         name,
@@ -77,12 +77,6 @@ employeesCardRouter.put('/:id', employeesUpload.single('image'),
       existedCard.photo = employeePhoto;
 
       await existedCard.save();
-
-      fs.unlink(oldPhotoPath, (err) => {
-        if (err) {
-          console.error(`Failed to delete old picture: ${err.message}`);
-        }
-      });
 
       return res.send({ message: 'employee has been changed', existedCard });
     } catch (error) {
@@ -108,14 +102,7 @@ employeesCardRouter.delete('/:id', async (req: Request, res: Response, next: Nex
         return res.status(404).send({ error: 'Card not found' });
       }
 
-      const oldPhotoPath = path.join(__dirname, '../public', deletedCard.photo ? 
-      deletedCard.photo : '');
-
-      fs.unlink(oldPhotoPath, (err) => {
-        if (err) {
-          console.error(`Failed to delete old picture: ${err.message}`);
-        }
-      });
+      FileCleaner(deletedCard.photo ? deletedCard.photo : '');
 
       return res.send({ 
         message: 'employee has been deleted', 

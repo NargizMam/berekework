@@ -3,6 +3,7 @@ import mainContainerCard from "../models/mainContainerCard/mainContainerCardMode
 import { cardUpload } from "../multer";
 import { mainCardContainerTypeWithoutId } from "../types";
 import mongoose from "mongoose";
+import { FileCleaner } from "../helpers/cleaner";
 
 const mainContainerCardRouter = Router();
 
@@ -73,6 +74,9 @@ async (req: Request, res: Response, next: NextFunction) => {
       return res.status(404).send({ error: 'Card not found' });
     }
 
+    FileCleaner(existedCard.image ? existedCard.image : '');
+    FileCleaner(existedCard.icon ? existedCard.icon : '');
+
     Object.assign(existedCard, { 
       title, 
       text, 
@@ -104,6 +108,9 @@ mainContainerCardRouter.delete('/:id', async (req: Request, res: Response, next:
     const cardID = req.params.id;
 
     const result = await mainContainerCard.findByIdAndDelete( cardID );
+
+    FileCleaner(result?.image ? result.image : '');
+    FileCleaner(result?.icon ? result.icon : '');
 
     if (!result) {
       return res.status(404).send({ 

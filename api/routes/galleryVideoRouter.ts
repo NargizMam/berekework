@@ -4,6 +4,7 @@ import { imagesUpload, videosUpload } from "../multer";
 import mongoose from "mongoose";
 import path from "path";
 import * as fs from 'fs';
+import { FileCleaner } from "../helpers/cleaner";
 
 const galleryVideoRouter = Router();
 
@@ -63,20 +64,12 @@ galleryVideoRouter.put('/new-picture/:id', imagesUpload.single('picture'),
         return res.status(404).send({error: 'item not found'});
       }
 
-      const oldPicturePath = path.join(__dirname, '../public', 'images', updatedPicture.picture ? 
-      updatedPicture.picture : '');
-
+      FileCleaner(updatedPicture.picture ? updatedPicture.picture : '');
 
       updatedPicture.picture = picture.filename;
       updatedPicture.name = picture.originalname.toString();
 
       await updatedPicture.save();
-
-      fs.unlink(oldPicturePath, (err) => {
-        if (err) {
-          console.error(`Failed to delete old picture: ${err.message}`);
-        }
-      });
 
       return res.send({ message: 'Updated', updatedPicture });
     } catch (error) {
@@ -99,6 +92,8 @@ galleryVideoRouter.delete('/new-picture/:id', async (req: Request, res: Response
 
     try {
       const deletedPicture = await GalleryVideo.findByIdAndDelete(itemId);
+
+      FileCleaner(deletedPicture?.picture ? deletedPicture.picture : '');
 
       return res.send({ 
         message: 'Deleted', deletedPicture 
@@ -156,20 +151,16 @@ galleryVideoRouter.put('/new-video/:id', videosUpload.single('video'),
         return res.status(404).send({ error: 'item not found' });
       }
 
-      const oldVideoPath = path.join(__dirname, '../public', 'videos', updatedVideo.video ? updatedVideo.video : '');
+      FileCleaner(updatedVideo.video ? updatedVideo.video : '');
 
       updatedVideo.video = video.filename;
       updatedVideo.name = video.originalname.toString();
 
       await updatedVideo.save();
 
-      fs.unlink(oldVideoPath, (err) => {
-        if (err) {
-          console.error(`Failed to delete old video: ${err.message}`);
-        }
+      return res.send({ 
+        message: 'Updated', updatedVideo
       });
-
-      return res.send({ message: 'Updated', updatedVideo});
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
         return res.status(422).send(e);
@@ -189,6 +180,8 @@ galleryVideoRouter.delete('/new-video/:id', async (req: Request, res: Response, 
 
   try {
     const deletedVideo = await GalleryVideo.findByIdAndDelete(itemId);
+
+    FileCleaner(deletedVideo?.video ? deletedVideo.video : '');
 
     return res.send({
       message: 'Deleted',
