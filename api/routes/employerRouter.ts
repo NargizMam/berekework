@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import Employer from '../models/employer/employerModel';
 import {multiUpload} from '../multer';
 import {UploadedFiles} from '../types';
+import { FileCleaner } from '../helpers/cleaner';
 
 const employerRouter = Router();
 
@@ -61,7 +62,10 @@ employerRouter.get('/:id', async (req, res, next) => {
 
 employerRouter.delete('/:id', async (req, res, next) => {
   try {
-    await Employer.findByIdAndDelete(req.params.id);
+    const employer = await Employer.findByIdAndDelete(req.params.id);
+
+    FileCleaner(employer?.logo ? employer.logo : '');
+
     res.send({ message: 'Employer deleted!' });
   } catch (error) {
     return next(error);

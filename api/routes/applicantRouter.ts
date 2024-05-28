@@ -4,6 +4,7 @@ import {imagesUpload} from '../multer';
 import auth, {RequestWithUser} from '../middleware/auth';
 import Applicant from "../models/applicants/Applicant";
 import permit from "../middleware/permit";
+import { FileCleaner } from '../helpers/cleaner';
 
 const applicantRouter = express.Router();
 
@@ -111,6 +112,8 @@ applicantRouter.delete(
             if (!applicant) {
                 return res.status(400).send({error: 'Applicant does not exist'});
             }
+
+            FileCleaner(applicant?.photo ? applicant.photo : '');
 
             await Applicant.deleteOne({_id: req.params.id});
             res.send('deleted');

@@ -3,8 +3,6 @@ import employeesCard from '../models/employeesCard/employeesCardModel';
 import { employeesUpload } from '../multer';
 import { EmployeesDataType } from '../types';
 import mongoose from 'mongoose';
-import path from 'path';
-import * as fs from 'fs';
 import { FileCleaner } from '../helpers/cleaner';
 
 const employeesCardRouter = Router();

@@ -2,6 +2,7 @@ import express from 'express';
 import Heading from '../models/heading/headingModels';
 import { imagesUpload } from '../multer';
 import mongoose from 'mongoose';
+import { FileCleaner } from '../helpers/cleaner';
 
 const headingRouter = express.Router();
 
@@ -65,7 +66,10 @@ headingRouter.patch('/:id', imagesUpload.single('image'), async (req, res, next)
 headingRouter.delete('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
-    await Heading.findByIdAndDelete(id);
+    const heading = await Heading.findByIdAndDelete(id);
+
+    FileCleaner(heading?.image ? heading.image : '');
+
     return res.send({ message: `Heading ${id} deleted!` });
   } catch (error) {
     return next(error);
