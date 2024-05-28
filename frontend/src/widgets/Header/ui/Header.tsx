@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   const nav = (
-    <nav>
+    <nav className="navigation-big-screen">
       <ul className="main-mav-web">
         {headerPrismicResponse?.body[0].items &&
           headerPrismicResponse.body[0].items.map((item, index) => (
@@ -62,7 +62,7 @@ const Header = () => {
     <div className="header">
       <Container>
         <div className="header-content">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="header-logo-wrapper">
             {headerPrismicResponse?.header_logo && (
               <a href={headerPrismicResponse?.logo_link}>
                 <img
@@ -72,8 +72,8 @@ const Header = () => {
                 />
               </a>
             )}
-            <button className="burger-button" type="button" onClick={toggleMenu}></button>
           </div>
+          <button className="burger-button" type="button" onClick={toggleMenu}></button>
           {nav}
           <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
             <ul className="main-nav-list">
