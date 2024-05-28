@@ -38,9 +38,10 @@ const FileInput: React.FC<Props> = ({onChange, photo}) => {
         {preview ? (
           <img src={preview} alt="Preview" className="photo"/>
         ) : (
-          photo && (
-            <img className="photo" src={`${API_URL}/${photo}`} alt="Photo"/>
-          )
+          photo ?
+            (<img className="photo" src={`${API_URL}/${photo}`} alt="Photo"/>)
+            :
+            (<div className="photo"></div>)
         )}
         <button className="photoBtn" onClick={activateInput}>+</button>
       </div>
