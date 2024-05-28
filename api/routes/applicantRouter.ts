@@ -77,6 +77,7 @@ applicantRouter.post(
                     photo: req.file ? req.file.filename : null,
                     sex: req.body.sex,
                     dateOfBirth: req.body.dateOfBirth,
+                    country: req.body.country,
                     city: req.body.city,
                     education: req.body.education,
                     aboutApplicant: req.body.aboutApplicant,

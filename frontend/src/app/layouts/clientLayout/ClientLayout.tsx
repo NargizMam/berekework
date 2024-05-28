@@ -14,7 +14,7 @@ const ClientLayout: React.FC<React.PropsWithChildren> = ({children}) => {
           {children}
         </Container>
       </main>
-      <footer>
+      <footer style={{marginTop: 'auto'}}>
         <Footer/>
       </footer>
     </>

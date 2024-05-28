@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation, useRoutes } from 'react-router-dom';
+import NotFound from '../widgets/NotFound/NotFound';
 import AdminLayout from './layouts/adminLayout/AdminLayout';
 import HomePage from '../client/page/HomePage/HomePage';
 import { AdminMainPage } from '../admin/page/adminMainPage';
@@ -75,7 +76,7 @@ const App = () => {
                 <Route path="/applicantProfile" element={<ApplicantProfile />} />
                 <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
                 <Route path='/for-employer' element={<ForEmployerPage/>}/>
-                <Route path="*" element={'Not found'} />
+                <Route path="*" element={<NotFound/>} />
               </Routes>
             </Container>
         </ClientLayout>

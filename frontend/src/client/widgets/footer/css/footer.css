@@ -1,68 +1,72 @@
 .footer {
-  background-color: #F5F5F5;
-  border-radius: 20px 20px 20px 20px;
-  padding-top: 10px ;
-  padding-bottom: 20px;
+	background-color: #F5F5F5;
+	border-radius: 20px 20px 20px 20px;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 120px;
 }
 
 .footer-nav {
-  list-style: none;
+	list-style: none;
 }
 
 .container {
-  max-width: 1280px;
+	max-width: 1280px;
 }
 
 .footer-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 20px;
+	font-size: 16px;
+	font-weight: 600;
 }
 
 .footer-nav-item {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 
 .footer-nav-link {
-  cursor: pointer;
-  color: #777777;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
+	cursor: pointer;
+	color: #777777;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
 }
 
 .footer-bottom {
-  padding: 10px;
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .logo-footer {
- width: 100%;
-  margin-top: 30px;
+	width: 100%;
+	margin-top: 30px;
 }
 
 .footer-icon-bottom {
-  display: flex;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .footer-bottom-nav-item {
-  margin: 0 5px;
+	margin: 0 5px;
 }
 
 .footer-bottom-nav-item:first-child {
-  margin-left: 0;
+	margin-left: 0;
 }
 
 .footer-contacts-content {
-  color: #000000;
-  font-weight: 500;
-  font-size: 14px;
-  margin: 5px 0;
+	color: #000000;
+	font-weight: 500;
+	font-size: 14px;
 }
 
 .footer-bottom-text {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  color: #777777;
-  margin-top: 50px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	color: #777777;
+	margin-top: 50px;
 }
