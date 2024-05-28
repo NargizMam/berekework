@@ -26,6 +26,11 @@ const MediaBlockStyle = {
       fontSize: '32px',
     },
   },
+  subtitleNoCards: {
+    fontWeight: '500',
+    fontSize: '18px',
+    color: '#777',
+  },
   paginationControls: {
     display: 'flex',
     gap: '10px',

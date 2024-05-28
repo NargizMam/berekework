@@ -32,6 +32,7 @@
     "@types/uuid": "^9.0.8",
     "axios": "^1.6.7",
     "dayjs": "^1.11.10",
+    "fslightbox-react": "^1.7.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-player": "^2.16.0",
@@ -43,6 +44,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/fslightbox-react": "^1.7.7",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

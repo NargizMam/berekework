@@ -9,6 +9,7 @@ const MediaCardStyle = {
     overflow: 'hidden',
     cursor: 'pointer',
     position: 'relative',
+    padding: 0,
     height: '100%',
     '@media (min-width: 1281px)': {
       maxHeight: '262px',
@@ -17,14 +18,7 @@ const MediaCardStyle = {
   image: {
     width: '100%',
     height: '100%',
-  },
-  noImageWrapper: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ccc',
+    objectFit: 'cover',
   },
   iconPlayWrapper: {
     position: 'absolute',
@@ -39,34 +33,6 @@ const MediaCardStyle = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-  },
-  modal: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '80%',
-    maxWidth: '800px',
-    backgroundColor: '#fff',
-    border: 'none',
-    boxShadow: 24,
-    padding: '16px',
-    outline: 0,
-    overflow: 'hidden',
-    '@media (max-width:600px)': {
-      width: '90%',
-      padding: '16px',
-    },
-    '@media (min-width:600px) and (max-width:900px)': {
-      width: '70%',
-      padding: '24px',
-    },
-  },
-  closeButton: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    zIndex: 1300,
   },
 };
 

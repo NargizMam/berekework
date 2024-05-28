@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { Box, CardMedia, Modal, IconButton } from '@mui/material';
-import ReactPlayer from 'react-player';
-import CloseIcon from '@mui/icons-material/Close';
+import React from 'react';
+import { Box, Button, CardMedia } from '@mui/material';
 import iconPlay from '../../images/icon-play.png';
 import MediaCardStyle from './MediaCard-style';
 
@@ -14,69 +12,26 @@ export interface MediaCardApiData {
     url: string;
     alt: string;
   };
+  onClick: (index: number) => void;
+  index: number;
 }
 
-const MediaCard: React.FC<MediaCardApiData> = ({ image, video }) => {
-  const [open, setOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<{
-    type: 'image' | 'video';
-    url: string;
-  } | null>(null);
-
-  const handleOpen = (type: 'image' | 'video', url: string) => {
-    if (url) {
-      setModalContent({ type, url });
-      setOpen(true);
-    }
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setModalContent(null);
-  };
-
+const MediaCard: React.FC<MediaCardApiData> = ({ image, video, onClick, index }) => {
   const imageUrl = image ? image.url : null;
   const videoUrl = video ? video.url : null;
 
-  const modal = (
-    <Modal open={open} onClose={handleClose}>
-      <>
-        <Box sx={MediaCardStyle.modal}>
-          {modalContent?.type === 'image' ? (
-            <CardMedia
-              sx={MediaCardStyle.image}
-              component="img"
-              image={modalContent.url}
-              alt={modalContent?.type === 'image' ? image?.alt : ''}
-            />
-          ) : (
-            <ReactPlayer url={modalContent?.url} controls width="100%" height="100%" />
-          )}
-        </Box>
-        <IconButton sx={MediaCardStyle.closeButton} onClick={handleClose}>
-          <CloseIcon />
-        </IconButton>
-      </>
-    </Modal>
-  );
-
   const mediaElement = imageUrl ? (
-    <Box sx={MediaCardStyle.card} onClick={() => handleOpen(videoUrl ? 'video' : 'image', videoUrl || imageUrl)}>
+    <Button sx={MediaCardStyle.card} onClick={() => onClick(index)}>
       <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt || video?.alt || ''} />
       {videoUrl && (
         <Box sx={MediaCardStyle.iconPlayWrapper}>
           <img src={iconPlay} alt="play" />
         </Box>
       )}
-    </Box>
+    </Button>
   ) : null;
 
-  return (
-    <>
-      {mediaElement}
-      {modal}
-    </>
-  );
+  return <>{mediaElement}</>;
 };
 
 export default MediaCard;
