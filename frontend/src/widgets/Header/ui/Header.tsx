@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../app/store/hooks';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import UserMenu from '../UserMenu';
 import { useSinglePrismicDocument } from '@prismicio/react';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import '../css/style.css';
 import '../css/media.css';
 
@@ -60,40 +60,42 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="header-content container">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {headerPrismicResponse?.header_logo && (
-            <a href={headerPrismicResponse?.logo_link}>
-              <img
-                src={headerPrismicResponse?.header_logo.url}
-                alt={headerPrismicResponse?.header_logo.alt}
-                style={{ width: 220, height: 56 }}
-              />
-            </a>
+      <Container>
+        <div className="header-content">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {headerPrismicResponse?.header_logo && (
+              <a href={headerPrismicResponse?.logo_link}>
+                <img
+                  src={headerPrismicResponse?.header_logo.url}
+                  alt={headerPrismicResponse?.header_logo.alt}
+                  style={{ width: 220, height: 56 }}
+                />
+              </a>
+            )}
+            <button className="burger-button" type="button" onClick={toggleMenu}></button>
+          </div>
+          {nav}
+          <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
+            <ul className="main-nav-list">
+              {headerPrismicResponse?.body[0].items &&
+                headerPrismicResponse.body[0].items.map((item, index) => (
+                  <li key={index + 'navDrop'} className="main-nav-item">
+                    <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
+                      {item.name_link}
+                    </Typography>
+                  </li>
+                ))}
+            </ul>
+          </nav>
+          {!user ? (
+            <NavLink to="/login" className="login">
+              Войти
+            </NavLink>
+          ) : (
+            <UserMenu user={user} />
           )}
-          <button className="burger-button" type="button" onClick={toggleMenu}></button>
         </div>
-        {nav}
-        <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
-          <ul className="main-nav-list">
-            {headerPrismicResponse?.body[0].items &&
-              headerPrismicResponse.body[0].items.map((item, index) => (
-                <li key={index + 'navDrop'} className="main-nav-item">
-                  <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
-                    {item.name_link}
-                  </Typography>
-                </li>
-              ))}
-          </ul>
-        </nav>
-        {!user ? (
-          <NavLink to="/login" className="login">
-            Войти
-          </NavLink>
-        ) : (
-          <UserMenu user={user} />
-        )}
-      </div>
+      </Container>
     </div>
   );
 };
