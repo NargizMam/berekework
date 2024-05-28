@@ -1,21 +1,22 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
+export const transporter = nodemailer.createTransport({
+  port: 465,
+  host: 'smtp.gmail.com',
+  secure: true,
   auth: {
     user: '04072002mu@gmail.com',
-    pass: '2107mika',
+    pass: 'zrslivmlllbgcsmw',
   },
-  secure: true,
 });
 
-const mailOptions = {
-  from: '04072002mu@gmail.com',
-  to: 'muradilakk02@gmail.com',
-  subject: 'Hello my friend!',
-  text: 'Text of letter',
-};
-
-transporter.sendMail(mailOptions, (err) => {
-  console.log(err);
-});
+// const mailOptions = {
+//   from: '04072002mu@gmail.com',
+//   to: 'muradilakk02@gmail.com',
+//   subject: 'Hello my friend!',
+//   text: 'Text of letter',
+// };
+//
+// transporter.sendMail(mailOptions, (err) => {
+//   console.log(err);
+// });
