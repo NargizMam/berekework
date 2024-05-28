@@ -25,9 +25,10 @@ export interface MediaBlockApiData {
 interface Props {
   slice: MediaBlockApiData;
   style?: React.CSSProperties;
+  className: string;
 }
 
-const MediaBlock: React.FC<Props> = ({ slice, style }) => {
+const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
   const swiperRef = useRef<any>(null);
 
   return (
@@ -41,7 +42,7 @@ const MediaBlock: React.FC<Props> = ({ slice, style }) => {
         <Box sx={MediaBlockStyle.paginationControls}>
           <button
             style={MediaBlockStyle.swiperButton}
-            className="swiper-button-prev"
+            className={`swiper-button-prev-${className}`}
             onClick={() => swiperRef.current.swiper.slidePrev()}
             disabled={false}
           >
@@ -49,7 +50,7 @@ const MediaBlock: React.FC<Props> = ({ slice, style }) => {
           </button>
           <button
             style={MediaBlockStyle.swiperButton}
-            className="swiper-button-next"
+            className={`swiper-button-next-${className}`}
             onClick={() => swiperRef.current.swiper.slideNext()}
             disabled={false}
           >
@@ -66,8 +67,8 @@ const MediaBlock: React.FC<Props> = ({ slice, style }) => {
             clickable: true,
           }}
           navigation={{
-            prevEl: '.swiper-button-prev',
-            nextEl: '.swiper-button-next',
+            prevEl: `.swiper-button-prev-${className}`,
+            nextEl: `.swiper-button-next-${className}`,
           }}
           breakpoints={{
             640: {
