@@ -125,7 +125,7 @@ const ApplicantFullForm: React.FC<Props> = ({applicant, onSubmit, loading}) => {
         <div className="whiteBackground"></div>
         <div className="applicantContainer">
           <FileInput
-            photo={state.photo}
+            photo={applicant?.photo}
             onChange={fileInputChangeHandler}
           />
           <p className="profileTitle">Настройки профиля</p>
