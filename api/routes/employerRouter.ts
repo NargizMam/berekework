@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import Employer from '../models/employer/employerModel';
 import { multiUpload } from '../multer';
 import { UploadedFiles } from '../types';
+import { transporter } from '../mailer';
 
 const employerRouter = Router();
 
@@ -32,6 +33,12 @@ employerRouter.post(
       });
       employer.generateToken();
       await employer.save();
+      await transporter.sendMail({
+        from: '04072002mu@gmail.com',
+        to: req.body.email,
+        subject: 'new employer!!',
+        text: `${req.body.email} already to employer!`,
+      });
       return res.send({ message: 'Employer is ready!', employer });
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
