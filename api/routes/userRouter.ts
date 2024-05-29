@@ -1,9 +1,12 @@
+import mongoose from 'mongoose';
 import { Router } from 'express';
 import User from '../models/users/userModel';
-import mongoose from 'mongoose';
-
 import { imagesUpload, documentsUpload } from '../multer';
 import Employer from '../models/employer/employerModel';
+import config from "../config";
+import {OAuth2Client} from "google-auth-library";
+const client = new OAuth2Client(config.google.clientId);
+
 
 const userRouter = Router();
 
@@ -11,7 +14,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
   try {
     if (req.query && req.query.role) {
       const user = new User({
-        displayName: req.body.name,
+        displayName: req.body.displayName,
         email: req.body.email,
         password: req.body.password,
         role: 'admin',
@@ -22,6 +25,8 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
     } else {
       const user = new User({
         email: req.body.email,
+        name: req.body.name,
+        surname: req.body.surname,
         password: req.body.password,
         avatar: req.file ? req.file.filename : null,
       });
@@ -35,6 +40,51 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
     }
 
     next(error);
+  }
+});
+userRouter.post('/google', async (req, res, next) => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: req.body.credential,
+      audience: config.google.clientId,
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload) {
+      return res.status(400).send({ error: 'Google login error!' });
+    }
+
+    const email = payload['email'];
+
+    const id = payload['sub'];
+    const displayName = payload['name'];
+    const image = payload['picture'];
+
+    if (!email) {
+      return res.status(400).send({ error: 'Not enough user data to continue' });
+    }
+
+    let user = await User.findOne({ googleID: id });
+
+    if (!user) {
+      user = new User({
+        email: email,
+        password: crypto.randomUUID(),
+        googleID: id,
+        displayName: displayName ? displayName : email,
+        image,
+      });
+    }
+    user.generateToken();
+
+    await user.save();
+    return res.send({ message: 'Login with Google successful!', user });
+  } catch (e) {
+    if (e instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(e);
+    }
+    return next(e);
   }
 });
 

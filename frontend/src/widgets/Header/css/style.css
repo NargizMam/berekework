@@ -49,7 +49,6 @@
 .login {
   color: #000000;
   cursor: pointer;
-  display: none;
 }
 
 .login:hover {

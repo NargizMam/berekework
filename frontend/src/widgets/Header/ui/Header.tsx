@@ -34,6 +34,7 @@ interface HeaderProps {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useAppSelector(selectUser);
+  console.log(user);
 
   const [document] = useSinglePrismicDocument('header');
 
