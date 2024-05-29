@@ -11,6 +11,9 @@ const MediaBlockStyle = {
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: '60px',
+    '@media (max-width: 900px)': {
+      marginBottom: '32px',
+    },
   },
   title: {
     fontWeight: '700',

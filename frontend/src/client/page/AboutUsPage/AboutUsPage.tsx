@@ -98,10 +98,22 @@ const AboutUsPage = () => {
   };
 
   const getSubtitle = (slice: SubtitleProps) => {
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
+
+    const subtitleStyle = {
+      fontSize: isMobile ? '32px' : '46px',
+      fontWeight: 700,
+      lineHeight: 1.3,
+      color: '#000',
+      margin: isMobile ? '0 0 32px 0' : '0 0 60px 0',
+    };
+
     return (
-      <div key={slice.id} style={{ marginTop: '7%' }}>
+      <div key={slice.id}>
         {slice.items.map((item, index) => (
-          <h1 key={index}>{item.subtitle[0].text}</h1>
+          <h1 style={subtitleStyle} key={index}>
+            {item.subtitle[0].text}
+          </h1>
         ))}
       </div>
     );

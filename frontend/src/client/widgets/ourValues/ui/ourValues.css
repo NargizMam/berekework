@@ -1,107 +1,68 @@
-.ourValuesBlockTitle {
-  font-weight: 700;
-  font-size: 25px;
-  line-height: 60px;
-  color: #000000;
-  margin-bottom: 10px;
+.ourValuesCardBlock {
+    margin-bottom: 178px;
 }
 
-.ourValuesCardBlock {
-  display: flex;
-  flex-direction: column;
+.ourValuesBlockTitle {
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #000;
+    margin: 0 0 60px 0;
 }
 
 .ourValuesCard {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 30px;
-  min-width: 250px;
-  height: 230px;
-  background: #ECECEC;
-  margin-bottom: 10px;
-  border-radius: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    width: 100%;
+    height: 100%;
+    background: #ECECEC;
+    margin: 0;
+    border-radius: 30px;
 }
 
 .ourValuesImgFrame {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  background: #FFFFFF;
-  border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    margin: 0 0 30px 0;
 }
 
 .ourValuesCardTitle {
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #000000;
-  margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
 }
 
 .ourValuesCardText {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 20px;
-  color: #8E8E8E;
-  margin: 0;
-}
-
-@media (min-width: 900px) {
-  .ourValuesBlockTitle {
-    font-size: 36px;
-    margin-bottom: 30px;
-  }
-
-  .ourValuesCardBlock {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .ourValuesCard {
-    width: 300px;
-    height: 215px;
-    margin-right: 10px;
-  }
-}
-
-@media (min-width: 1000px) {
-  .ourValuesCard {
-    width: 360px;
-  }
-}
-
-
-@media (min-width: 1200px) {
-  .ourValuesBlockTitle {
-    font-size: 46px;
-    margin-bottom: 60px;
-  }
-
-  .ourValuesCard {
-    width: 420px;
-    height: 235px;
-  }
-
-  .ourValuesImgFrame {
-    width: 40px;
-    height: 54px;
-  }
-
-  .ourValuesCardTitle {
-    font-size: 20px;
-  }
-
-  .ourValuesCardText {
+    font-weight: 500;
     font-size: 14px;
-  }
+    line-height: 1.4;
+    color: #8E8E8E;
+    margin: 0;
 }
 
-@media (min-width: 1300px) {
-  .ourValuesCardBlock {
-    flex-wrap: nowrap;
-  }
+.OurValuesSwiperSlide {
+    height: auto;
 }
+
+@media (max-width: 900px) {
+    .ourValuesCardBlock {
+        margin-bottom: 70px;
+    }
+    .ourValuesBlockTitle {
+        font-size: 32px;
+        margin-bottom: 32px;
+    }
+    .ourValuesCard {
+        padding: 24px;
+    }
+}
+
