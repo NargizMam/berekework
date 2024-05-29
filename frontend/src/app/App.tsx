@@ -65,21 +65,23 @@ const App = () => {
         adminRoutes
       ) : (
         <ClientLayout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/users" element={<UserPanelPage />} />
-            <Route path="/vacancy" element={<VacancyPage />} />
-            <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/employersProfile/:id" element={<EmployerProfile />} />
-            <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
-            <Route path="/newApplicant" element={<ApplicantSettings />} />
-            <Route path="/applicantProfile" element={<ApplicantProfile />} />
-            <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
-            <Route path="/for-employer" element={<ForEmployerPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Container>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/users" element={<UserPanelPage />} />
+              <Route path="/vacancy" element={<VacancyPage />} />
+              <Route path="/about-us" element={<AboutUsPage />} />
+              <Route path="/employersProfile/:id" element={<EmployerProfile />} />
+              <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
+              <Route path="/newApplicant" element={<ApplicantSettings />} />
+              <Route path="/applicantProfile" element={<ApplicantProfile />} />
+              <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
+              <Route path="/for-employer" element={<ForEmployerPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Container>
         </ClientLayout>
       )}
     </>
