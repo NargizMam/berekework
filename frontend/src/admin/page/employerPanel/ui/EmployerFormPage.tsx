@@ -39,18 +39,7 @@ export const EmployerFormPage = () => {
   const handleCreateEmployer = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(createEmployer(state)).unwrap();
-    setState({
-      email: '',
-      password: '',
-      companyName: '',
-      industry: '',
-      description: '',
-      foundationYear: '',
-      document: null,
-      address: '',
-      logo: null,
-      avatar: null
-    });
+    setState(initialState);
   };
 
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
@@ -158,8 +147,9 @@ export const EmployerFormPage = () => {
             label="industry"
             variant="outlined"
             required={true}
-            error={Boolean(getFieldError('scope'))}
-            helperText={getFieldError('scope')}
+            InputProps={{ style: inputStyle }}
+            error={Boolean(getFieldError('industry'))}
+            helperText={getFieldError('industry')}
           />
         </Grid>
         <Grid item xs={6}>
@@ -171,8 +161,9 @@ export const EmployerFormPage = () => {
             label="description"
             variant="outlined"
             required={true}
-            error={Boolean(getFieldError('action'))}
-            helperText={getFieldError('action')}
+            InputProps={{ style: inputStyle }}
+            error={Boolean(getFieldError('description'))}
+            helperText={getFieldError('description')}
           />
         </Grid>
         <Grid item xs={6}>
@@ -199,6 +190,20 @@ export const EmployerFormPage = () => {
             required={true}
             error={Boolean(getFieldError('address'))}
             helperText={getFieldError('address')}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            value={state.contacts}
+            onChange={changeField}
+            name="contacts"
+            id="standard-basic"
+            label="Contacts"
+            variant="outlined"
+            required={true}
+            InputProps={{ style: inputStyle }}
+            error={Boolean(getFieldError('contacts'))}
+            helperText={getFieldError('contacts')}
           />
         </Grid>
         <Grid item xs={12}>
@@ -246,11 +251,11 @@ export const EmployerFormPage = () => {
             <Grid item xs>
               <TextField
                 disabled
-                label="avatar"
+                label="Logo"
                 value={filenameImage || ''}
                 onClick={() => selectFile('image')}
-                error={Boolean(getFieldError('avatar'))}
-                helperText={getFieldError('avatar')}
+                error={Boolean(getFieldError('logo'))}
+                helperText={getFieldError('logo')}
               />
             </Grid>
             <Grid item>
