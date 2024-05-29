@@ -1,5 +1,6 @@
 .interested-vacancies-block {
 	margin-bottom: 100px;
+	width: 100%;
 }
 
 .interested-vacancies-title {
@@ -15,6 +16,14 @@
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	width: 860px;
+	max-width: 860px;
 	margin: 0 auto;
+}
+
+.card-vacancies {
+	max-width: 420px;
+	padding: 40px;
+	box-sizing: border-box;
+	gap: 30px;
+	margin: 5px;
 }

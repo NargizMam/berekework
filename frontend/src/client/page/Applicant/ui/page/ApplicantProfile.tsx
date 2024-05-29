@@ -32,14 +32,13 @@ const ApplicantProfile = () => {
 	const age = now.diff(birthDateDayjs, 'year');
 	
 	return (
-		<div style={{ marginTop: '40px' }}>
+		<div style={{ marginTop: '40px', marginBottom: '100px'}}>
 			<Typography variant='h4'></Typography>
 			{loading ? (
 				<Loader />
 			) : (
 				applicant ? (
 						<div className='profileContainer'>
-							<div className='whiteBackground'></div>
 							<div className='applicantContainer'>
 								<div className='photoFrame'>
 									{applicant.photo ?
@@ -68,6 +67,7 @@ const ApplicantProfile = () => {
 									<EditIcon style={{ color: '#FFFFFF', marginRight: '20px' }} />
 									Редактировать профиль
 								</NavLink>
+								<InterestedVacancies />
 							</div>
 						</div>
 					) :
@@ -76,8 +76,6 @@ const ApplicantProfile = () => {
 						<NavLink to='/newApplicant' className='changeBtn'>Создать</NavLink>
 					</div>
 			)}
-			
-			<InterestedVacancies />
 		</div>
 	);
 };
