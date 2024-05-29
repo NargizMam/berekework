@@ -23,9 +23,10 @@ export const createEmployer = createAsyncThunk<
     if(employer.document) {
       formData.append('document', employer.document);
     }
-    if(employer.avatar) {
-      formData.append('avatar', employer.avatar);
+    if(employer.logo) {
+      formData.append('logo', employer.logo);
     }
+    formData.append('contacts', '+99021312331');
     await axiosApi.post('/employer', formData);
   } catch (error) {
     if (isAxiosError(error) && error.response && error.response.status === 422) {
