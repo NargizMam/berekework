@@ -17,8 +17,9 @@ export interface EmployerMutation {
   industry: string;
   companyName: string;
   description: string;
+  contacts: string;
   foundationYear: string;
-  document: File | null;
+  documents: File | null;
   address: string;
   logo: File | null;
   avatar: File | null;

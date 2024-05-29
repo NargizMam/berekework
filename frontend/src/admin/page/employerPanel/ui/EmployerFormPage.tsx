@@ -74,7 +74,7 @@ export const EmployerFormPage = () => {
     setFilenameImage('');
     setState((prevState) => ({
       ...prevState,
-      avatar: null,
+      logo: null,
     }));
     if (documentSelect.current) {
       documentSelect.current.value = '';

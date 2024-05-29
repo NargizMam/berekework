@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation, useRoutes } from 'react-router-dom';
+import NotFound from '../widgets/NotFound/NotFound';
 import AdminLayout from './layouts/adminLayout/AdminLayout';
 import HomePage from '../client/page/HomePage/HomePage';
 import { AdminMainPage } from '../admin/page/adminMainPage';
@@ -22,24 +23,26 @@ import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
 
-
 const App = () => {
   const user = useAppSelector(selectUser);
   const location = useLocation();
-
   const AdminRoutes = () => (
     <AdminLayout>
       <Container>
         <Routes>
           <Route path="/" element={<AdminMainPage />} />
-          <Route path="/moderators" element={
-            <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
-              <ModeratorsPage/>
-            </ProtectedRoute>} />
-          <Route path="/employers" element={<EmployerPanelPage/>}/>
-          <Route path="/employers-submit" element={<EmployerFormPage/>}/>
-          <Route path="/vacancy" element={<VacancyPage/>}/>
-          <Route path="/users" element={<UserPanelPage/>}/>
+          <Route
+            path="/moderators"
+            element={
+              <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
+                <ModeratorsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/employers" element={<EmployerPanelPage />} />
+          <Route path="/employers-submit" element={<EmployerFormPage />} />
+          <Route path="/vacancy" element={<VacancyPage />} />
+          <Route path="/users" element={<UserPanelPage />} />
         </Routes>
       </Container>
     </AdminLayout>
@@ -62,24 +65,22 @@ const App = () => {
         adminRoutes
       ) : (
         <ClientLayout>
-            <Container maxWidth="xl">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/users" element={<UserPanelPage />} />
-                <Route path="/vacancy" element={<VacancyPage />} />
-                <Route path="/about-us" element={<AboutUsPage />} />
-                <Route path="/employersProfile/:id" element={<EmployerProfile/>} />
-                <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
-                <Route path="/newApplicant" element={<ApplicantSettings />} />
-                <Route path="/applicantProfile" element={<ApplicantProfile />} />
-                <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
-                <Route path='/for-employer' element={<ForEmployerPage/>}/>
-                <Route path="/news/:uid" element={<NewsPage />} />
-                <Route path="*" element={'Not found'} />
-              </Routes>
-            </Container>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/users" element={<UserPanelPage />} />
+              <Route path="/vacancy" element={<VacancyPage />} />
+              <Route path="/about-us" element={<AboutUsPage />} />
+              <Route path="/employersProfile/:id" element={<EmployerProfile />} />
+              <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
+              <Route path="/newApplicant" element={<ApplicantSettings />} />
+              <Route path="/applicantProfile" element={<ApplicantProfile />} />
+              <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
+              <Route path="/for-employer" element={<ForEmployerPage />} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/news/:uid" element={<NewsPage />} />
+            </Routes>
         </ClientLayout>
       )}
     </>

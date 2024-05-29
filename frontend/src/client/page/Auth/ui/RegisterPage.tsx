@@ -1,46 +1,29 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { RegisterMutation } from '../model/types';
-import { Box, Grid, Link, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Grid, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { register } from '../api/AuthThunk';
-import { selectRegisterError, selectRegisterLoading } from '../model/AuthSlice';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { LoadingButton } from '@mui/lab';
+import UserRegisterForm from './UserRegisterForm';
+import EmployerRegisterForm from './EmployerRegisterForm';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import { googleAuth } from '../api/AuthThunk';
+import { useAppDispatch } from '../../../../app/store/hooks';
+import { useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
-  const [state, setState] = useState<RegisterMutation>({
-    email: '',
-    password: '',
-    avatar: null,
-  });
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectRegisterError);
   const navigate = useNavigate();
-  const loading = useAppSelector(selectRegisterLoading);
+  const [alignment, setAlignment] = useState('applicant');
 
-  const changeFields = (event: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-
-    setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const getFieldError = (fieldName: string) => {
-    try {
-      return error?.errors[fieldName].message;
-    } catch {
-      return undefined;
+  const handleAlignment = (newAlignment: string) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
     }
   };
 
-  const submitFormHandler = async (event: FormEvent) => {
-    event.preventDefault();
-    await dispatch(register(state)).unwrap();
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleAuth(credential)).unwrap();
     navigate('/');
   };
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -52,53 +35,51 @@ export const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{mb:2}}>
           Регистрация
         </Typography>
-        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                label="E-mail"
-                name="email"
-                value={state.email}
-                onChange={changeFields}
-                autoComplete="new-email"
-                error={Boolean(getFieldError('email'))}
-                helperText={getFieldError('email')}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="password"
-                label="Пароль"
-                type="password"
-                value={state.password}
-                onChange={changeFields}
-                autoComplete="new-password"
-                error={Boolean(getFieldError('password'))}
-                helperText={getFieldError('password')}
-              />
-            </Grid>
-          </Grid>
-          <LoadingButton
-            loading={loading}
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{mt: 3, mb: 2, backgroundColor: '#0866FF', borderRadius: '30px'}}
-          >
-            Зарегистрироваться
-          </LoadingButton>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link component={RouterLink} to="/register" variant="body2">
-                Войти
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
+        <ToggleButtonGroup
+          color="primary"
+          value={alignment}
+          exclusive
+          onChange={(_, newAlignment) => handleAlignment(newAlignment)}
+          aria-label="Platform"
+          sx={{
+            marginBottom: 2,
+            borderRadius: '30px',
+            overflow: 'hidden',
+            '& .MuiToggleButton-root': {
+              border: 'none',
+              '&.Mui-selected': {
+                backgroundColor: 'white',
+                color: 'black',
+              },
+              '&:not(.Mui-selected)': {
+                backgroundColor: '#E9E9E9',
+                color: 'black',
+              },
+            },
+          }}
+        >
+          <ToggleButton value="applicant" sx={{ borderRadius: '30px 0 0 30px' }}>Поиск работы</ToggleButton>
+          <ToggleButton value="employer" sx={{ borderRadius: '0 30px 30px 0' }}>Поиск сотрудников</ToggleButton>
+        </ToggleButtonGroup>
+        {alignment === 'applicant' ? <UserRegisterForm /> : <EmployerRegisterForm />}
+        <Grid sx={{ my: 3 }}>
+          <GoogleLogin
+            onSuccess={(credentialResponse: CredentialResponse) => {
+              if (credentialResponse.credential) {
+                void googleLoginHandler(credentialResponse.credential);
+              }
+            }}
+            onError={() => {
+              console.log('Login failed!');
+            }}
+            useOneTap
+          />
+        </Grid>
       </Box>
     </Container>
   );
 };
+
