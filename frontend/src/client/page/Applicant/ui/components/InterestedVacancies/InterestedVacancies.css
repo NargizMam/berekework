@@ -1,0 +1,20 @@
+.interested-vacancies-block {
+	margin-bottom: 100px;
+}
+
+.interested-vacancies-title {
+	font-size: 36px;
+	margin: 0 0 50px 0;
+}
+
+.logo {
+	margin-top: 30px;
+}
+
+.cards-div {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	width: 860px;
+	margin: 0 auto;
+}
