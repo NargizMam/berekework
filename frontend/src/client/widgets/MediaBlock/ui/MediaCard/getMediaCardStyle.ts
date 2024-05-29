@@ -1,19 +1,17 @@
-const MediaCardStyle = {
+const getMediaCardStyle = (itemsLength: number) => ({
   card: {
-    display: 'flex',
-    justifyContent: 'center',
-    boxSizing: 'border-box',
-    flexBasis: '420px',
-    minWidth: '272px',
     borderRadius: '30px',
     overflow: 'hidden',
     cursor: 'pointer',
     position: 'relative',
     padding: 0,
+    width: '100%',
     height: '100%',
-    '@media (min-width: 1281px)': {
-      maxHeight: '262px',
-    },
+    ...(itemsLength >= 3 && {
+      '@media (min-width: 1280px)': {
+        maxHeight: '262px',
+      },
+    }),
   },
   image: {
     width: '100%',
@@ -34,6 +32,6 @@ const MediaCardStyle = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
   },
-};
+});
 
-export default MediaCardStyle;
+export default getMediaCardStyle;

@@ -2,7 +2,6 @@ const MediaBlockStyle = {
   container: {
     maxWidth: '1280px',
     margin: '0 auto',
-    // padding: '0 16px',
     '@media (max-width: 900px)': {
       marginBottom: '70px',
     },
@@ -12,10 +11,6 @@ const MediaBlockStyle = {
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: '60px',
-    // '@media (max-width: 900px)': {
-    //   flexDirection: 'column',
-    //   alignItems: 'flex-start',
-    // },
   },
   title: {
     fontWeight: '700',
@@ -34,8 +29,8 @@ const MediaBlockStyle = {
   paginationControls: {
     display: 'flex',
     gap: '10px',
-    '@media (max-width: 900px)': {
-      marginBottom: '20px',
+    '@media (max-width: 600px)': {
+      display: 'none',
     },
   },
   paragraph: {
@@ -62,12 +57,6 @@ const MediaBlockStyle = {
     padding: 0,
     cursor: 'pointer',
     outline: '#D2D2D2',
-  },
-  swiperPaginationBullet: {
-    backgroundColor: '#D2D2D2', // Цвет обычных точек
-    '&.swiper-pagination-bullet-active': {
-      backgroundColor: '#000', // Цвет активной точки
-    },
   },
 };
 

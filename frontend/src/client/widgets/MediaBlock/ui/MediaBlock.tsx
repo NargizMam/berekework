@@ -49,6 +49,8 @@ const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
 
   const isVideoBlock = className === 'video';
 
+  const showNavigation = slice.items.length > 3;
+
   const sources = slice.items
     .map((item) => (isVideoBlock ? item.video?.url : item.image?.url))
     .filter((url): url is string => Boolean(url));
@@ -61,49 +63,64 @@ const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
             {title.text}
           </Typography>
         ))}
-        <Box sx={MediaBlockStyle.paginationControls}>
-          <button style={MediaBlockStyle.swiperButton} className={`swiper-button-prev-${className}`}>
-            <ArrowBackIos sx={arrowIconStyle} />
-          </button>
-          <button style={MediaBlockStyle.swiperButton} className={`swiper-button-next-${className}`}>
-            <ArrowForwardIos sx={arrowIconStyle} />
-          </button>
-        </Box>
+        {showNavigation && (
+          <Box sx={MediaBlockStyle.paginationControls}>
+            <button style={MediaBlockStyle.swiperButton} className={`swiper-button-prev-${className}`}>
+              <ArrowBackIos sx={arrowIconStyle} />
+            </button>
+            <button style={MediaBlockStyle.swiperButton} className={`swiper-button-next-${className}`}>
+              <ArrowForwardIos sx={arrowIconStyle} />
+            </button>
+          </Box>
+        )}
       </Box>
       <Box sx={MediaBlockStyle.cards}>
-        <Swiper
-          slidesPerView={1.2}
-          spaceBetween={10}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={{
-            nextEl: `.swiper-button-next-${className}`,
-            prevEl: `.swiper-button-prev-${className}`,
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 10,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 10,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 10,
-            },
-          }}
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {slice.items.map((item, index) => (
-            <SwiperSlide key={index} className="media-slide">
-              <MediaCard image={item.image} video={item.video} onClick={() => openLightbox(index)} index={index} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {slice.items.length === 1 ? (
+          <MediaCard
+            index={0}
+            image={slice.items[0].image}
+            video={slice.items[0].video}
+            onClick={() => openLightbox(0)}
+            mediaCardsLength={slice.items.length}
+          />
+        ) : (
+          <Swiper
+            slidesPerView={1.2}
+            spaceBetween={10}
+            pagination={{
+              clickable: true,
+            }}
+            navigation={{
+              nextEl: `.swiper-button-next-${className}`,
+              prevEl: `.swiper-button-prev-${className}`,
+            }}
+            watchOverflow={true}
+            breakpoints={{
+              600: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              900: {
+                slidesPerView: slice.items.length < 3 ? slice.items.length : 3,
+                spaceBetween: 10,
+              },
+            }}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {slice.items.map((item, index) => (
+              <SwiperSlide key={index}>
+                <MediaCard
+                  index={index}
+                  image={item.image}
+                  video={item.video}
+                  mediaCardsLength={slice.items.length}
+                  onClick={() => openLightbox(index)}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
         <FsLightbox toggler={toggler} sources={sources} slide={currentIndex + 1} />
       </Box>
     </Box>

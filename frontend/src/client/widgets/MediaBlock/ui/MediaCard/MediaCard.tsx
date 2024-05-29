@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Button, CardMedia } from '@mui/material';
+import { Box, CardMedia } from '@mui/material';
 import iconPlay from '../../images/icon-play.png';
-import MediaCardStyle from './MediaCard-style';
+import getMediaCardStyle from './getMediaCardStyle';
 
 export interface MediaCardApiData {
+  index: number;
   image?: {
     url: string;
     alt: string;
@@ -12,23 +13,27 @@ export interface MediaCardApiData {
     url: string;
     alt: string;
   };
+  mediaCardsLength: number;
   onClick: (index: number) => void;
-  index: number;
 }
 
-const MediaCard: React.FC<MediaCardApiData> = ({ image, video, onClick, index }) => {
+const MediaCard: React.FC<MediaCardApiData> = ({ index, image, video, mediaCardsLength, onClick }) => {
+  const MediaCardStyle = getMediaCardStyle(mediaCardsLength);
+
   const imageUrl = image ? image.url : null;
   const videoUrl = video ? video.url : null;
 
   const mediaElement = imageUrl ? (
-    <Button sx={MediaCardStyle.card} onClick={() => onClick(index)}>
-      <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt || video?.alt || ''} />
+    <Box sx={MediaCardStyle.card} onClick={() => onClick(index)}>
+      {imageUrl && (
+        <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt || video?.alt || ''} />
+      )}
       {videoUrl && (
         <Box sx={MediaCardStyle.iconPlayWrapper}>
           <img src={iconPlay} alt="play" />
         </Box>
       )}
-    </Button>
+    </Box>
   ) : null;
 
   return <>{mediaElement}</>;
