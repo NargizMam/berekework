@@ -34,7 +34,7 @@ interface HeaderProps {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useAppSelector(selectUser);
-
+  const loginButtonStyle = `login ${isMenuOpen ? 'login-open' : 'login-close'}`;
   const [document] = useSinglePrismicDocument('header');
 
   const headerPrismicResponse: HeaderProps | undefined = document?.data as HeaderProps;
@@ -88,7 +88,7 @@ const Header = () => {
             </ul>
           </nav>
           {!user ? (
-            <NavLink to="/login" className="login">
+            <NavLink to="/login" className={loginButtonStyle}>
               Войти
             </NavLink>
           ) : (

@@ -75,6 +75,14 @@
 .login {
   color: #000000;
   cursor: pointer;
+  font-size: 12px;
+  overflow: hidden;
+  transition: max-height 0.7s ease;
+  padding: 0 10px;
+}
+
+.login-close {
+  height: 0;
 }
 
 .login:hover {
