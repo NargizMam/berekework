@@ -61,6 +61,9 @@ const MediaBlockStyle = {
     cursor: 'pointer',
     outline: '#D2D2D2',
   },
+  arrowIconStyle: {
+    fontSize: '20px',
+  },
 };
 
 export default MediaBlockStyle;

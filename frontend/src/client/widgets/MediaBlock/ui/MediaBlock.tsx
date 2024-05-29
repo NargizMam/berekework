@@ -9,10 +9,6 @@ import MediaBlockStyle from './MediaBlock-style';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import FsLightbox from 'fslightbox-react';
 
-const arrowIconStyle = {
-  fontSize: '20px',
-};
-
 export interface MediaBlockApiData {
   primary: {
     title: Array<{
@@ -66,10 +62,10 @@ const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
         {showNavigation && (
           <Box sx={MediaBlockStyle.paginationControls}>
             <button style={MediaBlockStyle.swiperButton} className={`swiper-button-prev-${className}`}>
-              <ArrowBackIos sx={arrowIconStyle} />
+              <ArrowBackIos sx={MediaBlockStyle.arrowIconStyle} />
             </button>
             <button style={MediaBlockStyle.swiperButton} className={`swiper-button-next-${className}`}>
-              <ArrowForwardIos sx={arrowIconStyle} />
+              <ArrowForwardIos sx={MediaBlockStyle.arrowIconStyle} />
             </button>
           </Box>
         )}
