@@ -25,7 +25,6 @@ import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 const App = () => {
   const user = useAppSelector(selectUser);
   const location = useLocation();
-
   const AdminRoutes = () => (
     <AdminLayout>
       <Container>
