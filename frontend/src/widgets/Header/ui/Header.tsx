@@ -59,8 +59,8 @@ const Header = () => {
   );
 
   return (
-    <div className="header">
-      <Container>
+    <div>
+      <Container maxWidth="xl">
         <div className="header-content">
           <div className="header-logo-wrapper">
             {headerPrismicResponse?.header_logo && (

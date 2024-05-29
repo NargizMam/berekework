@@ -64,7 +64,6 @@ const App = () => {
         adminRoutes
       ) : (
         <ClientLayout>
-          <Container>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/register" element={<RegisterPage />} />
@@ -80,7 +79,6 @@ const App = () => {
               <Route path="/for-employer" element={<ForEmployerPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </Container>
         </ClientLayout>
       )}
     </>

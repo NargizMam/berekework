@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <div className="footer">
-      <Container>
+      <Container maxWidth="xl">
         <div className="footer-top">
           {data.body.map((section: any, index: number) => (
             <div key={index}>
