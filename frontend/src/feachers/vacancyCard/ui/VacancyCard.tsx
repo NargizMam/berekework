@@ -3,18 +3,6 @@ import React from 'react';
 import VacancyCardStyle from './VacancyCard-style';
 import './VacancyCard.css';
 
-// export interface VacancyCardApiData {
-//   _id: string;
-//   title: string;
-//   description?: string;
-//   logo?: string;
-//   company?: string;
-//   city: string;
-//   salary?: {
-//     min?: number;
-//     max?: number;
-//   };
-// }
 export interface VacancyCardApiData {
   _id: string;
   logo: string;
