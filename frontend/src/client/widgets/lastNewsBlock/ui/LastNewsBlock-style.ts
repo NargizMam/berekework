@@ -2,7 +2,6 @@ const LastNewsBlockStyle = {
   block: {
     boxSizing: 'border-box',
     flexDirection: 'column',
-    maxWidth: '1280px',
     fontSize: '24px',
     margin: '0 auto 70px',
     height: '100%',
