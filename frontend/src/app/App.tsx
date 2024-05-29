@@ -20,6 +20,7 @@ import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel
 import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
+import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
 
 
 const App = () => {
@@ -75,6 +76,7 @@ const App = () => {
                 <Route path="/applicantProfile" element={<ApplicantProfile />} />
                 <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
                 <Route path='/for-employer' element={<ForEmployerPage/>}/>
+                <Route path="/news/:uid" element={<NewsPage />} />
                 <Route path="*" element={'Not found'} />
               </Routes>
             </Container>

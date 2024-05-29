@@ -7,6 +7,7 @@ import { MainCards } from '../../../admin/widgets/mainCards';
 
 const HomePage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'ps5');
+
   return (
     <>
       <div style={{ marginTop: 100 }}>
@@ -16,7 +17,6 @@ const HomePage = () => {
             titleblock: TitleBlock,
             maincard: MainCards,
             choosespecialist: ChooseSpecialistBlock,
-            lastnews: LastNewsBlock,
           }}
         />
       </div>
@@ -28,6 +28,7 @@ const HomePage = () => {
         {/*  }}*/}
         {/*/>*/}
         <VacancyBlock/>
+        <LastNewsBlock/>
       </div>
     </>
   );

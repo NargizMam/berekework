@@ -22,8 +22,11 @@ const LastNewsBlockStyle = {
   title: {
     fontWeight: '700',
     lineHeight: '1.3',
-    fontSize: '32px',
+    fontSize: '22px',
     marginBottom: '30px',
+    '@media (min-width: 600px)': {
+      fontSize: '32px',
+    },
     '@media (min-width: 900px)': {
       marginBottom: 0,
     },
