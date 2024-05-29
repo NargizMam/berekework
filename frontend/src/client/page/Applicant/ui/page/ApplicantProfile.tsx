@@ -39,6 +39,7 @@ const ApplicantProfile = () => {
 			) : (
 				applicant ? (
 						<div className='profileContainer'>
+							<div className='whiteBackground'></div>
 							<div className='applicantContainer'>
 								<div className='photoFrame'>
 									{applicant.photo ?

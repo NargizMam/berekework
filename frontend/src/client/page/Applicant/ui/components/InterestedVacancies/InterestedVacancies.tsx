@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { Button, CardActions, Typography } from '@mui/material';
-import Card from '@mui/material/Card';
+import { CardActions, Typography } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import './InterestedVacancies.css';
 import './mediaInterestedVacancies.css';
+import * as React from 'react';
 import logo from './images/logo.png';
 
 const InterestedVacancies = () => {
@@ -59,42 +58,21 @@ const InterestedVacancies = () => {
 				display: 'flex',
 				flexDirection: 'column'
 			}}>
-				<Button sx={{
-					width: '340px',
-					fontSize: 20,
-					lineHeight: '20px',
-					textAlign: 'center',
-					backgroundColor: '#FFE585',
-					color: '#000000',
-					textTransform: 'none',
-					padding: '20px 108px',
-					borderRadius: '30px',
-					fontWeight: '600'
-				}}>Связаться</Button>
-				<Button sx={{
-					width: '340px',
-					fontSize: 20,
-					lineHeight: '20px',
-					textAlign: 'center',
-					backgroundColor: '#E9E9E9',
-					color: '#000000',
-					textTransform: 'none',
-					padding: '20px 108px',
-					borderRadius: '30px',
-					fontWeight: '600',
-					marginTop: '10px'
-				}}>Отозвать</Button>
+				<button className='btn-connect btn-vacancies'>Связаться
+				</button>
+				<button className='btn-recall btn-vacancies'>Отозвать
+				</button>
 			</CardActions>
 		</React.Fragment>
 	);
 	
 	return (
 		<div className='interested-vacancies-block'>
-			<h6 className='interested-vacancies-title'>Заинтересованные вами</h6>
 			<div className='cards-div'>
-				<Card className='card-vacancies' sx={{ borderRadius: '30px' }} variant='outlined'>{card}</Card>
-				<Card className='card-vacancies' sx={{ borderRadius: '30px' }} variant='outlined'>{card}</Card>
-				<Card className='card-vacancies' sx={{ borderRadius: '30px' }} variant='outlined'>{card}</Card>
+				<h6 className='interested-vacancies-title'>Заинтересованные вами</h6>
+				<div className='card-vacancies'>{card}</div>
+				<div className='card-vacancies'>{card}</div>
+				<div className='card-vacancies'>{card}</div>
 			</div>
 		</div>
 	);
