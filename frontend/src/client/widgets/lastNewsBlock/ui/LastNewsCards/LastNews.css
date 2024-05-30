@@ -68,9 +68,16 @@
   color: #292D32;
 }
 
+h2.newsPageTitle {
+  margin-bottom: 20px;
+}
+
+.newsPageText {
+  font-size: 14px;
+  line-height: 25px;
+}
+
 @media (min-width: 400px) {
-
-
   .lastNewsDateTimeLink {
     flex-direction: row;
   }
@@ -84,11 +91,23 @@
     color: #292D32;
   }
 
+  .newsPageText {
+    font-size: 16px;
+  }
+
 }
 
 @media (min-width: 560px) {
   .lastNewsButtons {
     margin-left: auto;
+  }
+
+  .h2.newsPageTitle {
+    margin-bottom: 70px;
+  }
+
+  .newsPageText {
+    line-height: 32px;
   }
 }
 

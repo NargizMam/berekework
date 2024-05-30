@@ -21,47 +21,47 @@ import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel
 import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
-
+import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
 import { VacancyPageClient } from '../client/page/VacancyPage';
 
 const App = () => {
-  const user = useAppSelector(selectUser);
-  const location = useLocation();
-  const AdminRoutes = () => (
-    <AdminLayout>
-      <Container>
-        <Routes>
-          <Route path="/" element={<AdminMainPage />} />
-          <Route
-            path="/moderators"
-            element={
-              <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
-                <ModeratorsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/employers" element={<EmployerPanelPage />} />
-          <Route path="/employers-submit" element={<EmployerFormPage />} />
-          <Route path="/vacancy" element={<VacancyPage />} />
-          <Route path="/users" element={<UserPanelPage />} />
-        </Routes>
-      </Container>
-    </AdminLayout>
-  );
-  const adminRoutes = useRoutes([
-    {
-      path: '/admin/*',
-      element: (
-        <ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'}>
-          <AdminRoutes />
-        </ProtectedRoute>
-      ),
-    },
-  ]);
+    const user = useAppSelector(selectUser);
+    const location = useLocation();
+    const AdminRoutes = () => (
+      <AdminLayout>
+        <Container>
+          <Routes>
+            <Route path="/" element={<AdminMainPage/>}/>
+            <Route
+              path="/moderators"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
+                  <ModeratorsPage/>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/employers" element={<EmployerPanelPage/>}/>
+            <Route path="/employers-submit" element={<EmployerFormPage/>}/>
+            <Route path="/vacancy" element={<VacancyPage/>}/>
+            <Route path="/users" element={<UserPanelPage/>}/>
+          </Routes>
+        </Container>
+      </AdminLayout>
+    );
+    const adminRoutes = useRoutes([
+      {
+        path: '/admin/*',
+        element: (
+          <ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'}>
+            <AdminRoutes/>
+          </ProtectedRoute>
+        ),
+      },
+    ]);
 
   return (
     <>
-      <WarningMessage/>
+      <WarningMessage />
       {location.pathname.startsWith('/admin') ? (
         adminRoutes
       ) : (
@@ -79,6 +79,7 @@ const App = () => {
               <Route path="/applicantProfile" element={<ApplicantProfile />} />
               <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
               <Route path="/for-employer" element={<ForEmployerPage />} />
+              <Route path="/news/:uid" element={<NewsPage/>}/>
               <Route path="*" element={<NotFound />} />
             </Routes>
         </ClientLayout>
