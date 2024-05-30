@@ -126,7 +126,7 @@ userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req,
     }
     if (req.query.filter) {
       const prof = req.query.filter;
-      const filteredUsers = await User.find({ preferredJob: prof });
+      const filteredUsers = await User.find({ preferredJob: { $regex: new RegExp(prof.toString(), 'i') } });
       return res.send(filteredUsers);
     }
     if (!req.query.filter) {
