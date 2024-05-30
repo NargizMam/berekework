@@ -1,69 +1,52 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-
-interface VacancyCategory {
-  id: string;
-  title: string;
-  values: { id: string; value: string }[];
-  name: string;
-  value: string;
-  input: {
-    isInput: boolean;
-    placeholder: string;
-  };
-}
-
-const vacancyCategories: VacancyCategory[] = [
-  {
-    id: Math.random().toString(),
-    title: 'Уровень дохода',
-    values: [
-      { id: Math.random().toString(), value: 'от 1300 сом' },
-      { id: Math.random().toString(), value: 'от 17700 сом' },
-      { id: Math.random().toString(), value: 'от 34200 сом' },
-      { id: Math.random().toString(), value: 'от 50150 сом' },
-      { id: Math.random().toString(), value: 'от 67000 сом' },
-      { id: Math.random().toString(), value: 'от 83450 сом' },
-    ],
-    name: 'salary',
-    value: 'salary',
-    input: {
-      isInput: true,
-      placeholder: 'от',
-    },
-  },
-  {
-    id: Math.random().toString(),
-    title: 'Уровень дохода',
-    values: [
-      { id: Math.random().toString(), value: 'от 1300 сом' },
-      { id: Math.random().toString(), value: 'от 17700 сом' },
-      { id: Math.random().toString(), value: 'от 34200 сом' },
-      { id: Math.random().toString(), value: 'от 50150 сом' },
-      { id: Math.random().toString(), value: 'от 67000 сом' },
-      { id: Math.random().toString(), value: 'от 83450 сом' },
-    ],
-    name: 'salary2',
-    value: 'salary2',
-    input: {
-      isInput: true,
-      placeholder: 'от',
-    },
-  },
-];
+import { vacancyCategory } from '../../../../app/constants/links';
 
 export const VacancyCategory = () => {
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: string }>({});
+  const [customValues, setCustomValues] = useState<{ [key: string]: string }>({});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, name: string, value: string) => {
-    setCheckedItems({ ...checkedItems, [name]: value });
-    console.log(event.target);
+  const handleChange = (name: string, value: string) => {
+    if (checkedItems[name] === value) {
+      setCheckedItems({ ...checkedItems, [name]: '' });
+    } else {
+      setCheckedItems({ ...checkedItems, [name]: value });
+    }
   };
 
+  const handleCustomChange = (event: React.ChangeEvent<HTMLInputElement>, name: string) => {
+    if (event.target.checked) {
+      setCheckedItems({ ...checkedItems, [name]: 'custom' });
+    } else {
+      setCheckedItems({ ...checkedItems, [name]: '' });
+    }
+  };
+
+  const handleCustomInputChange = (event: React.ChangeEvent<HTMLInputElement>, name: string) => {
+    setCustomValues({ ...customValues, [name]: event.target.value });
+  };
+
+  /*console.log('Checked items:', checkedItems);
+  console.log('Custom values:', customValues);*/
+
+  const combineItems = () => {
+    const combined: { [key: string]: string } = {};
+
+    Object.entries(checkedItems).forEach(([name, value]) => {
+      if (value === 'custom') {
+        combined[name] = customValues[name];
+      } else if (value) {
+        combined[name] = value;
+      }
+    });
+
+    console.log(combined);
+  };
   return (
     <Box sx={{ border: '1px solid red' }}>
+      <Button onClick={() => combineItems()}>Test</Button>
       <Grid container direction="column">
-        {vacancyCategories.map((category) => (
+        {vacancyCategory.map((category) => (
           <Grid item key={category.id}>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
               {category.title}
@@ -72,30 +55,33 @@ export const VacancyCategory = () => {
               {category.values.map((item) => (
                 <FormControlLabel
                   key={item.id}
-                  control={<Checkbox checked={checkedItems[category.name] === item.value} />}
+                  control={<Checkbox checked={checkedItems[category.name] === item.valueSend} />}
                   label={item.value}
-                  onChange={(event) =>
-                    handleChange(event as React.ChangeEvent<HTMLInputElement>, category.name, item.value)
-                  }
+                  onChange={() => handleChange(category.name, item.valueSend)}
                 />
               ))}
               {category.input.isInput && (
                 <>
-                  <FormControlLabel control={<Checkbox color="primary" />} label={'Ваш вариант'} />
-                  <TextField placeholder={category.input.placeholder} />
+                  <FormControlLabel
+                    control={<Checkbox color="primary" checked={checkedItems[category.name] === 'custom'} />}
+                    label={'Ваш вариант'}
+                    onChange={(event) =>
+                      handleCustomChange(event as React.ChangeEvent<HTMLInputElement>, category.name)
+                    }
+                  />
+                  <TextField
+                    placeholder={category.input.placeholder}
+                    value={customValues[category.name] || ''}
+                    onChange={(event) =>
+                      handleCustomInputChange(event as React.ChangeEvent<HTMLInputElement>, category.name)
+                    }
+                    disabled={checkedItems[category.name] !== 'custom'}
+                  />
                 </>
               )}
             </FormGroup>
           </Grid>
         ))}
-        <Grid item>
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            Уровень запрлаты
-          </Typography>
-          <FormGroup sx={{ padding: 1 }}>
-            <FormControlLabel control={<Checkbox />} label="Required" />
-          </FormGroup>
-        </Grid>
       </Grid>
     </Box>
   );
