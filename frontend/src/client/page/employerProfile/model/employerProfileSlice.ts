@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../../app/store/store';
 import { EmployerInfoApi } from '../../../../types';
-import { getEmployersProfileInfo } from '../app/employerProfileThunk';
+import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 
 
 interface VacancyState {
-  employersProfile: EmployerInfoApi | null;
-  employersProfileLoading: boolean;
+
 }
 
 const initialState: VacancyState = {

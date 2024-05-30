@@ -72,7 +72,7 @@ employerRouter.put(
           address: req.body.address,
           contacts: req.body.contacts,
           logo: files['logo'] ? files['logo'][0].filename : null,
-          adminContacts: req.body.adminContacts,
+          adminsComment: req.body.adminsComment,
         };
 
         const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });

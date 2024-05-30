@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createEmployer, getAllEmployer } from '../api/employerThunk';
 import { RootState } from '../../../../app/store/store';
 import { Employer } from './types';
-import { ValidationError } from '../../../../types';
+import { EmployerInfoApi, ValidationError } from '../../../../types';
 
 interface EmployerState {
   employers: Employer[];
   employersLoading: boolean;
   createEmployerLoading: boolean;
+  employersProfile: EmployerInfoApi | null;
+  employersProfileLoading: boolean;
   employerError: ValidationError | null;
 }
 

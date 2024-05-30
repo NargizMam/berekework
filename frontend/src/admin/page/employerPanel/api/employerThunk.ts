@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../../../app/axiosApi';
 import { Employer, EmployerMutation } from '../model/types';
-import { ValidationError } from '../../../../types';
+import { EmployerInfoApi, ValidationError } from '../../../../types';
 import { isAxiosError } from 'axios';
 
 export const createEmployer = createAsyncThunk<
@@ -20,13 +20,16 @@ export const createEmployer = createAsyncThunk<
     formData.append('description', employer.description);
     formData.append('foundationYear', employer.foundationYear);
     formData.append('address', employer.address);
+    formData.append('contacts', employer.contacts);
     if(employer.document) {
       formData.append('document', employer.document);
     }
     if(employer.logo) {
       formData.append('logo', employer.logo);
     }
-    formData.append('contacts', '+99021312331');
+    if(employer.avatar) {
+      formData.append('logo', employer.avatar);
+    }
     await axiosApi.post('/employer', formData);
   } catch (error) {
     if (isAxiosError(error) && error.response && error.response.status === 422) {
@@ -41,6 +44,13 @@ export const getAllEmployer = createAsyncThunk<Employer[]>('employer/getAll', as
   const response = await axiosApi.get<Employer[]>('/employer');
   return response.data;
 });
+export const getEmployersProfileInfo = createAsyncThunk<EmployerInfoApi, string>(
+  'employersProfile/getInfo',
+  async (id) => {
+    const response = await axiosApi.get(`/employer/${id}`);
+    return response.data;
+  }
+);
 
 export const deleteEmployer = createAsyncThunk<void, string>('employer/delete', async (id) => {
   await axiosApi.delete(`/employer/${id}`);
