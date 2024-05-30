@@ -3,10 +3,12 @@ import { Router } from 'express';
 import User from '../models/users/userModel';
 import { imagesUpload, documentsUpload } from '../multer';
 import Employer from '../models/employer/employerModel';
-import config from "../config";
-import {OAuth2Client} from "google-auth-library";
-const client = new OAuth2Client(config.google.clientId);
+import config from '../config';
+import { OAuth2Client } from 'google-auth-library';
+import permit from '../middleware/permit';
+import auth from '../middleware/auth';
 
+const client = new OAuth2Client(config.google.clientId);
 
 const userRouter = Router();
 
@@ -42,6 +44,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
     next(error);
   }
 });
+
 userRouter.post('/google', async (req, res, next) => {
   try {
     const ticket = await client.verifyIdToken({
@@ -114,12 +117,19 @@ userRouter.post('/sessions', async (req, res, next) => {
     return next(error);
   }
 });
-userRouter.get('/', async (req, res, next) => {
+
+userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req, res, next) => {
   try {
-    if (req.query && req.query.role) {
+    if (req.query.filter === 'moderator') {
       const moderators = await User.find({ role: 'admin' });
       return res.send(moderators);
-    } else {
+    }
+    if (req.query.filter) {
+      const prof = req.query.filter;
+      const filteredUsers = await User.find({ preferredJob: prof });
+      return res.send(filteredUsers);
+    }
+    if (!req.query.filter) {
       const users = await User.find({ role: { $nin: ['admin', 'superadmin'] } });
       return res.send(users);
     }

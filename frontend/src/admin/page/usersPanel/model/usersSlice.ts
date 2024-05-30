@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllUser } from '../api/usersThunk';
 import { RootState } from '../../../../app/store/store';
 
-interface User {
+export interface User {
   _id: string;
   email: string;
   role: string;

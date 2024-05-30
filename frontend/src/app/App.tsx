@@ -18,7 +18,7 @@ import ApplicantSettings from '../client/page/Applicant/ui/page/ApplicantSetting
 import ApplicantProfile from '../client/page/Applicant/ui/page/ApplicantProfile';
 import ApplicantRefactor from '../client/page/Applicant/ui/page/ApplicantRefactor';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
-import PotentialEmployeesPage from '../client/page/PotentialEmployeesPage/PotentialEmployeesPage';
+import { PotentialEmployeesPage } from '../client/page/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
