@@ -16,9 +16,10 @@ export interface MediaBlockApiData {
 
 interface Props {
   slice: MediaBlockApiData;
+  style?: React.CSSProperties;
 }
 
-const MediaBlock: React.FC<Props> = ({ slice }) => {
+const MediaBlock: React.FC<Props> = ({ slice, style }) => {
   const [startIndex, setStartIndex] = useState(0);
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
@@ -43,7 +44,7 @@ const MediaBlock: React.FC<Props> = ({ slice }) => {
   };
 
   return (
-    <Box sx={MediaBlockStyle.container} style={{marginTop: '7%'}}>
+    <Box sx={{ ...MediaBlockStyle.container, ...style }}>
       <Box sx={MediaBlockStyle.row}>
         {slice.primary.title.map((title, index) => (
           <Typography key={index} variant="h4" sx={MediaBlockStyle.title}>
@@ -60,9 +61,13 @@ const MediaBlock: React.FC<Props> = ({ slice }) => {
         )}
       </Box>
       <Box sx={MediaBlockStyle.cards}>
-        {cardsToDisplay.map((item, index) => (
-          <MediaCard key={index} image={item.image} video={item.video} />
-        ))}
+        {cardsToDisplay.length > 0 ? (
+          cardsToDisplay.map((item, index) => <MediaCard key={index} image={item.image} video={item.video} />)
+        ) : (
+          <Typography variant="h6" sx={MediaBlockStyle.paragraph}>
+            Медиафайлы отсутствуют
+          </Typography>
+        )}
       </Box>
     </Box>
   );

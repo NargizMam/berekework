@@ -42,7 +42,7 @@
 @media (min-width: 700px) {
   .rateCard {
     width: 300px;
-    max-height: 780px;
+    height: 780px;
   }
 
   .cardBtnText {
@@ -94,7 +94,6 @@
   .rateCard {
     width: 420px;
     height: 720px;
-
   }
 
   .rateCardTitle {

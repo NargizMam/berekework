@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../app/store/hooks';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import UserMenu from '../UserMenu';
 import { useSinglePrismicDocument } from '@prismicio/react';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import '../css/style.css';
 import '../css/media.css';
 
@@ -34,7 +34,7 @@ interface HeaderProps {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useAppSelector(selectUser);
-
+  const loginButtonStyle = `login ${isMenuOpen ? 'login-open' : 'login-close'}`;
   const [document] = useSinglePrismicDocument('header');
 
   const headerPrismicResponse: HeaderProps | undefined = document?.data as HeaderProps;
@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   const nav = (
-    <nav>
+    <nav className="navigation-big-screen">
       <ul className="main-mav-web">
         {headerPrismicResponse?.body[0].items &&
           headerPrismicResponse.body[0].items.map((item, index) => (
@@ -59,41 +59,43 @@ const Header = () => {
   );
 
   return (
-    <div className="header">
-      <div className="header-content container">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {headerPrismicResponse?.header_logo && (
-            <a href={headerPrismicResponse?.logo_link}>
-              <img
-                src={headerPrismicResponse?.header_logo.url}
-                alt={headerPrismicResponse?.header_logo.alt}
-                style={{ width: 220, height: 56 }}
-              />
-            </a>
-          )}
+    <div>
+      <Container maxWidth="xl">
+        <div className="header-content">
+          <div className="header-logo-wrapper">
+            {headerPrismicResponse?.header_logo && (
+              <a href={headerPrismicResponse?.logo_link}>
+                <img
+                  src={headerPrismicResponse?.header_logo.url}
+                  alt={headerPrismicResponse?.header_logo.alt}
+                  style={{ width: 220, height: 56 }}
+                />
+              </a>
+            )}
+          </div>
           <button className="burger-button" type="button" onClick={toggleMenu}></button>
+          {nav}
+          <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
+            <ul className="main-nav-list">
+              {headerPrismicResponse?.body[0].items &&
+                headerPrismicResponse.body[0].items.map((item, index) => (
+                  <li key={index + 'navDrop'} className="main-nav-item">
+                    <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
+                      {item.name_link}
+                    </Typography>
+                  </li>
+                ))}
+            </ul>
+          </nav>
+          {!user ? (
+            <NavLink to="/login" className={loginButtonStyle}>
+              Войти
+            </NavLink>
+          ) : (
+            <UserMenu user={user} />
+          )}
         </div>
-        {nav}
-        <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
-          <ul className="main-nav-list">
-            {headerPrismicResponse?.body[0].items &&
-              headerPrismicResponse.body[0].items.map((item, index) => (
-                <li key={index + 'navDrop'} className="main-nav-item">
-                  <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
-                    {item.name_link}
-                  </Typography>
-                </li>
-              ))}
-          </ul>
-        </nav>
-        {!user ? (
-          <NavLink to="/login" className="login">
-            Войти
-          </NavLink>
-        ) : (
-          <UserMenu user={user} />
-        )}
-      </div>
+      </Container>
     </div>
   );
 };

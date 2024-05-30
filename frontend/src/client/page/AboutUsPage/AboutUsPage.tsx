@@ -3,6 +3,7 @@ import { MainCards } from '../../../admin/widgets/mainCards';
 import Container from '@mui/material/Container';
 import MediaBlock from '../../widgets/MediaBlock/ui/MediaBlock';
 import OurValuesBlock from '../../widgets/ourValues/ui/ourValuesBlock';
+import { Box, Typography } from '@mui/material';
 
 interface MainTileProps {
   id: string;
@@ -57,52 +58,115 @@ interface SubtitleProps {
 
 const AboutUsPage = () => {
   const [document] = usePrismicDocumentByUID('about_us', 'aboutusmain');
-
   if (!document) {
     return <div>Loading...</div>;
   }
-  console.log(document.data.body);
 
   const getMainTitle = (slice: MainTileProps) => {
     const { aboutusimage, aboutustitle } = slice.primary;
     return (
-      <div key={slice.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '7%' }}>
-        <div>{aboutustitle && aboutustitle.map((title, index) => <h1 key={index}>{title.text}</h1>)}</div>
-        <div>
-          <img
-            src={aboutusimage.url}
-            alt={aboutusimage.alt || 'Image'}
-            style={{ marginLeft: '20px', marginBottom: '5%' }}
-          />
-        </div>
-      </div>
+      <Box
+        key={slice.id}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          color: 'black',
+          marginBottom: '7%',
+          flexDirection: { xs: 'column', md: 'row' },
+          textAlign: { xs: 'center', md: 'left' },
+        }}
+      >
+        <Box>
+          {aboutustitle && aboutustitle.map((title) => (
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 'bold',
+                color: 'black',
+                fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem' },
+              }}
+              key={title.text}
+            >
+              {title.text}
+            </Typography>
+          ))}
+        </Box>
+        <Box
+          component="img"
+          src={aboutusimage.url}
+          alt={aboutusimage.alt || 'Image'}
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            marginLeft: { xs: 0, md: '20px' },
+            marginBottom: { xs: '20px', md: 0 },
+            maxWidth: { sm: '50%', md: '100%' },
+            height: 'auto',
+          }}
+        />
+      </Box>
     );
   };
 
   const getAboutUsInfo = (slice: AboutUsInfoProps) => {
     return (
-      <div key={slice.id} style={{ margin: '7% auto' }}>
+      <Box key={slice.id} sx={{ margin: '7% auto' }}>
         {slice.primary.infotitle && slice.primary.infotitle[0] && (
-          <h1>{slice.primary.infotitle[0].text}</h1>
+          <Typography
+            variant="h4"
+            sx={{
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+              fontWeight: 'bold',
+              color: 'black',
+              marginBottom: '20px'
+            }}
+          >
+            {slice.primary.infotitle[0].text}
+          </Typography>
         )}
 
         {slice.items.map((item, index) => (
-          <div key={index} style={{ marginBottom: '20px' }}>
-            {item.infodescriptiontitle && item.infodescriptiontitle[0] && <h2>{item.infodescriptiontitle[0].text}</h2>}
-            {item.infodescription && item.infodescription[0] && <p>{item.infodescription[0].text}</p>}
-          </div>
+          <Box key={index} sx={{ marginBottom: '20px' }}>
+            {item.infodescriptiontitle && item.infodescriptiontitle[0] && (
+              <Typography
+                variant="h6"
+                sx={{
+                  fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },
+                  fontWeight: 'bold',
+                  color: 'black',
+                  marginBottom: '10px',
+                  pl: '15px'
+                }}
+              >
+                {item.infodescriptiontitle[0].text}
+              </Typography>
+            )}
+            {item.infodescription && item.infodescription[0] && (
+              <Typography
+                variant="body1"
+                sx={{
+                  color: 'black',
+                  fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+                }}
+              >
+                {item.infodescription[0].text}
+              </Typography>
+            )}
+          </Box>
         ))}
-      </div>
+      </Box>
     );
   };
 
   const getSubtitle = (slice: SubtitleProps) => {
     return (
-      <div key={slice.id} style={{marginTop: '7%'}}>
+      <Box key={slice.id} sx={{ my: '7%' }}>
         {slice.items.map((item, index) => (
-          <h1 key={index}>{item.subtitle[0].text}</h1>
+          <Typography variant="h4" key={index} sx={{ fontWeight: 'bold', color: 'black', fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' } }}>
+            {item.subtitle[0].text}
+          </Typography>
         ))}
-      </div>
+      </Box>
     );
   };
 
@@ -117,7 +181,8 @@ const AboutUsPage = () => {
             subtitle: ({ slice }) => getSubtitle(slice),
             maincard: MainCards,
             ourvalues: OurValuesBlock,
-            galleryblock: MediaBlock,
+            galleryblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '180px' }} />,
+            videoblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '100px' }} />,
           }}
         />
       </Container>

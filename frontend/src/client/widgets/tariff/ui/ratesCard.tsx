@@ -23,7 +23,8 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
       setCardLink(false);
     }
   }, []);
-  // <Grid className='rateCard' component={cardLink ? 'a' : 'div'} href={cardLink ? url : undefined}>
+
+
   return (
     <Box className="rateCard">
       <p className="rateCardTitle">{title}</p>

@@ -3,7 +3,6 @@ import { Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { logout } from '../../client/page/Auth/api/AuthThunk';
 import { User } from '../../client/page/Auth/model/types';
 import { useAppDispatch } from '../../app/store/hooks';
@@ -36,6 +35,8 @@ const UserMenu: React.FC<Props> = ({ user }) => {
   const getProfile = () => {
     if (user.role === 'employer') {
       return navigate(`/employersProfile/${user._id}`);
+    } else if (user.role === 'user') {
+      return navigate(`/applicantProfile`);
     }
     navigate('/');
   };
@@ -44,9 +45,8 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     <Box
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', mr: 5 }}
+      sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
     >
-      <Typography p={2}>Hello, {user.email}!</Typography>
       {avatar && <Avatar alt={user.email} src={avatar} sx={{ borderRadius: 50 }} />}
       <Menu
         sx={{ mt: '45px' }}

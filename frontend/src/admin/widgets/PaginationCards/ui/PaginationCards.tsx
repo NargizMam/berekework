@@ -22,14 +22,18 @@ const paginationButtonStyle = {
   },
 };
 
+const arrowIconStyle = {
+  fontSize: '20px',
+};
+
 export const PaginationCards: React.FC<Props> = ({ onBack, onForward, isBackDisabled, isForwardDisabled }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
       <IconButton sx={paginationButtonStyle} onClick={onBack} disabled={isBackDisabled}>
-        <ArrowBackIos />
+        <ArrowBackIos sx={arrowIconStyle} />
       </IconButton>
       <IconButton sx={paginationButtonStyle} onClick={onForward} disabled={isForwardDisabled}>
-        <ArrowForwardIos />
+        <ArrowForwardIos sx={arrowIconStyle} />
       </IconButton>
     </Box>
   );
