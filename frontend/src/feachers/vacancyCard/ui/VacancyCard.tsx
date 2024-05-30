@@ -5,26 +5,26 @@ import './VacancyCard.css';
 
 export interface VacancyCardApiData {
   _id: string;
-  logo: string;
-  company: string;
-  vacancyTitle: string;
-  aboutVacancy: string;
-  responsibilities: string;
-  workConditions: string;
-  country: string;
   city: string;
-  fieldOfWork: string;
+  vacancyTitle: string;
+  company: string;
+  logo: string;
   salary: {
     minSalary: number;
     maxSalary: number;
   };
-  age: {
+  aboutVacancy?: string;
+  responsibilities?: string;
+  workConditions?: string;
+  country?: string;
+  fieldOfWork?: string;
+  age?: {
     minAge: number;
     maxAge: number;
   };
-  education: string;
-  employmentType: string;
-  employer: string | undefined;
+  education?: string;
+  employmentType?: string;
+  employer?: string | undefined;
 }
 
 interface Props {

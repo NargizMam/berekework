@@ -30,11 +30,11 @@ export const VacancyPageClient = () => {
                 <VacancyCard
                   data={{
                     city: vacancy.city,
-                    title: vacancy.vacancyTitle,
+                    vacancyTitle: vacancy.vacancyTitle,
                     _id: vacancy._id,
                     salary: {
-                      min: parseFloat(vacancy.salary.minSalary),
-                      max: parseFloat(vacancy.salary.maxSalary),
+                      minSalary: parseFloat(vacancy.salary.minSalary),
+                      maxSalary: parseFloat(vacancy.salary.maxSalary),
                     },
                     company: vacancy.employer.companyName,
                     logo: vacancy.employer.logo,
