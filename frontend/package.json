@@ -25,6 +25,7 @@
     "@mui/x-charts": "^7.3.0",
     "@phosphor-icons/react": "^2.1.5",
     "@prismicio/client": "^7.5.0",
+    "@prismicio/helpers": "^2.3.9",
     "@prismicio/react": "^2.7.4",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.1.0",

@@ -1,46 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
 import LastNewsBlockStyle from './LastNewsBlock-style';
-// import { PaginationCards } from '../../../../admin/widgets/PaginationCards';
 import LastNewsCards from './LastNewsCards/LastNewsCards';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-// import RatesCard from '../../tariff/ui/ratesCard';
+import { useAllPrismicDocumentsByType } from '@prismicio/react';
 
-interface LastNewsBlock {
-  items: {
-    lastnewsdatetime: string;
-    lastnewsdesc: string;
-    lastnewslink: {
-      target: string;
-      url: string;
-    };
-    lastnewstitle: string;
-  }[];
-}
-interface Props {
-  slice: LastNewsBlock;
-}
-
-const LastNewsBlock: React.FC<Props> = ({slice}) => {
+const LastNewsBlock = () => {
+  const [pages] = useAllPrismicDocumentsByType('lastnews');
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [maxSteps, setMaxSteps] = useState<number>(0);
-  const [cardsOnPage, setCardOnPage] = useState<number>(0);
+  const [maxSteps, setMaxSteps] = useState<number>(2);
+  const [cardsOnPage, setCardOnPage] = useState<number>(3);
 
   useEffect(() => {
-    if (slice.items.length > 0) {
+    if (pages) {
       if (window.innerWidth < 700) {
-        setMaxSteps(slice.items.length);
+        setMaxSteps(pages.length);
         setCardOnPage(1);
       } else if (window.innerWidth < 1300) {
-        setMaxSteps(slice.items.length / 2);
+        setMaxSteps(pages.length / 2);
         setCardOnPage(2);
       } else {
-        setMaxSteps(slice.items.length / 3);
+        setMaxSteps(pages.length / 3);
         setCardOnPage(3);
       }
     }
-  }, [slice.items.length]);
+  }, [pages]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -52,10 +37,6 @@ const LastNewsBlock: React.FC<Props> = ({slice}) => {
 
   const hasNextCards = activeStep < maxSteps - 1;
   const hasPreviousCards = activeStep > 0;
-
-  if (slice.items.length === 0) {
-    return <div>Нет доступных тарифов.</div>;
-  }
 
   return (
     <>
@@ -73,15 +54,15 @@ const LastNewsBlock: React.FC<Props> = ({slice}) => {
             </button>
           </div>
         </Box>
-        {slice.items.length > 0 ? (
-          <div className="rateBlock">
-            {slice.items.slice(activeStep * cardsOnPage, (activeStep + 1) * cardsOnPage).map((news, index) => (
-              <LastNewsCards key={index} title={news.lastnewstitle} description={news.lastnewsdesc} date={news.lastnewsdatetime} link={news.lastnewslink} />
-            ))}
-          </div>
-        ) : (
-          <div>Нет доступных новостей.</div>
-        )}
+        <div className="rateBlock">
+          {pages?.slice(activeStep * cardsOnPage, (activeStep + 1) * cardsOnPage).map((news) => (
+            <LastNewsCards
+              key={news.id}
+              uid={news.uid}
+            />
+          ))}
+        </div>
+        {!pages && <div>Нет доступных новостей.</div>}
       </Box>
     </>
   );
