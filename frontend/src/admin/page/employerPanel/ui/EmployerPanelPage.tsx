@@ -40,12 +40,7 @@ export const EmployerPanelPage = () => {
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
       <Box sx={{display: 'flex', justifyContent: 'right'}}>
         <Link
-          sx={{
-            background: 'green',
-            padding: '5px',
-            color: '#fff',
-            borderRadius: '5px',
-          }}
+          sx={{position: 'fixed', top: 'auto', right: 20, zIndex: 999, margin: '5px'}}
           underline="none"
           component={RouterLink}
           to="/admin/employers-submit"
@@ -62,12 +57,13 @@ export const EmployerPanelPage = () => {
               <TableCell>Email</TableCell>
               <TableCell>Company Name</TableCell>
               <TableCell>Logo</TableCell>
+              <TableCell>Foundation Year</TableCell>
               <TableCell>Industry</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Address</TableCell>
+              <TableCell>Contacts</TableCell>
               <TableCell>Document</TableCell>
-              <TableCell>Foundation Year</TableCell>
-              <TableCell align="right">Role</TableCell>
+              <TableCell align="right">Published</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,6 +79,9 @@ export const EmployerPanelPage = () => {
                   <img src={API_URL + '/' + employer.logo} alt="Logo" />
                 </TableCell>
                 <TableCell component="th" scope="row">
+                  {employer.foundationYear}
+                </TableCell>
+                <TableCell component="th" scope="row">
                   {employer.industry}
                 </TableCell>
                 <TableCell component="th" scope="row">
@@ -92,12 +91,12 @@ export const EmployerPanelPage = () => {
                   {employer.address}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <Link href={API_URL + '/' + employer.document}>PDF</Link>
+                  {employer.contacts}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {employer.foundationYear}
+                  <Link href={API_URL + '/' + employer.document}>PDF</Link>
                 </TableCell>
-                <TableCell>{employer.role}</TableCell>
+                <TableCell>{employer.isPublished}</TableCell>
                 <TableCell align="right">
                   <Button onClick={() => handleDeleteEmployer(employer._id)} variant="contained">
                     Delete

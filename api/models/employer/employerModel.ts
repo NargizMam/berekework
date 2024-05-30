@@ -31,12 +31,6 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     type: String,
     required: true,
   },
-  role: {
-    type: String,
-    default: 'employer',
-  },
-  avatar: String,
-  googleID: String,
   companyName: {
     type: String,
     required: true,
@@ -57,19 +51,36 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     type: String,
     required: true,
   },
+  documents: [{
+    type: String,
+    required: true,
+  }],
+  foundationYear: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    default: 'employer',
+  },
+  isPublished: {
+    type: Boolean,
+    default: false
+  },
+  googleID: String,
+  avatar: String,
   logo: {
     type: String,
   },
-  documents: [{
-    type: String,
-  }],
   vacancies: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Vacancy',
     },
   ],
-
+  adminsComment: {
+    type: String
+  },
 });
 
 employerSchema.methods.checkPassword = function (password: string) {

@@ -5,20 +5,24 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { createEmployer } from '../api/employerThunk';
 import { selectEmployerError } from '../model/employerSlice';
 import { getExtension } from '../../../../feachers/checkExtensiion';
+import { useParams } from 'react-router-dom';
+
+const initialState = {
+  email: '',
+  password: '',
+  industry: '',
+  companyName: '',
+  description: '',
+  contacts: '',
+  foundationYear: '',
+  document: null,
+  address: '',
+  logo: null,
+  avatar: null
+}
 
 export const EmployerFormPage = () => {
-  const [state, setState] = useState<EmployerMutation>({
-    email: '',
-    password: '',
-    companyName: '',
-    industry: '',
-    description: '',
-    foundationYear: '',
-    document: null,
-    address: '',
-    logo: null,
-    avatar: null
-  });
+  const [state, setState] = useState<EmployerMutation>(initialState);
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectEmployerError);
   const documentSelect = useRef<HTMLInputElement>(null);
@@ -26,7 +30,8 @@ export const EmployerFormPage = () => {
   const [filename, setFilename] = useState('');
   const [filenameImage, setFilenameImage] = useState('');
   const [errorDocument, setErrorDocument] = useState(false);
-
+  const con = useParams();
+  console.log(con);
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -89,6 +94,7 @@ export const EmployerFormPage = () => {
       return undefined;
     }
   };
+  const inputStyle = con === 'register' ? { borderRadius: '30px' } : {};
 
   return (
     <form
@@ -108,6 +114,7 @@ export const EmployerFormPage = () => {
             label="Email"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('email'))}
             helperText={getFieldError('email')}
           />
@@ -121,6 +128,7 @@ export const EmployerFormPage = () => {
             label="Password"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('password'))}
             helperText={getFieldError('password')}
           />
@@ -134,6 +142,7 @@ export const EmployerFormPage = () => {
             label="Company name"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('companyName'))}
             helperText={getFieldError('companyName')}
           />
@@ -175,11 +184,12 @@ export const EmployerFormPage = () => {
             label="Foundation Year"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('foundationYear'))}
             helperText={getFieldError('foundationYear')}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             value={state.address}
             onChange={changeField}
@@ -188,6 +198,7 @@ export const EmployerFormPage = () => {
             label="Address"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('address'))}
             helperText={getFieldError('address')}
           />

@@ -23,13 +23,13 @@ employerRouter.post(
         password: req.body.password,
         avatar: files['avatar'] ? files['avatar'][0].filename : null,
         companyName: req.body.companyName,
+        foundationYear: req.body.foundationYear,
+        documents: files['document'] ? files['document'][0].filename : null,
         industry: req.body.industry,
         description: req.body.description,
         address: req.body.address,
         contacts: req.body.contacts,
-        documents: files['document'] ? files['document'][0].filename : null,
         logo: files['logo'] ? files['logo'][0].filename : null,
-        foundationYear: req.body.foundationYear,
       });
       employer.generateToken();
       await employer.save();
@@ -47,6 +47,55 @@ employerRouter.post(
       return next(error);
     }
   },
+);
+employerRouter.put(
+    '/:id',
+    multiUpload.fields([
+      { name: 'document', maxCount: 1 },
+      { name: 'logo', maxCount: 1 },
+      { name: 'avatar', maxCount: 1 },
+    ]),
+    async (req, res, next) => {
+      try {
+        const files: UploadedFiles = req.files as UploadedFiles;
+        const employerId = req.params.id;
+
+        const updateData = {
+          email: req.body.email,
+          password: req.body.password,
+          avatar: files['avatar'] ? files['avatar'][0].filename : null,
+          companyName: req.body.companyName,
+          foundationYear: req.body.foundationYear,
+          documents: files['document'] ? files['document'][0].filename : null,
+          industry: req.body.industry,
+          description: req.body.description,
+          address: req.body.address,
+          contacts: req.body.contacts,
+          logo: files['logo'] ? files['logo'][0].filename : null,
+          adminContacts: req.body.adminContacts,
+        };
+
+        const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });
+
+        if (!employer) {
+          return res.status(404).send({ message: 'Employer not found!' });
+        }
+
+        await transporter.sendMail({
+          from: '04072002mu@gmail.com',
+          to: req.body.email,
+          subject: 'Employer details updated',
+          text: `${req.body.email}, your employer details have been updated!`,
+        });
+
+        return res.send({ message: 'Employer updated successfully!', employer });
+      } catch (error) {
+        if (error instanceof mongoose.Error.ValidationError) {
+          return res.status(422).send(error);
+        }
+        return next(error);
+      }
+    },
 );
 
 employerRouter.get('/', async (_req, res, next) => {

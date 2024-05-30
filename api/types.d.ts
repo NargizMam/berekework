@@ -60,6 +60,7 @@ export interface EmployerFields {
   password: string;
   token: string;
   role: string;
+  isPublished: Boolean;
   googleID?: string;
   avatar?: string;
   companyName: string;
@@ -71,6 +72,7 @@ export interface EmployerFields {
   documents: string[];
   foundationYear: string;
   vacancies: Types.ObjectId[];
+  adminsComment: string;
 }
 
 export interface UserMethods {
