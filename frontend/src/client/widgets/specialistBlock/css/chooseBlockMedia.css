@@ -1,31 +1,68 @@
-@media screen and (min-width: 1300px) {
-  .chooseBlock {
-    background: #FFE585;
-    border-radius: 30px;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: nowrap;
-  }
+.chooseBlock {
+  position: relative;
+  background: #FFE585;
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 30px;
+  height: 290px;
+}
 
-  .chooseBlockContent {
-    display: flex;
-    flex-direction: column;
-    padding: 30px 20px;
+.chooseBlockContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-link {
+  display: flex;
+  width: 230px;
+  height: 60px;
+  line-height: 30px;
+  border-radius: 40px;
+  font-size: 14px;
+  background-color: #FFFFFF;
+  color: #000000;
+  justify-content: center;
+  text-align: start;
+  text-decoration: none;
+  padding-top: 23px;
+  cursor: pointer;
+}
+
+.span {
+  display: none;
+}
+
+.chooseBlock-title {
+  font-size: 30px;
+  color: #000000;
+  text-align: start;
+  word-break: break-word;
+}
+
+.chooseBlock-img {
+  display: none;
+}
+
+@media only screen and (min-width: 550px) {
+  .chooseBlock-title {
+    font-size: 35px;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .chooseBlock-title {
+    font-size: 40px;
   }
 
   .button-link {
-    display: flex;
-    width: 254px;
-    height: 30px;
+    width: 274px;
+    font-size: 16px;
     line-height: 60px;
-    border-radius: 40px;
-    background-color: #FFFFFF;
-    color: #000000;
     justify-content: start;
     text-align: start;
-    text-decoration: none;
-    padding-top: 23px;
-    cursor: pointer;
     position: relative;
   }
 
@@ -46,26 +83,18 @@
     background-repeat: no-repeat;
     display: block;
   }
+}
 
+@media screen and (min-width: 1160px) {
   .chooseBlock-title {
     font-size: 48px;
-    color: #000000;
-    text-align: start;
-    word-break: break-word;
     width: 800px;
   }
 
   .chooseBlock-img {
+    position: absolute;
+    right: 60px;
+    top: 1px;
     display: block;
-    margin-left: auto;
-    margin-right: 100px;
-    width: auto;
-    height: 340px;
-  }
-}
-
-@media only screen and (min-width: 800px) {
-  .chooseBlock-title {
-    font-size: 48px;
   }
 }

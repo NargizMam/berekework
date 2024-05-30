@@ -41,7 +41,7 @@ div.inputContainer {
 }
 
 select.field {
-  width: 300px;
+  width: 250px;
   height: 70px;
 }
 
@@ -74,7 +74,7 @@ button.sendBtn {
   }
 
   select.field {
-    width: 450px;
+    width: 400px;
   }
 
   textarea.field{
@@ -88,11 +88,11 @@ button.sendBtn {
   }
 
   select.field {
-    width: 650px;
+    width: 600px;
   }
 
   textarea.field{
-    width: 580px;
+    width: 600px;
   }
 
   button.sendBtn {
@@ -104,14 +104,16 @@ button.sendBtn {
   .applicantFormContainer {
     background-color: #ffffff;
     border-radius: 30px;
-    width: 650px;
+    width: 850px;
     padding: 40px 50px;
   }
 }
 
 @media (min-width: 1400px) {
   .applicantFormContainer {
+    display: flex;
     width: 850px;
+    padding: 40px;
   }
 
   div.inputContainer {
@@ -143,7 +145,7 @@ button.sendBtn {
   }
 
   button.sendBtn {
-    width: 870px;
+    width: 770px;
     font-weight: 600;
     font-size: 20px;
     height: 70px;
@@ -156,6 +158,6 @@ button.sendBtn {
   }
 
   select.field {
-    width: 420px;
+    width: 380px;
   }
 }
