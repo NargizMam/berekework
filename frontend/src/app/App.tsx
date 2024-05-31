@@ -64,7 +64,7 @@ const App = () => {
         {location.pathname.startsWith('/admin') ? (
           adminRoutes
         ) : (
-          < ClientLayout>
+          <ClientLayout>
             <Routes>
               <Route path="/" element={<HomePage/>}/>
               <Route path="/register" element={<RegisterPage/>}/>
