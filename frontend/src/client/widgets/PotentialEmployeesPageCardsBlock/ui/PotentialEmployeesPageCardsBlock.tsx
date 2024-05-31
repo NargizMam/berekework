@@ -21,9 +21,11 @@ const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => {
   const users = useAppSelector(selectUsers);
   const isLoading = useAppSelector(selectUsersLoading);
 
-  useEffect(() => {
+	useEffect(() => {
     dispatch(getAllUser());
   }, [dispatch]);
+	
+	console.log('users', users);
 
   if (isLoading) {
     return (
@@ -45,11 +47,6 @@ const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => {
           ))}
         </div>
       )}
-      <div className="PotentialEmployeesPageCardsBlock__cards">
-        {users.map((user) => (
-          <PotentialEmployeesPageCard key={user._id} data={user} />
-        ))}
-      </div>
     </div>
   );
 };

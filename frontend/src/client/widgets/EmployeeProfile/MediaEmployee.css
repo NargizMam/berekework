@@ -1,0 +1,18 @@
+@media (max-width: 427px) {
+	.UserProfile__container {
+		text-align: center;
+	}
+	
+	p {
+		text-align: start;
+	}
+	
+	.employee-img {
+		width: 100%;
+	}
+
+	.employee-btn {
+		width: 100%;
+		padding: 20px;
+	}
+}
