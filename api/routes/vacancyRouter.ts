@@ -2,8 +2,11 @@ import express from 'express';
 import Vacancy from '../models/vacancy/Vacancy';
 import mongoose from 'mongoose';
 import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
+import { VacancyI } from '../types';
 
 const vacancyRouter = express.Router();
+
+const categories = ['country', 'city', 'fieldOfWork', 'education', 'employmentType'];
 
 vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next) => {
   const {
@@ -56,12 +59,52 @@ vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next
 vacancyRouter.get('/', async (req, res, next) => {
   try {
     const vacancyPage = req.query.vacancyPage;
+    const categoryVacancy = req.query.getCategory;
+    const filterCategory = req.query.category;
+    const category = req.body.category;
 
     if (vacancyPage) {
       const result = await Vacancy.find()
         .select('vacancyTitle salary city')
         .populate('employer', '-_id companyName logo');
       return res.send(result);
+    }
+
+    if (categoryVacancy) {
+      const countryCategory: string[] = [];
+      const cityCategory: string[] = [];
+      const fieldOfWorkCategory: string[] = [];
+      const educationCategory: string[] = [];
+      const employmentTypeCategory: string[] = [];
+
+      let vacancyCategory = {
+        country: [''],
+        city: [''],
+        fieldOfWork: [''],
+        education: [''],
+        employmentType: [''],
+      };
+
+      const vacancies: VacancyI[] = await Vacancy.find();
+      vacancies.forEach((vacancy) => {
+        countryCategory.push(vacancy.country);
+        cityCategory.push(vacancy.city);
+        fieldOfWorkCategory.push(vacancy.fieldOfWork);
+        educationCategory.push(vacancy.education);
+        employmentTypeCategory.push(vacancy.employmentType);
+      });
+
+      vacancyCategory.city = [...new Set(cityCategory)];
+      vacancyCategory.country = [...new Set(countryCategory)];
+      vacancyCategory.fieldOfWork = [...new Set(fieldOfWorkCategory)];
+      vacancyCategory.education = [...new Set(educationCategory)];
+      vacancyCategory.employmentType = [...new Set(employmentTypeCategory)];
+
+      return res.send(vacancyCategory);
+    }
+
+    if (filterCategory) {
+      console.log('filter', category);
     }
 
     const result = await Vacancy.find();

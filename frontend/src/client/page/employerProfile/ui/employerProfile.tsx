@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectEmployersProfileInfo } from '../model/employerProfileSlice';
 import { getEmployersProfileInfo } from '../app/employerProfileThunk';
 import { Loader } from '../../../../shared/loader';
-import { VacancyCard } from '../../../../admin/widgets/vacancyCard';
+//import { VacancyCard } from '../../../../admin/widgets/vacancyCard';
 import { useParams } from 'react-router-dom';
 import { selectEmployerLoading } from '../../../../admin/page/employerPanel/model/employerSlice';
 import './employerProfile.css';
@@ -17,7 +17,7 @@ const EmployerProfile = () => {
   const loading = useAppSelector(selectEmployerLoading);
   const apiURL = 'http://localhost:8000';
   const image = apiURL + '/' + profile?.logo;
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     if (id) {
@@ -27,15 +27,19 @@ const EmployerProfile = () => {
 
   return (
     <div>
-      <div className='createVacancyContainer' >
-        <Button variant="outlined" onClick={() => setOpenForm(true)}>Создать вакансию</Button>
+      <div className="createVacancyContainer">
+        <Button variant="outlined" onClick={() => setOpenForm(true)}>
+          Создать вакансию
+        </Button>
       </div>
-      {loading && <Loader/>}
+      {loading && <Loader />}
       {profile ? (
         <Grid mt={6}>
-          <div className='companyHeader'>
-            <img className="companyLogo" src={image} alt="Логотип компании" height="100px"/>
-            <Typography ml={2} variant="h4">{profile.companyName}</Typography>
+          <div className="companyHeader">
+            <img className="companyLogo" src={image} alt="Логотип компании" height="100px" />
+            <Typography ml={2} variant="h4">
+              {profile.companyName}
+            </Typography>
           </div>
           <p className="companyInfo">
             <strong>Сфера деятельности:</strong> {profile.industry}
@@ -53,8 +57,11 @@ const EmployerProfile = () => {
             Скачать документы
           </a>
           <Grid mt={6} mb={6}>
-            <Typography mb={2} variant='h5'> Ваши вакансии:</Typography>
-            {profile.vacancies.length > 0 ? (
+            <Typography mb={2} variant="h5">
+              {' '}
+              Ваши вакансии:
+            </Typography>
+            {/*{profile.vacancies.length > 0 ? (
               profile.vacancies.map((vacancy) => (
                 <Grid mb={2}>
                   <VacancyCard key={vacancy._id} data={vacancy}/>
@@ -62,9 +69,8 @@ const EmployerProfile = () => {
               ))
             ) : (
               <h6>Добавьте свои вакансии</h6>
-            )}
+            )}*/}
           </Grid>
-
         </Grid>
       ) : (
         <h1>Данные работодателя еще не введены</h1>
@@ -73,7 +79,7 @@ const EmployerProfile = () => {
       {openForm && (
         <>
           <Typography variant="h4">Создайте свои вакансии</Typography>
-          <CreateVacancyForm setOpenForm={setOpenForm}/>
+          <CreateVacancyForm setOpenForm={setOpenForm} />
         </>
       )}
     </div>

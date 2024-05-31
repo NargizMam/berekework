@@ -162,3 +162,24 @@ export interface UploadedFiles {
   document?: Express.Multer.File[]; // Массив файлов для поля 'document'
   logo?: Express.Multer.File[]; // Массив файлов для поля 'logo'
 }
+
+export interface VacancyI {
+  _id: string;
+  vacancyTitle: string;
+  salary: {
+    minSalary: number;
+    maxSalary: number;
+  };
+  country: string;
+  city: string;
+  aboutVacancy: string;
+  responsibilities: string;
+  workConditions: string;
+  fieldOfWork: string;
+  age: {
+    minAge: number;
+    maxAge: number;
+  };
+  education: string;
+  employmentType: string;
+}

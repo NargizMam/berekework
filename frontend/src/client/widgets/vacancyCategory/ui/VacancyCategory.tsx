@@ -1,10 +1,19 @@
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
-import { vacancyCategory } from '../../../../app/constants/links';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { selectClientVacancyCategory } from '../../../page/VacancyPage/model/vacancySlice';
+import { vacancyFetchCategory } from '../../../page/VacancyPage/api/vacancyThunks';
 
 export const VacancyCategory = () => {
+  const dispatch = useAppDispatch();
+  const categoriesGet = useAppSelector(selectClientVacancyCategory);
+
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: string }>({});
   const [customValues, setCustomValues] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    dispatch(vacancyFetchCategory());
+  }, [dispatch]);
 
   const handleChange = (name: string, value: string) => {
     if (checkedItems[name] === value) {
@@ -26,9 +35,6 @@ export const VacancyCategory = () => {
     setCustomValues({ ...customValues, [name]: event.target.value });
   };
 
-  /*console.log('Checked items:', checkedItems);
-  console.log('Custom values:', customValues);*/
-
   const combineItems = () => {
     const combined: { [key: string]: string } = {};
 
@@ -39,14 +45,13 @@ export const VacancyCategory = () => {
         combined[name] = value;
       }
     });
-
     console.log(combined);
   };
   return (
     <Box sx={{ border: '1px solid red' }}>
       <Button onClick={() => combineItems()}>Test</Button>
       <Grid container direction="column">
-        {vacancyCategory.map((category) => (
+        {categoriesGet.map((category) => (
           <Grid item key={category.id}>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
               {category.title}
@@ -60,7 +65,7 @@ export const VacancyCategory = () => {
                   onChange={() => handleChange(category.name, item.valueSend)}
                 />
               ))}
-              {category.input.isInput && (
+              {category.input?.isInput && (
                 <>
                   <FormControlLabel
                     control={<Checkbox color="primary" checked={checkedItems[category.name] === 'custom'} />}
