@@ -181,8 +181,10 @@ const AboutUsPage = () => {
             subtitle: ({ slice }) => getSubtitle(slice),
             maincard: MainCards,
             ourvalues: OurValuesBlock,
-            galleryblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '180px' }} />,
-            videoblock: ({ slice }) => <MediaBlock slice={slice} style={{ marginBottom: '100px' }} />,
+            galleryblock: ({ slice }) => (
+              <MediaBlock className="gallery" slice={slice} style={{ marginBottom: '180px' }} />
+            ),
+            videoblock: ({ slice }) => <MediaBlock className="video" slice={slice} style={{ marginBottom: '100px' }} />,
           }}
         />
       </Container>
