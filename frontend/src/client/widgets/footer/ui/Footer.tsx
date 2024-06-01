@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import '../css/footer.css';
 import '../css/footerMedia.css';
 import { useSinglePrismicDocument } from '@prismicio/react';
@@ -14,7 +13,7 @@ const Footer = () => {
 
   return (
     <div className="footer">
-      <Container maxWidth="xl">
+      <div className="main-container">
         <div className="footer-top">
           {data.body.map((section: any, index: number) => (
             <div key={index}>
@@ -79,7 +78,7 @@ const Footer = () => {
           </div>
         </div>
         <p className="footer-bottom-text">{data.copyright}</p>
-      </Container>
+    </div>
     </div>
   );
 };
