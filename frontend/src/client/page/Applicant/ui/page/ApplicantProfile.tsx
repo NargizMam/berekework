@@ -32,7 +32,7 @@ const ApplicantProfile = () => {
 	const age = now.diff(birthDateDayjs, 'year');
 	
 	return (
-		<div style={{ marginTop: '40px', marginBottom: '100px'}}>
+		<div style={{ marginTop: '40px', marginBottom: '100px' }}>
 			<Typography variant='h4'></Typography>
 			{loading ? (
 				<Loader />
