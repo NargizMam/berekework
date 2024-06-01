@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { useAppSelector } from '../../../app/store/hooks';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import UserMenu from '../UserMenu';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { Container, Typography } from '@mui/material';
 import '../css/style.css';
 import '../css/media.css';
+import { getProfile } from '../feauteres/user/user';
+import { logout } from '../../../client/page/Auth/api/AuthThunk';
 
 interface HeaderProps {
   body: [
@@ -32,16 +34,27 @@ interface HeaderProps {
 }
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const user = useAppSelector(selectUser);
-  const loginButtonStyle = `login ${isMenuOpen ? 'login-open' : 'login-close'}`;
   const [document] = useSinglePrismicDocument('header');
-
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const headerPrismicResponse: HeaderProps | undefined = document?.data as HeaderProps;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  const handleLogout = () => {
+    dispatch(logout()).unwrap();
+    navigate('/login');
+  };
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
 
   const nav = (
     <nav className="navigation-big-screen">
@@ -57,7 +70,6 @@ const Header = () => {
       </ul>
     </nav>
   );
-
   return (
     <div>
       <Container maxWidth="xl">
@@ -68,13 +80,22 @@ const Header = () => {
                 <img
                   src={headerPrismicResponse?.header_logo.url}
                   alt={headerPrismicResponse?.header_logo.alt}
-                  style={{ width: 220, height: 56 }}
+                  style={{width: 220, height: 56}}
                 />
               </a>
             )}
           </div>
-          <button className="burger-button" type="button" onClick={toggleMenu}></button>
           {nav}
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            {!user ? (
+              <NavLink to="/login" className={'login-open'}>
+                Войти
+              </NavLink>
+            ) : (
+              <UserMenu user={user}/>
+            )}
+            <button className="burger-button" type="button" onClick={toggleMenu}></button>
+          </div>
           <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
             <ul className="main-nav-list">
               {headerPrismicResponse?.body[0].items &&
@@ -85,15 +106,23 @@ const Header = () => {
                     </Typography>
                   </li>
                 ))}
+              {user &&
+                <div className='burgerUser'>
+                  <li className="main-nav-item">
+                    <Typography className={'main-nav-link'} onClick={() => getProfile(user, navigate)}>
+                      Мой профиль
+                    </Typography>
+                  </li>
+                  <li className="main-nav-item">
+                    <Typography onClick={handleLogout} className={'main-nav-link'}>
+                      Выйти
+                    </Typography>
+                  </li>
+                </div>
+              }
             </ul>
           </nav>
-          {!user ? (
-            <NavLink to="/login" className={loginButtonStyle}>
-              Войти
-            </NavLink>
-          ) : (
-            <UserMenu user={user} />
-          )}
+
         </div>
       </Container>
     </div>

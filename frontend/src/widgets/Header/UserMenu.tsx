@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
 import { logout } from '../../client/page/Auth/api/AuthThunk';
 import { User } from '../../client/page/Auth/model/types';
 import { useAppDispatch } from '../../app/store/hooks';
 import { apiURL } from '../../constants';
+import './css/media.css';
+import { getProfile } from './feauteres/user/user';
 
 interface Props {
   user: User;
 }
 
-const UserMenu: React.FC<Props> = ({ user }) => {
+const   UserMenu: React.FC<Props> = ({ user }) => {
+  let name = '';
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -32,22 +34,19 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     setAnchorEl(null);
   };
 
-  const getProfile = () => {
-    if (user.role === 'employer') {
-      return navigate(`/employersProfile/${user._id}`);
-    } else if (user.role === 'user') {
-      return navigate(`/applicantProfile`);
-    }
-    navigate('/');
-  };
+  if (user.role === 'user') {
+    name = user.name + ' ' + user.surname;
+  }
+
 
   return (
-    <Box
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+    <div
+      className='userMenu'
     >
-      {avatar && <Avatar alt={user.email} src={avatar} sx={{ borderRadius: 50 }} />}
+      <Typography className='userName' style={{marginRight: '10px'}}>{name}</Typography>
+      <div  onClick={handleMouseEnter}>
+        {avatar && <Avatar alt={user.email} src={avatar} sx={{ borderRadius: 50}} className='userAvatar'/>}
+      </div>
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
@@ -64,10 +63,10 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         open={Boolean(anchorEl)}
         onClose={handleMouseLeave}
       >
-        <MenuItem onClick={getProfile}>My profile</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={() => getProfile(user, navigate)}>Мой профиль</MenuItem>
+        <MenuItem onClick={handleLogout}>Выйти</MenuItem>
       </Menu>
-    </Box>
+    </div>
   );
 };
 

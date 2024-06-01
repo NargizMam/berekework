@@ -1,4 +1,34 @@
-@media screen and (min-width: 830px) {
+.userMenu {
+  display: none;
+}
+
+@media screen and (min-width: 650px) {
+  .userMenu {
+    display: flex;
+    align-items: center;
+  }
+
+  div.userAvatar {
+    display: none;
+  }
+
+  .main-nav-list {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  div.userMenu {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  div.userAvatar {
+    display: flex;
+  }
+
   .header-content {
     display: flex;
     align-items: center;
@@ -6,17 +36,30 @@
     flex-wrap: nowrap;
   }
 
-  .navigation-big-screen {
+  nav.navigation-big-screen {
     display: block;
   }
 
   .header-logo-wrapper {
-    flex-basis: 0%;
+    flex-basis: 0;
   }
 
-  .main-mav-web {
+  ul.main-mav-web {
     display: flex;
     list-style: none;
+    padding: 0;
+  }
+
+  .userName {
+    display: none;
+  }
+
+  a.main-nav-link {
+    font-size: 14px;
+  }
+
+  .login-open {
+    font-size: 14px;
   }
 
   .main-nav-login {
@@ -49,20 +92,17 @@
   }
 }
 
-@media screen and (min-width: 650px) {
-  .main-nav-list {
-    display: flex;
-    justify-content: space-between;
+@media screen and (min-width: 1400px) {
+  a.main-nav-link {
+    font-size: 16px;
+  }
+  .login-open {
+    font-size: 16px;
+  }
+
+  .userName {
+    display: block;
   }
 }
 
-@media screen and (min-width: 370px) {
-.login {
-  font-size: 15px;
-  padding: 0;
-}
 
-.login-close {
-  height: auto;
-}
-}

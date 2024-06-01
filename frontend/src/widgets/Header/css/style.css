@@ -1,6 +1,6 @@
 .main-nav-link {
   color: #a9a9a9;
-  text-wrap: nowrap;
+  text-wrap: none;
 }
 
 .navigation-big-screen {
@@ -36,6 +36,8 @@
 }
 
 .main-nav-list {
+  display: flex;
+  flex-direction: column;
   list-style: none;
   overflow: hidden;
   max-height: 0;
@@ -53,7 +55,7 @@
 }
 
 .main-nav-open .main-nav-list {
-  max-height: 200px;
+  max-height: 250px;
 }
 
 .main-nav-close .main-nav-list {
@@ -90,7 +92,7 @@
 }
 
 .burger-button {
-  margin-left: auto;
+  margin-left: 10px;
   background-image: url('../images/burger-menu.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -100,4 +102,8 @@
   height: 25px;
   cursor: pointer;
   background-color: transparent;
+}
+
+button.burger-button:focus {
+  outline: none;
 }

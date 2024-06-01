@@ -26,6 +26,8 @@ export interface User {
   token: string;
   role: string;
   avatar: string;
+  name: string;
+  surname: string;
 }
 export interface ValidationError {
   errors: {
