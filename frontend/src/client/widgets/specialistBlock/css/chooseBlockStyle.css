@@ -9,12 +9,13 @@
 
 .chooseBlock-title {
   color: #1a1a1a;
+  margin: 0 0 30px 0;
+  font-size: 46px;
 }
 
 .chooseBlockContent {
   display: flex;
   flex-direction: column;
-  padding: 30px 20px;
 }
 
 .button-link {

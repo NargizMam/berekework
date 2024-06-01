@@ -38,17 +38,16 @@ const ApplicantProfile = () => {
       ) : (
         applicant ? (
             <div className='profileContainer'>
-              <div className="whiteBackground"></div>
+              <div className="photoFrame">
+                {applicant.photo ?
+                  <img className="photo" src={API_URL + '/' + applicant.photo} alt="Photo"/>
+                  :
+                  <div className="photo">
+                    <Typography>Нет фото</Typography>
+                  </div>
+                }
+              </div>
               <div className="applicantContainer">
-                <div className="photoFrame">
-                  {applicant.photo ?
-                    <img className="photo" src={API_URL + '/' + applicant.photo} alt="Photo"/>
-                    :
-                    <div className="photo">
-                      <Typography>Нет фото</Typography>
-                    </div>
-                  }
-                </div>
                 <p className="profileTitle">{applicant.surname} {applicant.firstName} {applicant.secondName}</p>
                 <p className="applicantInfo">{applicant.wantedJob}</p>
                 <div className="infoBlock">

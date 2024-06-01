@@ -121,13 +121,12 @@ const ApplicantFullForm: React.FC<Props> = ({applicant, onSubmit, loading}) => {
 
   return (
     <>
-      <div style={{marginTop: '70px'}}>
-        <div className="whiteBackground"></div>
+      <div style={{marginTop: '70px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative'}}>
+        <FileInput
+          photo={applicant?.photo}
+          onChange={fileInputChangeHandler}
+        />
         <div className="applicantContainer">
-          <FileInput
-            photo={applicant?.photo}
-            onChange={fileInputChangeHandler}
-          />
           <p className="profileTitle">Настройки профиля</p>
           <Grid sx={{maxWidth: '850px'}}>
             <Form
