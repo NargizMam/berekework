@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import UserMenu from '../UserMenu';
 import { useSinglePrismicDocument } from '@prismicio/react';
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import '../css/style.css';
 import '../css/media.css';
 import { getProfile } from '../feauteres/user/user';
@@ -71,8 +71,7 @@ const Header = () => {
     </nav>
   );
   return (
-    <div>
-      <Container maxWidth="xl">
+    <div className="main-container">
         <div className="header-content">
           <div className="header-logo-wrapper">
             {headerPrismicResponse?.header_logo && (
@@ -124,7 +123,6 @@ const Header = () => {
           </nav>
 
         </div>
-      </Container>
     </div>
   );
 };
