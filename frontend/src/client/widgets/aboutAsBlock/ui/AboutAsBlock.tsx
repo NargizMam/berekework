@@ -32,7 +32,7 @@ interface Props {
 
 const AboutUsBlock: React.FC<Props> = ({ slice }) => {
   return (
-    <Box key={slice.id} sx={{ marginBottom: { xs: '7%', md: '161px' } }}>
+    <Box key={slice.id} sx={{ marginBottom: { xs: '7%', md: '161px' }, marginTop: { xs: '7%', md: '180px' } }}>
       {slice.primary.infotitle && slice.primary.infotitle[0] && (
         <Typography
           variant="h4"
@@ -49,7 +49,7 @@ const AboutUsBlock: React.FC<Props> = ({ slice }) => {
       )}
 
       {slice.items.map((item, index) => (
-        <Box key={index} sx={{ marginBottom: { xs: '7%', md: '60px' } }}>
+        <Box key={index} sx={{ marginBottom: { xs: '7%', md: '40px' } }}>
           {item.infodescription && item.infodescription[0] && (
             <Typography
               component="span"
