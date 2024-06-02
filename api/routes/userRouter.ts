@@ -143,9 +143,9 @@ userRouter.delete('/:id', async (req, res, next) => {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
-        return res.send('Модератор возможно был удален!');
+        return res.send({ text: 'not found!' });
       }
-      return res.send('Модератор удачно удален!');
+      return res.send({ text: 'User deleted' });
     } catch (e) {
       next(e);
     }

@@ -9,3 +9,10 @@ export const getAllUser = createAsyncThunk<User[], string | undefined>(
     return response.data;
   }
 );
+
+export const deleteUser = createAsyncThunk<void, string>(
+  'users/delete',
+  async (id) => {
+    await axiosApi.delete(`/user/${id}`);
+  }
+);
