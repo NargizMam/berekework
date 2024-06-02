@@ -1,6 +1,5 @@
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { MainCards } from '../../../admin/widgets/mainCards';
-import Container from '@mui/material/Container';
 import MediaBlock from '../../widgets/MediaBlock/ui/MediaBlock';
 import OurValuesBlock from '../../widgets/ourValues/ui/ourValuesBlock';
 import { Box, Typography } from '@mui/material';
@@ -87,12 +86,17 @@ const AboutUsPage = () => {
 
   const getSubtitle = (slice: SubtitleProps) => {
     return (
-      <Box key={slice.id} sx={{ my: '7%' }}>
+      <Box key={slice.id} sx={{ marginBottom: { xs: '7%', md: '60px' } }}>
         {slice.items.map((item, index) => (
           <Typography
             variant="h4"
             key={index}
-            sx={{ fontWeight: 'bold', color: 'black', fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' } }}
+            sx={{
+              fontWeight: '700',
+              color: '#000',
+              lineHeight: 1.3,
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.875rem' },
+            }}
           >
             {item.subtitle[0].text}
           </Typography>
@@ -111,10 +115,10 @@ const AboutUsPage = () => {
           subtitle: ({ slice }) => getSubtitle(slice),
           maincard: MainCards,
           ourvalues: OurValuesBlock,
-          galleryblock: ({ slice }) => (
-            <MediaBlock className="gallery" slice={slice} style={{ marginBottom: '180px' }} />
+          galleryblock: ({ slice }) => <MediaBlock className="gallery" slice={slice} style={{ marginTop: '176px' }} />,
+          videoblock: ({ slice }) => (
+            <MediaBlock className="video" slice={slice} style={{ marginTop: '180px', marginBottom: '100px' }} />
           ),
-          videoblock: ({ slice }) => <MediaBlock className="video" slice={slice} style={{ marginBottom: '100px' }} />,
         }}
       />
     </>
