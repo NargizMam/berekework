@@ -30,14 +30,18 @@ const EmployerProfile = () => {
   }, [dispatch, id]);
 
   return (
-    <div>
-      <Button variant="outlined" onClick={() => setOpenProfileForm(true)}>Редактировать профиль </Button>
-      <div className='createVacancyContainer' >
-       {profile && profile.isPublished === true && <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>Создать вакансию</Button>}
+    <div style={{position: 'relative'}}>
+      <Button variant="outlined" sx={{position: 'absolute', top: '20px', right: '50px'}}
+              onClick={() => setOpenProfileForm(true)}>
+        Редактировать профиль
+      </Button>
+      <div className='createVacancyContainer'>
+        {profile && profile.isPublished === true &&
+          <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>Создать вакансию</Button>}
       </div>
 
       {loading && <Loader/>}
-      {(profile && !openProfileForm) ? (
+      {(profile && !openProfileForm) && (
         <Grid mt={6}>
           <div className='companyHeader'>
             <img className="companyLogo" src={image} alt="Логотип компании" height="100px"/>
@@ -72,8 +76,6 @@ const EmployerProfile = () => {
           </Grid>
 
         </Grid>
-      ) : (
-        <h1>Данные работодателя еще не введены</h1>
       )}
       {openProfileForm && profile && (
         <>
