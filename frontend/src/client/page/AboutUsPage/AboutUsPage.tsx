@@ -103,22 +103,20 @@ const AboutUsPage = () => {
 
   return (
     <>
-      <Container>
-        <SliceZone
-          slices={document.data.body}
-          components={{
-            aboutusmaintitle: ({ slice }) => getMainTitle(slice),
-            aboutusinfo: AboutUsBlock,
-            subtitle: ({ slice }) => getSubtitle(slice),
-            maincard: MainCards,
-            ourvalues: OurValuesBlock,
-            galleryblock: ({ slice }) => (
-              <MediaBlock className="gallery" slice={slice} style={{ marginBottom: '180px' }} />
-            ),
-            videoblock: ({ slice }) => <MediaBlock className="video" slice={slice} style={{ marginBottom: '100px' }} />,
-          }}
-        />
-      </Container>
+      <SliceZone
+        slices={document.data.body}
+        components={{
+          aboutusmaintitle: ({ slice }) => getMainTitle(slice),
+          aboutusinfo: AboutUsBlock,
+          subtitle: ({ slice }) => getSubtitle(slice),
+          maincard: MainCards,
+          ourvalues: OurValuesBlock,
+          galleryblock: ({ slice }) => (
+            <MediaBlock className="gallery" slice={slice} style={{ marginBottom: '180px' }} />
+          ),
+          videoblock: ({ slice }) => <MediaBlock className="video" slice={slice} style={{ marginBottom: '100px' }} />,
+        }}
+      />
     </>
   );
 };
