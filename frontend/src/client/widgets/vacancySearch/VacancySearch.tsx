@@ -30,7 +30,8 @@ const VacancySearch: React.FC<Props> = ({ onSearch, isLoading }) => {
           value={vacancyTitle}
           onChange={(event) => setVacancyTitle(event.target.value)}
           autoComplete="off"
-          placeholder="Введите название вакансии..."
+          placeholder="Например: водитель или менеджер по продажам"
+          label="Поиск вакансий"
           InputProps={{
             style: { borderRadius: '30px' },
           }}
