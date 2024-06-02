@@ -1,11 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectClientVacancyCategory } from '../../../page/VacancyPage/model/vacancySlice';
+import {
+  selectClientVacancyCategory,
+  selectClientVacancyCategoryFetching,
+} from '../../../page/VacancyPage/model/vacancySlice';
 import { vacancyFetchCategory } from '../../../page/VacancyPage/api/vacancyThunks';
 
-export const VacancyCategory = () => {
+interface Props {
+  toggleCategory: (show: boolean) => void;
+}
+
+export const VacancyCategory: React.FC<Props> = ({ toggleCategory }) => {
   const dispatch = useAppDispatch();
+  const fetchCategoryLoading = useAppSelector(selectClientVacancyCategoryFetching);
   const categoriesGet = useAppSelector(selectClientVacancyCategory);
 
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: string }>({});
@@ -46,48 +64,69 @@ export const VacancyCategory = () => {
       }
     });
     console.log(combined);
+
+    toggleCategory(false);
   };
+
   return (
-    <Box sx={{ border: '1px solid red' }}>
-      <Button onClick={() => combineItems()}>Test</Button>
+    <Box sx={{ border: '1px solid red', marginBottom: { xs: '20px', md: '0' } }}>
       <Grid container direction="column">
-        {categoriesGet.map((category) => (
-          <Grid item key={category.id}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              {category.title}
-            </Typography>
-            <FormGroup sx={{ padding: 1 }}>
-              {category.values.map((item) => (
-                <FormControlLabel
-                  key={item.id}
-                  control={<Checkbox checked={checkedItems[category.name] === item.valueSend} />}
-                  label={item.value}
-                  onChange={() => handleChange(category.name, item.valueSend)}
-                />
-              ))}
-              {category.input?.isInput && (
-                <>
+        {fetchCategoryLoading ? (
+          <CircularProgress />
+        ) : (
+          categoriesGet.map((category) => (
+            <Grid item key={category.id}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                {category.title}
+              </Typography>
+              <FormGroup sx={{ padding: 1 }} key={`form-group-${category.id}`}>
+                {category.values.map((item) => (
                   <FormControlLabel
-                    control={<Checkbox color="primary" checked={checkedItems[category.name] === 'custom'} />}
-                    label={'Ваш вариант'}
-                    onChange={(event) =>
-                      handleCustomChange(event as React.ChangeEvent<HTMLInputElement>, category.name)
-                    }
+                    key={item.id}
+                    control={<Checkbox checked={checkedItems[category.name] === item.valueSend} />}
+                    label={item.value}
+                    onChange={() => handleChange(category.name, item.valueSend)}
                   />
-                  <TextField
-                    placeholder={category.input.placeholder}
-                    value={customValues[category.name] || ''}
-                    onChange={(event) =>
-                      handleCustomInputChange(event as React.ChangeEvent<HTMLInputElement>, category.name)
-                    }
-                    disabled={checkedItems[category.name] !== 'custom'}
-                  />
-                </>
-              )}
-            </FormGroup>
-          </Grid>
-        ))}
+                ))}
+                {category.input?.isInput && (
+                  <>
+                    <FormControlLabel
+                      key={`custom-checkbox-${category.name}`}
+                      control={<Checkbox color="primary" checked={checkedItems[category.name] === 'custom'} />}
+                      label={'Ваш вариант'}
+                      onChange={(event) =>
+                        handleCustomChange(event as React.ChangeEvent<HTMLInputElement>, category.name)
+                      }
+                    />
+                    <TextField
+                      key={`custom-input-${category.name}`}
+                      placeholder={category.input.placeholder}
+                      value={customValues[category.name] || ''}
+                      onChange={(event) =>
+                        handleCustomInputChange(event as React.ChangeEvent<HTMLInputElement>, category.name)
+                      }
+                      disabled={checkedItems[category.name] !== 'custom'}
+                    />
+                  </>
+                )}
+              </FormGroup>
+            </Grid>
+          ))
+        )}
       </Grid>
+      <Button
+        onClick={() => combineItems()}
+        sx={{
+          backgroundColor: '#FFE585',
+          color: 'black',
+          borderRadius: '40px',
+          padding: { xs: '10px 20px', md: '15px 30px' },
+          fontSize: { xs: '14px', md: '16px' },
+        }}
+        variant="contained"
+      >
+        Оправить
+      </Button>
     </Box>
   );
 };

@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../app/store/hooks';
 import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import UserMenu from '../UserMenu';
 import { useSinglePrismicDocument } from '@prismicio/react';
-import { Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import '../css/style.css';
 import '../css/media.css';
 
@@ -60,7 +60,7 @@ const Header = () => {
 
   return (
     <div>
-      <Container maxWidth="xl">
+      <Box className="main-container">
         <div className="header-content">
           <div className="header-logo-wrapper">
             {headerPrismicResponse?.header_logo && (
@@ -95,7 +95,7 @@ const Header = () => {
             <UserMenu user={user} />
           )}
         </div>
-      </Container>
+      </Box>
     </div>
   );
 };
