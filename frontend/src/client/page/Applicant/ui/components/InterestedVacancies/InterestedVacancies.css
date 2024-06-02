@@ -1,0 +1,57 @@
+.interested-vacancies-block {
+	margin-bottom: 100px;
+	width: 100%;
+}
+
+.interested-vacancies-title {
+	font-size: 36px;
+	margin: 0 0 50px 0;
+	font-weight: 600;
+}
+
+.logo {
+	margin-top: 30px;
+}
+
+.cards-div {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 860px;
+	margin: 0 auto;
+}
+
+.card-vacancies {
+	max-width: 420px;
+	padding: 40px;
+	box-sizing: border-box;
+	gap: 30px;
+	margin: 5px;
+	background: #fff;
+	border-radius: 30px;
+}
+
+.btn-vacancies {
+	max-width: 340px;
+	font-size: 20px;
+	line-height: 20px;
+	text-align: center;
+	border: none;
+	text-transform: none;
+	padding: 20px 108px;
+	border-radius: 30px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn-vacancies:hover {
+	background: #FFFFFF;
+}
+
+.btn-connect {
+	background-color: #FFE585;
+}
+
+.btn-recall {
+	background-color: #E9E9E9;
+	margin-top: 10px;
+}

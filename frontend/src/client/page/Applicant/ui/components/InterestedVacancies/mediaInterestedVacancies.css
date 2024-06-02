@@ -1,0 +1,44 @@
+@media (max-width: 1099px) {
+	
+	.interested-vacancies-block {
+		text-align: center;
+	}
+	
+	.cards-div {
+		justify-content: center;
+	}
+	
+	.interested-vacancies-title {
+		flex-wrap: wrap;
+	}
+	
+	.card-vacancies {
+		border: 1px solid black;
+		text-align: start;
+	}
+}
+
+
+@media (max-width: 460px) {
+	.cards-div {
+		width: 100%;
+	}
+	
+	.card-vacancies {
+		width: 100%;
+		padding: 0;
+	}
+	
+	.btn-vacancies {
+		width: 100%;
+		text-align: center;
+		padding: 20px 0;
+	}
+	
+	.interested-vacancies-title {
+		font-size: 25px;
+		margin: 20px 0;
+	}
+	
+}
+

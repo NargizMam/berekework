@@ -7,10 +7,11 @@ import { Moderator, ModeratorApi } from '../../../../types';
 export const getAllModerators = createAsyncThunk<ModeratorApi[]>(
   'moderators/getAll',
   async () => {
-    const response = await axiosApi.get('/user?role=moderator');
+    const response = await axiosApi.get('/user?filter=moderator');
     return response.data;
   }
 );
+
 export const createModerator = createAsyncThunk< string, Moderator, { rejectValue: ValidationError }>(
   'moderators/create',
   async (moderator, { rejectWithValue }) => {
@@ -26,6 +27,7 @@ export const createModerator = createAsyncThunk< string, Moderator, { rejectValu
 
   }
 );
+
 export const deleteModerator = createAsyncThunk<string, string, { rejectValue: GlobalError }>(
   'moderators/delete',
   async (moderatorsId, {rejectWithValue}) => {

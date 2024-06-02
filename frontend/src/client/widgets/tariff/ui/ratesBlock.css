@@ -44,7 +44,7 @@
 @media (min-width: 1040px) {
   .rateBlock {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     gap: 0 10px;
   }

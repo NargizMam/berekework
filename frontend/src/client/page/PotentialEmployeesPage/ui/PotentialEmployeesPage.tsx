@@ -1,10 +1,9 @@
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
-import PotentialEmployeesStartBlock from '../../widgets/potentialEmployeesStartBlock/ui/potentialEmployeesStartBlock';
-import PotentialEmployeesPageCardsBlock from '../../widgets/PotentialEmployeesPageCardsBlock/ui/PotentialEmployeesPageCardsBlock';
+import PotentialEmployeesStartBlock from '../../../widgets/potentialEmployeesStartBlock/ui/potentialEmployeesStartBlock';
+import PotentialEmployeesPageCardsBlock from '../../../widgets/PotentialEmployeesPageCardsBlock/ui/PotentialEmployeesPageCardsBlock';
 
-const PotentialEmployeesPage = () => {
+export const PotentialEmployeesPage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'potentialemployees');
-  console.log(document);
   return (
     <>
       <div style={{ marginTop: 100 }}>
@@ -19,5 +18,3 @@ const PotentialEmployeesPage = () => {
     </>
   );
 };
-
-export default PotentialEmployeesPage;

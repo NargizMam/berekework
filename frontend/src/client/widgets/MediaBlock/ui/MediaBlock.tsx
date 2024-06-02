@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 import MediaCard, { MediaCardApiData } from './MediaCard/MediaCard';
-import { PaginationCards } from '../../../../admin/widgets/PaginationCards';
 import MediaBlockStyle from './MediaBlock-style';
+import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import FsLightbox from 'fslightbox-react';
 
 export interface MediaBlockApiData {
   primary: {
@@ -17,31 +22,34 @@ export interface MediaBlockApiData {
 interface Props {
   slice: MediaBlockApiData;
   style?: React.CSSProperties;
+  className: string;
 }
 
-const MediaBlock: React.FC<Props> = ({ slice, style }) => {
-  const [startIndex, setStartIndex] = useState(0);
-  const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
-  const pageSize = 3;
+const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
+  const [toggler, setToggler] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  let cardsToDisplay = slice.items;
+  const openLightbox = (index: number) => {
+    console.log('index = ', index);
+    setCurrentIndex(index);
+    setToggler(!toggler);
+  };
 
-  const isPaginationEnabled = !isTablet && slice.items.length > pageSize;
-  if (isPaginationEnabled) {
-    cardsToDisplay = slice.items.slice(startIndex, startIndex + pageSize);
+  if (!slice.items || slice.items.length === 0) {
+    return (
+      <Typography variant="h4" sx={MediaBlockStyle.subtitleNoCards}>
+        Нет медиа файлов для отображения
+      </Typography>
+    );
   }
 
-  const isBackDisabled = startIndex === 0;
-  const isForwardDisabled = startIndex + pageSize >= slice.items.length;
+  const isVideoBlock = className === 'video';
 
-  const handleBack = () => {
-    setStartIndex(Math.max(0, startIndex - pageSize));
-  };
+  const showNavigation = slice.items.length > 3;
 
-  const handleForward = () => {
-    setStartIndex(Math.min(startIndex + pageSize, slice.items.length - pageSize));
-  };
+  const sources = slice.items
+    .map((item) => (isVideoBlock ? item.video?.url : item.image?.url))
+    .filter((url): url is string => Boolean(url));
 
   return (
     <Box sx={{ ...MediaBlockStyle.container, ...style }}>
@@ -51,23 +59,65 @@ const MediaBlock: React.FC<Props> = ({ slice, style }) => {
             {title.text}
           </Typography>
         ))}
-        {!isTablet && isPaginationEnabled && (
-          <PaginationCards
-            onBack={handleBack}
-            onForward={handleForward}
-            isBackDisabled={isBackDisabled}
-            isForwardDisabled={isForwardDisabled}
-          />
+        {showNavigation && (
+          <Box sx={MediaBlockStyle.paginationControls}>
+            <button style={MediaBlockStyle.swiperButton} className={`swiper-button-prev-${className}`}>
+              <ArrowBackIos sx={MediaBlockStyle.arrowIconStyle} />
+            </button>
+            <button style={MediaBlockStyle.swiperButton} className={`swiper-button-next-${className}`}>
+              <ArrowForwardIos sx={MediaBlockStyle.arrowIconStyle} />
+            </button>
+          </Box>
         )}
       </Box>
       <Box sx={MediaBlockStyle.cards}>
-        {cardsToDisplay.length > 0 ? (
-          cardsToDisplay.map((item, index) => <MediaCard key={index} image={item.image} video={item.video} />)
+        {slice.items.length === 1 ? (
+          <MediaCard
+            index={0}
+            image={slice.items[0].image}
+            video={slice.items[0].video}
+            onClick={() => openLightbox(0)}
+            mediaCardsLength={slice.items.length}
+          />
         ) : (
-          <Typography variant="h6" sx={MediaBlockStyle.paragraph}>
-            Медиафайлы отсутствуют
-          </Typography>
+          <Swiper
+            slidesPerView={1.2}
+            spaceBetween={10}
+            pagination={{
+              clickable: true,
+            }}
+            navigation={{
+              nextEl: `.swiper-button-next-${className}`,
+              prevEl: `.swiper-button-prev-${className}`,
+            }}
+            watchOverflow={true}
+            breakpoints={{
+              600: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              900: {
+                slidesPerView: slice.items.length < 3 ? slice.items.length : 3,
+                spaceBetween: 10,
+              },
+            }}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {slice.items.map((item, index) => (
+              <SwiperSlide key={index}>
+                <MediaCard
+                  index={index}
+                  image={item.image}
+                  video={item.video}
+                  mediaCardsLength={slice.items.length}
+                  onClick={() => openLightbox(index)}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         )}
+        <FsLightbox toggler={toggler} sources={sources} slide={currentIndex + 1} />
       </Box>
     </Box>
   );
