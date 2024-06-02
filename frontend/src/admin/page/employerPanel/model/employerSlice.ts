@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createEmployer, getAllEmployer } from '../api/employerThunk';
+import { createEmployer, getAllEmployer, getEmployersProfileInfo } from '../api/employerThunk';
 import { RootState } from '../../../../app/store/store';
 import { Employer } from './types';
 import { EmployerInfoApi, ValidationError } from '../../../../types';
@@ -17,6 +17,8 @@ const initialState: EmployerState = {
   employers: [],
   employersLoading: false,
   createEmployerLoading: false,
+  employersProfile: null,
+  employersProfileLoading: false,
   employerError: null,
 };
 
@@ -45,6 +47,16 @@ const employerSlice = createSlice({
     builder.addCase(getAllEmployer.rejected, (state) => {
       state.employersLoading = false;
     });
+    builder.addCase(getEmployersProfileInfo.pending, (state) => {
+      state.employersProfileLoading = true;
+    });
+    builder.addCase(getEmployersProfileInfo.fulfilled, (state, { payload: employersProfile }: PayloadAction<EmployerInfoApi>) => {
+      state.employersProfileLoading = false;
+      state.employersProfile = employersProfile;
+    });
+    builder.addCase(getEmployersProfileInfo.rejected, (state) => {
+      state.employersProfileLoading = false;
+    });
   },
 });
 
@@ -52,3 +64,5 @@ export const employerReducer = employerSlice.reducer;
 export const selectEmployers = (state: RootState) => state.employerAdmin.employers;
 export const selectEmployerLoading = (state: RootState) => state.employerAdmin.employersLoading;
 export const selectEmployerError = (state: RootState) => state.employerAdmin.employerError;
+export const selectEmployersProfileInfo = (state: RootState) => state.employerAdmin.employersProfile;
+export const selectEmployersProfileLoading = (state: RootState) => state.employerAdmin.employersProfileLoading;

@@ -10,7 +10,6 @@ import { applicantReducer } from '../../client/page/Applicant/model/applicantSli
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
-import { employersProfileReducer } from '../../client/page/employerProfile/model/employerProfileSlice';
 import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
 import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
 
@@ -29,7 +28,6 @@ const rootReducer = combineReducers({
   moderator: moderatorsReducer,
   applicant: applicantReducer,
   chooseBlock: chooseBlockReducer,
-  employer: employersProfileReducer,
   employerAdmin: employerReducer,
   warningMessage: warningMessageReducer,
   createVacancyForm: createVacancyFormReducer,

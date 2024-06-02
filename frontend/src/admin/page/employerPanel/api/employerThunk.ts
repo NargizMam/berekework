@@ -27,15 +27,50 @@ export const createEmployer = createAsyncThunk<
     if(employer.logo) {
       formData.append('logo', employer.logo);
     }
-    if(employer.avatar) {
-      formData.append('logo', employer.avatar);
-    }
     await axiosApi.post('/employer', formData);
   } catch (error) {
     if (isAxiosError(error) && error.response && error.response.status === 422) {
       return rejectWithValue(error.response.data);
     }
 
+    throw error;
+  }
+});
+export const updateEmployer = createAsyncThunk<
+  void,
+  { id: string,
+    data: EmployerMutation },
+  {
+    rejectValue: ValidationError;
+  }
+>('employer/update', async ({ id, data }, { rejectWithValue }) => {
+  try {
+    const formData = new FormData();
+    formData.append('email', data.email);
+    if (data.password) {
+      formData.append('password', data.password);
+    }
+    formData.append('companyName', data.companyName);
+    formData.append('industry', data.industry);
+    formData.append('description', data.description);
+    formData.append('foundationYear', data.foundationYear);
+    formData.append('address', data.address);
+    formData.append('contacts', data.contacts);
+    if (data.document) {
+      formData.append('document', data.document);
+    }
+    if (data.logo) {
+      formData.append('logo', data.logo);
+    }
+    if (data.document) {
+      formData.append('document', data.document);
+    }
+    const response = await axiosApi.put(`/employer/${id}`, formData);
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response && error.response.status === 422) {
+      return rejectWithValue(error.response.data);
+    }
     throw error;
   }
 });

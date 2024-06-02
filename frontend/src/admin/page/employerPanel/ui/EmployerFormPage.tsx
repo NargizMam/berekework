@@ -1,19 +1,19 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, Grid, IconButton, InputAdornment, TextField } from '@mui/material';
-import { EmployerMutation } from '../model/types';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { createEmployer } from '../api/employerThunk';
-import { selectEmployerError } from '../model/employerSlice';
+import { createEmployer, updateEmployer } from '../api/employerThunk';
+import { selectEmployerError, selectEmployersProfileLoading } from '../model/employerSlice';
 import { getExtension } from '../../../../feachers/checkExtensiion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {
-  selectEmployersProfileInfo,
-  selectEmployersProfileLoading
-} from '../../../../client/page/employerProfile/model/employerProfileSlice';
 import { LoadingButton } from '@mui/lab';
+import { EmployerInfoApi } from '../../../../types';
 
+interface Props {
+  initialProfile: EmployerInfoApi | null;
+  id: string;
+}
 const initialState = {
   email: '',
   password: '',
@@ -22,25 +22,24 @@ const initialState = {
   description: '',
   contacts: '',
   foundationYear: '',
-  document: null,
   address: '',
+  document: null,
   logo: null,
-  avatar: null
 }
 
-export const EmployerFormPage = () => {
+export const EmployerFormPage: React.FC<Props> = ({initialProfile, id }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {pathname} = useLocation();
-  const [state, setState] = useState<EmployerMutation>(initialState);
+  const [state, setState] = useState(initialProfile ? initialProfile : initialState);
   const error = useAppSelector(selectEmployerError);
   const documentSelect = useRef<HTMLInputElement>(null);
   const imageSelect = useRef<HTMLInputElement>(null);
   const [filename, setFilename] = useState('');
-  const [filenameImage, setFilenameImage] = useState('');
+  const [filenameImage, setFilenameImage] = useState(initialProfile ? initialProfile.logo : '');
   const [errorDocument, setErrorDocument] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const employerInfo = useAppSelector(selectEmployersProfileInfo);
+
   const loading = useAppSelector(selectEmployersProfileLoading);
   const inputStyle = {borderRadius: '30px'}
   const registerStyle = pathname === '/register';
@@ -55,17 +54,17 @@ export const EmployerFormPage = () => {
   };
   const handleCreateEmployer = async (event: FormEvent) => {
     event.preventDefault();
-    try {
-      await dispatch(createEmployer(state)).unwrap();
-    }finally{
-      setState(initialState);
-      if(registerStyle && employerInfo){
-        navigate(`/employer/${employerInfo._id}`);
-      }else{
-        navigate('');
+      if (initialProfile && id) {
+        await dispatch(updateEmployer({id, data: state})).unwrap();
+        setState(initialState);
+        navigate(`/employer/${id}`);
+        return;
       }
-    }
+      await dispatch(createEmployer(state)).unwrap();
+      setState(initialState);
+      navigate('/');
     };
+
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (files && files[0]) {
@@ -145,7 +144,7 @@ export const EmployerFormPage = () => {
             helperText={getFieldError('email')}
           />
         </Grid>
-        <Grid item xs={registerStyle ? 12 : 6}>
+        {!initialProfile && <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.password}
             onChange={changeField}
@@ -170,7 +169,7 @@ export const EmployerFormPage = () => {
             error={Boolean(getFieldError('password'))}
             helperText={getFieldError('password')}
           />
-        </Grid>
+        </Grid>}
         <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.companyName}
@@ -218,6 +217,7 @@ export const EmployerFormPage = () => {
             value={state.foundationYear}
             onChange={changeField}
             name="foundationYear"
+            type="number"
             id="standard-basic"
             label="Foundation Year"
             variant="outlined"
@@ -314,7 +314,7 @@ export const EmployerFormPage = () => {
                 Browse
               </Button>
             </Grid>
-            {filenameImage.length !== 0 && (
+            {filenameImage && filenameImage.toString().length !== 0 && (
               <Grid item>
                 <Button variant="contained" onClick={clearDocumentField}>
                   Clear
@@ -329,7 +329,6 @@ export const EmployerFormPage = () => {
             type="submit"
             variant="contained"
             sx={{width: '100%'}}
-            disabled={state === initialState}
           >
             Create
           </LoadingButton>

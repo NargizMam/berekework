@@ -4,25 +4,24 @@ export interface Employer {
   role: string;
   companyName: string;
   foundationYear: string;
-  logo: string;
   industry: string;
   description: string;
   address: string;
   contacts: string;
-  document: string;
   isPublished: string;
+  logo: string;
+  document: string;
 }
 
 export interface EmployerMutation {
   email: string;
   password: string;
   companyName: string;
-  logo: File | null;
   foundationYear: string;
   industry: string;
   description: string;
-  document: File | null;
+  document: File |string | null;
+  logo: File |string | null;
   address: string;
   contacts: string;
-  avatar: File | null;
 }
