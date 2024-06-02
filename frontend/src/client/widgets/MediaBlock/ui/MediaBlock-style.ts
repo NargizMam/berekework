@@ -3,25 +3,28 @@ const MediaBlockStyle = {
     maxWidth: '1280px',
     margin: '0 auto',
     '@media (max-width: 900px)': {
-      marginBottom: '70px',
+      marginTop: '7%',
+      marginBottom: '7%',
     },
   },
   row: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: '60px',
-    '@media (max-width: 900px)': {
-      marginBottom: '32px',
+    marginBottom: {
+      xs: '7%',
+      sm: '2rem',
+      md: '60px',
     },
   },
   title: {
     fontWeight: '700',
     lineHeight: '1.3',
-    fontSize: '46px',
     color: '#000',
-    '@media (max-width: 900px)': {
-      fontSize: '32px',
+    fontSize: {
+      xs: '1.5rem',
+      sm: '2rem',
+      md: '2.875rem',
     },
   },
   subtitleNoCards: {
@@ -60,9 +63,6 @@ const MediaBlockStyle = {
     padding: 0,
     cursor: 'pointer',
     outline: '#D2D2D2',
-  },
-  arrowIconStyle: {
-    fontSize: '20px',
   },
 };
 

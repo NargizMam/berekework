@@ -6,8 +6,9 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import MediaCard, { MediaCardApiData } from './MediaCard/MediaCard';
 import MediaBlockStyle from './MediaBlock-style';
-import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import FsLightbox from 'fslightbox-react';
+import arrowLeft from '../images/arrow-left.png';
+import arrowRight from '../images/arrow-right.png';
 
 export interface MediaBlockApiData {
   primary: {
@@ -62,10 +63,10 @@ const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
         {showNavigation && (
           <Box sx={MediaBlockStyle.paginationControls}>
             <button style={MediaBlockStyle.swiperButton} className={`swiper-button-prev-${className}`}>
-              <ArrowBackIos sx={MediaBlockStyle.arrowIconStyle} />
+              <img src={arrowLeft} alt="arrow-left" />
             </button>
             <button style={MediaBlockStyle.swiperButton} className={`swiper-button-next-${className}`}>
-              <ArrowForwardIos sx={MediaBlockStyle.arrowIconStyle} />
+              <img src={arrowRight} alt="arrow-right" />
             </button>
           </Box>
         )}
