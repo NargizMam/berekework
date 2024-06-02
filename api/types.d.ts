@@ -183,3 +183,7 @@ export interface VacancyI {
   education: string;
   employmentType: string;
 }
+
+export interface CategoryVacancy {
+  [key: string]: 'string';
+}

@@ -2,7 +2,7 @@ import express from 'express';
 import Vacancy from '../models/vacancy/Vacancy';
 import mongoose from 'mongoose';
 import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
-import { VacancyI } from '../types';
+import { CategoryVacancy, VacancyI } from '../types';
 
 const vacancyRouter = express.Router();
 
@@ -61,7 +61,7 @@ vacancyRouter.get('/', async (req, res, next) => {
     const vacancyPage = req.query.vacancyPage;
     const categoryVacancy = req.query.getCategory;
     const filterCategory = req.query.category;
-    const category = req.body.category;
+    const category: CategoryVacancy = req.body.category;
 
     if (vacancyPage) {
       const result = await Vacancy.find()
@@ -104,7 +104,44 @@ vacancyRouter.get('/', async (req, res, next) => {
     }
 
     if (filterCategory) {
-      console.log('filter', category);
+      const queryConditions = [];
+      for (const [key, value] of Object.entries(category)) {
+        if (key !== 'age' && key !== 'salary' && value) {
+          queryConditions.push({ [key]: value });
+        }
+      }
+
+      let filteredVacancies: VacancyI[] = [];
+
+      if (queryConditions.length > 1) {
+        const orConditions = queryConditions.flatMap((condition, index, array) =>
+          array.slice(index + 1).map((otherCondition) => ({
+            $and: [condition, otherCondition],
+          })),
+        );
+
+        filteredVacancies = await Vacancy.find({ $or: orConditions });
+      } else if (queryConditions.length === 1) {
+        filteredVacancies = await Vacancy.find(queryConditions[0]);
+      } else {
+        filteredVacancies = await Vacancy.find();
+      }
+
+      if (category.salary) {
+        const salary = parseInt(category.salary, 10);
+        filteredVacancies = filteredVacancies.filter(
+          (vacancy) => vacancy.salary.minSalary <= salary && vacancy.salary.maxSalary >= salary,
+        );
+      }
+
+      if (category.age) {
+        const [minAge, maxAge] = category.age.split('-').map(Number);
+        filteredVacancies = filteredVacancies.filter(
+          (vacancy) => vacancy.age.minAge <= maxAge && vacancy.age.maxAge >= minAge,
+        );
+      }
+
+      return res.send(filteredVacancies);
     }
 
     const result = await Vacancy.find();
