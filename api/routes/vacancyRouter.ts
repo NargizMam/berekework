@@ -5,7 +5,7 @@ import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
 
 const vacancyRouter = express.Router();
 
-vacancyRouter.post('/',  employerAuth, async (req: RequestWithEmployer, res, next) => {
+vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next) => {
   const {
     logoCompany,
     nameCompany,
@@ -59,17 +59,25 @@ vacancyRouter.post('/',  employerAuth, async (req: RequestWithEmployer, res, nex
 
 vacancyRouter.get('/', async (req, res, next) => {
   try {
-    const result = await Vacancy.find();
+    const { vacancyTitle } = req.query;
 
+    if (vacancyTitle) {
+      const filteredVacancies = await Vacancy.find({
+        vacancyTitle: { $regex: vacancyTitle, $options: 'i' },
+      });
+      return res.send(filteredVacancies);
+    }
+
+    const result = await Vacancy.find({});
     return res.send(result);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    return next(error);
   }
 });
 
 vacancyRouter.get('/:id', async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
 
     const result = await Vacancy.findById(id);
     return res.send(result);
@@ -97,27 +105,31 @@ vacancyRouter.put('/:id', async (req, res, next) => {
   } = req.body;
 
   try {
-    const updatedVacancy = await Vacancy.findByIdAndUpdate(id, {
-      logoCompany,
-      nameCompany,
-      vacancyTitle,
-      salary: {
-        minSalary: salary.minSalary,
-        maxSalary: salary.maxSalary,
+    const updatedVacancy = await Vacancy.findByIdAndUpdate(
+      id,
+      {
+        logoCompany,
+        nameCompany,
+        vacancyTitle,
+        salary: {
+          minSalary: salary.minSalary,
+          maxSalary: salary.maxSalary,
+        },
+        city,
+        aboutVacancy,
+        responsibilities,
+        workConditions,
+        country,
+        fieldOfWork,
+        age: {
+          minAge: age.minAge,
+          maxAge: age.maxAge,
+        },
+        education,
+        employmentType,
       },
-      city,
-      aboutVacancy,
-      responsibilities,
-      workConditions,
-      country,
-      fieldOfWork,
-      age: {
-        minAge: age.minAge,
-        maxAge: age.maxAge,
-      },
-      education,
-      employmentType,
-    }, { new: true });
+      { new: true },
+    );
 
     if (!updatedVacancy) {
       return res.status(404).send({ message: 'Vacancy not found' });
