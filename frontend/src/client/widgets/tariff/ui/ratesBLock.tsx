@@ -26,7 +26,7 @@ export const RatesBLock: React.FC<Props> = ({ slice }) => {
 
   useEffect(() => {
     if (slice.items.length > 0) {
-      if (window.innerWidth < 700) {
+      if (window.innerWidth < 770) {
         setMaxSteps(slice.items.length);
         setCardOnPage(1);
       } else if (window.innerWidth < 1300) {
