@@ -1,18 +1,22 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectEmployersProfileInfo } from '../model/employerProfileSlice';
-import { getEmployersProfileInfo } from '../app/employerProfileThunk';
 import { Loader } from '../../../../shared/loader';
 import { VacancyCard } from '../../../../admin/widgets/vacancyCard';
 import { useParams } from 'react-router-dom';
-import { selectEmployerLoading } from '../../../../admin/page/employerPanel/model/employerSlice';
+import {
+  selectEmployerLoading,
+  selectEmployersProfileInfo
+} from '../../../../admin/page/employerPanel/model/employerSlice';
 import './employerProfile.css';
 import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
+import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
+import { EmployerFormPage } from '../../../../admin/page/employerPanel';
 
 const EmployerProfile = () => {
   const dispatch = useAppDispatch();
-  const [openForm, setOpenForm] = useState(false);
+  const [openVacancyForm, setOpenVacancyForm] = useState(false);
+  const [openProfileForm, setOpenProfileForm] = useState(false);
   const profile = useAppSelector(selectEmployersProfileInfo);
   const loading = useAppSelector(selectEmployerLoading);
   const apiURL = 'http://localhost:8000';
@@ -26,12 +30,18 @@ const EmployerProfile = () => {
   }, [dispatch, id]);
 
   return (
-    <div>
-      <div className='createVacancyContainer' >
-        <Button variant="outlined" onClick={() => setOpenForm(true)}>Создать вакансию</Button>
+    <div style={{position: 'relative'}}>
+      <Button variant="outlined" sx={{position: 'absolute', top: '20px', right: '50px'}}
+              onClick={() => setOpenProfileForm(true)}>
+        Редактировать профиль
+      </Button>
+      <div className='createVacancyContainer'>
+        {profile && profile.isPublished === true &&
+          <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>Создать вакансию</Button>}
       </div>
+
       {loading && <Loader/>}
-      {profile ? (
+      {(profile && !openProfileForm) && (
         <Grid mt={6}>
           <div className='companyHeader'>
             <img className="companyLogo" src={image} alt="Логотип компании" height="100px"/>
@@ -49,7 +59,7 @@ const EmployerProfile = () => {
           <p className="companyInfo">
             <strong>Контакты:</strong> {profile.contacts}
           </p>
-          <a className="companyLink" href={profile.documents} download>
+          <a className="companyLink" href={profile.document} download>
             Скачать документы
           </a>
           <Grid mt={6} mb={6}>
@@ -66,14 +76,22 @@ const EmployerProfile = () => {
           </Grid>
 
         </Grid>
-      ) : (
-        <h1>Данные работодателя еще не введены</h1>
+      )}
+      {openProfileForm && profile && (
+        <>
+          <Typography variant="h4">Редактируйте свой профиль</Typography>
+          <EmployerFormPage
+            id={profile._id}
+            key={profile._id}
+            initialProfile={profile}
+          />
+        </>
       )}
 
-      {openForm && (
+      {openVacancyForm && (
         <>
           <Typography variant="h4">Создайте свои вакансии</Typography>
-          <CreateVacancyForm setOpenForm={setOpenForm}/>
+          <CreateVacancyForm setOpenForm={setOpenVacancyForm}/>
         </>
       )}
     </div>

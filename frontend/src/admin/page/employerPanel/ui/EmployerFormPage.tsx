@@ -1,57 +1,69 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
-import { EmployerMutation } from '../model/types';
+import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { Button, Grid, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { createEmployer } from '../api/employerThunk';
-import { selectEmployerError } from '../model/employerSlice';
+import { createEmployer, updateEmployer } from '../api/employerThunk';
+import { selectEmployerError, selectEmployersProfileLoading } from '../model/employerSlice';
 import { getExtension } from '../../../../feachers/checkExtensiion';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { LoadingButton } from '@mui/lab';
+import { EmployerInfoApi } from '../../../../types';
 
-export const EmployerFormPage = () => {
-  const [state, setState] = useState<EmployerMutation>({
-    email: '',
-    password: '',
-    companyName: '',
-    industry: '',
-    description: '',
-    foundationYear: '',
-    document: null,
-    address: '',
-    logo: null,
-    avatar: null
-  });
+interface Props {
+  initialProfile: EmployerInfoApi | null;
+  id: string;
+}
+const initialState = {
+  email: '',
+  password: '',
+  industry: '',
+  companyName: '',
+  description: '',
+  contacts: '',
+  foundationYear: '',
+  address: '',
+  document: null,
+  logo: null,
+}
+
+export const EmployerFormPage: React.FC<Props> = ({initialProfile, id }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const {pathname} = useLocation();
+  const [state, setState] = useState(initialProfile ? initialProfile : initialState);
   const error = useAppSelector(selectEmployerError);
   const documentSelect = useRef<HTMLInputElement>(null);
   const imageSelect = useRef<HTMLInputElement>(null);
   const [filename, setFilename] = useState('');
-  const [filenameImage, setFilenameImage] = useState('');
+  const [filenameImage, setFilenameImage] = useState(initialProfile ? initialProfile.logo : '');
   const [errorDocument, setErrorDocument] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const loading = useAppSelector(selectEmployersProfileLoading);
+  const inputStyle = {borderRadius: '30px'}
+  const registerStyle = pathname === '/register';
 
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     setState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
 
+  };
   const handleCreateEmployer = async (event: FormEvent) => {
     event.preventDefault();
-    await dispatch(createEmployer(state)).unwrap();
-    setState({
-      email: '',
-      password: '',
-      companyName: '',
-      industry: '',
-      description: '',
-      foundationYear: '',
-      document: null,
-      address: '',
-      logo: null,
-      avatar: null
-    });
-  };
+      if (initialProfile && id) {
+        await dispatch(updateEmployer({id, data: state})).unwrap();
+        setState(initialState);
+        navigate(`/employer/${id}`);
+        return;
+      }
+      await dispatch(createEmployer(state)).unwrap();
+      setState(initialState);
+      navigate('/');
+    };
 
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
@@ -67,8 +79,8 @@ export const EmployerFormPage = () => {
         [name]: files[0],
       }));
     }
-  };
 
+  };
   const clearDocumentField = () => {
     setFilename('');
     setFilenameImage('');
@@ -79,8 +91,8 @@ export const EmployerFormPage = () => {
     if (documentSelect.current) {
       documentSelect.current.value = '';
     }
-  };
 
+  };
   const selectFile = (type: string) => {
     if (type === 'document') {
       if (documentSelect.current) {
@@ -91,8 +103,8 @@ export const EmployerFormPage = () => {
         imageSelect.current.click();
       }
     }
-  };
 
+  };
   const getFieldError = (fieldName: string) => {
     try {
       return error?.errors[fieldName].message;
@@ -100,8 +112,15 @@ export const EmployerFormPage = () => {
       return undefined;
     }
   };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   return (
+    <>
     <form
       style={{
         margin: '30px auto',
@@ -110,33 +129,48 @@ export const EmployerFormPage = () => {
       onSubmit={handleCreateEmployer}
     >
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.email}
             onChange={changeField}
             name="email"
+            type='email'
             id="standard-basic"
             label="Email"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('email'))}
             helperText={getFieldError('email')}
           />
         </Grid>
-        <Grid item xs={6}>
+        {!initialProfile && <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.password}
             onChange={changeField}
             name="password"
             id="standard-basic"
             label="Password"
+            type="password"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )}}
             error={Boolean(getFieldError('password'))}
             helperText={getFieldError('password')}
           />
-        </Grid>
-        <Grid item xs={6}>
+        </Grid>}
+        <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.companyName}
             onChange={changeField}
@@ -145,11 +179,12 @@ export const EmployerFormPage = () => {
             label="Company name"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('companyName'))}
             helperText={getFieldError('companyName')}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.industry}
             onChange={changeField}
@@ -158,11 +193,12 @@ export const EmployerFormPage = () => {
             label="industry"
             variant="outlined"
             required={true}
-            error={Boolean(getFieldError('scope'))}
-            helperText={getFieldError('scope')}
+            InputProps={{ style: inputStyle }}
+            error={Boolean(getFieldError('industry'))}
+            helperText={getFieldError('industry')}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.description}
             onChange={changeField}
@@ -171,24 +207,27 @@ export const EmployerFormPage = () => {
             label="description"
             variant="outlined"
             required={true}
-            error={Boolean(getFieldError('action'))}
-            helperText={getFieldError('action')}
+            InputProps={{ style: inputStyle }}
+            error={Boolean(getFieldError('description'))}
+            helperText={getFieldError('description')}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.foundationYear}
             onChange={changeField}
             name="foundationYear"
+            type="number"
             id="standard-basic"
             label="Foundation Year"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('foundationYear'))}
             helperText={getFieldError('foundationYear')}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={registerStyle ? 12 : 6}>
           <TextField
             value={state.address}
             onChange={changeField}
@@ -197,8 +236,23 @@ export const EmployerFormPage = () => {
             label="Address"
             variant="outlined"
             required={true}
+            InputProps={{ style: inputStyle }}
             error={Boolean(getFieldError('address'))}
             helperText={getFieldError('address')}
+          />
+        </Grid>
+        <Grid item xs={registerStyle ? 12 : 6}>
+          <TextField
+            value={state.contacts}
+            onChange={changeField}
+            name="contacts"
+            id="standard-basic"
+            label="Contacts"
+            variant="outlined"
+            required={true}
+            InputProps={{ style: inputStyle }}
+            error={Boolean(getFieldError('contacts'))}
+            helperText={getFieldError('contacts')}
           />
         </Grid>
         <Grid item xs={12}>
@@ -215,6 +269,7 @@ export const EmployerFormPage = () => {
                 disabled
                 label="document"
                 value={filename || ''}
+                InputProps={{ style: inputStyle }}
                 onClick={() => selectFile('document')}
                 error={errorDocument}
                 helperText={errorDocument ? 'PDF format!' : null}
@@ -246,11 +301,12 @@ export const EmployerFormPage = () => {
             <Grid item xs>
               <TextField
                 disabled
-                label="avatar"
+                label="Logo"
+                InputProps={{ style: inputStyle}}
                 value={filenameImage || ''}
                 onClick={() => selectFile('image')}
-                error={Boolean(getFieldError('avatar'))}
-                helperText={getFieldError('avatar')}
+                error={Boolean(getFieldError('logo'))}
+                helperText={getFieldError('logo')}
               />
             </Grid>
             <Grid item>
@@ -258,7 +314,7 @@ export const EmployerFormPage = () => {
                 Browse
               </Button>
             </Grid>
-            {filenameImage.length !== 0 && (
+            {filenameImage && filenameImage.toString().length !== 0 && (
               <Grid item>
                 <Button variant="contained" onClick={clearDocumentField}>
                   Clear
@@ -267,12 +323,19 @@ export const EmployerFormPage = () => {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Button type="submit" variant="contained">
+        <Grid item xs={registerStyle ? 12 : 6}>
+          <LoadingButton
+            loading={loading}
+            type="submit"
+            variant="contained"
+            sx={{width: '100%'}}
+          >
             Create
-          </Button>
+          </LoadingButton>
         </Grid>
       </Grid>
     </form>
+    </>
+
   );
 };
