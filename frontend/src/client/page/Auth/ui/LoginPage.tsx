@@ -11,7 +11,7 @@ import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 const initialState = {
   email: '',
   password: '',
-}
+};
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();

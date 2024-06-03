@@ -15,7 +15,7 @@ const initialState = {
   email: '',
   password: '',
   avatar: null,
-}
+};
 
 const UserRegisterForm = () => {
   const [state, setState] = useState<RegisterMutation>(initialState);

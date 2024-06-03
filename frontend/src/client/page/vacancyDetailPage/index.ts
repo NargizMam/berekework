@@ -1,0 +1,1 @@
+export { VacancyDetailPage } from './ui/VacancyDetailPage';

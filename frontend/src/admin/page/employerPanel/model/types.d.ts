@@ -6,6 +6,7 @@ export interface Employer {
   companyName: string;
   description: string;
   address: string;
+  contacts: string;
   logo: string;
   document: string;
   foundationYear: string;

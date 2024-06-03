@@ -23,6 +23,7 @@ import { PotentialEmployeesPage } from '../client/page/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
+import { VacancyDetailPage } from '../client/page/vacancyDetailPage';
 
 const App = () => {
 		const user = useAppSelector(selectUser);
@@ -72,6 +73,7 @@ const App = () => {
 							<Route path='/login' element={<LoginPage />} />
 							<Route path='/users' element={<UserPanelPage />} />
 							<Route path='/vacancy' element={<VacancyPage />} />
+							<Route path='/vacancy/:id' element={<VacancyDetailPage />} />
 							<Route path='/about-us' element={<AboutUsPage />} />
 							<Route path='/employersProfile/:id' element={<EmployerProfile />} />
 							<Route path='/potential-employees' element={<PotentialEmployeesPage />} />
