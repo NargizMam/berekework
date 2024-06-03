@@ -53,6 +53,8 @@ export interface UserFields {
     telegram?: string;
   };
   documents?: string[] | null;
+  otp?: string;
+  otpExpires?: date;
 }
 
 export interface EmployerFields {

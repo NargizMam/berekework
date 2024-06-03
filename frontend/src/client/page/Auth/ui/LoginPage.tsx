@@ -106,7 +106,12 @@ export const LoginPage = () => {
           >
             Войти
           </LoadingButton>
-          <Grid container justifyContent="flex-end" sx={{ my: 3}}>
+          <Grid  container justifyContent="space-between" sx={{ my: 3}}>
+            <Grid item>
+              <Link component={RouterLink} to="/register" variant="body2" sx={{ color: '#0866FF'}}>
+                Забыли пароль?
+              </Link>
+            </Grid>
             <Grid item>
               <Link component={RouterLink} to="/register" variant="body2" sx={{ color: '#0866FF'}}>
                 Зарегистрироваться

@@ -68,6 +68,8 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
   documents: {
     type: [String],
   },
+  otp: String ,
+  otpExpires: Date,
 });
 
 userSchema.methods.checkPassword = function (password: string) {
@@ -87,6 +89,8 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+
 
 userSchema.set('toJSON', {
   transform: (_doc, ret, _options) => {
