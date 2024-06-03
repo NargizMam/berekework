@@ -212,11 +212,6 @@ vacancyRouter.put('/:id', async (req, res, next) => {
     const updatedVacancy = await Vacancy.findByIdAndUpdate(
       id,
       {
-<<<<<<< HEAD
-=======
-        logoCompany,
-        nameCompany,
->>>>>>> 4b2f65529da5a6dd9831e67e52fa0e4bf0e45ed5
         vacancyTitle,
         salary: {
           minSalary: salary.minSalary,
@@ -251,7 +246,6 @@ vacancyRouter.put('/:id', async (req, res, next) => {
     next(e);
   }
 });
-
 vacancyRouter.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
 

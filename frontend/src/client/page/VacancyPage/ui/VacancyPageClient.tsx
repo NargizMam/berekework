@@ -7,9 +7,13 @@ import { VacancyCard } from '../../../../feachers/vacancyCard';
 import { VacancyCategory } from '../../../widgets/vacancyCategory';
 import { Tune } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
+import VacancySearch from '../../../widgets/vacancySearch/VacancySearch';
+import { selectVacanciesLoading } from '../../../../admin/page/vacancyPanel/model/vacancySlice';
+import { getAllVacancy } from '../../../../admin/page/vacancyPanel/api/vacancyThunk';
 
 export const VacancyPageClient = () => {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectVacanciesLoading);
   const [showCategory, setShowCategory] = useState(false);
   const vacancies = useAppSelector(selectClientVacancies);
   const vacanciesFetching = useAppSelector(selectClientVacancyFetching);
@@ -18,9 +22,14 @@ export const VacancyPageClient = () => {
     dispatch(vacancyFetchAll());
   }, [dispatch]);
 
+  const handleSearch = async (vacancyTitle: string) => {
+    await dispatch(getAllVacancy(vacancyTitle));
+  };
+
   return (
     <Box sx={{ margin: '10px 0 20px' }}>
-      <Box>
+      <Box sx={{ display: { xs: 'flex', md: 'block' }, justifyContent: 'space-between' }}>
+        <VacancySearch onSearch={handleSearch} isLoading={isLoading} />
         <Tooltip title={'Расширенный поиск'}>
           <IconButton
             sx={{ display: { xs: 'block', md: 'none' } }}

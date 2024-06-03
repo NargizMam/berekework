@@ -2,11 +2,11 @@ import { Button, Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
-import { VacancyCard } from '../../../../admin/widgets/vacancyCard';
+// import { VacancyCard } from '../../../../admin/widgets/vacancyCard';
 import { useParams } from 'react-router-dom';
 import {
   selectEmployerLoading,
-  selectEmployersProfileInfo
+  selectEmployersProfileInfo,
 } from '../../../../admin/page/employerPanel/model/employerSlice';
 import './employerProfile.css';
 import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
@@ -21,7 +21,7 @@ const EmployerProfile = () => {
   const loading = useAppSelector(selectEmployerLoading);
   const apiURL = 'http://localhost:8000';
   const image = apiURL + '/' + profile?.logo;
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     if (id) {
@@ -30,22 +30,30 @@ const EmployerProfile = () => {
   }, [dispatch, id]);
 
   return (
-    <div style={{position: 'relative'}}>
-      <Button variant="outlined" sx={{position: 'absolute', top: '20px', right: '50px'}}
-              onClick={() => setOpenProfileForm(true)}>
+    <div style={{ position: 'relative' }}>
+      <Button
+        variant="outlined"
+        sx={{ position: 'absolute', top: '20px', right: '50px' }}
+        onClick={() => setOpenProfileForm(true)}
+      >
         Редактировать профиль
       </Button>
-      <div className='createVacancyContainer'>
-        {profile && profile.isPublished === true &&
-          <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>Создать вакансию</Button>}
+      <div className="createVacancyContainer">
+        {profile && profile.isPublished === true && (
+          <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>
+            Создать вакансию
+          </Button>
+        )}
       </div>
 
-      {loading && <Loader/>}
-      {(profile && !openProfileForm) && (
+      {loading && <Loader />}
+      {profile && !openProfileForm && (
         <Grid mt={6}>
-          <div className='companyHeader'>
-            <img className="companyLogo" src={image} alt="Логотип компании" height="100px"/>
-            <Typography ml={2} variant="h4">{profile.companyName}</Typography>
+          <div className="companyHeader">
+            <img className="companyLogo" src={image} alt="Логотип компании" height="100px" />
+            <Typography ml={2} variant="h4">
+              {profile.companyName}
+            </Typography>
           </div>
           <p className="companyInfo">
             <strong>Сфера деятельности:</strong> {profile.industry}
@@ -63,35 +71,31 @@ const EmployerProfile = () => {
             Скачать документы
           </a>
           <Grid mt={6} mb={6}>
-            <Typography mb={2} variant='h5'> Ваши вакансии:</Typography>
+            <Typography mb={2} variant="h5">
+              {' '}
+              Ваши вакансии:
+            </Typography>
             {profile.vacancies.length > 0 ? (
               profile.vacancies.map((vacancy) => (
-                <Grid mb={2}>
-                  <VacancyCard key={vacancy._id} data={vacancy}/>
-                </Grid>
+                <Grid mb={2}>{/*<VacancyCard key={vacancy._id} data={vacancy}/>*/}</Grid>
               ))
             ) : (
               <h6>Добавьте свои вакансии</h6>
             )}
           </Grid>
-
         </Grid>
       )}
       {openProfileForm && profile && (
         <>
           <Typography variant="h4">Редактируйте свой профиль</Typography>
-          <EmployerFormPage
-            id={profile._id}
-            key={profile._id}
-            initialProfile={profile}
-          />
+          <EmployerFormPage id={profile._id} key={profile._id} initialProfile={profile} />
         </>
       )}
 
       {openVacancyForm && (
         <>
           <Typography variant="h4">Создайте свои вакансии</Typography>
-          <CreateVacancyForm setOpenForm={setOpenVacancyForm}/>
+          <CreateVacancyForm setOpenForm={setOpenVacancyForm} />
         </>
       )}
     </div>
