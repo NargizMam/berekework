@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { getAllUser } from '../api/usersThunk';
+import { deleteUser, getAllUser } from '../api/usersThunk';
 import { selectUsers, selectUsersLoading } from '../model/usersSlice';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 
 export const UserPanelPage = () => {
@@ -14,6 +14,11 @@ export const UserPanelPage = () => {
     dispatch(getAllUser());
   }, [dispatch]);
 
+  const handleDeleteUser = async (id: string) => {
+    await dispatch(deleteUser(id)).unwrap();
+    await dispatch(getAllUser());
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -24,6 +29,10 @@ export const UserPanelPage = () => {
         <TableHead>
           <TableRow>
             <TableCell>Email</TableCell>
+            <TableCell>Prof</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>City</TableCell>
+            <TableCell>Country</TableCell>
             <TableCell align="right">Role</TableCell>
           </TableRow>
         </TableHead>
@@ -33,7 +42,24 @@ export const UserPanelPage = () => {
               <TableCell component="th" scope="row">
                 {user.email}
               </TableCell>
+              <TableCell component="th" scope="row">
+                {user.preferredJob}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {user.contacts?.phone}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {user.city}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {user.country}
+              </TableCell>
               <TableCell align="right">{user.role}</TableCell>
+              <TableCell align="right">
+                <Button onClick={() => handleDeleteUser(user._id)} variant="contained">
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

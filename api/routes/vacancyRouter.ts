@@ -58,8 +58,16 @@ vacancyRouter.get('/', async (req, res, next) => {
   try {
     const vacancyPage = req.query.vacancyPage;
     const categoryVacancy = req.query.getCategory;
+    const { vacancyTitle } = req.query;
     const filterCategory = req.query.category;
     const { salary, age, ...categories } = req.query;
+
+    if (vacancyTitle) {
+      const filteredVacancies = await Vacancy.find({
+        vacancyTitle: { $regex: vacancyTitle, $options: 'i' },
+      });
+      return res.send(filteredVacancies);
+    }
 
     if (vacancyPage) {
       const result = await Vacancy.find()
@@ -168,8 +176,8 @@ vacancyRouter.get('/', async (req, res, next) => {
 
     const result = await Vacancy.find();
     return res.send(result);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    return next(error);
   }
 });
 
@@ -204,6 +212,11 @@ vacancyRouter.put('/:id', async (req, res, next) => {
     const updatedVacancy = await Vacancy.findByIdAndUpdate(
       id,
       {
+<<<<<<< HEAD
+=======
+        logoCompany,
+        nameCompany,
+>>>>>>> 4b2f65529da5a6dd9831e67e52fa0e4bf0e45ed5
         vacancyTitle,
         salary: {
           minSalary: salary.minSalary,

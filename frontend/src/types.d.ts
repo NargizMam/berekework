@@ -23,19 +23,24 @@ export interface ModeratorApi{
   password: string;
   createdAt: string;
   updatedAt: string;
+
 }
 export interface EmployerInfoApi{
   _id: string;
+  email: string;
+  password: string;
   companyName: string;
   industry: string;
   description: string;
   address: string;
   contacts: string;
-  logo: string;
-  documents: string;
+  logo: File |string | null;
+  document: File |string | null;
+  foundationYear: string;
   vacancies: VacancyCardApiData[];
   createdAt: string;
   updatedAt: string;
+  isPublished: Boolean;
 }
 export interface Moderator{
   name: string;

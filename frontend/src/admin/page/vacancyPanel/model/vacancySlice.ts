@@ -1,24 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllVacancy } from '../api/vacancyThunk';
 import { RootState } from '../../../../app/store/store';
+import { VacancyCardApiData } from '../../../../feachers/vacancyCard/ui/VacancyCard';
 
-interface Vacancy {
-  _id: string;
-  city: string;
-  company: string;
-  createdAt: string;
-  logo: string;
-  salary: {
-    min: number;
-    max: number;
-  };
-  title: string;
-  updatedAt: string;
-  url: string;
-}
+// interface Vacancy {
+//   _id: string;
+//   city: string;
+//   company: string;
+//   createdAt: string;
+//   logo: string;
+//   salary: {
+//     min: number;
+//     max: number;
+//   };
+//   title: string;
+//   updatedAt: string;
+//   url: string;
+// }
 
 interface VacancyState {
-  vacancies: Vacancy[];
+  vacancies: VacancyCardApiData[];
   vacanciesLoading: boolean;
 }
 
@@ -35,7 +36,7 @@ const vacancySlice = createSlice({
     builder.addCase(getAllVacancy.pending, (state) => {
       state.vacanciesLoading = true;
     });
-    builder.addCase(getAllVacancy.fulfilled, (state, { payload: vacancies }: PayloadAction<Vacancy[]>) => {
+    builder.addCase(getAllVacancy.fulfilled, (state, { payload: vacancies }: PayloadAction<VacancyCardApiData[]>) => {
       state.vacanciesLoading = false;
       state.vacancies = vacancies;
     });

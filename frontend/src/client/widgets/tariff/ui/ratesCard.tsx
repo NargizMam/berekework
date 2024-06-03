@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CheckIcon from '@mui/icons-material/Check';
-// import CallMadeIcon from '@mui/icons-material/CallMade';
+import CallMadeIcon from '@mui/icons-material/CallMade';
 import './ratesCard.css';
 import { Box } from '@mui/material';
 
@@ -17,7 +17,7 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
   const [cardLink, setCardLink] = useState<boolean>(false);
 
   useEffect(() => {
-    if (window.innerWidth < 700) {
+    if (window.innerWidth < 770) {
       setCardLink(true);
     } else {
       setCardLink(false);
@@ -40,6 +40,9 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
         <a target={link.target} href={link.url}>
           <div className="cardButton">
             <p className="cardBtnText">Смотреть</p>
+            <div className='cardBtnIcon'>
+              <CallMadeIcon sx={{color: '#000'}}/>
+            </div>
           </div>
         </a>
       )}
