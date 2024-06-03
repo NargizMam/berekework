@@ -2,22 +2,23 @@ import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { MainCards } from '../../../admin/widgets/mainCards';
 import Container from '@mui/material/Container';
 import MediaBlock from '../../widgets/MediaBlock/ui/MediaBlock';
-import OurValuesBlock from '../../widgets/ourValues/ui/ourValuesBlock';
+import { OurValuesBlock } from '../../widgets/ourValues';
 import { Box, Typography } from '@mui/material';
+import { TitleBlock } from '../../../admin/widgets/titleBlock';
 
-interface MainTileProps {
-  id: string;
-  primary: {
-    aboutusimage: {
-      url: string;
-      alt: string | null;
-    };
-    aboutustitle: Array<{
-      type: string;
-      text: string;
-    }>;
-  };
-}
+// interface MainTileProps {
+//   id: string;
+//   primary: {
+//     aboutusimage: {
+//       url: string;
+//       alt: string | null;
+//     };
+//     aboutustitle: Array<{
+//       type: string;
+//       text: string;
+//     }>;
+//   };
+// }
 
 interface InfoItem {
   infodescription: Array<{
@@ -53,7 +54,6 @@ interface SubtitleProps {
       spans: any[];
     }>;
   }>;
-  primary: {};
 }
 
 const AboutUsPage = () => {
@@ -62,51 +62,51 @@ const AboutUsPage = () => {
     return <div>Loading...</div>;
   }
 
-  const getMainTitle = (slice: MainTileProps) => {
-    const { aboutusimage, aboutustitle } = slice.primary;
-    return (
-      <Box
-        key={slice.id}
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          color: 'black',
-          marginBottom: '7%',
-          flexDirection: { xs: 'column', md: 'row' },
-          textAlign: { xs: 'center', md: 'left' },
-        }}
-      >
-        <Box>
-          {aboutustitle && aboutustitle.map((title) => (
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 'bold',
-                color: 'black',
-                fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem' },
-              }}
-              key={title.text}
-            >
-              {title.text}
-            </Typography>
-          ))}
-        </Box>
-        <Box
-          component="img"
-          src={aboutusimage.url}
-          alt={aboutusimage.alt || 'Image'}
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            marginLeft: { xs: 0, md: '20px' },
-            marginBottom: { xs: '20px', md: 0 },
-            maxWidth: { sm: '50%', md: '100%' },
-            height: 'auto',
-          }}
-        />
-      </Box>
-    );
-  };
+  // const getMainTitle = (slice: MainTileProps) => {
+  //   const { aboutusimage, aboutustitle } = slice.primary;
+  //   return (
+  //     <Box
+  //       key={slice.id}
+  //       sx={{
+  //         display: 'flex',
+  //         justifyContent: 'space-between',
+  //         alignItems: 'center',
+  //         color: 'black',
+  //         marginBottom: '7%',
+  //         flexDirection: { xs: 'column', md: 'row' },
+  //         textAlign: { xs: 'center', md: 'left' },
+  //       }}
+  //     >
+  //       <Box>
+  //         {aboutustitle && aboutustitle.map((title) => (
+  //           <Typography
+  //             variant="h3"
+  //             sx={{
+  //               fontWeight: 'bold',
+  //               color: 'black',
+  //               fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem' },
+  //             }}
+  //             key={title.text}
+  //           >
+  //             {title.text}
+  //           </Typography>
+  //         ))}
+  //       </Box>
+  //       <Box
+  //         component="img"
+  //         src={aboutusimage.url}
+  //         alt={aboutusimage.alt || 'Image'}
+  //         sx={{
+  //           display: { xs: 'none', sm: 'block' },
+  //           marginLeft: { xs: 0, md: '20px' },
+  //           marginBottom: { xs: '20px', md: 0 },
+  //           maxWidth: { sm: '50%', md: '100%' },
+  //           height: 'auto',
+  //         }}
+  //       />
+  //     </Box>
+  //   );
+  // };
 
   const getAboutUsInfo = (slice: AboutUsInfoProps) => {
     return (
@@ -176,7 +176,8 @@ const AboutUsPage = () => {
         <SliceZone
           slices={document.data.body}
           components={{
-            aboutusmaintitle: ({ slice }) => getMainTitle(slice),
+            // aboutusmaintitle: ({ slice }) => getMainTitle(slice),
+            aboutusmaintitle: TitleBlock,
             aboutusinfo: ({ slice }) => getAboutUsInfo(slice),
             subtitle: ({ slice }) => getSubtitle(slice),
             maincard: MainCards,

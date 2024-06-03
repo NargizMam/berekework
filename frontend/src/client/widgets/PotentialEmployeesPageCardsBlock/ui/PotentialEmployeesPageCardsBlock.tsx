@@ -18,7 +18,7 @@ interface Props {
   slice: PotentialEmployeesCardsBlockTitleApiData;
 }
 
-const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => {
+export const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => {
   const dispatch = useAppDispatch();
   const users = useAppSelector(selectUsers);
   const isLoading = useAppSelector(selectUsersLoading);
@@ -88,5 +88,3 @@ const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => {
     </div>
   );
 };
-
-export default PotentialEmployeesPageCardsBlock;

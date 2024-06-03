@@ -20,7 +20,7 @@ interface Props {
   slice: OurValues;
 }
 
-const OurValuesBlock: React.FC<Props> = ({ slice }) => {
+export const OurValuesBlock: React.FC<Props> = ({ slice }) => {
   const slidesPerView = slice.items.length < 3 ? slice.items.length : 3;
 
   return (
@@ -60,5 +60,3 @@ const OurValuesBlock: React.FC<Props> = ({ slice }) => {
     </div>
   );
 };
-
-export default OurValuesBlock;
