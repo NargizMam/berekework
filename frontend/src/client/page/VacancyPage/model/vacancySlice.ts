@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../../app/store/store';
 import { CategoryVacancyI, VacancyToCards } from './types';
-import { vacancyFetchAll, vacancyFetchCategory } from '../api/vacancyThunks';
+import { vacancyFetchAll, vacancyFetchCategory, vacancyGetByCategory } from '../api/vacancyThunks';
 
 interface VacancyState {
   vacancies: VacancyToCards[];
@@ -31,6 +31,17 @@ const vacancyClientSlice = createSlice({
         state.vacancyFetching = false;
       })
       .addCase(vacancyFetchAll.rejected, (state) => {
+        state.vacancyFetching = false;
+      });
+    builder
+      .addCase(vacancyGetByCategory.pending, (state) => {
+        state.vacancyFetching = true;
+      })
+      .addCase(vacancyGetByCategory.fulfilled, (state, { payload }) => {
+        state.vacancies = payload;
+        state.vacancyFetching = false;
+      })
+      .addCase(vacancyGetByCategory.rejected, (state) => {
         state.vacancyFetching = false;
       });
     builder

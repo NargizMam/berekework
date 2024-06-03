@@ -15,7 +15,7 @@ import {
   selectClientVacancyCategory,
   selectClientVacancyCategoryFetching,
 } from '../../../page/VacancyPage/model/vacancySlice';
-import { vacancyFetchCategory } from '../../../page/VacancyPage/api/vacancyThunks';
+import { vacancyFetchCategory, vacancyGetByCategory } from '../../../page/VacancyPage/api/vacancyThunks';
 
 interface Props {
   toggleCategory: (show: boolean) => void;
@@ -53,7 +53,7 @@ export const VacancyCategory: React.FC<Props> = ({ toggleCategory }) => {
     setCustomValues({ ...customValues, [name]: event.target.value });
   };
 
-  const combineItems = () => {
+  const combineItems = async () => {
     const combined: { [key: string]: string } = {};
 
     Object.entries(checkedItems).forEach(([name, value]) => {
@@ -63,13 +63,13 @@ export const VacancyCategory: React.FC<Props> = ({ toggleCategory }) => {
         combined[name] = value;
       }
     });
-    console.log(combined);
 
+    await dispatch(vacancyGetByCategory(combined));
     toggleCategory(false);
   };
 
   return (
-    <Box sx={{ border: '1px solid red', marginBottom: { xs: '20px', md: '0' } }}>
+    <Box sx={{ marginBottom: { xs: '20px', md: '0' } }}>
       <Grid container direction="column">
         {fetchCategoryLoading ? (
           <CircularProgress />

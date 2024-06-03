@@ -2,11 +2,9 @@ import express from 'express';
 import Vacancy from '../models/vacancy/Vacancy';
 import mongoose from 'mongoose';
 import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
-import { CategoryVacancy, VacancyI } from '../types';
+import { VacancyI } from '../types';
 
 const vacancyRouter = express.Router();
-
-const categories = ['country', 'city', 'fieldOfWork', 'education', 'employmentType'];
 
 vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next) => {
   const {
@@ -61,7 +59,7 @@ vacancyRouter.get('/', async (req, res, next) => {
     const vacancyPage = req.query.vacancyPage;
     const categoryVacancy = req.query.getCategory;
     const filterCategory = req.query.category;
-    const category: CategoryVacancy = req.body.category;
+    const { salary, age, ...categories } = req.query;
 
     if (vacancyPage) {
       const result = await Vacancy.find()
@@ -104,48 +102,71 @@ vacancyRouter.get('/', async (req, res, next) => {
     }
 
     if (filterCategory) {
-      const queryConditions = [];
-      for (const [key, value] of Object.entries(category)) {
-        if (key !== 'age' && key !== 'salary' && value) {
-          queryConditions.push({ [key]: value });
+      let filteredVacancies: VacancyI[] = [];
+      const vacancies: VacancyI[] = await Vacancy.find();
+
+      if (categories.hasOwnProperty('city')) {
+        const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city });
+        filteredVacancies.push(...vacancies);
+      }
+
+      if (categories.hasOwnProperty('education')) {
+        const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education });
+        filteredVacancies.push(...vacancies);
+      }
+
+      if (categories.hasOwnProperty('country')) {
+        const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country });
+        filteredVacancies.push(...vacancies);
+      }
+
+      if (categories.hasOwnProperty('fieldOfWork')) {
+        const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork });
+        filteredVacancies.push(...vacancies);
+      }
+
+      if (categories.hasOwnProperty('employmentType')) {
+        const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType });
+        filteredVacancies.push(...vacancies);
+      }
+
+      if (salary) {
+        const salaryValue = parseInt(salary as string);
+        if (filteredVacancies.length === 0) {
+          filteredVacancies = vacancies.filter(
+            (vacancy) => vacancy.salary.minSalary <= salaryValue && vacancy.salary.maxSalary >= salaryValue,
+          );
+        } else {
+          filteredVacancies = filteredVacancies.filter(
+            (vacancy) => vacancy.salary.minSalary <= salaryValue && vacancy.salary.maxSalary >= salaryValue,
+          );
         }
       }
 
-      let filteredVacancies: VacancyI[] = [];
+      if (age) {
+        const ageStr = age as string;
+        const [minAge, maxAge] = ageStr.split('-').map(Number);
 
-      if (queryConditions.length > 1) {
-        const orConditions = queryConditions.flatMap((condition, index, array) =>
-          array.slice(index + 1).map((otherCondition) => ({
-            $and: [condition, otherCondition],
-          })),
-        );
-
-        filteredVacancies = await Vacancy.find({ $or: orConditions });
-      } else if (queryConditions.length === 1) {
-        filteredVacancies = await Vacancy.find(queryConditions[0]);
-      } else {
-        filteredVacancies = await Vacancy.find();
+        if (filteredVacancies.length === 0) {
+          filteredVacancies = vacancies.filter(
+            (vacancy) => vacancy.age.minAge <= minAge && vacancy.age.maxAge >= maxAge,
+          );
+        } else {
+          filteredVacancies = filteredVacancies.filter(
+            (vacancy) => vacancy.age.minAge <= minAge && vacancy.age.maxAge >= maxAge,
+          );
+        }
       }
 
-      if (category.salary) {
-        const salary = parseInt(category.salary, 10);
-        filteredVacancies = filteredVacancies.filter(
-          (vacancy) => vacancy.salary.minSalary <= salary && vacancy.salary.maxSalary >= salary,
-        );
-      }
+      const uniqueArr = filteredVacancies.filter((item, index) => {
+        const ids = filteredVacancies.map((vacancy) => vacancy._id);
+        return ids.findIndex((id) => id.equals(item._id)) === index;
+      });
 
-      if (category.age) {
-        const [minAge, maxAge] = category.age.split('-').map(Number);
-        filteredVacancies = filteredVacancies.filter(
-          (vacancy) => vacancy.age.minAge <= maxAge && vacancy.age.maxAge >= minAge,
-        );
-      }
-
-      return res.send(filteredVacancies);
+      return res.send(uniqueArr);
     }
 
     const result = await Vacancy.find();
-
     return res.send(result);
   } catch (e) {
     next(e);

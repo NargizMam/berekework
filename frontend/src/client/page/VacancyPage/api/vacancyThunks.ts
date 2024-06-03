@@ -35,3 +35,12 @@ export const vacancyFetchCategory = createAsyncThunk<CategoryVacancyI[]>(
     return [...vacancyCategory, ...mainCategory];
   },
 );
+
+export const vacancyGetByCategory = createAsyncThunk<VacancyToCards[], { [key: string]: string }>(
+  'vacancyGetByCategory/getByCategory',
+  async (values) => {
+    const params = new URLSearchParams({ category: 'true', ...values });
+    const response = await axiosApi.get(`/vacancy?${params.toString()}`);
+    return response.data;
+  },
+);

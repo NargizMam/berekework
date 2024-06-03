@@ -1,4 +1,5 @@
 import { Document, Model, Types } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 export interface mainCardContainerType {
   _id: string;
@@ -164,7 +165,7 @@ export interface UploadedFiles {
 }
 
 export interface VacancyI {
-  _id: string;
+  _id: ObjectId;
   vacancyTitle: string;
   salary: {
     minSalary: number;
@@ -185,5 +186,5 @@ export interface VacancyI {
 }
 
 export interface CategoryVacancy {
-  [key: string]: 'string';
+  [key: string]: string;
 }

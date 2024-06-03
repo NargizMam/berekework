@@ -63,8 +63,13 @@ export const VacancyPageClient = () => {
               </Grid>
             ))
           ) : (
-            <Grid item xs={12}>
-              <Typography>No Vacancy</Typography>
+            <Grid item xs={12} sx={{ textAlign: 'center', padding: '20px', mt: 3 }}>
+              <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                Вакансий не найдено
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                К сожалению, на основе выбранных вами критериев вакансий в данный момент нет.
+              </Typography>
             </Grid>
           )}
         </Grid>
