@@ -10,7 +10,7 @@ export interface Employer {
   contacts: string;
   isPublished: string;
   logo: string;
-  document: string;
+  documents: string;
 }
 
 export interface EmployerMutation {

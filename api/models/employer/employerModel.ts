@@ -1,6 +1,6 @@
-import mongoose, {HydratedDocument} from 'mongoose';
-import {randomUUID} from 'crypto';
-import {EmployerFields, EmployerModel, UserFields, UserMethods} from '../../types';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { randomUUID } from 'crypto';
+import { EmployerFields, EmployerModel, UserFields, UserMethods } from '../../types';
 import bcrypt from 'bcrypt';
 
 export const SALT_WORK_FACTOR = 10;
@@ -51,10 +51,10 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     type: String,
     required: true,
   },
-  documents: [{
+  documents: {
     type: String,
     required: true,
-  }],
+  },
   foundationYear: {
     type: String,
   },
@@ -64,7 +64,7 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
   },
   isPublished: {
     type: Boolean,
-    default: false
+    default: false,
   },
   googleID: String,
   avatar: String,
@@ -78,7 +78,7 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     },
   ],
   adminsComment: {
-    type: String
+    type: String,
   },
 });
 

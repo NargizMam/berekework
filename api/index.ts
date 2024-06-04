@@ -7,7 +7,6 @@ import userRouter from './routes/userRouter';
 import vacancyRouter from './routes/vacancyRouter';
 import employerRouter from './routes/employerRouter';
 import applicationsRouter from './routes/applicationsRouter';
-import applicantRouter from './routes/applicantRouter';
 import imageUploadRouter from './routes/imageUploadRouter';
 import employeesCardRouter from './routes/employeesCardRouter';
 
@@ -22,7 +21,6 @@ app.use('/employer', employerRouter);
 app.use('/vacancy', vacancyRouter);
 app.use('/upload-image', imageUploadRouter);
 app.use('/applications', applicationsRouter);
-app.use('/applicants', applicantRouter);
 app.use('/employees-card', employeesCardRouter);
 
 const run = async () => {

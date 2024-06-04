@@ -15,7 +15,7 @@ interface StartBlock {
 interface Props {
   slice: StartBlock;
 }
-const PotentialEmployeesStartBlock: React.FC<Props> = ({ slice }) => {
+export const PotentialEmployeesStartBlock: React.FC<Props> = ({ slice }) => {
   return (
     <div className='startBlock'>
       <div className='textBlock'>
@@ -26,5 +26,3 @@ const PotentialEmployeesStartBlock: React.FC<Props> = ({ slice }) => {
     </div>
   );
 };
-
-export default PotentialEmployeesStartBlock;

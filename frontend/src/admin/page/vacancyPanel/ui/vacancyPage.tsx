@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { deleteVacancy, getAllVacancy } from '../api/vacancyThunk';
-import { selectVacancies, selectVacanciesLoading } from '../model/vacancySlice';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
+import { selectVacancies, selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';
+import { deleteVacancy, getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
+import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
 export const VacancyPage = () => {
   const dispatch = useAppDispatch();
   const vacancies = useAppSelector(selectVacancies);
+  const navigate = useNavigate();
   const loading = useAppSelector(selectVacanciesLoading);
 
   useEffect(() => {
@@ -29,6 +32,7 @@ export const VacancyPage = () => {
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
+            <TableCell>Type employment</TableCell>
             <TableCell align="right">Company</TableCell>
             <TableCell align="right">City</TableCell>
             <TableCell align="right">Salary</TableCell>
@@ -40,19 +44,27 @@ export const VacancyPage = () => {
           {vacancies.map((vacancy) => (
             <TableRow key={vacancy._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {vacancy.title}
+                {vacancy.vacancyTitle}
               </TableCell>
-              <TableCell align="right">{vacancy.company}</TableCell>
-              <TableCell align="right">{vacancy.city}</TableCell>
+              <TableCell component="th" scope="row">
+                {vacancy.employmentType}
+              </TableCell>
+              <TableCell>{vacancy.employer?.companyName}</TableCell>
+              <TableCell component="th" scope="row">{vacancy.city}</TableCell>
               {vacancy.salary ? (
-                <TableCell align="right">
-                  {vacancy.salary.min} - {vacancy.salary.max}
+                <TableCell component="th" scope="row">
+                  {vacancy.salary.minSalary} - {vacancy.salary.maxSalary}
                 </TableCell>
               ) : (
                 <TableCell align="right">No salary</TableCell>
               )}
-              <TableCell align="right">{vacancy.createdAt}</TableCell>
-              <TableCell align="right">{vacancy.updatedAt}</TableCell>
+              <TableCell component="th" scope="row">{dayjs(vacancy.createdAt).format('DD MMMM YYYY')}</TableCell>
+              <TableCell component="th" scope="row">{dayjs(vacancy.updatedAt).format('DD MMMM YYYY')}</TableCell>
+              <TableCell align="right">
+                <Button onClick={() => navigate('/vacancy/' + vacancy._id)} variant="contained">
+                  View
+                </Button>
+              </TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleDeleteVacancy(vacancy._id)} variant="contained">
                   Delete

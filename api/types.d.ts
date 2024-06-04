@@ -1,4 +1,5 @@
 import { Document, Model, Types } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 export interface mainCardContainerType {
   _id: string;
@@ -69,7 +70,7 @@ export interface EmployerFields {
   address: string;
   contacts: string;
   logo: string;
-  documents: string[];
+  documents: string;
   foundationYear: string;
   vacancies: Types.ObjectId[];
   adminsComment: string;
@@ -163,4 +164,29 @@ export interface UploadedFiles {
   avatar?: Express.Multer.File[]; // Массив файлов для поля 'avatar'
   document?: Express.Multer.File[]; // Массив файлов для поля 'document'
   logo?: Express.Multer.File[]; // Массив файлов для поля 'logo'
+}
+
+export interface VacancyI {
+  _id: ObjectId;
+  vacancyTitle: string;
+  salary: {
+    minSalary: number;
+    maxSalary: number;
+  };
+  country: string;
+  city: string;
+  aboutVacancy: string;
+  responsibilities: string;
+  workConditions: string;
+  fieldOfWork: string;
+  age: {
+    minAge: number;
+    maxAge: number;
+  };
+  education: string;
+  employmentType: string;
+}
+
+export interface CategoryVacancy {
+  [key: string]: string;
 }

@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { HydratedDocument } from 'mongoose';
-import { UserFields } from '../types';
+import { EmployerFields, UserFields } from '../types';
 import User from '../models/users/userModel';
+import Employer from '../models/employer/employerModel';
 
 export interface RequestWithUser extends Request {
   user?: HydratedDocument<UserFields>;
+  employer?: HydratedDocument<EmployerFields>;
 }
 
 const auth = async (req: RequestWithUser, res: Response, next: NextFunction) => {
@@ -21,11 +23,18 @@ const auth = async (req: RequestWithUser, res: Response, next: NextFunction) => 
   }
 
   const user = await User.findOne({ token });
-  if (!user) {
-    return res.status(401).send({ error: 'Wrong token!' });
+  const employer = await Employer.findOne({ token });
+  if (!user && !employer) {
+    return res.status(401).send({ error: 'Invalid token!' });
   }
 
-  req.user = user;
+  if (user) {
+    req.user = user;
+  }
+
+  if (employer) {
+    req.employer = employer;
+  }
 
   next();
 };

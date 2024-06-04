@@ -1,5 +1,6 @@
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { MainCards } from '../../../admin/widgets/mainCards';
+import Container from '@mui/material/Container';
 import MediaBlock from '../../widgets/MediaBlock/ui/MediaBlock';
 import OurValuesBlock from '../../widgets/ourValues/ui/ourValuesBlock';
 import AboutUsBlock from '../../widgets/aboutAsBlock/ui/AboutAsBlock';

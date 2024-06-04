@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAllUser } from '../../../admin/page/usersPanel/api/usersThunk';
-import { selectUsers, selectUsersLoading } from '../../../admin/page/usersPanel/model/usersSlice';
+import { getAllUser } from '../../../feachers/user/usersThunk';
+import { selectUsers, selectUsersLoading } from '../../../feachers/user/usersSlice';
 import { API_URL } from '../../../app/constants/links';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { Loader } from '../../../shared/loader';

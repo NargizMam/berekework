@@ -4,6 +4,7 @@ import Employer from '../models/employer/employerModel';
 import { multiUpload } from '../multer';
 import { UploadedFiles } from '../types';
 import { transporter } from '../mailer';
+import path from 'path';
 
 const employerRouter = Router();
 
@@ -49,53 +50,53 @@ employerRouter.post(
   },
 );
 employerRouter.put(
-    '/:id',
-    multiUpload.fields([
-      { name: 'document', maxCount: 1 },
-      { name: 'logo', maxCount: 1 },
-      { name: 'avatar', maxCount: 1 },
-    ]),
-    async (req, res, next) => {
-      try {
-        const files: UploadedFiles = req.files as UploadedFiles;
-        const employerId = req.params.id;
+  '/:id',
+  multiUpload.fields([
+    { name: 'document', maxCount: 1 },
+    { name: 'logo', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 },
+  ]),
+  async (req, res, next) => {
+    try {
+      const files: UploadedFiles = req.files as UploadedFiles;
+      const employerId = req.params.id;
 
-        const updateData = {
-          email: req.body.email,
-          password: req.body.password,
-          avatar: files['avatar'] ? files['avatar'][0].filename : null,
-          companyName: req.body.companyName,
-          foundationYear: req.body.foundationYear,
-          documents: files['document'] ? files['document'][0].filename : null,
-          industry: req.body.industry,
-          description: req.body.description,
-          address: req.body.address,
-          contacts: req.body.contacts,
-          logo: files['logo'] ? files['logo'][0].filename : null,
-          adminsComment: req.body.adminsComment,
-        };
+      const updateData = {
+        email: req.body.email,
+        password: req.body.password,
+        avatar: files['avatar'] ? files['avatar'][0].filename : null,
+        companyName: req.body.companyName,
+        foundationYear: req.body.foundationYear,
+        documents: files['document'] ? files['document'][0].filename : null,
+        industry: req.body.industry,
+        description: req.body.description,
+        address: req.body.address,
+        contacts: req.body.contacts,
+        logo: files['logo'] ? files['logo'][0].filename : null,
+        adminsComment: req.body.adminsComment,
+      };
 
-        const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });
+      const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });
 
-        if (!employer) {
-          return res.status(404).send({ message: 'Employer not found!' });
-        }
-
-        await transporter.sendMail({
-          from: '04072002mu@gmail.com',
-          to: req.body.email,
-          subject: 'Employer details updated',
-          text: `${req.body.email}, your employer details have been updated!`,
-        });
-
-        return res.send({ message: 'Employer updated successfully!', employer });
-      } catch (error) {
-        if (error instanceof mongoose.Error.ValidationError) {
-          return res.status(422).send(error);
-        }
-        return next(error);
+      if (!employer) {
+        return res.status(404).send({ message: 'Employer not found!' });
       }
-    },
+
+      await transporter.sendMail({
+        from: '04072002mu@gmail.com',
+        to: req.body.email,
+        subject: 'Employer details updated',
+        text: `${req.body.email}, your employer details have been updated!`,
+      });
+
+      return res.send({ message: 'Employer updated successfully!', employer });
+    } catch (error) {
+      if (error instanceof mongoose.Error.ValidationError) {
+        return res.status(422).send(error);
+      }
+      return next(error);
+    }
+  },
 );
 
 employerRouter.get('/', async (_req, res, next) => {
@@ -109,7 +110,10 @@ employerRouter.get('/', async (_req, res, next) => {
 
 employerRouter.get('/:id', async (req, res, next) => {
   try {
-    const results = await Employer.findById(req.params.id).populate('vacancies');
+    const results = await Employer.findById(req.params.id).populate({
+      path: 'vacancies',
+      populate: { path: 'employer' },
+    });
     res.send(results);
   } catch (error) {
     return next(error);
