@@ -94,7 +94,7 @@ export const EmployerPanelPage = () => {
                   {employer.contacts}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <Link href={API_URL + '/' + employer.document}>PDF</Link>
+                  <Link href={API_URL + '/' + employer.documents}>PDF</Link>
                 </TableCell>
                 <TableCell>{employer.isPublished}</TableCell>
                 <TableCell align="right">

@@ -70,7 +70,7 @@ export interface EmployerFields {
   address: string;
   contacts: string;
   logo: string;
-  documents: string[];
+  documents: string;
   foundationYear: string;
   vacancies: Types.ObjectId[];
   adminsComment: string;
