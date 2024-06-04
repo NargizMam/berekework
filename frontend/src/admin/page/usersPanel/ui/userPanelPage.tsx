@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { deleteUser, getAllUser } from '../api/usersThunk';
-import { selectUsers, selectUsersLoading } from '../model/usersSlice';
+import { deleteUser, getAllUser } from '../../../../feachers/user/usersThunk';
+import { selectUsers, selectUsersLoading } from '../../../../feachers/user/usersSlice';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 

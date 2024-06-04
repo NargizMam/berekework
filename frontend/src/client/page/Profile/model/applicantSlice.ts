@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Applicant } from '../types';
-import { activateApplicant, addApplicant, deleteApplicant, fetchApplicant, fetchApplicants } from './applicantThunk';
+import { Applicant } from './types';
+import { activateApplicant, addApplicant, deleteApplicant, fetchApplicant, fetchApplicants } from '../api/applicantThunk';
 import { RootState } from '../../../../app/store/store';
 
 

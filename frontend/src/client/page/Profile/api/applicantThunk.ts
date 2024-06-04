@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import { Applicant, ApplicantMutation } from '../types';
+import { Applicant, ApplicantMutation } from '../model/types';
 import axiosApi from '../../../../app/axiosApi';
 
 export const fetchApplicants = createAsyncThunk<Applicant[] >(

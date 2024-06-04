@@ -1,9 +1,9 @@
 import PotentialEmployeesPageCard from './PotentialEmployeesPageCard';
 import './PotentialEmployeesPageCardsBlock.css';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectUsers, selectUsersLoading } from '../../../../admin/page/usersPanel/model/usersSlice';
+import { selectUsers, selectUsersLoading } from '../../../../feachers/user/usersSlice';
 import React, { FormEvent, useEffect, useState } from 'react';
-import { getAllUser } from '../../../../admin/page/usersPanel/api/usersThunk';
+import { getAllUser } from '../../../../feachers/user/usersThunk';
 import { Loader } from '../../../../shared/loader';
 import { Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';

@@ -3,9 +3,9 @@ import { vacancyBlockReducer } from '../../admin/widgets/vacancyBlock/model/Vaca
 import { authReducer } from '../../client/page/Auth/model/AuthSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
-import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
+import { usersReducer } from '../../feachers/user/usersSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
-import { applicantReducer } from '../../client/page/Applicant/model/applicantSlice';
+import { applicantReducer } from '../../client/page/Profile/model/applicantSlice';
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';

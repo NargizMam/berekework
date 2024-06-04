@@ -7,6 +7,7 @@ import config from '../config';
 import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth from '../middleware/auth';
+import Applicant from '../models/applicants/Applicant';
 
 const client = new OAuth2Client(config.google.clientId);
 
@@ -138,45 +139,18 @@ userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req,
   }
 });
 
-userRouter.delete('/:id', async (req, res, next) => {
-  if (req.params.id !== 'sessions') {
-    try {
-      const deletedModerator = await User.findByIdAndDelete(req.params.id);
-      if (!deletedModerator) {
-        return res.send({ text: 'not found!' });
-      }
-      return res.send({ text: 'User deleted' });
-    } catch (e) {
-      next(e);
+userRouter.get('/:id', async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found!' });
     }
-  } else {
-    try {
-      const headerValue = req.get('Authorization');
-      const successMessage = { message: 'Success!' };
 
-      if (!headerValue) {
-        return res.send({ ...successMessage, stage: 'No header' });
-      }
-
-      const [_bearer, token] = headerValue.split(' ');
-
-      if (!token) {
-        return res.send({ ...successMessage, stage: 'No token' });
-      }
-
-      const user = await User.findOne({ token });
-
-      if (!user) {
-        return res.send({ ...successMessage, stage: 'No user' });
-      }
-
-      user.generateToken();
-      await user.save();
-
-      return res.send({ ...successMessage, stage: 'Success' });
-    } catch (e) {
-      return next(e);
-    }
+    return res.send(user);
+  } catch (error) {
+    return next(error);
   }
 });
 
@@ -273,4 +247,47 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
     next(e);
   }
 });
+
+userRouter.delete('/:id', async (req, res, next) => {
+  if (req.params.id !== 'sessions') {
+    try {
+      const deletedModerator = await User.findByIdAndDelete(req.params.id);
+      if (!deletedModerator) {
+        return res.send({ text: 'not found!' });
+      }
+      return res.send({ text: 'User deleted' });
+    } catch (e) {
+      next(e);
+    }
+  } else {
+    try {
+      const headerValue = req.get('Authorization');
+      const successMessage = { message: 'Success!' };
+
+      if (!headerValue) {
+        return res.send({ ...successMessage, stage: 'No header' });
+      }
+
+      const [_bearer, token] = headerValue.split(' ');
+
+      if (!token) {
+        return res.send({ ...successMessage, stage: 'No token' });
+      }
+
+      const user = await User.findOne({ token });
+
+      if (!user) {
+        return res.send({ ...successMessage, stage: 'No user' });
+      }
+
+      user.generateToken();
+      await user.save();
+
+      return res.send({ ...successMessage, stage: 'Success' });
+    } catch (e) {
+      return next(e);
+    }
+  }
+});
+
 export default userRouter;

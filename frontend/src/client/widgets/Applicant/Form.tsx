@@ -1,11 +1,11 @@
 import { Button, Grid } from '@mui/material';
-import { cities, educationTypes, jobCities, jobs } from '../constant';
+import { cities, educationTypes, jobCities, jobs } from '../../../app/constants/constant';
 import { LoadingButton } from '@mui/lab';
 import React, { ReactNode } from 'react';
-import { ApplicantMutation } from '../../../types';
+import { UserMutation } from '../../page/Profile/model/types';
 
 interface Props {
-  state: ApplicantMutation;
+  state: UserMutation;
   submitFormHandler: (e: React.FormEvent) => void;
   inputChangeHandler: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
   addField: () => void;
@@ -18,16 +18,15 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
     <div className="applicantFormContainer">
       <form style={{display: "flex", flexDirection: 'column', alignItems: 'center'}} autoComplete="off" onSubmit={submitFormHandler}>
         <div className='formContainer'>
-          {/*fio*/}
           <div className='inputContainer'>
             <Grid item xs >
               <label className="labelForField" htmlFor="firstName">Имя</label>
               <input
                 className="field"
                 id="firstName"
-                value={state.firstName}
+                value={state.name}
                 onChange={inputChangeHandler}
-                name="firstName"
+                name="name"
                 required
               />
             </Grid>
@@ -44,17 +43,17 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
             </Grid>
           </div>
           {/*отчество*/}
-          <Grid item xs>
-            <label className="labelForField" htmlFor="secondName">Отчество</label>
-            <input
-              className="field"
-              id="secondName"
-              value={state.secondName}
-              onChange={inputChangeHandler}
-              name="secondName"
-              required
-            />
-          </Grid>
+          {/*<Grid item xs>*/}
+          {/*  <label className="labelForField" htmlFor="secondName">Отчество</label>*/}
+          {/*  <input*/}
+          {/*    className="field"*/}
+          {/*    id="secondName"*/}
+          {/*    value={state.secondName}*/}
+          {/*    onChange={inputChangeHandler}*/}
+          {/*    name="secondName"*/}
+          {/*    required*/}
+          {/*  />*/}
+          {/*</Grid>*/}
           {/*пол и возраст*/}
           <div className="inputContainer">
             <Grid item xs={7}>
@@ -62,9 +61,9 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               <select
                 className="field"
                 onChange={inputChangeHandler}
-                id="sex"
-                value={state.sex}
-                name="sex"
+                id="gender"
+                value={state.gender}
+                name="gender"
                 required
               >
                 <option className="menuItem" value="">Не указан</option>
@@ -141,7 +140,7 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
             <textarea
               className="field"
               id="aboutApplicant"
-              value={state.aboutApplicant}
+              value={state.aboutMe}
               onChange={inputChangeHandler}
               name="aboutApplicant"
               required
@@ -166,7 +165,7 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               <select
                 className="field"
                 id="wantedJob"
-                value={state.wantedJob}
+                value={state.preferredJob}
                 onChange={inputChangeHandler}
                 name="wantedJob"
                 required
@@ -182,7 +181,7 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               <select
                 className="field"
                 id="wantedJobCity"
-                value={state.wantedJobCity}
+                value={state.preferredCity}
                 onChange={inputChangeHandler}
                 name="wantedJobCity"
                 required

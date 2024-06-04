@@ -40,3 +40,32 @@ export interface CategoryVacancyI {
     placeholder: string;
   };
 }
+
+export interface User {
+  _id: string;
+  email: string;
+  role: string;
+  avatar: File | string | null;
+  name?: string;
+  surname?: string;
+  patronymic?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  country?: string;
+  city?: string;
+  education?: string;
+  aboutMe?: string;
+  workExperience: {
+    _id: string;
+    fieldOfWork: string;
+    duration: string;
+  }[];
+  preferredJob?: string;
+  preferredCity?: string;
+  contacts?: {
+    phone?: string;
+    whatsapp?: string;
+    telegram?: string;
+  };
+  documents?: string[];
+}

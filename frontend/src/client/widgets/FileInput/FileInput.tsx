@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { API_URL } from '../../../../../../app/constants/links';
+import { API_URL } from '../../../app/constants/links';
 
 interface Props {
-  photo: string | null | undefined;
+  photo: File | string | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -24,7 +24,7 @@ const FileInput: React.FC<Props> = ({onChange, photo}) => {
       inputRef.current.click();
     }
   };
-  console.log(photo);
+
   return (
     <>
       <input

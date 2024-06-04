@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Grid, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
-import { WorkExperience } from '../../../types';
+import { WorkExperience } from '../../page/Profile/model/types';
 
 interface Props {
   id: string;
-  job: string | null,
+  job: string,
+  duration: string;
   deleteField: (id: string) => void,
   addField: (newField: WorkExperience) => void;
 }
@@ -15,12 +16,14 @@ interface Props {
 const WorkExperienceField: React.FC<Props> = ({
   id,
   job,
+  duration,
   deleteField,
   addField,
 }) => {
   const [state, setState] = useState<WorkExperience>({
-    id: id,
-    job: job || '',
+    _id: id,
+    fieldOfWork: job || '',
+    duration: duration || '',
   });
   const [isAdded, setIsAdded] = useState(false);
 
@@ -49,9 +52,9 @@ const WorkExperienceField: React.FC<Props> = ({
           style={{marginLeft: '8px'}}
           className="field"
           id="job"
-          value={state.job}
+          value={state.fieldOfWork}
           onChange={fieldChangeHandler}
-          name="job"
+          name="fieldOfWork"
         />
       </Grid>
       <Grid>
@@ -60,7 +63,7 @@ const WorkExperienceField: React.FC<Props> = ({
             <CheckIcon/>
           </IconButton>
           :
-          <IconButton onClick={() => handleDeleteField(state.id)} aria-label="delete" color="primary">
+          <IconButton onClick={() => handleDeleteField(id)} aria-label="delete" color="primary">
             <DeleteIcon/>
           </IconButton>
         }
