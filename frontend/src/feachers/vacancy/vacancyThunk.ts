@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { VacancyCardApiData } from '../../app/types';
+import { CategoryVacancyI, VacancyCardApiData, VacancyCategoryGet } from '../../app/types';
 import axiosApi from '../../app/axiosApi';
-import { CategoryVacancyI, VacancyCategoryGet } from '../../client/page/VacancyPage/model/types';
 import { titleVacancyFilter, vacancyCategory } from '../../app/constants/links';
 
 export const getAllVacancy = createAsyncThunk<VacancyCardApiData[], string | undefined>(

@@ -5,13 +5,13 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import { usersReducer } from '../../feachers/user/usersSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
-import { applicantReducer } from '../../client/page/Profile/model/applicantSlice';
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
 import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
 import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
 import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
 import { vacancyReducer } from '../../feachers/vacancy/vacancySlice';
+import { applicationReducer } from '../../feachers/aplication/applicationSlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
   users: usersReducer,
   vacancy: vacancyReducer,
   moderator: moderatorsReducer,
-  applicant: applicantReducer,
+  application: applicationReducer,
   chooseBlock: chooseBlockReducer,
   employerAdmin: employerReducer,
   warningMessage: warningMessageReducer,

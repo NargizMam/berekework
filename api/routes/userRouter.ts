@@ -7,7 +7,6 @@ import config from '../config';
 import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth from '../middleware/auth';
-import Applicant from '../models/applicants/Applicant';
 
 const client = new OAuth2Client(config.google.clientId);
 

@@ -15,6 +15,7 @@
 
 .cards-div {
 	display: flex;
+  flex-direction: column;
 	flex-wrap: wrap;
 	max-width: 860px;
 	margin: 0 auto;

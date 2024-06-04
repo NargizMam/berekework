@@ -16,7 +16,7 @@ export interface PotentialEmployeesPageCardProps {
 	workExperience?: {
 		fieldOfWork: string;
 		duration: string;
-	};
+	}[];
 }
 
 interface Props {
@@ -34,7 +34,7 @@ const PotentialEmployeesPageCard: React.FC<Props> = ({ data }) => {
 		return null;
 	}
 	const education = data.education ? data.education : 'Не указано';
-	const workExperience = data.workExperience ? `${data.workExperience.duration}` : 'Не указано';
+	const workExperience = data.workExperience ? `${data.workExperience[0].duration}` : 'Не указано';
 	const image = data.avatar ? API_URL + data.avatar : null;
 	const avatar = image ? <img className="PotentialEmployeesPageCard__photo" src={image} alt={data.name} /> : 'Нет фото';
 	

@@ -21,22 +21,27 @@ const vacancySchema = new Schema(
       type: String,
       required: true,
     },
-    aboutVacancy: { // О вакансии (минимум 200 символов)
+    aboutVacancy: {
+      // О вакансии (минимум 200 символов)
       type: String,
     },
-    responsibilities: {// Обязанности (минимум 150 символов)
+    responsibilities: {
+      // Обязанности (минимум 150 символов)
       type: String,
     },
-    workConditions: {  // Условия работы (Минимум 100 символов)
+    workConditions: {
+      // Условия работы (Минимум 100 символов)
       type: String,
     },
     country: {
       type: String,
     },
-    fieldOfWork: { // Сфера деятельности
+    fieldOfWork: {
+      // Сфера деятельности
       type: String,
     },
-    age: { // Возрастная категория (17-30, 30-45, 45+
+    age: {
+      // Возрастная категория (17-30, 30-45, 45+
       minAge: {
         type: Number,
       },
@@ -44,18 +49,14 @@ const vacancySchema = new Schema(
         type: Number,
       },
     },
-    education: { // Образование (среднее, средне-специальное, высшее, высшее-неполное магистратура, без образования)
+    education: {
+      // Образование (среднее, средне-специальное, высшее, высшее-неполное магистратура, без образования)
       type: String,
     },
-    employmentType: {  // Тип занятости: Полная, Неполная, Подработка
+    employmentType: {
+      // Тип занятости: Полная, Неполная, Подработка
       type: String,
     },
-    /*users: [
-      {
-        userId: ref - на соискателя
-        chosenBy: Boolean, // true - Когда соискатель сам выбрал
-      }                    // false - когда рабодатель выбрал себе соискателя
-    ],*/
     employer: {
       type: Schema.Types.ObjectId,
       ref: 'Employer',
@@ -67,4 +68,3 @@ const vacancySchema = new Schema(
 const Vacancy = model('Vacancy', vacancySchema);
 
 export default Vacancy;
-

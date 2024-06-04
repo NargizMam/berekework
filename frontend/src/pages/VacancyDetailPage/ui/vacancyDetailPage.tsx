@@ -1,20 +1,24 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Box, Button, CircularProgress, Link, Typography } from "@mui/material";
-import { Email, Phone } from "@mui/icons-material";
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, Button, CircularProgress, Link, Typography } from '@mui/material';
+import { Email, Phone } from '@mui/icons-material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 import { API_URL } from '../../../app/constants/links';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { getVacancyById } from '../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy, selectVacancyLoading } from '../../../feachers/vacancy/vacancySlice';
 import './vacancyDetailPage.css';
+import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
+import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
 
 export const VacancyDetailPage = () => {
+  // const employer = useAppSelector(true);
   const dispatch = useAppDispatch();
-  const id = useParams()?.id;
+  const { id } = useParams() as { id: string };
   const vacancy = useAppSelector(selectVacancy);
   const loading = useAppSelector(selectVacancyLoading);
+  const candidates = useAppSelector(selectCandidates);
 
   useEffect(() => {
     if (id) {
@@ -22,8 +26,16 @@ export const VacancyDetailPage = () => {
     }
   }, [dispatch, id]);
 
+  useEffect(() => {
+    dispatch(getCandidateByEmployer(id));
+  }, [dispatch, id]);
+
+  const sendReplyHandle = async (id: string) => {
+    await dispatch(sendReplyByUser(id)).unwrap();
+  };
+
   if (loading) {
-    return <CircularProgress/>;
+    return <CircularProgress />;
   }
 
   if (!vacancy) {
@@ -44,7 +56,13 @@ export const VacancyDetailPage = () => {
             </div>
             <div className="employmentType">Тип занятости: {vacancy.employmentType}</div>
             <div className="vacancyButtons">
-              <Button variant="contained" size="large" color="success" className="vacancyButton">
+              <Button
+                onClick={() => sendReplyHandle(vacancy._id)}
+                variant="contained"
+                size="large"
+                color="success"
+                className="vacancyButton"
+              >
                 Откликнуться
               </Button>
             </div>
@@ -95,6 +113,15 @@ export const VacancyDetailPage = () => {
             Вакансия создана: {dayjs(vacancy.createdAt).format('DD MMMM YYYY')}
           </Typography>
         </div>
+      </Box>
+      <Box>
+        <h1>Откликнутые</h1>
+        {candidates.map((candidate, index) => (
+          <p>
+            <span>{index + 1}</span>
+            {candidate.user.name} - {candidate.user.preferredJob} - {candidate.status}
+          </p>
+        ))}
       </Box>
     </>
   );
