@@ -18,12 +18,13 @@ import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import ApplicantSettings from '../client/page/Applicant/ui/page/ApplicantSettings';
 import ApplicantProfile from '../client/page/Applicant/ui/page/ApplicantProfile';
 import ApplicantRefactor from '../client/page/Applicant/ui/page/ApplicantRefactor';
-import { EmployerPanelPage } from '../admin/page/employerPanel';
+import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import { PotentialEmployeesPage } from '../client/page/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
 import { VacancyPageClient } from '../client/page/VacancyPage';
+import { VacancyDetailPage } from '../pages/VacancyDetailPage';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -42,8 +43,9 @@ const App = () => {
             }
           />
           <Route path="/employers" element={<EmployerPanelPage />} />
-          {/*<Route path="/employers-submit" element={<EmployerFormPage />} />*/}
+          <Route path="/employers-submit" element={<EmployerFormPage />} />
           <Route path="/vacancy" element={<VacancyPage />} />
+          <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
           <Route path="/users" element={<UserPanelPage />} />
         </Routes>
       </Container>
@@ -73,6 +75,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/users" element={<UserPanelPage />} />
             <Route path="/vacancy" element={<VacancyPageClient />} />
+            <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
             <Route path="/employersProfile/:id" element={<EmployerProfile />} />
             <Route path="/potential-employees" element={<PotentialEmployeesPage />} />

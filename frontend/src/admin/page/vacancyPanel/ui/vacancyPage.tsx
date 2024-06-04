@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { deleteVacancy, getAllVacancy } from '../api/vacancyThunk';
-import { selectVacancies, selectVacanciesLoading } from '../model/vacancySlice';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
+import { selectVacancies, selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';
+import { deleteVacancy, getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
 
 export const VacancyPage = () => {
   const dispatch = useAppDispatch();
@@ -40,19 +40,17 @@ export const VacancyPage = () => {
           {vacancies.map((vacancy) => (
             <TableRow key={vacancy._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {vacancy.title}
+                {vacancy.company}
               </TableCell>
               <TableCell align="right">{vacancy.company}</TableCell>
               <TableCell align="right">{vacancy.city}</TableCell>
               {vacancy.salary ? (
                 <TableCell align="right">
-                  {vacancy.salary.min} - {vacancy.salary.max}
+                  {vacancy.salary.minSalary} - {vacancy.salary.maxSalary}
                 </TableCell>
               ) : (
                 <TableCell align="right">No salary</TableCell>
               )}
-              <TableCell align="right">{vacancy.createdAt}</TableCell>
-              <TableCell align="right">{vacancy.updatedAt}</TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleDeleteVacancy(vacancy._id)} variant="contained">
                   Delete

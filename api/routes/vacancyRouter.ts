@@ -185,7 +185,7 @@ vacancyRouter.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await Vacancy.findById(id);
+    const result = await Vacancy.findById(id).populate('employer');
     return res.send(result);
   } catch (e) {
     next(e);

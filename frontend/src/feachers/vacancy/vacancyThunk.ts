@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../../../app/axiosApi';
-import { VacancyCardApiData } from '../../../../feachers/vacancyCard/ui/VacancyCard';
+import { VacancyCardApiData } from '../../app/types';
+import axiosApi from '../../app/axiosApi';
 
 export const getAllVacancy = createAsyncThunk<VacancyCardApiData[], string | undefined>(
   'vacancy/getAll',
@@ -11,6 +11,11 @@ export const getAllVacancy = createAsyncThunk<VacancyCardApiData[], string | und
     return response.data;
   },
 );
+
+export const getVacancyById = createAsyncThunk<VacancyCardApiData, string>('vacancy/getById', async (id) => {
+  const response = await axiosApi.get(`/vacancy/${id}`);
+  return response.data;
+});
 
 export const deleteVacancy = createAsyncThunk<void, string>('vacancy/delete', async (id) => {
   await axiosApi.delete(`/vacancies/${id}`);

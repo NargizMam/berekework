@@ -8,8 +8,8 @@ import { VacancyCategory } from '../../../widgets/vacancyCategory';
 import { Tune } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import VacancySearch from '../../../widgets/vacancySearch/VacancySearch';
-import { selectVacanciesLoading } from '../../../../admin/page/vacancyPanel/model/vacancySlice';
-import { getAllVacancy } from '../../../../admin/page/vacancyPanel/api/vacancyThunk';
+import { selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';
+import { getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
 
 export const VacancyPageClient = () => {
   const dispatch = useAppDispatch();

@@ -3,8 +3,8 @@ import OurValuesCard from './ourValuesCard';
 import { Box, Typography } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import 'swiper/css/pagination';
 import OurValuesBlockStyle from './ourValuesBlock-style';
+import 'swiper/css/pagination';
 
 interface OurValues {
   items: {

@@ -4,7 +4,6 @@ import { authReducer } from '../../client/page/Auth/model/AuthSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import { usersReducer } from '../../admin/page/usersPanel/model/usersSlice';
-import { vacancyReducer } from '../../admin/page/vacancyPanel/model/vacancySlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
 import { applicantReducer } from '../../client/page/Applicant/model/applicantSlice';
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
@@ -13,6 +12,7 @@ import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/c
 import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
 import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
 import { vacancyClientReducer } from '../../client/page/VacancyPage/model/vacancySlice';
+import { vacancyReducer } from '../../feachers/vacancy/vacancySlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
