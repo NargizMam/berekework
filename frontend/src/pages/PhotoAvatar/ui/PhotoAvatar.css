@@ -3,7 +3,7 @@
 }
 
 .PhotoAvatar__image {
-  border: 5px solid #FFFF;
+  border: 5px solid #ffff;
 }
 
 .PhotoAvatar__buttton {
@@ -11,7 +11,7 @@
   border-radius: 50%;
   position: absolute;
   border: none;
-  background: #0866FF;
+  background: #0866ff;
   bottom: 0;
   right: 0;
   display: flex;

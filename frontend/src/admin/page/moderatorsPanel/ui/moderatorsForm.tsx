@@ -7,35 +7,34 @@ import { createModerator, getAllModerators } from '../api/moderatorsThunk';
 import { Moderator } from '../../../../types';
 
 interface Props {
-  close:() => void;
+  close: () => void;
 }
 const initialState = {
   name: '',
   email: '',
   password: '',
-}
-export const ModeratorsForm: React.FC<Props> = ({close}) => {
+};
+export const ModeratorsForm: React.FC<Props> = ({ close }) => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectModeratorsCreateError);
   const loading = useAppSelector(selectModeratorsCreating);
   const [state, setState] = useState<Moderator>(initialState);
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
 
     setState((prevState) => {
-      return {...prevState, [name]: value};
+      return { ...prevState, [name]: value };
     });
   };
 
   const submitFormHandler = async (event: FormEvent) => {
     event.preventDefault();
-    try{
+    try {
       dispatch(createModerator(state)).unwrap();
       dispatch(getAllModerators());
       setState(initialState);
       close();
-    }catch(e){
-    }
+    } catch (e) {}
   };
 
   return (
@@ -49,15 +48,15 @@ export const ModeratorsForm: React.FC<Props> = ({close}) => {
         }}
       >
         {error && (
-        <Alert severity="error" sx={{mt: 3, width: '100%'}}>
-          {error?.error}
-        </Alert>
-      )}
+          <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
+            {error?.error}
+          </Alert>
+        )}
         <Typography component="h1" variant="h5">
           Create admin
         </Typography>
 
-        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
+        <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -93,7 +92,7 @@ export const ModeratorsForm: React.FC<Props> = ({close}) => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{mt: 3, mb: 2, backgroundColor: '#0866FF', borderRadius: '30px'}}
+            sx={{ mt: 3, mb: 2, backgroundColor: '#0866FF', borderRadius: '30px' }}
           >
             Создать
           </LoadingButton>

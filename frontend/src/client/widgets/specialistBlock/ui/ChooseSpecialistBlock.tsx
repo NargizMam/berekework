@@ -20,13 +20,11 @@ export interface ChooseSpecialistBlockData {
   };
 }
 
-
 interface Props {
   slice: ChooseSpecialistBlockData;
 }
 
-
-export const ChooseSpecialistBlock: React.FC<Props> = ({slice}) => {
+export const ChooseSpecialistBlock: React.FC<Props> = ({ slice }) => {
   // const dispatch = useAppDispatch();
   // const chooseBlock = useSelector(selectChooseBlock);
   //
@@ -35,15 +33,15 @@ export const ChooseSpecialistBlock: React.FC<Props> = ({slice}) => {
   // }, [dispatch]);
 
   return (
-    <div style={{margin: '100px 0'}} className="chooseBlock">
+    <div style={{ margin: '100px 0' }} className="chooseBlock">
       <div className="chooseBlockContent">
         <h2 className="chooseBlock-title">{slice.primary.title}</h2>
         <a href={slice.primary.link.url} className="button-link">
-         Читать подробнее
-          <span className='span'></span>
+          Читать подробнее
+          <span className="span"></span>
         </a>
       </div>
-      <img className='chooseBlock-img' alt={slice.primary.img.alt} src={slice.primary.img.url}/>
+      <img className="chooseBlock-img" alt={slice.primary.img.alt} src={slice.primary.img.url} />
     </div>
   );
 };

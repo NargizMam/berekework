@@ -50,7 +50,9 @@ export const VacancyPage = () => {
                 {vacancy.employmentType}
               </TableCell>
               <TableCell>{vacancy.employer?.companyName}</TableCell>
-              <TableCell component="th" scope="row">{vacancy.city}</TableCell>
+              <TableCell component="th" scope="row">
+                {vacancy.city}
+              </TableCell>
               {vacancy.salary ? (
                 <TableCell component="th" scope="row">
                   {vacancy.salary.minSalary} - {vacancy.salary.maxSalary}
@@ -58,8 +60,12 @@ export const VacancyPage = () => {
               ) : (
                 <TableCell align="right">No salary</TableCell>
               )}
-              <TableCell component="th" scope="row">{dayjs(vacancy.createdAt).format('DD MMMM YYYY')}</TableCell>
-              <TableCell component="th" scope="row">{dayjs(vacancy.updatedAt).format('DD MMMM YYYY')}</TableCell>
+              <TableCell component="th" scope="row">
+                {dayjs(vacancy.createdAt).format('DD MMMM YYYY')}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {dayjs(vacancy.updatedAt).format('DD MMMM YYYY')}
+              </TableCell>
               <TableCell align="right">
                 <Button onClick={() => navigate('/vacancy/' + vacancy._id)} variant="contained">
                   View

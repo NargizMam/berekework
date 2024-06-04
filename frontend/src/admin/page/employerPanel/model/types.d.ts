@@ -20,8 +20,8 @@ export interface EmployerMutation {
   foundationYear: string;
   industry: string;
   description: string;
-  document: File |string | null;
-  logo: File |string | null;
+  document: File | string | null;
+  logo: File | string | null;
   address: string;
   contacts: string;
 }

@@ -12,7 +12,6 @@ interface Props {
 }
 
 export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
-  console.log(data);
   const image = data.employer.logo ? (
     <Box sx={VacancyCardStyle.imageWrapper}>
       <img src={API_URL + '/' + data.employer.logo} alt={data.vacancyTitle} />

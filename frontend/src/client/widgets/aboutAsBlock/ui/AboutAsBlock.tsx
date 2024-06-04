@@ -7,7 +7,6 @@ interface InfoItem {
     text: string;
     spans: any[];
   }>;
-
 }
 
 interface AboutUsInfoProps {

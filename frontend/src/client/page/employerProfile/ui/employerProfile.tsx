@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {
 import './employerProfile.css';
 import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
+import { VacancyCard } from '../../../../feachers/vacancyCard';
 
 const EmployerProfile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,38 +40,63 @@ const EmployerProfile: React.FC = () => {
       >
         Редактировать профиль
       </Button>
-      <div className='createVacancyContainer'>
+      <div className="createVacancyContainer">
         {profile?.isPublished && (
-          <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>Создать вакансию</Button>
+          <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>
+            Создать вакансию
+          </Button>
         )}
       </div>
 
       {profile && (
         <Grid mt={6}>
           <div className="companyHeader">
-            <img className="companyLogo" src={`http://localhost:8000/${profile.logo}`} alt="Логотип компании" height="100px" />
-            <Typography ml={2} variant="h4">{profile.companyName}</Typography>
+            <img
+              className="companyLogo"
+              src={`http://localhost:8000/${profile.logo}`}
+              alt="Логотип компании"
+              height="100px"
+            />
+            <Typography ml={2} variant="h4">
+              {profile.companyName}
+            </Typography>
           </div>
-          <p className="companyInfo"><strong>Сфера деятельности:</strong> {profile.industry}</p>
-          <p className="companyInfo"><strong>Описание:</strong> {profile.description}</p>
-          <p className="companyInfo"><strong>Адрес:</strong> {profile.address}</p>
-          <p className="companyInfo"><strong>Контакты:</strong> {profile.contacts}</p>
-          <a className="companyLink" href={profile.document || '#'} download>Скачать документы</a>
+          <p className="companyInfo">
+            <strong>Сфера деятельности:</strong> {profile.industry}
+          </p>
+          <p className="companyInfo">
+            <strong>Описание:</strong> {profile.description}
+          </p>
+          <p className="companyInfo">
+            <strong>Адрес:</strong> {profile.address}
+          </p>
+          <p className="companyInfo">
+            <strong>Контакты:</strong> {profile.contacts}
+          </p>
+          <a className="companyLink" href={profile.document || '#'} download>
+            Скачать документы
+          </a>
           <Grid mt={6} mb={6}>
-            <Typography mb={2} variant="h5">Ваши вакансии:</Typography>
-            {profile.vacancies.length > 0 ? (
-              profile.vacancies.map((vacancy) => (
-                <Grid mb={2} key={vacancy._id}>
-                  Здесь должны быть вакансии
-                </Grid>
-              ))
-            ) : (
-              <h6>Добавьте свои вакансии</h6>
-            )}
+            <Typography mb={2} variant="h5">
+              Ваши вакансии:
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '15px 0',
+              }}
+            >
+              {profile.vacancies.length > 0 ? (
+                profile.vacancies.map((vacancy) => <VacancyCard key={vacancy._id} data={vacancy} visible={true} />)
+              ) : (
+                <h6>Добавьте свои вакансии</h6>
+              )}
+            </Box>
           </Grid>
         </Grid>
       )}
-       
+
       {openVacancyForm && (
         <>
           <Typography variant="h4">Создайте свои вакансии</Typography>

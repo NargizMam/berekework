@@ -1,26 +1,29 @@
 import { Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { VacancyCard, VacancyCardApiData } from '../../../feachers/vacancyCard/ui/VacancyCard';
+import { VacancyCard } from '../../../feachers/vacancyCard';
 import './VacancyBlock.css';
 import VacancyBlockStyle from './VacancyBlock-style';
+import { VacancyCardApiData } from '../../../app/types';
 
 interface Props {
   data: VacancyCardApiData[];
 }
 
-export const VacancyBlock: React.FC<Props> = ({data}) => {
+export const VacancyBlock: React.FC<Props> = ({ data }) => {
   const [currentRow, setCurrentRow] = useState(6);
 
   const showMore = () => {
-    setCurrentRow(prev => prev + 6);
+    setCurrentRow((prev) => prev + 6);
   };
 
   return (
     <>
-      <Typography variant="h2" sx={VacancyBlockStyle.title}>Последние Вакансии</Typography>
+      <Typography variant="h2" sx={VacancyBlockStyle.title}>
+        Последние Вакансии
+      </Typography>
       <div className="VacancyBlock__flex">
         {data.map((data, index) => (
-          <VacancyCard key={data._id} data={data} visible={index < currentRow}/>
+          <VacancyCard key={data._id} data={data} visible={index < currentRow} />
         ))}
       </div>
       <div className="VacancyBlock__buttonWrapper">

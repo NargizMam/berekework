@@ -3,7 +3,6 @@ import { fetchChooseBlock } from '../api/chooseBlockThunk';
 import { RootState } from '../../../../app/store/store';
 import { ChooseBlock } from './types';
 
-
 interface ChooseBlockState {
   items: ChooseBlock | null;
   fetchLoadingAlbums: boolean;

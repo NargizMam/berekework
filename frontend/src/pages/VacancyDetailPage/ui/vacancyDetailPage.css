@@ -2,14 +2,18 @@
   flex-basis: 100%;
 
   padding: 10px;
-  box-shadow: -5px 5px 5px -7px rgba(0,0,0,0.5), 2px 0 5px -7px rgba(0,0,0,0.5);
+  box-shadow:
+    -5px 5px 5px -7px rgba(0, 0, 0, 0.5),
+    2px 0 5px -7px rgba(0, 0, 0, 0.5);
 }
 
 .aboutEmployer {
   flex-basis: 100%;
   padding: 10px;
   margin-top: 20px;
-  box-shadow: -5px 5px 5px -7px rgba(0,0,0,0.5), 2px 0 5px -7px rgba(0,0,0,0.5);
+  box-shadow:
+    -5px 5px 5px -7px rgba(0, 0, 0, 0.5),
+    2px 0 5px -7px rgba(0, 0, 0, 0.5);
 }
 
 .vacancy-info {

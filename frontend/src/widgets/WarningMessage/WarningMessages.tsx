@@ -4,7 +4,7 @@ import SuccessMessage from './SuccessMessage';
 import ErrorMessage from './ErrorMessage';
 import {
   selectModeratorsCreateError,
-  selectModeratorsSuccessMessage
+  selectModeratorsSuccessMessage,
 } from '../../admin/page/moderatorsPanel/model/moderatorsSlice';
 
 const WarningMessage = () => {
@@ -15,10 +15,10 @@ const WarningMessage = () => {
     <>
       <Grid container direction="column" spacing={2}>
         <Grid item xs={12}>
-          {successMessage && <SuccessMessage successMessage={successMessage}/>}
+          {successMessage && <SuccessMessage successMessage={successMessage} />}
         </Grid>
         <Grid item xs={12}>
-          {errorMessage && <ErrorMessage errorMessage={errorMessage.error}/>}
+          {errorMessage && <ErrorMessage errorMessage={errorMessage.error} />}
         </Grid>
       </Grid>
     </>

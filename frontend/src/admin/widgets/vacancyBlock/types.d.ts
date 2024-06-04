@@ -27,7 +27,7 @@ export interface VacancyCardApiData {
   age?: {
     minAge?: number;
     maxAge?: number;
-  }
+  };
   education?: string;
   employmentType?: string;
   employer: string;

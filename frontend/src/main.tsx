@@ -22,12 +22,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <BrowserRouter>
           <ThemeProvider theme={appTheme}>
             <PrismicProvider client={prismicClient}>
-              <App/>
+              <App />
             </PrismicProvider>
           </ThemeProvider>
         </BrowserRouter>
       </PersistGate>
     </GoogleOAuthProvider>
   </Provider>,
-
 );

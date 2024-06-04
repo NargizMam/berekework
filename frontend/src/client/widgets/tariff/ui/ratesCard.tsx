@@ -24,7 +24,6 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
     }
   }, []);
 
-
   return (
     <Box className="rateCard">
       <p className="rateCardTitle">{title}</p>
@@ -40,8 +39,8 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
         <a target={link.target} href={link.url}>
           <div className="cardButton">
             <p className="cardBtnText">Смотреть</p>
-            <div className='cardBtnIcon'>
-              <CallMadeIcon sx={{color: '#000'}}/>
+            <div className="cardBtnIcon">
+              <CallMadeIcon sx={{ color: '#000' }} />
             </div>
           </div>
         </a>

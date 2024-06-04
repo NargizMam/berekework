@@ -16,5 +16,4 @@ export const addInterceptors = (store: Store<RootState>) => {
   });
 };
 
-
 export default axiosApi;

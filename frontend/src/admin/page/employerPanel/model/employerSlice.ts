@@ -33,7 +33,7 @@ const employerSlice = createSlice({
     builder.addCase(createEmployer.fulfilled, (state) => {
       state.createEmployerLoading = false;
     });
-    builder.addCase(createEmployer.rejected, (state, {payload: error}) => {
+    builder.addCase(createEmployer.rejected, (state, { payload: error }) => {
       state.createEmployerLoading = false;
       state.employerError = error || null;
     });
@@ -50,10 +50,13 @@ const employerSlice = createSlice({
     builder.addCase(getEmployersProfileInfo.pending, (state) => {
       state.employersProfileLoading = true;
     });
-    builder.addCase(getEmployersProfileInfo.fulfilled, (state, { payload: employersProfile }: PayloadAction<EmployerInfoApi>) => {
-      state.employersProfileLoading = false;
-      state.employersProfile = employersProfile;
-    });
+    builder.addCase(
+      getEmployersProfileInfo.fulfilled,
+      (state, { payload: employersProfile }: PayloadAction<EmployerInfoApi>) => {
+        state.employersProfileLoading = false;
+        state.employersProfile = employersProfile;
+      },
+    );
     builder.addCase(getEmployersProfileInfo.rejected, (state) => {
       state.employersProfileLoading = false;
     });

@@ -24,7 +24,6 @@ export const RegisterPage = () => {
     navigate('/');
   };
 
-
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -35,7 +34,7 @@ export const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5" sx={{mb:2}}>
+        <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
           Регистрация
         </Typography>
         <ToggleButtonGroup
@@ -61,8 +60,12 @@ export const RegisterPage = () => {
             },
           }}
         >
-          <ToggleButton value="applicant" sx={{ borderRadius: '30px 0 0 30px' }}>Поиск работы</ToggleButton>
-          <ToggleButton value="employer" sx={{ borderRadius: '0 30px 30px 0' }}>Поиск сотрудников</ToggleButton>
+          <ToggleButton value="applicant" sx={{ borderRadius: '30px 0 0 30px' }}>
+            Поиск работы
+          </ToggleButton>
+          <ToggleButton value="employer" sx={{ borderRadius: '0 30px 30px 0' }}>
+            Поиск сотрудников
+          </ToggleButton>
         </ToggleButtonGroup>
         {alignment === 'applicant' ? <UserRegisterForm /> : <EmployerRegisterForm />}
         <Grid sx={{ my: 3 }}>
@@ -82,4 +85,3 @@ export const RegisterPage = () => {
     </Container>
   );
 };
-

@@ -42,5 +42,4 @@ export const selectIsLoading = (state: RootState) => state.vacancyBlock.isLoadin
 export const selectBlock = (state: RootState) => state.vacancyBlock.block;
 export const selectisLoadingCard = (state: RootState) => state.vacancyBlock.block;
 
-
 export const vacancyBlockReducer = vacancyBlockSlice.reducer;

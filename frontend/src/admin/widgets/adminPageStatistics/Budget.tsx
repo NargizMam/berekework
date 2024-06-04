@@ -3,12 +3,10 @@ import Typography from '@mui/material/Typography';
 import { Grid, Paper } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
 
-
 export function Budget(): React.JSX.Element {
-
   return (
-    <Paper sx={{marginBottom: '30px', padding: '20px'}}>
-      <Typography color="text.secondary" variant="h6" marginBottom='20px'>
+    <Paper sx={{ marginBottom: '30px', padding: '20px' }}>
+      <Typography color="text.secondary" variant="h6" marginBottom="20px">
         Budget
       </Typography>
       <Grid>

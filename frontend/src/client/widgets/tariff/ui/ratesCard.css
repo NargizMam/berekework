@@ -1,5 +1,5 @@
 .rateCard {
-  background-color: #FFE585;
+  background-color: #ffe585;
   min-width: 340px;
   max-height: 720px;
   border-radius: 30px;
@@ -12,7 +12,7 @@
 }
 
 .rateCardTitle {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   line-height: 22px;
   font-weight: 600;
@@ -32,7 +32,7 @@
 }
 
 .rateCardText {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   font-size: 14px;
   line-height: 20px;
@@ -47,13 +47,13 @@
   }
 
   .cardBtnText {
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin-left: 5%;
     color: #000000;
   }
 
   .cardButton {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 40px;
     margin-top: auto;
     width: 120px;
@@ -74,7 +74,7 @@
   }
 
   .northEastIcon {
-    color: #292D32;
+    color: #292d32;
     position: relative;
     top: 12px;
     left: 14px;
@@ -114,7 +114,7 @@
   .cardBtnIcon {
     width: 50px;
     height: 50px;
-    background: #FFE585;
+    background: #ffe585;
     border-radius: 50%;
     display: flex;
     margin-left: auto;
@@ -122,4 +122,3 @@
     justify-content: center;
   }
 }
-

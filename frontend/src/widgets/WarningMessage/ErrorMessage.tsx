@@ -5,13 +5,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { openErrorMessage, selectShowErrorMessage } from './warningMessageSlice';
 
-
-
 interface Props {
   errorMessage: string;
 }
 
-const ErrorMessage: React.FC<Props> = ({errorMessage}) => {
+const ErrorMessage: React.FC<Props> = ({ errorMessage }) => {
   const dispatch = useAppDispatch();
   const showErrorMessage = useAppSelector(selectShowErrorMessage);
   return (
@@ -29,13 +27,8 @@ const ErrorMessage: React.FC<Props> = ({errorMessage}) => {
         }}
         message={<span id="message-id">{errorMessage}</span>}
         action={[
-          <IconButton
-            key="close"
-            aria-label="Close"
-            color="warning"
-            onClick={() => dispatch(openErrorMessage())}
-          >
-            <CloseIcon/>
+          <IconButton key="close" aria-label="Close" color="warning" onClick={() => dispatch(openErrorMessage())}>
+            <CloseIcon />
           </IconButton>,
         ]}
       />

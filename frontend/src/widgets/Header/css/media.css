@@ -57,12 +57,12 @@
 }
 
 @media screen and (min-width: 370px) {
-.login {
-  font-size: 15px;
-  padding: 0;
-}
+  .login {
+    font-size: 15px;
+    padding: 0;
+  }
 
-.login-close {
-  height: auto;
-}
+  .login-close {
+    height: auto;
+  }
 }

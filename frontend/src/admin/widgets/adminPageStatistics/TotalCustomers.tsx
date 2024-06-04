@@ -2,11 +2,9 @@ import Typography from '@mui/material/Typography';
 import { Grid, Paper } from '@mui/material';
 import { PieChart } from '@mui/x-charts';
 
-
 export function TotalCustomers() {
-
   return (
-    <Paper sx={{marginBottom: '30px', padding: '20px'}}>
+    <Paper sx={{ marginBottom: '30px', padding: '20px' }}>
       <Typography color="text.secondary" variant="h6" marginBottom="20px">
         Customers
       </Typography>
@@ -17,8 +15,8 @@ export function TotalCustomers() {
             series={[
               {
                 data: [
-                  {id: 0, value: 10, label: 'Employers'},
-                  {id: 1, value: 15, label: 'Applicants'},
+                  { id: 0, value: 10, label: 'Employers' },
+                  { id: 1, value: 15, label: 'Applicants' },
                 ],
               },
             ]}
@@ -32,8 +30,8 @@ export function TotalCustomers() {
             series={[
               {
                 data: [
-                  {id: 1, value: 30, label: 'Employers'},
-                  {id: 2, value: 25, label: 'Applicants'},
+                  { id: 1, value: 30, label: 'Employers' },
+                  { id: 2, value: 25, label: 'Applicants' },
                 ],
               },
             ]}
@@ -41,7 +39,6 @@ export function TotalCustomers() {
             height={200}
           />
         </Grid>
-
       </Grid>
     </Paper>
   );

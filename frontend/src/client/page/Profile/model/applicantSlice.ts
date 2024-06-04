@@ -1,12 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Applicant } from './types';
-import { activateApplicant, addApplicant, deleteApplicant, fetchApplicant, fetchApplicants } from '../api/applicantThunk';
+import {
+  activateApplicant,
+  addApplicant,
+  deleteApplicant,
+  fetchApplicant,
+  fetchApplicants,
+} from '../api/applicantThunk';
 import { RootState } from '../../../../app/store/store';
 
-
 interface ApplicantState {
-  items: Applicant[] ;
-  item: Applicant [];
+  items: Applicant[];
+  item: Applicant[];
   fetchAllLoading: boolean;
   fetchOneLoading: boolean;
   createLoading: boolean;
@@ -32,7 +37,7 @@ export const applicantSlice = createSlice({
     builder.addCase(fetchApplicants.pending, (state) => {
       state.fetchAllLoading = true;
     });
-    builder.addCase(fetchApplicants.fulfilled, (state, {payload: data}) => {
+    builder.addCase(fetchApplicants.fulfilled, (state, { payload: data }) => {
       state.fetchAllLoading = false;
       state.items = data;
     });
@@ -43,7 +48,7 @@ export const applicantSlice = createSlice({
     builder.addCase(fetchApplicant.pending, (state) => {
       state.fetchOneLoading = true;
     });
-    builder.addCase(fetchApplicant.fulfilled, (state, {payload: data}) => {
+    builder.addCase(fetchApplicant.fulfilled, (state, { payload: data }) => {
       state.fetchOneLoading = false;
       state.item = data;
     });
@@ -91,4 +96,3 @@ export const selectOneApplicantLoading = (state: RootState) => state.applicant.f
 export const selectApplicantCreating = (state: RootState) => state.applicant.createLoading;
 export const selectApplicantDeleting = (state: RootState) => state.applicant.deletedLoading;
 export const selectApplicantActivated = (state: RootState) => state.applicant.activatedLoading;
-

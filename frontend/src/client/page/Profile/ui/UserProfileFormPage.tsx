@@ -32,7 +32,7 @@ export const UserProfileFormPage = () => {
   };
 
   if (!profile) {
-    return <Navigate to='/login'/>;
+    return <Navigate to="/login" />;
   }
 
   return <ApplicantFullForm applicant={profile} onSubmit={onFormSubmit} loading={loading} />;

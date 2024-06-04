@@ -1,5 +1,5 @@
 .chooseBlock {
-  background: #FFE585;
+  background: #ffe585;
   border-radius: 5px;
   overflow: hidden;
   display: flex;
@@ -19,7 +19,7 @@
 }
 
 .button-link {
-  background: #FFFFFF;
+  background: #ffffff;
   color: #000000;
   border-radius: 20px;
   padding: 20px;

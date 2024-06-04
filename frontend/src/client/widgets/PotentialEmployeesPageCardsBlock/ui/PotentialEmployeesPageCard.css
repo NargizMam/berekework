@@ -4,9 +4,9 @@
   justify-content: space-between; /* Make sure the content and button are spaced out */
   box-sizing: border-box;
   flex-basis: calc(50% - 5px);
-  background: #E9E9E9;
+  background: #e9e9e9;
   border-radius: 30px;
-  color: #8E8E8E;
+  color: #8e8e8e;
   font-size: 16px;
   font-weight: 500;
   line-height: 1;
@@ -44,7 +44,7 @@
   align-items: center;
   width: 120px;
   height: 120px;
-  background: #FFFF;
+  background: #ffff;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -70,7 +70,7 @@
 }
 
 .PotentialEmployeesPageCard__age::before {
-  content: "";
+  content: '';
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -80,7 +80,7 @@
 }
 
 .PotentialEmployeesPageCard__location::before {
-  content: "";
+  content: '';
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -99,13 +99,13 @@
   font-weight: 600;
   line-height: 1;
   color: #000;
-  background: #FFF;
+  background: #fff;
   border-radius: 30px;
   border: 1px solid #fff;
   padding: 25px 0;
   width: 100%;
   margin-top: auto;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 @media (max-width: 980px) {

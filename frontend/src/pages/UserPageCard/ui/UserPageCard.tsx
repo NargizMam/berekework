@@ -61,8 +61,8 @@ const UserPageCard: React.FC<Props> = ({ data }) => {
     </div>
   );
 };
-        // <Typography
-        //   sx={{ ...UserPageCardStyle.subText, ...UserPageCardStyle.colorGray }}
-        //   className="UserPageCard__date"
-        // ></Typography>
+// <Typography
+//   sx={{ ...UserPageCardStyle.subText, ...UserPageCardStyle.colorGray }}
+//   className="UserPageCard__date"
+// ></Typography>
 export default UserPageCard;

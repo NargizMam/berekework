@@ -1,14 +1,9 @@
 .Main-cards__container {
-    box-sizing: border-box;
-    max-width: 1280px;
-    margin: 0 auto;
+  box-sizing: border-box;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .MainCards__SwiperSlide {
-    height: auto;
+  height: auto;
 }
-
-
-
-
-

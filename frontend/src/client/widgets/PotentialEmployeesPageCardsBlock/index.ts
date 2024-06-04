@@ -1,1 +1,1 @@
-export {PotentialEmployeesPageCardsBlock} from './ui/PotentialEmployeesPageCardsBlock';
+export { PotentialEmployeesPageCardsBlock } from './ui/PotentialEmployeesPageCardsBlock';

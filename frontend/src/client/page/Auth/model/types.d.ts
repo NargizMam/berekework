@@ -19,8 +19,8 @@ export interface GlobalError {
 
 export interface AuthResponse {
   message: string;
-  user: User | EmployerInfoApi;
-  employer: EmployerInfoApi;
+  user: User;
+  employer: EmployerAuth;
 }
 
 export interface User {
@@ -31,6 +31,12 @@ export interface User {
   avatar: string;
 }
 
+export interface EmployerAuth {
+  _id: string;
+  email: string;
+  token: string;
+  role: string;
+}
 
 export interface ValidationError {
   errors: {

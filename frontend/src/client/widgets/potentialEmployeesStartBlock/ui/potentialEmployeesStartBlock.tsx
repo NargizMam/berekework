@@ -5,7 +5,7 @@ interface StartBlock {
   primary: {
     img: {
       alt: string;
-      url: string
+      url: string;
     };
     title: string;
     text: string;
@@ -17,12 +17,12 @@ interface Props {
 }
 export const PotentialEmployeesStartBlock: React.FC<Props> = ({ slice }) => {
   return (
-    <div className='startBlock'>
-      <div className='textBlock'>
+    <div className="startBlock">
+      <div className="textBlock">
         <p className="startBlockTitle">{slice.primary.title}</p>
         <p className="startBlockText">{slice.primary.text}</p>
       </div>
-      <img className="startBlockImg" alt={slice.primary.img.alt} src={slice.primary.img.url}/>
+      <img className="startBlockImg" alt={slice.primary.img.alt} src={slice.primary.img.url} />
     </div>
   );
 };

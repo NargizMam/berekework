@@ -6,7 +6,7 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FileInput: React.FC<Props> = ({onChange, photo}) => {
+const FileInput: React.FC<Props> = ({ onChange, photo }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -27,23 +27,18 @@ const FileInput: React.FC<Props> = ({onChange, photo}) => {
 
   return (
     <>
-      <input
-        style={{display: 'none'}}
-        type="file"
-        name="photo"
-        onChange={onFileChange}
-        ref={inputRef}
-      />
+      <input style={{ display: 'none' }} type="file" name="photo" onChange={onFileChange} ref={inputRef} />
       <div className="photoFrame">
         {preview ? (
-          <img src={preview} alt="Preview" className="photo"/>
+          <img src={preview} alt="Preview" className="photo" />
+        ) : photo ? (
+          <img className="photo" src={`${API_URL}/${photo}`} alt="Photo" />
         ) : (
-          photo ?
-            (<img className="photo" src={`${API_URL}/${photo}`} alt="Photo"/>)
-            :
-            (<div className="photo"></div>)
+          <div className="photo"></div>
         )}
-        <button className="photoBtn" onClick={activateInput}>+</button>
+        <button className="photoBtn" onClick={activateInput}>
+          +
+        </button>
       </div>
     </>
   );
