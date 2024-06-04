@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button,Box Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import {
   selectEmployerLoading,
@@ -12,8 +11,6 @@ import {
 import './employerProfile.css';
 import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
-import { EmployerFormPage } from '../../../../admin/page/employerPanel';
-import { VacancyCard } from '../../../../feachers/vacancyCard';
 
 const EmployerProfile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,8 +18,8 @@ const EmployerProfile: React.FC = () => {
   const profile = useAppSelector(selectEmployersProfileInfo);
   const loading = useAppSelector(selectEmployerLoading);
   const navigate = useNavigate();
-  const apiURL = 'http://localhost:8000';
-  const image = apiURL + '/' + profile?.logo;
+  // const apiURL = 'http://localhost:8000';
+  // const image = apiURL + '/' + profile?.logo;
   const { id } = useParams();
 
   useEffect(() => {

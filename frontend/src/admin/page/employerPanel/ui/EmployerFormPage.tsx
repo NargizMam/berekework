@@ -1,13 +1,14 @@
-// import React, { ChangeEvent, FormEvent, useRef, useState, useEffect } from 'react';
-// import { Button, Grid, IconButton, InputAdornment, TextField } from '@mui/material';
-// import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-// import { createEmployer, updateEmployer } from '../api/employerThunk';
-// import { selectEmployerError, selectEmployersProfileInfo, selectEmployersProfileLoading } from '../model/employerSlice';
-// import { getExtension } from '../../../../feachers/checkExtensiion';
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
-// import { LoadingButton } from '@mui/lab';
+import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { Button, Grid, IconButton, InputAdornment, TextField } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { createEmployer, updateEmployer } from '../api/employerThunk';
+import { selectEmployerError, selectEmployersProfileLoading } from '../model/employerSlice';
+import { getExtension } from '../../../../feachers/checkExtensiion';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { LoadingButton } from '@mui/lab';
+import { EmployerInfoApi } from '../../../../types';
 // import { EmployerMutation } from '../model/types';
 //
 // export interface Props {
@@ -363,7 +364,6 @@
 //
 // export default EmployerFormPage;
 
-
 interface Props {
   initialProfile?: EmployerInfoApi | null;
   id?: string;
@@ -470,7 +470,6 @@ export const EmployerFormPage: React.FC<Props> = ({ initialProfile, id }) => {
     event.preventDefault();
   };
 
-export const EmployerFormPage = () => {
   return (
     <>
       <form
@@ -683,4 +682,3 @@ export const EmployerFormPage = () => {
     </>
   );
 };
-
