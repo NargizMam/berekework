@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import EmployerFormPage from '../../../../admin/page/employerPanel/ui/EmployerFormPage';
+import { EmployerFormPage } from '../../../../admin/page/employerPanel';
 
 const EmployerEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,8 +9,8 @@ const EmployerEdit = () => {
     <>
     {id &&
     <EmployerFormPage
-      id={id}
-      isEditing={isEditing}
+      // id={id}
+      // isEditing={isEditing}
     />}
     </>
 

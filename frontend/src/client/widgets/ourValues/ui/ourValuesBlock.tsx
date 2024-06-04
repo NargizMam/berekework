@@ -7,9 +7,16 @@ import 'swiper/css/pagination';
 import OurValuesBlockStyle from './ourValuesBlock-style';
 
 interface OurValues {
+  primary: {
+    valuestitle: Array<{
+      text: string;
+    }>
+  },
   items: {
-    title: string;
-    text: string;
+    cardtitle: Array<{
+      text: string;
+      type: string;
+    }>,
     icon: {
       alt: string;
       url: string;
@@ -27,11 +34,11 @@ const OurValuesBlock: React.FC<Props> = ({ slice }) => {
   return (
     <Box sx={OurValuesBlockStyle}>
       <Typography variant="h4" sx={OurValuesBlockStyle.ourValuesBlockTitle}>
-        Наши ценности
+        {slice.primary.valuestitle[0].text}
       </Typography>
       <Box sx={OurValuesBlockStyle.ourValuesCardBlock}>
         {slice.items.length === 1 ? (
-          <OurValuesCard title={slice.items[0].title} text={slice.items[0].text} icon={slice.items[0].icon} />
+          <OurValuesCard title={slice.items[0].cardtitle[0].text} text={slice.items[0].cardtitle[1].text} icon={slice.items[0].icon} />
         ) : (
           <Swiper
             className="OurValuesSwiper"
@@ -53,19 +60,19 @@ const OurValuesBlock: React.FC<Props> = ({ slice }) => {
             modules={[Pagination]}
           >
             {slice.items.map((item, index) => (
-              <SwiperSlide key={index} style={OurValuesBlockStyle.OurValuesSwiperSlide}>
-                <Box sx={OurValuesBlockStyle.ourValuesCard}>
-                  <Box sx={OurValuesBlockStyle.ourValuesImgFrame}>
-                    <img src={item.icon.url} alt={item.icon.alt} />
+                <SwiperSlide key={index} style={OurValuesBlockStyle.OurValuesSwiperSlide}>
+                  <Box sx={OurValuesBlockStyle.ourValuesCard}>
+                    <Box sx={OurValuesBlockStyle.ourValuesImgFrame}>
+                      <img src={item.icon.url} alt={item.icon.alt} />
+                    </Box>
+                    <Typography variant="h5" sx={OurValuesBlockStyle.ourValuesCardTitle}>
+                      {item.cardtitle[0].text}
+                    </Typography>
+                    <Typography variant="body1" sx={OurValuesBlockStyle.ourValuesCardText}>
+                      {item.cardtitle[1].text}
+                    </Typography>
                   </Box>
-                  <Typography variant="h5" sx={OurValuesBlockStyle.ourValuesCardTitle}>
-                    {item.title}
-                  </Typography>
-                  <Typography variant="body1" sx={OurValuesBlockStyle.ourValuesCardText}>
-                    {item.text}
-                  </Typography>
-                </Box>
-              </SwiperSlide>
+                </SwiperSlide>
             ))}
           </Swiper>
         )}
