@@ -26,7 +26,7 @@ interface Props {
 }
 
 
-const ChooseSpecialistBlock: React.FC<Props> = ({slice}) => {
+export const ChooseSpecialistBlock: React.FC<Props> = ({slice}) => {
   // const dispatch = useAppDispatch();
   // const chooseBlock = useSelector(selectChooseBlock);
   //
@@ -47,5 +47,3 @@ const ChooseSpecialistBlock: React.FC<Props> = ({slice}) => {
     </div>
   );
 };
-
-export default ChooseSpecialistBlock;

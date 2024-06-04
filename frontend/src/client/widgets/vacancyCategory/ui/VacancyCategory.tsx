@@ -11,11 +11,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { vacancyFetchCategory, vacancyGetByCategory } from '../../../../feachers/vacancy/vacancyThunk';
 import {
   selectClientVacancyCategory,
   selectClientVacancyCategoryFetching,
-} from '../../../page/VacancyPage/model/vacancySlice';
-import { vacancyFetchCategory, vacancyGetByCategory } from '../../../page/VacancyPage/api/vacancyThunks';
+} from '../../../../feachers/vacancy/vacancySlice';
 
 interface Props {
   toggleCategory: (show: boolean) => void;

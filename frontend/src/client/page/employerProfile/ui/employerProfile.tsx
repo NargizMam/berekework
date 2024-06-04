@@ -1,8 +1,7 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
-// import { VacancyCard } from '../../../../admin/widgets/vacancyCard';
 import { useParams } from 'react-router-dom';
 import {
   selectEmployerLoading,
@@ -12,6 +11,7 @@ import './employerProfile.css';
 import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 import { EmployerFormPage } from '../../../../admin/page/employerPanel';
+import { VacancyCard } from '../../../../feachers/vacancyCard';
 
 const EmployerProfile = () => {
   const dispatch = useAppDispatch();
@@ -67,21 +67,31 @@ const EmployerProfile = () => {
           <p className="companyInfo">
             <strong>Контакты:</strong> {profile.contacts}
           </p>
-          <a className="companyLink" href={profile.document} download>
-            Скачать документы
-          </a>
+          {/*<a className="companyLink" href={profile.document} download>*/}
+          {/*  Скачать документы*/}
+          {/*</a>*/}
           <Grid mt={6} mb={6}>
             <Typography mb={2} variant="h5">
               {' '}
               Ваши вакансии:
             </Typography>
-            {profile.vacancies.length > 0 ? (
-              profile.vacancies.map((vacancy) => (
-                <Grid mb={2}>{/*<VacancyCard key={vacancy._id} data={vacancy}/>*/}</Grid>
-              ))
-            ) : (
-              <h6>Добавьте свои вакансии</h6>
-            )}
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '15px 15px',
+            }}>
+              {profile.vacancies.length > 0 ? (
+                profile.vacancies.map((vacancy) => (
+                  <VacancyCard
+                    key={vacancy._id}
+                    data={vacancy}
+                    visible={true}
+                  />
+                ))
+              ) : (
+                <h6>Добавьте свои вакансии</h6>
+              )}
+            </Box>
           </Grid>
         </Grid>
       )}

@@ -3,8 +3,8 @@ import OurValuesCard from './ourValuesCard';
 import { Box, Typography } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import 'swiper/css/pagination';
 import OurValuesBlockStyle from './ourValuesBlock-style';
+import 'swiper/css/pagination';
 
 interface OurValues {
   items: {
@@ -21,7 +21,7 @@ interface Props {
   slice: OurValues;
 }
 
-const OurValuesBlock: React.FC<Props> = ({ slice }) => {
+export const OurValuesBlock: React.FC<Props> = ({ slice }) => {
   const slidesPerView = slice.items.length < 3 ? slice.items.length : 3;
 
   return (
@@ -73,5 +73,3 @@ const OurValuesBlock: React.FC<Props> = ({ slice }) => {
     </Box>
   );
 };
-
-export default OurValuesBlock;

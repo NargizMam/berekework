@@ -1,3 +1,5 @@
+import { Employer } from '../../../../admin/page/employerPanel/model/types';
+
 export interface ICreateVacancyForm {
   vacancyTitle: string;
   aboutVacancy: string;
@@ -42,7 +44,7 @@ export interface Vacancy {
   };
   education: srring;
   employmentType: string;
-  employer: string | undefined;
+  employer: Employer;
 }
 
 export interface VacancyWithId {

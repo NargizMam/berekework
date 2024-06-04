@@ -47,7 +47,9 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
       filter = { user: user._id };
     }
 
-    const response = await Application.find(filter).populate('vacancy').sort({ createdAt: -1 });
+    const response = await Application.find(filter)
+      .populate({ path: 'vacancy', populate: { path: 'employer' } })
+      .sort({ createdAt: -1 });
     return res.send(response);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {

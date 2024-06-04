@@ -1,31 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import VacancyCardStyle from './VacancyCard-style';
 import './VacancyCard.css';
-
-export interface VacancyCardApiData {
-  _id: string;
-  city: string;
-  vacancyTitle: string;
-  company: string;
-  logo: string;
-  salary: {
-    minSalary: number;
-    maxSalary: number;
-  };
-  aboutVacancy?: string;
-  responsibilities?: string;
-  workConditions?: string;
-  country?: string;
-  fieldOfWork?: string;
-  age?: {
-    minAge: number;
-    maxAge: number;
-  };
-  education?: string;
-  employmentType?: string;
-  employer?: string | undefined;
-}
+import { API_URL } from '../../../app/constants/links';
+import { VacancyCardApiData } from '../../../app/types';
 
 interface Props {
   data: VacancyCardApiData;
@@ -33,9 +12,10 @@ interface Props {
 }
 
 export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
-  const image = data.country ? (
+  console.log(data);
+  const image = data.employer.logo ? (
     <Box sx={VacancyCardStyle.imageWrapper}>
-      <img src={data.logo} alt={data.vacancyTitle} />
+      <img src={API_URL + '/' + data.employer.logo} alt={data.vacancyTitle} />
     </Box>
   ) : null;
   let salary = 'з/п не указана';
@@ -47,18 +27,29 @@ export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
   } else if (data.salary?.maxSalary) {
     salary = `до ${data.salary.maxSalary} сом`;
   }
+
+  const LinkItem = styled(Link)({
+    color: 'inherit',
+    textDecoration: 'none',
+    '&:hover': {
+      color: 'inherit',
+    },
+  });
+
   return (
-    <div className="VacancyCard" style={{ display: visible ? 'flex' : 'none' }}>
-      {image}
-      <Typography variant="h5" sx={VacancyCardStyle.title}>
-        {data.vacancyTitle}
-      </Typography>
-      <Typography sx={VacancyCardStyle.subTitle}>
-        {data.company}, {data.city}
-      </Typography>
-      <Typography variant="h5" sx={VacancyCardStyle.salary}>
-        {salary}
-      </Typography>
-    </div>
+    <LinkItem to={`/vacancy/` + data._id}>
+      <div className="VacancyCard" style={{ display: visible ? 'flex' : 'none' }}>
+        {image}
+        <Typography variant="h5" sx={VacancyCardStyle.title}>
+          {data.vacancyTitle}
+        </Typography>
+        <Typography sx={VacancyCardStyle.subTitle}>
+          {data.employer.companyName}, {data.city}
+        </Typography>
+        <Typography variant="h5" sx={VacancyCardStyle.salary}>
+          {salary}
+        </Typography>
+      </div>
+    </LinkItem>
   );
 };
