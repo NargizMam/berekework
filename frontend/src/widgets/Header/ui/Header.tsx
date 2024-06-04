@@ -49,7 +49,7 @@ const Header = () => {
       <ul className="main-mav-web">
         {headerPrismicResponse?.body[0].items &&
           headerPrismicResponse.body[0].items.map((item, index) => {
-            if (user) {
+            if (user === null && user?.role === 'user') {
               if (item.name_link === 'Для работодателей') {
                 return null;
               }
@@ -89,7 +89,7 @@ const Header = () => {
           <ul className="main-nav-list">
             {headerPrismicResponse?.body[0].items &&
               headerPrismicResponse.body[0].items.map((item, index) => {
-                if (user) {
+                if (user === null && user?.role === 'user') {
                   if (item.name_link === 'Для работодателей') {
                     return null;
                   }
