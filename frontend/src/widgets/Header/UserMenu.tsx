@@ -9,7 +9,7 @@ import { useAppDispatch } from '../../app/store/hooks';
 import { apiURL } from '../../constants';
 
 interface Props {
-  user: User;
+  user: User | EmployerInfoApi;
 }
 
 const UserMenu: React.FC<Props> = ({ user }) => {

@@ -1,3 +1,5 @@
+import { EmployerInfoApi } from '../../../../types';
+
 export interface RegisterMutation {
   name: string;
   surname: string;
@@ -18,6 +20,7 @@ export interface GlobalError {
 export interface AuthResponse {
   message: string;
   user: User;
+  employer: EmployerInfoApi;
 }
 
 export interface User {

@@ -24,6 +24,7 @@ import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
 import VacanciesPage from '../client/page/VacanciesPage/VacanciesPage';
+import EmployerEdit from '../client/page/employerProfile/ui/EmployerEdit';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -75,6 +76,7 @@ const App = () => {
             <Route path="/vacancy" element={<VacanciesPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
             <Route path="/employersProfile/:id" element={<EmployerProfile />} />
+            <Route path="/edit-employer/:id" element={<EmployerEdit/>} />
             <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
             <Route path="/newApplicant" element={<ApplicantSettings />} />
             <Route path="/applicantProfile" element={<ApplicantProfile />} />

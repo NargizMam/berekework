@@ -35,12 +35,23 @@ export interface EmployerInfoApi{
   address: string;
   contacts: string;
   logo: File |string | null;
-  document: File |string | null;
+  document: string | null;
   foundationYear: string;
   vacancies: VacancyCardApiData[];
   createdAt: string;
   updatedAt: string;
   isPublished: Boolean;
+}
+export interface EmployerProfileMutation {
+  _id: string;
+  companyName: string;
+  industry: string;
+  description: string;
+  address: string;
+  contacts: string;
+  logo: File |string | null;
+  document: string | null;
+  foundationYear: string;
 }
 export interface Moderator{
   name: string;

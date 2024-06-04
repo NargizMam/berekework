@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../../app/store/hooks';
-import { selectUser } from '../../../client/page/Auth/model/AuthSlice';
+import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import UserMenu from '../UserMenu';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { Typography } from '@mui/material';
@@ -34,8 +34,11 @@ interface HeaderProps {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useAppSelector(selectUser);
+  const employer = useAppSelector(selectEmployer)
   const loginButtonStyle = `login ${isMenuOpen ? 'login-open' : 'login-close'}`;
   const [document] = useSinglePrismicDocument('header');
+
+  console.log(employer);
 
   const headerPrismicResponse: HeaderProps | undefined = document?.data as HeaderProps;
 
@@ -86,12 +89,12 @@ const Header = () => {
                 ))}
             </ul>
           </nav>
-          {!user ? (
+          {!user && !employer ? (
             <NavLink to="/login" className={loginButtonStyle}>
               Войти
             </NavLink>
           ) : (
-            <UserMenu user={user} />
+            <UserMenu user={user || employer} />
           )}
         </div>
     </div>

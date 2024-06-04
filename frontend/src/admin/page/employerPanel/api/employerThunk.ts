@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../../../app/axiosApi';
 import { Employer, EmployerMutation } from '../model/types';
-import { EmployerInfoApi, ValidationError } from '../../../../types';
+import { EmployerInfoApi, EmployerProfileMutation, ValidationError } from '../../../../types';
 import { isAxiosError } from 'axios';
 
 export const createEmployer = createAsyncThunk<
@@ -39,17 +39,13 @@ export const createEmployer = createAsyncThunk<
 export const updateEmployer = createAsyncThunk<
   void,
   { id: string,
-    data: EmployerMutation },
+    data: EmployerProfileMutation },
   {
     rejectValue: ValidationError;
   }
 >('employer/update', async ({ id, data }, { rejectWithValue }) => {
   try {
     const formData = new FormData();
-    formData.append('email', data.email);
-    if (data.password) {
-      formData.append('password', data.password);
-    }
     formData.append('companyName', data.companyName);
     formData.append('industry', data.industry);
     formData.append('description', data.description);

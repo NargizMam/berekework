@@ -2,9 +2,11 @@ import { AuthResponse, GlobalError, User, ValidationError } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { googleAuth, login, register, registerEmployer } from '../api/AuthThunk';
 import { RootState } from '../../../../app/store/store';
+import { EmployerInfoApi } from '../../../../types';
 
 interface AuthState {
   user: User | null;
+  employer: EmployerInfoApi | null;
   registerLoading: boolean;
   loginLoading: boolean;
   registerError: ValidationError | null;
@@ -13,6 +15,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
+  employer: null,
   registerLoading: false,
   registerError: null,
   loginLoading: false,
@@ -44,7 +47,8 @@ export const authSlice = createSlice({
     });
     builder.addCase(registerEmployer.fulfilled, (state, {payload: data}: PayloadAction<AuthResponse>) => {
       state.registerLoading = false;
-      state.user = data.user;
+      state.employer = data.employer;
+      console.log(data);
     });
     builder.addCase(registerEmployer.rejected, (state, { payload: error }) => {
       state.registerLoading = false;
@@ -80,6 +84,7 @@ export const authReducer = authSlice.reducer;
 export const {unsetUser} = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
+export const selectEmployer = (state: RootState) => state.auth.employer;
 export const selectRegisterLoading = (state: RootState) => state.auth.registerLoading;
 export const selectRegisterError = (state: RootState) => state.auth.registerError;
 export const selectLoginLoading = (state: RootState) => state.auth.loginLoading;
