@@ -12,6 +12,7 @@ import { moderatorsReducer } from '../../admin/page/moderatorsPanel/model/modera
 import { chooseBlockReducer } from '../../client/widgets/specialistBlock/model/chooseBlockSlice';
 import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessageSlice';
 import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
+import { vacancyClientReducer } from '../../client/page/VacancyPage/model/vacancySlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   employerAdmin: employerReducer,
   warningMessage: warningMessageReducer,
   createVacancyForm: createVacancyFormReducer,
+  vacancyClient: vacancyClientReducer,
 });
 
 export const store = configureStore({

@@ -18,12 +18,12 @@ import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import ApplicantSettings from '../client/page/Applicant/ui/page/ApplicantSettings';
 import ApplicantProfile from '../client/page/Applicant/ui/page/ApplicantProfile';
 import ApplicantRefactor from '../client/page/Applicant/ui/page/ApplicantRefactor';
-import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
+import { EmployerPanelPage } from '../admin/page/employerPanel';
 import { PotentialEmployeesPage } from '../client/page/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
 import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
-import VacanciesPage from '../client/page/VacanciesPage/VacanciesPage';
+import { VacancyPageClient } from '../client/page/VacancyPage';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -42,7 +42,7 @@ const App = () => {
             }
           />
           <Route path="/employers" element={<EmployerPanelPage />} />
-          <Route path="/employers-submit" element={<EmployerFormPage />} />
+          {/*<Route path="/employers-submit" element={<EmployerFormPage />} />*/}
           <Route path="/vacancy" element={<VacancyPage />} />
           <Route path="/users" element={<UserPanelPage />} />
         </Routes>
@@ -72,7 +72,7 @@ const App = () => {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/users" element={<UserPanelPage />} />
-            <Route path="/vacancy" element={<VacanciesPage />} />
+            <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/about-us" element={<AboutUsPage />} />
             <Route path="/employersProfile/:id" element={<EmployerProfile />} />
             <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
@@ -80,9 +80,9 @@ const App = () => {
             <Route path="/applicantProfile" element={<ApplicantProfile />} />
             <Route path="/applicantRefactor" element={<ApplicantRefactor />} />
             <Route path="/for-employer" element={<ForEmployerPage />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/news/:uid" element={<NewsPage />} />
             <Route path="/user/:id" element={<EmployeeProfile />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </ClientLayout>
       )}
