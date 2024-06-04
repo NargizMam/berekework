@@ -1,9 +1,10 @@
 import React from 'react';
 import OurValuesCard from './ourValuesCard';
+import { Box, Typography } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css/pagination';
-import './ourValues.css';
+import OurValuesBlockStyle from './ourValuesBlock-style';
 
 interface OurValues {
   items: {
@@ -24,9 +25,11 @@ export const OurValuesBlock: React.FC<Props> = ({ slice }) => {
   const slidesPerView = slice.items.length < 3 ? slice.items.length : 3;
 
   return (
-    <div>
-      <p className="ourValuesBlockTitle">Наши ценности</p>
-      <div className="ourValuesCardBlock">
+    <Box sx={OurValuesBlockStyle}>
+      <Typography variant="h4" sx={OurValuesBlockStyle.ourValuesBlockTitle}>
+        Наши ценности
+      </Typography>
+      <Box sx={OurValuesBlockStyle.ourValuesCardBlock}>
         {slice.items.length === 1 ? (
           <OurValuesCard title={slice.items[0].title} text={slice.items[0].text} icon={slice.items[0].icon} />
         ) : (
@@ -50,13 +53,23 @@ export const OurValuesBlock: React.FC<Props> = ({ slice }) => {
             modules={[Pagination]}
           >
             {slice.items.map((item, index) => (
-              <SwiperSlide className="OurValuesSwiperSlide" key={index}>
-                <OurValuesCard title={item.title} text={item.text} icon={item.icon} />
+              <SwiperSlide key={index} style={OurValuesBlockStyle.OurValuesSwiperSlide}>
+                <Box sx={OurValuesBlockStyle.ourValuesCard}>
+                  <Box sx={OurValuesBlockStyle.ourValuesImgFrame}>
+                    <img src={item.icon.url} alt={item.icon.alt} />
+                  </Box>
+                  <Typography variant="h5" sx={OurValuesBlockStyle.ourValuesCardTitle}>
+                    {item.title}
+                  </Typography>
+                  <Typography variant="body1" sx={OurValuesBlockStyle.ourValuesCardText}>
+                    {item.text}
+                  </Typography>
+                </Box>
               </SwiperSlide>
             ))}
           </Swiper>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

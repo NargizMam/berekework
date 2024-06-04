@@ -8,13 +8,14 @@ import { Traffic } from '../../../widgets/adminPageStatistics/Traffic';
 export const AdminMainPage = () => {
   return (
     <>
-      <Typography sx={{ margin: 2 }} variant="h4">Общая статистическая информация</Typography>
+      <Typography sx={{ margin: 2 }} variant="h4">
+        Общая статистическая информация
+      </Typography>
       <Budget />
       <TotalCustomers />
       <TasksProgress />
       <TotalProfit />
       <Traffic />
     </>
-
   );
 };

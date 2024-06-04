@@ -34,8 +34,10 @@ export const LastNewsCards: React.FC<Props> = ({uid}) => {
               </div>
             </div>
             <div className="lastNewsDateTimeLink">
-              <p className="cardDateText"><strong>Дата: </strong>{formattedDate}</p>
-              <p className="cardDateText"><strong>Время:</strong> {formattedTime}</p>
+              <div className='dates'>
+                <p className="cardDateText"><strong>Дата: </strong>{formattedDate}</p>
+                <p className="cardDateText"><strong>Время:</strong> {formattedTime}</p>
+              </div>
               <NavLink className="cardBtnLink" to={`news/${uid}`}><ArrowOutwardIcon/></NavLink>
             </div>
           </>

@@ -17,7 +17,6 @@ export const VacancyBlock = () => {
   const isLoading = useAppSelector(selectIsLoading);
   const isLoadingCard = useAppSelector(selectisLoadingCard);
   let render;
-
   useEffect(() => {
     dispatch(getVacancyBlock()).unwrap();
     dispatch(getVacancyCard()).unwrap();
