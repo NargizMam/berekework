@@ -1,12 +1,17 @@
 import { Typography } from '@mui/material';
 import React, { useState } from 'react';
-import EmployerCard, { EmployerCardApiData } from '../../../feachers/employerCard/ui/EmployerCard';
 import './EmployerBlock.css';
-import EmployerBlockStyle from './EmployerBlock-style';
+import EmployerCard from '../../../feachers/employerCard/ui/EmployerCard';
 
 export interface EmployerBlockApiData {
-  title: { text: string }[];
-  body:  EmployerCardApiData[];
+  primary: {
+    empltitle: { text: string }[];
+  },
+  items: {
+    emplinfo: { type: string; text: string }[];
+    image: { url: string };
+    id: string;
+  }[];
 }
 
 interface Props {
@@ -14,29 +19,19 @@ interface Props {
 }
 
 const EmployerBlock: React.FC<Props> = ({ slice }) => {
+  console.log(slice);
   const [currentRow, setCurrentRow] = useState(5);
   const [currentWrap, setCurrentWrap] = useState(false);
-  let button;
-  console.log(slice);
 
   const showMore = () => {
     setCurrentRow((prev) => prev + 5);
     setCurrentWrap(true);
   };
 
-  if (slice?.body.length > 5) {
-    button = (
-      <div className="EmployerBlock__buttonWrapper">
-        <button className="EmployerBlock__button" onClick={showMore}>
-          <Typography sx={EmployerBlockStyle.button}>Смотреть еще</Typography>
-        </button>
-      </div>
-    );
-  }
   return (
     <>
       <div>
-        <Typography sx={EmployerBlockStyle.title}>{slice?.title[0].text}</Typography>
+        <Typography variant="h3" sx={{ mb: 5, fontWeight: 'bold'}}>{slice?.primary.empltitle[0].text}</Typography>
       </div>
       <div
         className="EmployerBlock__flex"
@@ -44,11 +39,17 @@ const EmployerBlock: React.FC<Props> = ({ slice }) => {
           flexWrap: currentWrap ? 'wrap' : 'nowrap',
         }}
       >
-        {slice.body.map((data, index) => (
-          <EmployerCard key={data.id} data={data} viseble={index >= currentRow ? false : true} />
+        {slice.items.slice(0, currentRow).map((empl) => (
+          <EmployerCard key={empl.id} data={empl} />
         ))}
       </div>
-      {button}
+      {slice.items.length > currentRow && (
+        <div className="EmployerBlock__buttonWrapper">
+          <button className="EmployerBlock__button" onClick={showMore}>
+            <Typography>Смотреть еще</Typography>
+          </button>
+        </div>
+      )}
     </>
   );
 };

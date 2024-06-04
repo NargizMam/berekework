@@ -2,23 +2,19 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 
 interface InfoItem {
-  infodescription: Array<{
+  aboutusdescription: Array<{
     type: string;
     text: string;
     spans: any[];
   }>;
-  infodescriptiontitle: Array<{
-    type: string;
-    text: string;
-    spans: any[];
-  }>;
+
 }
 
 interface AboutUsInfoProps {
   id: string;
   items: InfoItem[];
   primary: {
-    infotitle: Array<{
+    aboutustitle: Array<{
       type: string;
       text: string;
       spans: any[];
@@ -33,7 +29,7 @@ interface Props {
 const AboutUsBlock: React.FC<Props> = ({ slice }) => {
   return (
     <Box key={slice.id} sx={{ marginBottom: { xs: '7%', md: '161px' }, marginTop: { xs: '7%', md: '180px' } }}>
-      {slice.primary.infotitle && slice.primary.infotitle[0] && (
+      {slice.primary.aboutustitle && slice.primary.aboutustitle[0] && (
         <Typography
           variant="h4"
           sx={{
@@ -44,13 +40,13 @@ const AboutUsBlock: React.FC<Props> = ({ slice }) => {
             marginBottom: { xs: '7%', md: '60px' },
           }}
         >
-          {slice.primary.infotitle[0].text}
+          {slice.primary.aboutustitle[0].text}
         </Typography>
       )}
 
       {slice.items.map((item, index) => (
         <Box key={index} sx={{ marginBottom: { xs: '7%', md: '40px' } }}>
-          {item.infodescription && item.infodescription[0] && (
+          {item.aboutusdescription && item.aboutusdescription[0] && (
             <Typography
               component="span"
               variant="body1"
@@ -61,7 +57,7 @@ const AboutUsBlock: React.FC<Props> = ({ slice }) => {
                 lineHeight: 1.44,
               }}
             >
-              {item.infodescriptiontitle && item.infodescriptiontitle[0] && (
+              {item.aboutusdescription && item.aboutusdescription[0] && (
                 <Typography
                   component="span"
                   variant="body1"
@@ -73,17 +69,17 @@ const AboutUsBlock: React.FC<Props> = ({ slice }) => {
                     lineHeight: 1.1,
                   }}
                 >
-                  {item.infodescriptiontitle[0].text}{' '}
+                  {item.aboutusdescription[0].text}{' '}
                 </Typography>
               )}
               {index === 0 ? (
                 <Typography component="span" variant="body1">
-                  {item.infodescription[0].text}
+                  {item.aboutusdescription[1].text}
                 </Typography>
               ) : (
                 <Box component="span" sx={{ display: 'block', marginTop: '10px' }}>
                   <Typography component="span" variant="body1">
-                    {item.infodescription[0].text}
+                    {item.aboutusdescription[1].text}
                   </Typography>
                 </Box>
               )}
