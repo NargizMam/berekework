@@ -47,36 +47,28 @@ const MainNavAdmin = (): React.JSX.Element => {
   }, [isMobileScreen]);
 
   return (
-    <Box component="header" display='flex' position="relative">
+    <Box component="header" display="flex" position="relative">
       <Stack
         direction="row"
         spacing={2}
-        sx={{alignItems: 'center', justifyContent: 'flex-start', minHeight: '64px', px: 2}}
+        sx={{ alignItems: 'center', justifyContent: 'flex-start', minHeight: '64px', px: 2 }}
       >
         {isMobileScreen && (
-          <IconButton
-            onClick={handleNavToggle}
-            sx={{display: {lg: 'none'}}}
-          >
-            <ListIcon/>
+          <IconButton onClick={handleNavToggle} sx={{ display: { lg: 'none' } }}>
+            <ListIcon />
           </IconButton>
         )}
-
       </Stack>
       {isMobileScreen ? (
-        <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)}/>
+        <SideNavAdmin open={openNav} onClose={() => setOpenNav(false)} />
       ) : (
-        <SideNavAdmin open={true}/>
+        <SideNavAdmin open={true} />
       )}
-      <Stack
-        sx={{alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1}}
-        direction="row"
-        spacing={5}
-      >
+      <Stack sx={{ alignItems: 'center', justifyContent: 'flex-end', flexGrow: 1 }} direction="row" spacing={5}>
         <a href="/">
-          <img src={logo} alt="logo"/>
+          <img src={logo} alt="logo" />
         </a>
-        <Avatar src="/assets/avatar.png" sx={{cursor: 'pointer'}} onClick={handleClickAvatar} />
+        <Avatar src="/assets/avatar.png" sx={{ cursor: 'pointer' }} onClick={handleClickAvatar} />
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu} keepMounted>
           {user ? (
             <MenuItem onClick={handleLogout}>Logout</MenuItem>

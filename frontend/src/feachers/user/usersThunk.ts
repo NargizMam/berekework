@@ -31,7 +31,7 @@ export const changeProfile = createAsyncThunk<void, ProfileChange>(
       }
     });
     return axiosApi.patch(userId ? `applicants?userId=${userId}` : '/applicants', formData);
-  }
+  },
 );
 
 export const deleteUser = createAsyncThunk<void, string>('users/delete', async (id) => {

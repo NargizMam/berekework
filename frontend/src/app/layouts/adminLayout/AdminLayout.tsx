@@ -8,7 +8,6 @@ interface LayoutProps {
 }
 
 const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
-
   return (
     <>
       <Container
@@ -16,19 +15,18 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
-          padding: '20px'
+          padding: '20px',
         }}
       >
-        <MainNavAdmin/>
+        <MainNavAdmin />
         <main>
           <Container>
             {children}
-            <Outlet/>
+            <Outlet />
           </Container>
         </main>
       </Container>
     </>
   );
-
 };
 export default AdminLayout;

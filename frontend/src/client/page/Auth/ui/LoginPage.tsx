@@ -11,7 +11,7 @@ import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 const initialState = {
   email: '',
   password: '',
-}
+};
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,6 @@ export const LoginPage = () => {
   const error = useAppSelector(selectLoginError);
   const loading = useAppSelector(selectLoginLoading);
   const [state, setState] = useState<LoginMutation>(initialState);
-
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -41,11 +40,11 @@ export const LoginPage = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ mt: 5}}>
-        <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-          Bereke work
-        </Typography>
-      <Grid >
+    <Container component="main" maxWidth="xs" sx={{ mt: 5 }}>
+      <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+        Bereke work
+      </Typography>
+      <Grid>
         <GoogleLogin
           onSuccess={(credentialResponse: CredentialResponse) => {
             if (credentialResponse.credential) {
@@ -58,62 +57,62 @@ export const LoginPage = () => {
           useOneTap
         />
       </Grid>
-        {error && (
-          <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
-            {error.error}
-          </Alert>
-        )}
-        <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3, width: '100%' }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="E-mail"
-                name="email"
-                autoComplete="current-username"
-                value={state.email}
-                onChange={inputChangeHandler}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: '30px',
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="password"
-                label="Пароль"
-                type="password"
-                value={state.password}
-                onChange={inputChangeHandler}
-                autoComplete="current-password"
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: '30px',
-                  },
-                }}
-              />
-            </Grid>
+      {error && (
+        <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
+          {error.error}
+        </Alert>
+      )}
+      <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3, width: '100%' }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="E-mail"
+              name="email"
+              autoComplete="current-username"
+              value={state.email}
+              onChange={inputChangeHandler}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '30px',
+                },
+              }}
+            />
           </Grid>
-          <LoadingButton
-            loading={loading}
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: '#FFE585', color: 'black', borderRadius: '30px', p: 1.5 }}
-          >
-            Войти
-          </LoadingButton>
-          <Grid container justifyContent="flex-end" sx={{ my: 3}}>
-            <Grid item>
-              <Link component={RouterLink} to="/register" variant="body2" sx={{ color: '#0866FF'}}>
-                Зарегистрироваться
-              </Link>
-            </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              name="password"
+              label="Пароль"
+              type="password"
+              value={state.password}
+              onChange={inputChangeHandler}
+              autoComplete="current-password"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '30px',
+                },
+              }}
+            />
           </Grid>
-        </Box>
+        </Grid>
+        <LoadingButton
+          loading={loading}
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2, backgroundColor: '#FFE585', color: 'black', borderRadius: '30px', p: 1.5 }}
+        >
+          Войти
+        </LoadingButton>
+        <Grid container justifyContent="flex-end" sx={{ my: 3 }}>
+          <Grid item>
+            <Link component={RouterLink} to="/register" variant="body2" sx={{ color: '#0866FF' }}>
+              Зарегистрироваться
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
     </Container>
   );
 };

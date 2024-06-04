@@ -17,5 +17,4 @@ const VacancyBlockStyle = {
   },
 };
 
-
 export default VacancyBlockStyle;

@@ -21,7 +21,6 @@ export interface TitleBlockApiData {
   };
 }
 
-
 interface Props {
   slice: TitleBlockApiData;
 }

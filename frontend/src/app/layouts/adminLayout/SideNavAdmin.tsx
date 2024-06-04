@@ -71,14 +71,14 @@ export const SideNavAdmin: React.FC<SideNavProps> = ({ open, onClose }) => {
                 }}
               >
                 <ListItemIcon>
-                  <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }}/>
+                  <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }} />
                 </ListItemIcon>
                 <ListItemText primary={sideLink.value} sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
               </ListItemButton>
             </ListItem>
           ))}
 
-          {user?.role === 'superadmin' &&
+          {user?.role === 'superadmin' && (
             <ListItem disablePadding>
               <ListItemButton
                 component={Link}
@@ -89,12 +89,12 @@ export const SideNavAdmin: React.FC<SideNavProps> = ({ open, onClose }) => {
                 }}
               >
                 <ListItemIcon>
-                  <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }}/>
+                  <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }} />
                 </ListItemIcon>
-                <ListItemText primary='Moderators' sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
+                <ListItemText primary="Moderators" sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
               </ListItemButton>
             </ListItem>
-          }
+          )}
         </List>
       </Box>
       <Divider sx={{ borderColor: '#000' }} />

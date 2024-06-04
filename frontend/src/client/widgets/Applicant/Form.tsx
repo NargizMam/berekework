@@ -7,20 +7,31 @@ import { UserMutation } from '../../page/Profile/model/types';
 interface Props {
   state: UserMutation;
   submitFormHandler: (e: React.FormEvent) => void;
-  inputChangeHandler: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
+  inputChangeHandler: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => void;
   addField: () => void;
   fields: ReactNode[];
   loading: boolean;
 }
 
-const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, inputChangeHandler, addField}) => {
+const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inputChangeHandler, addField }) => {
   return (
     <div className="applicantFormContainer">
-      <form style={{display: "flex", flexDirection: 'column', alignItems: 'center'}} autoComplete="off" onSubmit={submitFormHandler}>
-        <div className='formContainer'>
-          <div className='inputContainer'>
-            <Grid item xs >
-              <label className="labelForField" htmlFor="firstName">Имя</label>
+      <form
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        autoComplete="off"
+        onSubmit={submitFormHandler}
+      >
+        <div className="formContainer">
+          <div className="inputContainer">
+            <Grid item xs>
+              <label className="labelForField" htmlFor="firstName">
+                Имя
+              </label>
               <input
                 className="field"
                 id="firstName"
@@ -31,7 +42,9 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
               />
             </Grid>
             <Grid item xs>
-              <label className="labelForField" htmlFor="surname">Фамилия</label>
+              <label className="labelForField" htmlFor="surname">
+                Фамилия
+              </label>
               <input
                 className="field"
                 id="surname"
@@ -57,7 +70,9 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
           {/*пол и возраст*/}
           <div className="inputContainer">
             <Grid item xs={7}>
-              <label className="labelForField" htmlFor="sex">Пол</label>
+              <label className="labelForField" htmlFor="sex">
+                Пол
+              </label>
               <select
                 className="field"
                 onChange={inputChangeHandler}
@@ -66,13 +81,21 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 name="gender"
                 required
               >
-                <option className="menuItem" value="">Не указан</option>
-                <option className="menuItem" value="жен">Женский</option>
-                <option className="menuItem" value="муж">Мужской</option>
+                <option className="menuItem" value="">
+                  Не указан
+                </option>
+                <option className="menuItem" value="жен">
+                  Женский
+                </option>
+                <option className="menuItem" value="муж">
+                  Мужской
+                </option>
               </select>
             </Grid>
             <Grid item xs>
-              <label className="labelForField" htmlFor="dateOfBirth">Дата рождения</label>
+              <label className="labelForField" htmlFor="dateOfBirth">
+                Дата рождения
+              </label>
               <input
                 type={'date'}
                 className="field"
@@ -85,9 +108,11 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
             </Grid>
           </div>
           {/*страна и город*/}
-          <div className='inputContainer'>
+          <div className="inputContainer">
             <Grid item xs>
-              <label className="labelForField" htmlFor="country">Страна</label>
+              <label className="labelForField" htmlFor="country">
+                Страна
+              </label>
               <select
                 className="field"
                 id="country"
@@ -96,30 +121,35 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 name="country"
                 required
               >
-                <option className="menuItem" value="">Выберите страну</option>
-                <option className="menuItem" value="Кыргызстан">Кыргызстан</option>
+                <option className="menuItem" value="">
+                  Выберите страну
+                </option>
+                <option className="menuItem" value="Кыргызстан">
+                  Кыргызстан
+                </option>
               </select>
             </Grid>
             <Grid item xs>
-              <label className="labelForField" htmlFor="city">Город</label>
-              <select
-                className="field"
-                id="city"
-                value={state.city}
-                onChange={inputChangeHandler}
-                name="city"
-                required
-              >
-                <option className="menuItem" value="">Выберите город</option>
-                {cities.map(city => (
-                  <option key={city} value={city}>{city}</option>
+              <label className="labelForField" htmlFor="city">
+                Город
+              </label>
+              <select className="field" id="city" value={state.city} onChange={inputChangeHandler} name="city" required>
+                <option className="menuItem" value="">
+                  Выберите город
+                </option>
+                {cities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
                 ))}
               </select>
             </Grid>
           </div>
           {/* образование */}
           <Grid item xs>
-            <label className="labelForField" htmlFor="education">Образование</label>
+            <label className="labelForField" htmlFor="education">
+              Образование
+            </label>
             <select
               className="field"
               id="education"
@@ -130,13 +160,17 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
             >
               <option value="">Не указано</option>
               {educationTypes.map((educationType, index) => (
-                <option key={index} value={educationType}>{educationType}</option>
+                <option key={index} value={educationType}>
+                  {educationType}
+                </option>
               ))}
             </select>
           </Grid>
           {/* о себе */}
           <Grid item xs>
-            <label className="labelForField" htmlFor="aboutApplicant">О себе</label>
+            <label className="labelForField" htmlFor="aboutApplicant">
+              О себе
+            </label>
             <textarea
               className="field"
               id="aboutApplicant"
@@ -149,19 +183,24 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
           {/* опыт работы */}
           <Grid item xs>
             <Grid item xs>
-              <Button variant="contained"
-                      sx={{marginTop: '10px', backgroundColor: '#0866FF', color: '#ffff', borderRadius: '30px'}}
-                      onClick={() => addField()}>Добавить опыт
-                работы</Button>
+              <Button
+                variant="contained"
+                sx={{ marginTop: '10px', backgroundColor: '#0866FF', color: '#ffff', borderRadius: '30px' }}
+                onClick={() => addField()}
+              >
+                Добавить опыт работы
+              </Button>
             </Grid>
             <Grid display="flex" mt={2} flexWrap={'wrap'}>
-              {fields.map(field => field)}
+              {fields.map((field) => field)}
             </Grid>
           </Grid>
           {/* ищу работу */}
-          <div className='inputContainer'>
+          <div className="inputContainer">
             <Grid item xs>
-              <label className="labelForField" htmlFor="wantedJob">Ищу работу в сфере:</label>
+              <label className="labelForField" htmlFor="wantedJob">
+                Ищу работу в сфере:
+              </label>
               <select
                 className="field"
                 id="wantedJob"
@@ -170,14 +209,20 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 name="wantedJob"
                 required
               >
-                <option className="menuItem" value="">Выберите профессию</option>
-                {jobs.map(job => (
-                  <option key={job} value={job}>{job}</option>
+                <option className="menuItem" value="">
+                  Выберите профессию
+                </option>
+                {jobs.map((job) => (
+                  <option key={job} value={job}>
+                    {job}
+                  </option>
                 ))}
               </select>
             </Grid>
             <Grid item xs>
-              <label className="labelForField" htmlFor="wantedJobCity">Выберите город</label>
+              <label className="labelForField" htmlFor="wantedJobCity">
+                Выберите город
+              </label>
               <select
                 className="field"
                 id="wantedJobCity"
@@ -186,21 +231,19 @@ const Form: React.FC<Props> = ({loading, fields, state, submitFormHandler, input
                 name="wantedJobCity"
                 required
               >
-                <option className="menuItem" value="">Выберите город</option>
-                {jobCities.map(city => (
-                  <option key={city} value={city}>{city}</option>
+                <option className="menuItem" value="">
+                  Выберите город
+                </option>
+                {jobCities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
                 ))}
               </select>
             </Grid>
           </div>
         </div>
-        <LoadingButton
-          className="sendBtn"
-          type="submit"
-          color="primary"
-          variant="contained"
-          loading={loading}
-        >
+        <LoadingButton className="sendBtn" type="submit" color="primary" variant="contained" loading={loading}>
           Сохранить изменения
         </LoadingButton>
       </form>

@@ -24,11 +24,11 @@ export const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => 
   const isLoading = useAppSelector(selectUsersLoading);
   const [prof, setProf] = useState('');
 
-	useEffect(() => {
+  useEffect(() => {
     dispatch(getAllUser());
   }, [dispatch]);
-	
-	console.log('users', users);
+
+  console.log('users', users);
 
   const searchHandle = async (event: FormEvent) => {
     event.preventDefault();
@@ -47,16 +47,18 @@ export const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => 
     <div className="PotentialEmployeesPageCardsBlock__container">
       <h2 className="PotentialEmployeesPageCardsBlock__title">{slice.primary.titletext}</h2>
       <form onSubmit={searchHandle}>
-        <Box sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0 15px',
-          margin: '15px 0',
-        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0 15px',
+            margin: '15px 0',
+          }}
+        >
           <TextField
             fullWidth
             value={prof}
-            onChange={event => setProf(event.target.value)}
+            onChange={(event) => setProf(event.target.value)}
             autoComplete="new-email"
             placeholder="Frontend developer...."
             InputProps={{

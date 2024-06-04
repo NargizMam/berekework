@@ -40,27 +40,24 @@ const LastNewsBlock = () => {
 
   return (
     <>
-      <Box sx={LastNewsBlockStyle.block} style={{marginTop: '30px'}}>
+      <Box sx={LastNewsBlockStyle.block} style={{ marginTop: '30px' }}>
         <Box sx={LastNewsBlockStyle.row}>
           <Typography variant="h2" sx={LastNewsBlockStyle.title}>
             Последние новости
           </Typography>
           <div className="lastNewsButtons">
             <button className="titleButton" onClick={handleBack} disabled={!hasPreviousCards}>
-              <NavigateBeforeIcon sx={{fontSize: 24}}/>
+              <NavigateBeforeIcon sx={{ fontSize: 24 }} />
             </button>
             <button className="titleButton" onClick={handleNext} disabled={!hasNextCards}>
-              <NavigateNextIcon sx={{fontSize: 24}}/>
+              <NavigateNextIcon sx={{ fontSize: 24 }} />
             </button>
           </div>
         </Box>
         <div className="rateBlock">
-          {pages?.slice(activeStep * cardsOnPage, (activeStep + 1) * cardsOnPage).map((news) => (
-            <LastNewsCards
-              key={news.id}
-              uid={news.uid}
-            />
-          ))}
+          {pages
+            ?.slice(activeStep * cardsOnPage, (activeStep + 1) * cardsOnPage)
+            .map((news) => <LastNewsCards key={news.id} uid={news.uid} />)}
         </div>
         {!pages && <div>Нет доступных новостей.</div>}
       </Box>

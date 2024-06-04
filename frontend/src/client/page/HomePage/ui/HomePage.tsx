@@ -9,10 +9,7 @@ export const HomePage = () => {
   return (
     <>
       <div style={{ marginTop: 100 }}>
-        <SliceZone
-          slices={document?.data.body}
-          components={{...components}}
-        />
+        <SliceZone slices={document?.data.body} components={{ ...components }} />
       </div>
       <div style={{ marginTop: 100 }}>
         {/*<SliceZone*/}
@@ -21,8 +18,8 @@ export const HomePage = () => {
         {/*    startscreen: StartScreen,*/}
         {/*  }}*/}
         {/*/>*/}
-        <VacancyBlock/>
-        <LastNewsBlock/>
+        <VacancyBlock />
+        <LastNewsBlock />
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import EmployerCard from '../../../feachers/employerCard/ui/EmployerCard';
 export interface EmployerBlockApiData {
   primary: {
     empltitle: { text: string }[];
-  },
+  };
   items: {
     emplinfo: { type: string; text: string }[];
     image: { url: string };
@@ -31,7 +31,9 @@ const EmployerBlock: React.FC<Props> = ({ slice }) => {
   return (
     <>
       <div>
-        <Typography variant="h3" sx={{ mb: 5, fontWeight: 'bold'}}>{slice?.primary.empltitle[0].text}</Typography>
+        <Typography variant="h3" sx={{ mb: 5, fontWeight: 'bold' }}>
+          {slice?.primary.empltitle[0].text}
+        </Typography>
       </div>
       <div
         className="EmployerBlock__flex"

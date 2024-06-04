@@ -8,7 +8,7 @@
 }
 
 .UserPageCard__status {
-  background: #F0F0F0;
+  background: #f0f0f0;
   padding: 10px 27px;
   border-radius: 25px;
   display: inline;
@@ -22,8 +22,7 @@
 }
 
 .UserPageCard__date {
-  color: #8E8E8E;
-
+  color: #8e8e8e;
 }
 
 .UserPageCard__btnWrapper {
@@ -42,11 +41,9 @@
 }
 
 .UserPageCard__btn_connect {
-  background: #FFE585;
-
+  background: #ffe585;
 }
 
 .UserPageCard__btn_cencel {
-  background: #E9E9E9;
-
+  background: #e9e9e9;
 }

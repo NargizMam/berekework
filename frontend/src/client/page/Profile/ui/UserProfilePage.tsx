@@ -35,7 +35,7 @@ export const UserProfilePage = () => {
   }
 
   if (!profile) {
-    return <Navigate to={"/login"}/>;
+    return <Navigate to={'/login'} />;
   }
 
   return (

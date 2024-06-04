@@ -22,8 +22,7 @@ export const register = createAsyncThunk<AuthResponse, RegisterMutation, { rejec
   },
 );
 
-class EmployerRegisterMutation {
-}
+class EmployerRegisterMutation {}
 
 export const registerEmployer = createAsyncThunk<AuthResponse, EmployerMutation, { rejectValue: ValidationError }>(
   'employer/registerEmployer',
@@ -45,13 +44,13 @@ export const registerEmployer = createAsyncThunk<AuthResponse, EmployerMutation,
       }
       throw error;
     }
-  }
+  },
 );
 export const googleAuth = createAsyncThunk<AuthResponse, string, { rejectValue: GlobalError }>(
   'auth/googleAuth',
-  async (credential, {rejectWithValue}) => {
+  async (credential, { rejectWithValue }) => {
     try {
-      const response = await axiosApi.post('/user/google', {credential});
+      const response = await axiosApi.post('/user/google', { credential });
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 422) {
@@ -77,7 +76,6 @@ export const login = createAsyncThunk<AuthResponse, LoginMutation, { rejectValue
     }
   },
 );
-
 
 export const logout = createAsyncThunk<void, undefined, { state: RootState }>(
   'users/logout',

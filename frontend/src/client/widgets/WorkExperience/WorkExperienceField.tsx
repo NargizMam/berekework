@@ -6,20 +6,13 @@ import { WorkExperience } from '../../page/Profile/model/types';
 
 interface Props {
   id: string;
-  job: string,
+  job: string;
   duration: string;
-  deleteField: (id: string) => void,
+  deleteField: (id: string) => void;
   addField: (newField: WorkExperience) => void;
 }
 
-
-const WorkExperienceField: React.FC<Props> = ({
-  id,
-  job,
-  duration,
-  deleteField,
-  addField,
-}) => {
+const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, addField }) => {
   const [state, setState] = useState<WorkExperience>({
     _id: id,
     fieldOfWork: job || '',
@@ -28,10 +21,10 @@ const WorkExperienceField: React.FC<Props> = ({
   const [isAdded, setIsAdded] = useState(false);
 
   const fieldChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setState(prevState => ({
+    const { name, value } = e.target;
+    setState((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -40,16 +33,15 @@ const WorkExperienceField: React.FC<Props> = ({
   };
 
   const addFieldToFormState = () => {
-    addField({...state});
+    addField({ ...state });
     setIsAdded(true);
   };
 
-
   return (
-    <div className='workExpWrapper'>
+    <div className="workExpWrapper">
       <Grid item xs={6}>
         <input
-          style={{marginLeft: '8px'}}
+          style={{ marginLeft: '8px' }}
           className="field"
           id="job"
           value={state.fieldOfWork}
@@ -58,15 +50,15 @@ const WorkExperienceField: React.FC<Props> = ({
         />
       </Grid>
       <Grid>
-        {!isAdded ?
+        {!isAdded ? (
           <IconButton onClick={addFieldToFormState} aria-label="delete" color="primary">
-            <CheckIcon/>
+            <CheckIcon />
           </IconButton>
-          :
+        ) : (
           <IconButton onClick={() => handleDeleteField(id)} aria-label="delete" color="primary">
-            <DeleteIcon/>
+            <DeleteIcon />
           </IconButton>
-        }
+        )}
       </Grid>
     </div>
   );

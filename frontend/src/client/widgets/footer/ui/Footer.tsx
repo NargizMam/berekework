@@ -78,7 +78,7 @@ const Footer = () => {
           </div>
         </div>
         <p className="footer-bottom-text">{data.copyright}</p>
-    </div>
+      </div>
     </div>
   );
 };

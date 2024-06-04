@@ -5,10 +5,9 @@ import { selectBlock, selectIsLoading, selectVacancy, selectisLoadingCard } from
 import { getVacancyCard } from '../model/VacancyBlockThunks';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
-import { VacancyCard } from '../../vacancyCard';
-import { VacancyCardApiData } from '../types';
 import VacancyBlockStyle from './VacancyBlock-style';
 import './VacancyBlock.css';
+import { VacancyCard } from '../../../../feachers/vacancyCard';
 
 export const VacancyBlock = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +16,7 @@ export const VacancyBlock = () => {
   const isLoading = useAppSelector(selectIsLoading);
   const isLoadingCard = useAppSelector(selectisLoadingCard);
   let render;
+
   useEffect(() => {
     dispatch(getVacancyCard()).unwrap();
   }, [dispatch]);
@@ -32,9 +32,9 @@ export const VacancyBlock = () => {
           <Loader />
         ) : (
           <div className="VacancyBlock__flex">
-            {vacancyCard.map((data: VacancyCardApiData, index: number) => {
+            {vacancyCard.map((data, index) => {
               if (index < 6) {
-                return <VacancyCard key={data._id} data={data} />;
+                return <VacancyCard data={data} visible={true} />;
               } else {
                 return null;
               }

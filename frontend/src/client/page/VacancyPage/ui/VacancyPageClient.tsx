@@ -57,10 +57,7 @@ export const VacancyPageClient = () => {
           ) : vacancies.length > 0 ? (
             vacancies.map((vacancy) => (
               <Grid item key={vacancy._id} xs={12} sm={6}>
-                <VacancyCard
-                  data={vacancy}
-                  visible={true}
-                />
+                <VacancyCard data={vacancy} visible={true} />
               </Grid>
             ))
           ) : (

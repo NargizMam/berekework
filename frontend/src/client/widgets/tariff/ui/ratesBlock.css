@@ -1,5 +1,5 @@
 .rateBlockTitle {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 30px;
   font-weight: 700;
   line-height: 60px;
@@ -23,7 +23,7 @@
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: #D2D2D2;
+  background-color: #d2d2d2;
   border: none;
 }
 

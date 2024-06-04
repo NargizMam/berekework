@@ -11,9 +11,10 @@ import { selectVacancy, selectVacancyLoading } from '../../../feachers/vacancy/v
 import './vacancyDetailPage.css';
 import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
+import { selectEmployer } from '../../../client/page/Auth/model/AuthSlice';
 
 export const VacancyDetailPage = () => {
-  // const employer = useAppSelector(true);
+  const employer = useAppSelector(selectEmployer);
   const dispatch = useAppDispatch();
   const { id } = useParams() as { id: string };
   const vacancy = useAppSelector(selectVacancy);
@@ -114,15 +115,17 @@ export const VacancyDetailPage = () => {
           </Typography>
         </div>
       </Box>
-      <Box>
-        <h1>Откликнутые</h1>
-        {candidates.map((candidate, index) => (
-          <p>
-            <span>{index + 1}</span>
-            {candidate.user.name} - {candidate.user.preferredJob} - {candidate.status}
-          </p>
-        ))}
-      </Box>
+      {employer ? (
+        <Box>
+          <h1>Откликнутые</h1>
+          {candidates.map((candidate, index) => (
+            <p>
+              <span>{index + 1}</span>
+              {candidate.user.name} - {candidate.user.preferredJob} - {candidate.status}
+            </p>
+          ))}
+        </Box>
+      ) : null}
     </>
   );
 };

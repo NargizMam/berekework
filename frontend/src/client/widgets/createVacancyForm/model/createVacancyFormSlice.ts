@@ -41,18 +41,18 @@ const createVacancyFormSlice = createSlice({
         state.error = error || null;
       });
 
-      bilder
-        .addCase(updateVacancy.pending, (state) => {
-          state.isLoading = true;
-          state.error = null;
-        })
-        .addCase(updateVacancy.fulfilled, (state) => {
-          state.isLoading = false;
-        })
-        .addCase(updateVacancy.rejected, (state, { payload: error }) => {
-          state.isLoading = false;
-          state.error = error || null;
-        });
+    bilder
+      .addCase(updateVacancy.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateVacancy.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updateVacancy.rejected, (state, { payload: error }) => {
+        state.isLoading = false;
+        state.error = error || null;
+      });
   },
 });
 

@@ -23,7 +23,7 @@ const AboutUsPage = () => {
           aboutusvalues: OurValuesBlock,
           potentialemployees: EmployerBlock,
           galleryblock: MediaBlock,
-          videoblock: MediaBlock ,
+          videoblock: MediaBlock,
         }}
       />
     </>

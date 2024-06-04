@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import { Grid, Paper } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
 
-
 export function TasksProgress(): React.JSX.Element {
   const chartSetting = {
     xAxis: [
@@ -67,8 +66,8 @@ export function TasksProgress(): React.JSX.Element {
 
   const valueFormatter = (value: number | null) => `${value}mm`;
   return (
-    <Paper sx={{marginBottom: '30px', padding: '20px'}}>
-      <Typography color="text.secondary" variant="h6" marginBottom='20px'>
+    <Paper sx={{ marginBottom: '30px', padding: '20px' }}>
+      <Typography color="text.secondary" variant="h6" marginBottom="20px">
         Task progress
       </Typography>
       <Grid>

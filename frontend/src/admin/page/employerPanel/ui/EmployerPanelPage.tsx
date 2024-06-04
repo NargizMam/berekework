@@ -12,7 +12,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow, Typography,
+  TableRow,
+  Typography,
 } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 import { Link as RouterLink } from 'react-router-dom';
@@ -38,16 +39,14 @@ export const EmployerPanelPage = () => {
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
-      <Box sx={{display: 'flex', justifyContent: 'right'}}>
+      <Box sx={{ display: 'flex', justifyContent: 'right' }}>
         <Link
-          sx={{position: 'fixed', top: 'auto', right: 20, zIndex: 999, margin: '5px'}}
+          sx={{ position: 'fixed', top: 'auto', right: 20, zIndex: 999, margin: '5px' }}
           underline="none"
           component={RouterLink}
           to="/admin/employers-submit"
         >
-          <Typography>
-            Create
-          </Typography>
+          <Typography>Create</Typography>
         </Link>
       </Box>
       <TableContainer component={Paper}>

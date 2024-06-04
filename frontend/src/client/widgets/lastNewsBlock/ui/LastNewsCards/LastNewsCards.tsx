@@ -7,12 +7,11 @@ import { NavLink } from 'react-router-dom';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import * as prismicH from '@prismicio/helpers';
 
-
 interface Props {
   uid: string | null;
 }
 
-export const LastNewsCards: React.FC<Props> = ({uid}) => {
+export const LastNewsCards: React.FC<Props> = ({ uid }) => {
   const safeUid = uid || '';
 
   const [document] = usePrismicDocumentByUID('lastnews', safeUid);
@@ -25,7 +24,7 @@ export const LastNewsCards: React.FC<Props> = ({uid}) => {
   return (
     <>
       <Box className="newsCard">
-        {document ?
+        {document ? (
           <>
             <p className="newsCardTitle">{title}</p>
             <div className="rateCardTextBlocks">
@@ -34,20 +33,26 @@ export const LastNewsCards: React.FC<Props> = ({uid}) => {
               </div>
             </div>
             <div className="lastNewsDateTimeLink">
-              <div className='dates'>
-                <p className="cardDateText"><strong>Дата: </strong>{formattedDate}</p>
-                <p className="cardDateText"><strong>Время:</strong> {formattedTime}</p>
+              <div className="dates">
+                <p className="cardDateText">
+                  <strong>Дата: </strong>
+                  {formattedDate}
+                </p>
+                <p className="cardDateText">
+                  <strong>Время:</strong> {formattedTime}
+                </p>
               </div>
-              <NavLink className="cardBtnLink" to={`news/${uid}`}><ArrowOutwardIcon/></NavLink>
+              <NavLink className="cardBtnLink" to={`news/${uid}`}>
+                <ArrowOutwardIcon />
+              </NavLink>
             </div>
           </>
-          :
+        ) : (
           <div>Loading...</div>
-        }
+        )}
       </Box>
     </>
-  )
-    ;
+  );
 };
 
 export default LastNewsCards;

@@ -23,7 +23,7 @@ export interface Country {
 }
 
 export interface ApiAnswer {
-  items: Country[]
+  items: Country[];
 }
 
 export interface Vacancy {

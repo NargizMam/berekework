@@ -4,7 +4,6 @@ import { ModeratorApi } from '../../../../types';
 import { createModerator, deleteModerator, getAllModerators } from '../api/moderatorsThunk';
 import { GlobalError, ValidationError } from '../../../../client/page/Auth/model/types';
 
-
 interface ModeratorState {
   moderators: ModeratorApi[];
   moderatorsLoading: boolean;
@@ -50,7 +49,7 @@ const moderatorsSlice = createSlice({
       state.successMessage = message;
       state.errorMessage = null;
     });
-    builder.addCase(createModerator.rejected, (state, {payload: error}) => {
+    builder.addCase(createModerator.rejected, (state, { payload: error }) => {
       state.createLoading = false;
       state.successMessage = null;
       state.createErrorMessage = error || null;
@@ -65,7 +64,7 @@ const moderatorsSlice = createSlice({
       state.successMessage = message;
       state.errorMessage = null;
     });
-    builder.addCase(deleteModerator.rejected, (state, {payload: error}) => {
+    builder.addCase(deleteModerator.rejected, (state, { payload: error }) => {
       state.deleteLoading = false;
       state.successMessage = null;
       state.errorMessage = error || null;
@@ -76,6 +75,6 @@ const moderatorsSlice = createSlice({
 export const moderatorsReducer = moderatorsSlice.reducer;
 export const selectModerators = (state: RootState) => state.moderator.moderators;
 export const selectModeratorsLoading = (state: RootState) => state.moderator.moderatorsLoading;
-export const selectModeratorsCreating= (state: RootState) => state.moderator.createLoading;
+export const selectModeratorsCreating = (state: RootState) => state.moderator.createLoading;
 export const selectModeratorsCreateError = (state: RootState) => state.moderator.errorMessage;
 export const selectModeratorsSuccessMessage = (state: RootState) => state.moderator.successMessage;

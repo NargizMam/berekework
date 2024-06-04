@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import {
   selectEmployerError,
+  selectEmployersProfileInfo,
   selectEmployersProfileLoading,
 } from '../../../../admin/page/employerPanel/model/employerSlice';
 import {
@@ -15,7 +16,6 @@ import { Button, Grid, TextField } from '@mui/material';
 // import Visibility from '@mui/icons-material/Visibility';
 // import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { LoadingButton } from '@mui/lab';
-import { selectEmployer } from '../../Auth/model/AuthSlice';
 
 export interface EmployerInfoApiMutation {
   email: string;
@@ -47,7 +47,7 @@ export const EmployerEditPage = () => {
     document: null,
     logo: null,
   });
-  const employer = useAppSelector(selectEmployer);
+  const employer = useAppSelector(selectEmployersProfileInfo);
   const error = useAppSelector(selectEmployerError);
   const documentSelect = useRef<HTMLInputElement>(null);
   const imageSelect = useRef<HTMLInputElement>(null);

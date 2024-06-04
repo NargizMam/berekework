@@ -1,12 +1,11 @@
-import { AuthResponse, GlobalError, User, ValidationError } from './types';
+import { AuthResponse, EmployerAuth, GlobalError, User, ValidationError } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { googleAuth, login, register, registerEmployer } from '../api/AuthThunk';
 import { RootState } from '../../../../app/store/store';
-import { EmployerInfoApi } from '../../../../types';
 
 interface AuthState {
   user: User | null;
-  employer: EmployerInfoApi | null;
+  employer: EmployerAuth | null;
   registerLoading: boolean;
   loginLoading: boolean;
   registerError: ValidationError | null;
@@ -36,9 +35,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(register.fulfilled, (state, { payload: data }: PayloadAction<AuthResponse>) => {
       state.registerLoading = false;
-      if ('role' in data.user && data.user.role === 'user') {
-        state.user = data.user;
-      }
+      state.user = data.user;
     });
     builder.addCase(register.rejected, (state, { payload: error }) => {
       state.registerLoading = false;
@@ -60,9 +57,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(googleAuth.fulfilled, (state, { payload: data }) => {
       state.loginLoading = false;
-      if ('role' in data.user && data.user.role === 'user'){
-        state.user = data.user;
-      }
+      state.user = data.user;
     });
     builder.addCase(googleAuth.rejected, (state, { payload: error }) => {
       state.loginLoading = false;
@@ -74,9 +69,9 @@ export const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, { payload: data }: PayloadAction<AuthResponse>) => {
       state.loginLoading = false;
-      if ('role' in data.user && data.user.role === 'employer') {
+      if (data.user.role === 'employer') {
         state.employer = data.user;
-      } else if ('role' in data.user && data.user.role === 'user') {
+      } else {
         state.user = data.user;
       }
     });

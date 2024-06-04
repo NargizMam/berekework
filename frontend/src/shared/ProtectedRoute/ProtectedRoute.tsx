@@ -5,7 +5,7 @@ interface Props extends React.PropsWithChildren {
   isAllowed: boolean | null;
 }
 
-const ProtectedRoute: React.FC<Props> = ({isAllowed, children}) => {
+const ProtectedRoute: React.FC<Props> = ({ isAllowed, children }) => {
   if (!isAllowed) {
     return <Navigate to="/" />;
   }

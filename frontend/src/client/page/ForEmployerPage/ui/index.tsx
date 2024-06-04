@@ -13,7 +13,7 @@ export const ForEmployerPage = () => {
         components={{
           titleblock: TitleBlock,
           maincard: MainCards,
-          tariff: RatesBLock
+          tariff: RatesBLock,
         }}
       />
     </>

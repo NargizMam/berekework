@@ -5,13 +5,13 @@ import CheckIcon from '@mui/icons-material/Check';
 import { Card } from './cardTypes';
 
 interface Props {
-  cardId: string,
-  card: Card | null,
+  cardId: string;
+  card: Card | null;
   addCard: (newCardState: Card) => void;
-  deleteCard: (id: string) => void,
+  deleteCard: (id: string) => void;
 }
 
-const CardForm: React.FC<Props> = ({card, cardId, addCard, deleteCard}) => {
+const CardForm: React.FC<Props> = ({ card, cardId, addCard, deleteCard }) => {
   const [cardState, setCardState] = useState<Card>({
     _id: cardId,
     cardTitle: card?.cardTitle || '',
@@ -22,10 +22,10 @@ const CardForm: React.FC<Props> = ({card, cardId, addCard, deleteCard}) => {
   const [isAdded, setIsAdded] = useState(false);
 
   const cardChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setCardState(prevState => ({
+    const { name, value } = e.target;
+    setCardState((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -34,22 +34,25 @@ const CardForm: React.FC<Props> = ({card, cardId, addCard, deleteCard}) => {
   };
 
   const addCardToBlockState = () => {
-    addCard({...cardState});
+    addCard({ ...cardState });
     setIsAdded(true);
   };
 
   return (
     <Grid item display="flex" mb={2}>
-      <Paper elevation={3} sx={{
-        width: 280,
-        height: 250,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingBottom: '20px',
-        paddingTop: '20px'
-      }}>
+      <Paper
+        elevation={3}
+        sx={{
+          width: 280,
+          height: 250,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingBottom: '20px',
+          paddingTop: '20px',
+        }}
+      >
         <Grid>
           <TextField
             id="cardTitle"
@@ -81,15 +84,15 @@ const CardForm: React.FC<Props> = ({card, cardId, addCard, deleteCard}) => {
           />
         </Grid>
       </Paper>
-      {!isAdded ?
+      {!isAdded ? (
         <IconButton onClick={addCardToBlockState} aria-label="delete" color="primary">
-          <CheckIcon/>
+          <CheckIcon />
         </IconButton>
-        :
+      ) : (
         <IconButton onClick={() => handleDeleteCard(cardState._id)} aria-label="delete" color="primary">
-          <DeleteIcon/>
+          <DeleteIcon />
         </IconButton>
-      }
+      )}
     </Grid>
   );
 };
