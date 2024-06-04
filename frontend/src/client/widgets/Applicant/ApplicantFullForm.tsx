@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserMutation, WorkExperience } from '../../page/Profile/model/types';
 import './ApplicantForm.css';
 import WorkExperienceField from '../WorkExperience/WorkExperienceField';

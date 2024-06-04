@@ -34,9 +34,11 @@ export const authSlice = createSlice({
     builder.addCase(register.pending, (state) => {
       state.registerLoading = true;
     });
-    builder.addCase(register.fulfilled, (state, {payload: data}: PayloadAction<AuthResponse>) => {
+    builder.addCase(register.fulfilled, (state, { payload: data }: PayloadAction<AuthResponse>) => {
       state.registerLoading = false;
-      state.user = data.user;
+      if ('role' in data.user && data.user.role === 'user') {
+        state.user = data.user;
+      }
     });
     builder.addCase(register.rejected, (state, { payload: error }) => {
       state.registerLoading = false;
@@ -45,10 +47,9 @@ export const authSlice = createSlice({
     builder.addCase(registerEmployer.pending, (state) => {
       state.registerLoading = true;
     });
-    builder.addCase(registerEmployer.fulfilled, (state, {payload: data}: PayloadAction<AuthResponse>) => {
+    builder.addCase(registerEmployer.fulfilled, (state, { payload: data }: PayloadAction<AuthResponse>) => {
       state.registerLoading = false;
       state.employer = data.employer;
-      console.log(data);
     });
     builder.addCase(registerEmployer.rejected, (state, { payload: error }) => {
       state.registerLoading = false;
@@ -57,11 +58,13 @@ export const authSlice = createSlice({
     builder.addCase(googleAuth.pending, (state) => {
       state.loginLoading = true;
     });
-    builder.addCase(googleAuth.fulfilled, (state, {payload: data}) => {
+    builder.addCase(googleAuth.fulfilled, (state, { payload: data }) => {
       state.loginLoading = false;
-      state.user = data.user;
+      if ('role' in data.user && data.user.role === 'user'){
+        state.user = data.user;
+      }
     });
-    builder.addCase(googleAuth.rejected, (state, {payload: error}) => {
+    builder.addCase(googleAuth.rejected, (state, { payload: error }) => {
       state.loginLoading = false;
       state.loginError = error || null;
     });
@@ -71,17 +74,21 @@ export const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, { payload: data }: PayloadAction<AuthResponse>) => {
       state.loginLoading = false;
-      state.user = data.user;
+      if ('role' in data.user && data.user.role === 'employer') {
+        state.employer = data.user;
+      } else if ('role' in data.user && data.user.role === 'user') {
+        state.user = data.user;
+      }
     });
     builder.addCase(login.rejected, (state, { payload: error }) => {
       state.loginLoading = false;
       state.loginError = error || null;
     });
-  }
+  },
 });
 
 export const authReducer = authSlice.reducer;
-export const {unsetUser} = authSlice.actions;
+export const { unsetUser } = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectEmployer = (state: RootState) => state.auth.employer;

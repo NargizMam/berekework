@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getVacancyBlock, getVacancyCard } from './VacancyBlockThunks';
+import { getVacancyCard } from './VacancyBlockThunks';
 import { VacancyBlockApiData, VacancyCardApiData } from '../types';
 import { RootState } from '../../../../app/store/store';
 
@@ -21,21 +21,8 @@ const vacancyBlockSlice = createSlice({
   name: 'vacancyBlock',
   initialState,
   reducers: {},
-  extraReducers: (bilder) => {
-    bilder
-      .addCase(getVacancyBlock.pending, (state) => {
-        state.isLoading = true;
-        state.block = null;
-      })
-      .addCase(getVacancyBlock.fulfilled, (state, { payload: vacancyBlock }) => {
-        state.isLoading = false;
-        state.block = vacancyBlock;
-      })
-      .addCase(getVacancyBlock.rejected, (state) => {
-        state.isLoading = false;
-      });
-
-    bilder
+  extraReducers: (builder) => {
+    builder
       .addCase(getVacancyCard.pending, (state) => {
         state.isLoadingCard = true;
         state.vacancy = [];

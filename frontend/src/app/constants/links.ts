@@ -1,4 +1,4 @@
-import { CategoryVacancyI } from '../../client/page/VacancyPage/model/types';
+import { CategoryVacancyI } from '../types';
 
 export const API_URL = 'http://localhost:8000';
 
