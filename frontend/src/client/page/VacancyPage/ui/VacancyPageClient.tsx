@@ -1,25 +1,27 @@
 import { Box, CircularProgress, Grid, Tooltip, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectClientVacancies, selectClientVacancyFetching } from '../model/vacancySlice';
 import { useEffect, useState } from 'react';
-import { vacancyFetchAll } from '../api/vacancyThunks';
 import { VacancyCard } from '../../../../feachers/vacancyCard';
 import { VacancyCategory } from '../../../widgets/vacancyCategory';
 import { Tune } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import VacancySearch from '../../../widgets/vacancySearch/VacancySearch';
-import { selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';
+import {
+  selectVacancies,
+  selectVacanciesLoading,
+  selectVacancyLoading,
+} from '../../../../feachers/vacancy/vacancySlice';
 import { getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
 
 export const VacancyPageClient = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectVacanciesLoading);
   const [showCategory, setShowCategory] = useState(false);
-  const vacancies = useAppSelector(selectClientVacancies);
-  const vacanciesFetching = useAppSelector(selectClientVacancyFetching);
+  const vacancies = useAppSelector(selectVacancies);
+  const vacanciesFetching = useAppSelector(selectVacancyLoading);
 
   useEffect(() => {
-    dispatch(vacancyFetchAll());
+    dispatch(getAllVacancy());
   }, [dispatch]);
 
   const handleSearch = async (vacancyTitle: string) => {
@@ -56,17 +58,7 @@ export const VacancyPageClient = () => {
             vacancies.map((vacancy) => (
               <Grid item key={vacancy._id} xs={12} sm={6}>
                 <VacancyCard
-                  data={{
-                    city: vacancy.city,
-                    vacancyTitle: vacancy.vacancyTitle,
-                    _id: vacancy._id,
-                    salary: {
-                      minSalary: parseFloat(vacancy.salary.minSalary),
-                      maxSalary: parseFloat(vacancy.salary.maxSalary),
-                    },
-                    company: vacancy.employer.companyName,
-                    logo: vacancy.employer.logo,
-                  }}
+                  data={vacancy}
                   visible={true}
                 />
               </Grid>

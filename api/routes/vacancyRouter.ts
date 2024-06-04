@@ -65,7 +65,7 @@ vacancyRouter.get('/', async (req, res, next) => {
     if (vacancyTitle) {
       const filteredVacancies = await Vacancy.find({
         vacancyTitle: { $regex: vacancyTitle, $options: 'i' },
-      });
+      }).populate('employer');
       return res.send(filteredVacancies);
     }
 
@@ -111,30 +111,32 @@ vacancyRouter.get('/', async (req, res, next) => {
 
     if (filterCategory) {
       let filteredVacancies: VacancyI[] = [];
-      const vacancies: VacancyI[] = await Vacancy.find();
+      const vacancies: VacancyI[] = await Vacancy.find().populate('employer');
 
       if (categories.hasOwnProperty('city')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city });
+        const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city }).populate('employer');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('education')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education });
+        const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education }).populate('employer');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('country')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country });
+        const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country }).populate('employer');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('fieldOfWork')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork });
+        const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork }).populate('employer');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('employmentType')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType });
+        const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType }).populate(
+          'employer',
+        );
         filteredVacancies.push(...vacancies);
       }
 
@@ -174,7 +176,7 @@ vacancyRouter.get('/', async (req, res, next) => {
       return res.send(uniqueArr);
     }
 
-    const result = await Vacancy.find();
+    const result = await Vacancy.find().populate('employer');
     return res.send(result);
   } catch (error) {
     return next(error);

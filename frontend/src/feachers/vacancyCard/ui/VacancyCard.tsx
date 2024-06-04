@@ -12,9 +12,10 @@ interface Props {
 }
 
 export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
-  const image = data.logo ? (
+  console.log(data);
+  const image = data.employer.logo ? (
     <Box sx={VacancyCardStyle.imageWrapper}>
-      <img src={API_URL + '/' + data.logo} alt={data.vacancyTitle} />
+      <img src={API_URL + '/' + data.employer.logo} alt={data.vacancyTitle} />
     </Box>
   ) : null;
   let salary = 'з/п не указана';
@@ -43,7 +44,7 @@ export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
           {data.vacancyTitle}
         </Typography>
         <Typography sx={VacancyCardStyle.subTitle}>
-          {data.company}, {data.city}
+          {data.employer.companyName}, {data.city}
         </Typography>
         <Typography variant="h5" sx={VacancyCardStyle.salary}>
           {salary}

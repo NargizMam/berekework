@@ -1,11 +1,13 @@
-import { VacancyCardApiData } from '../../app/types';
+import { CategoryVacancyI, VacancyCardApiData } from '../../app/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllVacancy, getVacancyById } from './vacancyThunk';
+import { getAllVacancy, getVacancyById, vacancyFetchCategory, vacancyGetByCategory } from './vacancyThunk';
 import { RootState } from '../../app/store/store';
 
 interface VacancyState {
   vacancies: VacancyCardApiData[];
   vacancy: VacancyCardApiData | null;
+  vacancyCategory: CategoryVacancyI[];
+  vacancyCategoryLoading: boolean;
   vacanciesLoading: boolean;
   vacancyLoading: boolean;
 }
@@ -13,8 +15,10 @@ interface VacancyState {
 const initialState: VacancyState = {
   vacancies: [],
   vacancy: null,
+  vacancyCategory: [],
   vacanciesLoading: false,
   vacancyLoading: false,
+  vacancyCategoryLoading: false,
 };
 
 const vacancySlice = createSlice({
@@ -42,11 +46,33 @@ const vacancySlice = createSlice({
     builder.addCase(getVacancyById.rejected, (state) => {
       state.vacancyLoading = false;
     });
+    builder.addCase(vacancyGetByCategory.pending, (state) => {
+      state.vacanciesLoading = true;
+    });
+    builder.addCase(vacancyGetByCategory.fulfilled, (state, { payload: vacancy }) => {
+      state.vacancies = vacancy;
+      state.vacanciesLoading = false;
+    });
+    builder.addCase(vacancyGetByCategory.rejected, (state) => {
+      state.vacanciesLoading = false;
+    });
+    builder.addCase(vacancyFetchCategory.pending, (state) => {
+      state.vacancyCategoryLoading = true;
+    });
+    builder.addCase(vacancyFetchCategory.fulfilled, (state, { payload }) => {
+      state.vacancyCategoryLoading = false;
+      state.vacancyCategory = payload;
+    });
+    builder.addCase(vacancyFetchCategory.rejected, (state) => {
+      state.vacancyCategoryLoading = false;
+    });
   },
 });
 
 export const vacancyReducer = vacancySlice.reducer;
 export const selectVacancies = (state: RootState) => state.vacancy.vacancies;
 export const selectVacancy = (state: RootState) => state.vacancy.vacancy;
+export const selectClientVacancyCategory = (state: RootState) => state.vacancy.vacancyCategory;
+export const selectClientVacancyCategoryFetching = (state: RootState) => state.vacancy.vacancyCategoryLoading;
 export const selectVacanciesLoading = (state: RootState) => state.vacancy.vacanciesLoading;
 export const selectVacancyLoading = (state: RootState) => state.vacancy.vacancyLoading;

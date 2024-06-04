@@ -21,6 +21,22 @@ export interface VacancyCardApiData {
   };
   education?: string;
   employmentType?: string;
-  employer?: Employer;
+  employer: Employer;
   createdAt: string;
+  updatedAt: string;
+}
+
+export interface VacancyCategoryGet {
+  [key: string]: string[];
+}
+
+export interface CategoryVacancyI {
+  id: string;
+  title: string;
+  name: string;
+  values: { id: string; value: string; valueSend: string }[];
+  input?: {
+    isInput: boolean;
+    placeholder: string;
+  };
 }
