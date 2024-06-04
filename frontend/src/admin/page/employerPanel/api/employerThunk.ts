@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../../../app/axiosApi';
 import { Employer, EmployerMutation } from '../model/types';
-import { EmployerInfoApi, EmployerProfileMutation, ValidationError } from '../../../../types';
+import { EmployerInfoApi, ValidationError } from '../../../../types';
 import { isAxiosError } from 'axios';
+import { EmployerInfoApiMutation } from '../../../../client/page/employerProfile/ui/EmployerEdit';
 
 export const createEmployer = createAsyncThunk<
   void,
@@ -21,10 +22,10 @@ export const createEmployer = createAsyncThunk<
     formData.append('foundationYear', employer.foundationYear);
     formData.append('address', employer.address);
     formData.append('contacts', employer.contacts);
-    if(employer.document) {
+    if (employer.document) {
       formData.append('document', employer.document);
     }
-    if(employer.logo) {
+    if (employer.logo) {
       formData.append('logo', employer.logo);
     }
     await axiosApi.post('/employer', formData);
@@ -36,10 +37,26 @@ export const createEmployer = createAsyncThunk<
     throw error;
   }
 });
+
+export const getAllEmployer = createAsyncThunk<Employer[]>('employer/getAll', async () => {
+  const response = await axiosApi.get<Employer[]>('/employer');
+  return response.data;
+});
+
+export const getEmployersProfileInfo = createAsyncThunk<EmployerInfoApi, string>(
+  'employersProfile/getInfo',
+  async (id) => {
+    const response = await axiosApi.get(`/employer/${id}`);
+    return response.data;
+  },
+);
+
 export const updateEmployer = createAsyncThunk<
   void,
-  { id: string,
-    data: EmployerProfileMutation },
+  {
+    id: string;
+    data: EmployerInfoApiMutation;
+  },
   {
     rejectValue: ValidationError;
   }
@@ -70,18 +87,6 @@ export const updateEmployer = createAsyncThunk<
     throw error;
   }
 });
-
-export const getAllEmployer = createAsyncThunk<Employer[]>('employer/getAll', async () => {
-  const response = await axiosApi.get<Employer[]>('/employer');
-  return response.data;
-});
-export const getEmployersProfileInfo = createAsyncThunk<EmployerInfoApi, string>(
-  'employersProfile/getInfo',
-  async (id) => {
-    const response = await axiosApi.get(`/employer/${id}`);
-    return response.data;
-  }
-);
 
 export const deleteEmployer = createAsyncThunk<void, string>('employer/delete', async (id) => {
   await axiosApi.delete(`/employer/${id}`);

@@ -24,6 +24,7 @@ import { VacancyPageClient } from '../client/page/VacancyPage';
 import { VacancyDetailPage } from '../pages/VacancyDetailPage';
 import { UserProfilePage } from '../client/page/Profile';
 import { UserProfileFormPage } from '../client/page/Profile';
+import { EmployerEditPage } from '../client/page/employerProfile';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -77,7 +78,7 @@ const App = () => {
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
             <Route path="/employersProfile/:id" element={<EmployerProfile />} />
-            {/*<Route path="/edit-employer/:id" element={<EmployerEdit/>} />*/}
+            <Route path="/edit-employer/:id" element={<EmployerEditPage/>} />
             <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
             <Route path="/userProfile" element={<UserProfilePage />} />
             <Route path="/userProfile-submit" element={<UserProfileFormPage />} />

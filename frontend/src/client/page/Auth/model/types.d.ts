@@ -19,7 +19,7 @@ export interface GlobalError {
 
 export interface AuthResponse {
   message: string;
-  user: User;
+  user: User | EmployerInfoApi;
   employer: EmployerInfoApi;
 }
 
@@ -30,6 +30,8 @@ export interface User {
   role: string;
   avatar: string;
 }
+
+
 export interface ValidationError {
   errors: {
     [key: string]: {

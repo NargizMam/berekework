@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { selectBlock, selectIsLoading, selectVacancy, selectisLoadingCard } from '../model/VacancyBlockSlice';
-import { getVacancyBlock, getVacancyCard } from '../model/VacancyBlockThunks';
+import { getVacancyCard } from '../model/VacancyBlockThunks';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
 import { VacancyCard } from '../../vacancyCard';
@@ -18,7 +18,6 @@ export const VacancyBlock = () => {
   const isLoadingCard = useAppSelector(selectisLoadingCard);
   let render;
   useEffect(() => {
-    dispatch(getVacancyBlock()).unwrap();
     dispatch(getVacancyCard()).unwrap();
   }, [dispatch]);
 

@@ -34,11 +34,9 @@ interface HeaderProps {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useAppSelector(selectUser);
-  const employer = useAppSelector(selectEmployer)
+  const employer = useAppSelector(selectEmployer);
   const loginButtonStyle = `login ${isMenuOpen ? 'login-open' : 'login-close'}`;
   const [document] = useSinglePrismicDocument('header');
-
-  console.log(employer);
 
   const headerPrismicResponse: HeaderProps | undefined = document?.data as HeaderProps;
 
@@ -50,53 +48,73 @@ const Header = () => {
     <nav className="navigation-big-screen">
       <ul className="main-mav-web">
         {headerPrismicResponse?.body[0].items &&
-          headerPrismicResponse.body[0].items.map((item, index) => (
-            <li key={index + headerPrismicResponse?.body[0].id} className="main-nav-item">
-              <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
-                {item.name_link}
-              </Typography>
-            </li>
-          ))}
+          headerPrismicResponse.body[0].items.map((item, index) => {
+            if (user) {
+              if (item.name_link === 'Для работодателей') {
+                return null;
+              }
+              if (item.name_link === 'Потенциальные сотрудники') {
+                return null;
+              }
+            }
+            return (
+              <li key={index + headerPrismicResponse?.body[0].id} className="main-nav-item">
+                <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
+                  {item.name_link}
+                </Typography>
+              </li>
+            );
+          })}
       </ul>
     </nav>
   );
 
   return (
     <div className="main-container">
-        <div className="header-content">
-          <div className="header-logo-wrapper">
-            {headerPrismicResponse?.header_logo && (
-              <a href={headerPrismicResponse?.logo_link}>
-                <img
-                  src={headerPrismicResponse?.header_logo.url}
-                  alt={headerPrismicResponse?.header_logo.alt}
-                  style={{ width: 220, height: 56 }}
-                />
-              </a>
-            )}
-          </div>
-          <button className="burger-button" type="button" onClick={toggleMenu}></button>
-          {nav}
-          <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
-            <ul className="main-nav-list">
-              {headerPrismicResponse?.body[0].items &&
-                headerPrismicResponse.body[0].items.map((item, index) => (
+      <div className="header-content">
+        <div className="header-logo-wrapper">
+          {headerPrismicResponse?.header_logo && (
+            <a href={headerPrismicResponse?.logo_link}>
+              <img
+                src={headerPrismicResponse?.header_logo.url}
+                alt={headerPrismicResponse?.header_logo.alt}
+                style={{ width: 220, height: 56 }}
+              />
+            </a>
+          )}
+        </div>
+        <button className="burger-button" type="button" onClick={toggleMenu}></button>
+        {nav}
+        <nav className={isMenuOpen ? 'main-nav-open' : 'main-nav-close'}>
+          <ul className="main-nav-list">
+            {headerPrismicResponse?.body[0].items &&
+              headerPrismicResponse.body[0].items.map((item, index) => {
+                if (user) {
+                  if (item.name_link === 'Для работодателей') {
+                    return null;
+                  }
+                  if (item.name_link === 'Потенциальные сотрудники') {
+                    return null;
+                  }
+                }
+                return (
                   <li key={index + 'navDrop'} className="main-nav-item">
                     <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
                       {item.name_link}
                     </Typography>
                   </li>
-                ))}
-            </ul>
-          </nav>
-          {!user && !employer ? (
-            <NavLink to="/login" className={loginButtonStyle}>
-              Войти
-            </NavLink>
-          ) : (
-            <UserMenu user={user || employer} />
-          )}
-        </div>
+                );
+              })}
+          </ul>
+        </nav>
+        {!user && !employer ? (
+          <NavLink to="/login" className={loginButtonStyle}>
+            Войти
+          </NavLink>
+        ) : (
+          <UserMenu user={user || employer} />
+        )}
+      </div>
     </div>
   );
 };
