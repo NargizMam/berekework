@@ -22,10 +22,8 @@ const AboutUsPage = () => {
           maincard: MainCards,
           aboutusvalues: OurValuesBlock,
           potentialemployees: EmployerBlock,
-          galleryblock: ({ slice }) => <MediaBlock className="gallery" slice={slice} style={{ marginTop: '176px' }} />,
-          videoblock: ({ slice }) => (
-            <MediaBlock className="video" slice={slice} style={{ marginTop: '180px', marginBottom: '100px' }} />
-          ),
+          galleryblock: MediaBlock,
+          videoblock: MediaBlock ,
         }}
       />
     </>

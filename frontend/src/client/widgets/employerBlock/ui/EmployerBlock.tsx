@@ -31,7 +31,7 @@ const EmployerBlock: React.FC<Props> = ({ slice }) => {
   return (
     <>
       <div>
-        <Typography variant="h2" align="center" sx={{ mb: 5 }}>{slice?.primary.empltitle[0].text}</Typography>
+        <Typography variant="h3" sx={{ mb: 5, fontWeight: 'bold'}}>{slice?.primary.empltitle[0].text}</Typography>
       </div>
       <div
         className="EmployerBlock__flex"
