@@ -11,8 +11,8 @@ import { VacancyBlock } from '../../client/widgets/vacancyBlock';
 export const components = {
   titleblock: TitleBlock,
   maincard: MainCards,
-	vacancies_block: VacancyBlock,
   choosespecialist: ChooseSpecialistBlock,
+	vacancies_block: VacancyBlock,
   tariff: RatesBLock,
   startblock: PotentialEmployeesStartBlock,
   potentialemployeescardsblock: PotentialEmployeesPageCardsBlock,

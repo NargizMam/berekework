@@ -37,6 +37,11 @@
   }
 }
 
+.vacancy_block {
+	margin-top: 200px;
+	margin-bottom: 150px;
+}
+
 .vacancy_block_title {
 	font-weight: 700;
 	font-size: 46px;

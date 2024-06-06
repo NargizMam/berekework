@@ -1,17 +1,17 @@
 import { Box, styled, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { API_URL } from '../../../app/constants/links';
 import VacancyCardStyle from './VacancyCard-style';
 import './VacancyCard.css';
-import { API_URL } from '../../../app/constants/links';
-import { VacancyCardApiData } from '../../../app/types';
 
 interface Props {
-  data: VacancyCardApiData;
+  data: any;
   visible: boolean;
 }
 
 export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
+	
   const image = data.employer.logo ? (
     <Box sx={VacancyCardStyle.imageWrapper}>
       <img src={API_URL + '/' + data.employer.logo} alt={data.vacancyTitle} />

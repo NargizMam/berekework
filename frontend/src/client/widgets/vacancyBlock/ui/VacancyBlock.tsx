@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectBlock, selectIsLoading, selectisLoadingCard, selectVacancy } from '../model/VacancyBlockSlice';
+import { getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
+import { VacancyCard } from '../../../../feachers/vacancyCard';
+import { selectVacancy } from '../model/VacancyBlockSlice';
 import { getVacancyCard } from '../model/VacancyBlockThunks';
-import VacancyBlockStyle from './VacancyBlock-style';
 import './VacancyBlock.css';
 
 interface IVacancyBlockProps {
@@ -12,54 +12,43 @@ interface IVacancyBlockProps {
 }
 
 export const VacancyBlock: React.FC<IVacancyBlockProps> = (data) => {
-  const dispatch = useAppDispatch();
-  const block = useAppSelector(selectBlock);
-  const vacancyCard = useAppSelector(selectVacancy);
-  const isLoading = useAppSelector(selectIsLoading);
-  const isLoadingCard = useAppSelector(selectisLoadingCard);
-  let render;
+	const dispatch = useAppDispatch();
+	const vacancyCard = useAppSelector(selectVacancy);
 	
-  useEffect(() => {
-    dispatch(getVacancyCard()).unwrap();
-  }, [dispatch]);
-
-  if (block) {
-    render = (
-      <>
-        <Typography variant="h2" sx={VacancyBlockStyle.title}>
-          {data.slice.primary}
-        </Typography>
-
-        {/* {isLoadingCard ? ( */}
-        {/*   <Loader /> */}
-        {/* ) : ( */}
-        {/*   <div className="VacancyBlock__flex"> */}
-        {/*     {vacancyCard.map((data, index) => { */}
-        {/*       if (index < 6) { */}
-        {/*         return <VacancyCard data={data} visible={true} />; */}
-        {/*       } else { */}
-        {/*         return null; */}
-        {/*       } */}
-        {/*     })} */}
-        {/*   </div> */}
-        {/* )} */}
-
-        <div className="VacancyBlock__buttonWrapper">
-          <Link className="VacancyBlock__button" to={block.button.url}>
-            <Typography sx={VacancyBlockStyle.button}>{block.button.text}</Typography>
-          </Link>
-        </div>
-      </>
-    );
-  }
+	useEffect(() => {
+		dispatch(getVacancyCard()).unwrap();
+	}, [dispatch]);
 	
-  return (
-		<div>
+	useEffect(() => {
+		dispatch(getAllVacancy());
+	}, [dispatch]);
+	
+	const renderContent = () => {
+		if (!vacancyCard) {
+			return <CircularProgress sx={{margin: 'auto'}}/>;
+		}
+		
+		return (
+			<>
+				<div className='VacancyBlock__flex'>
+					{vacancyCard.map((data, index) => {
+						if (index < 6) {
+							return <VacancyCard key={index} data={data} visible={true} />;
+						}
+						return null;
+					})}
+				</div>
+			</>
+		);
+	};
+	
+	return (
+		<div className='vacancy_block'>
 			<h1 className='vacancy_block_title'>{data.slice.primary.vacancies_block_title}</h1>
+			<div>
+				{renderContent()}
+			</div>
 			<button className='vacancy_block_button'>{data.slice.primary.button_text_vacancies_block}</button>
 		</div>
-  );
+	);
 };
-
-
-export default VacancyBlock;
