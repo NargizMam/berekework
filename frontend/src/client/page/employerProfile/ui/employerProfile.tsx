@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Grid, Tab, Tabs, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Loader } from '../../../../shared/loader';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,8 +22,8 @@ import {
 import './employerProfile.css';
 import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
-import { VacancyCard } from '../../../../feachers/vacancyCard';
 import { MyPotentialEmployeeTable, NewPotentialEmployeeTable } from '../../../widgets/PotentialEmployeeTable';
+import { VacancyTable } from '../../../widgets/VacancyTable';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,6 +59,7 @@ const EmployerProfile: React.FC = () => {
   const loading = useAppSelector(selectEmployerLoading);
   const navigate = useNavigate();
 
+  const [vacancyId, setVacancyId] = useState<string | null>(null);
   const [value, setValue] = React.useState(0);
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -62,6 +74,24 @@ const EmployerProfile: React.FC = () => {
       dispatch(getEmployersProfileInfo(id));
     }
   }, [dispatch, id]);
+
+  const onDeleteConfirm = async () => {
+    if (vacancyId) {
+      /*await dispatch(deleteVacancy(vacancyId));
+      await dispatch(f());*/
+
+      console.log(vacancyId);
+      setVacancyId(null);
+    }
+  };
+
+  const onDeleteCancel = () => {
+    setVacancyId(null);
+  };
+
+  const onVacancyDelete = (id: string) => {
+    setVacancyId(id);
+  };
 
   if (loading) return <Loader />;
 
@@ -110,28 +140,10 @@ const EmployerProfile: React.FC = () => {
           <a className="companyLink" href={profile.document || '#'} download>
             Скачать документы
           </a>
-          <Grid mt={6} mb={6}>
-            <Typography mb={2} variant="h5">
-              Ваши вакансии:
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '15px 0',
-              }}
-            >
-              {profile.vacancies.length > 0 ? (
-                profile.vacancies.map((vacancy) => <VacancyCard key={vacancy._id} data={vacancy} visible={true} />)
-              ) : (
-                <h6>Добавьте свои вакансии</h6>
-              )}
-            </Box>
-          </Grid>
         </Grid>
       )}
 
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%', mt: 4 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange}>
             <Tab label="Вакансии" {...a11yProps(0)} />
@@ -140,7 +152,21 @@ const EmployerProfile: React.FC = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          Здесь должна быть таблица созданных вакансиий где у каждой вакансии есть кнопка удалить и редактировать
+          {profile && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '15px 0',
+              }}
+            >
+              {profile.vacancies.length > 0 ? (
+                <VacancyTable vacancies={profile.vacancies} vacancyDelete={onVacancyDelete} />
+              ) : (
+                <h6>Добавьте свои вакансии</h6>
+              )}
+            </Box>
+          )}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <NewPotentialEmployeeTable />
@@ -156,6 +182,14 @@ const EmployerProfile: React.FC = () => {
           <CreateVacancyForm setOpenForm={setOpenVacancyForm} />
         </>
       )}
+      <Dialog open={Boolean(vacancyId)} onClose={onDeleteCancel}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>Вы действительно хотите удалить эту вакансию ?</DialogContent>
+        <DialogActions>
+          <Button onClick={onDeleteConfirm}>Да</Button>
+          <Button onClick={onDeleteCancel}>Нет</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
