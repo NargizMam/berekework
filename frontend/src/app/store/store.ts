@@ -16,7 +16,7 @@ import { applicationReducer } from '../../feachers/aplication/applicationSlice';
 const usersPersistConfig = {
   key: 'shop:users',
   storage: storage,
-  whitelist: ['user, employer'],
+  whitelist: ['user', 'employer'],
 };
 
 const rootReducer = combineReducers({
