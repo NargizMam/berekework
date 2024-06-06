@@ -7,7 +7,7 @@ import logo from './images/logo.png';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectReplies } from '../../../feachers/aplication/applicationSlice';
 import { useEffect, useState } from 'react';
-import { getReplyByUser } from '../../../feachers/aplication/aplicationThunk';
+import { deleteReply, getReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import dayjs from 'dayjs';
 
 const InterestedVacancies = () => {
@@ -18,6 +18,11 @@ const InterestedVacancies = () => {
   useEffect(() => {
     dispatch(getReplyByUser());
   }, [dispatch]);
+
+  const deleteHandle = async (id: string) => {
+    await dispatch(deleteReply(id)).unwrap();
+    await dispatch(getReplyByUser());
+  };
 
   const card = (
     <React.Fragment>
@@ -130,7 +135,7 @@ const InterestedVacancies = () => {
                       color="text.secondary"
                       gutterBottom
                     >
-                      {reply.status}
+                      {reply.employerStatus}
                     </Typography>
                     <img className="logo" src={logo} alt="logo" />
                     <Typography
@@ -186,10 +191,10 @@ const InterestedVacancies = () => {
                       flexDirection: 'column',
                     }}
                   >
-                    {reply.status === 'Принят' ? (
+                    {reply.employerStatus === 'Принят' ? (
                       <button className="btn-connect btn-vacancies">Связаться</button>
                     ) : null}
-                    <button className="btn-recall btn-vacancies">Отозвать</button>
+                    <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">Отозвать</button>
                   </CardActions>
                 </React.Fragment>
               </div>

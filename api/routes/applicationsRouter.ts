@@ -173,7 +173,10 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
-    const applications = await Application.find(filter).populate('vacancy').populate('user').sort({ createdAt: -1 });
+    const applications = await Application.find(filter)
+      .populate({ path: 'vacancy', populate: { path: 'employer' } })
+      .populate('user')
+      .sort({ createdAt: -1 });
 
     return res.send(applications);
   } catch (e) {

@@ -17,3 +17,7 @@ export const getCandidateByEmployer = createAsyncThunk<[], string>('application/
   const response = await axiosApi.get(`/applications/${id}`);
   return response.data;
 });
+
+export const deleteReply = createAsyncThunk<void, string>('application/delete', async (id) => {
+  await axiosApi.delete(`/applications/${id}`);
+});

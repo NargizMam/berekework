@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthResponse, GlobalError, LoginMutation, RegisterMutation } from '../model/types';
 import axiosApi from '../../../../app/axiosApi';
 import { isAxiosError } from 'axios';
-import { unsetUser } from '../model/AuthSlice';
+import { unsetEmployer, unsetUser } from '../model/AuthSlice';
 import { RootState } from '../../../../app/store/store';
 import { ValidationError } from '../../../../types';
 import { EmployerMutation } from '../../../../admin/page/employerPanel/model/types';
@@ -80,8 +80,12 @@ export const login = createAsyncThunk<AuthResponse, LoginMutation, { rejectValue
 export const logout = createAsyncThunk<void, undefined, { state: RootState }>(
   'users/logout',
   async (_, { getState, dispatch }) => {
-    const token = getState().auth.user?.token;
+    const token = getState().auth.user?.token || getState().auth.employer?.token;
     await axiosApi.delete('/user/sessions', { headers: { Authorization: 'Bearer ' + token } });
-    dispatch(unsetUser());
+    if (getState().auth.user?.token) {
+      dispatch(unsetUser());
+    } else {
+      dispatch(unsetEmployer());
+    }
   },
 );
