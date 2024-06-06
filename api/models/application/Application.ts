@@ -20,10 +20,20 @@ const applicationSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    status: {
+    // status: {
+    //   type: String,
+    //   enum: ['Новая', 'На рассмотрении', 'Принят', 'Отклонен'],
+    //   default: 'Новая',
+    // },
+    userStatus: {
       type: String,
-      enum: ['Новая', 'На рассмотрении', 'Принят', 'Отклонен'],
-      default: 'Новая',
+      enum: ['На рассмотрение', 'Принят', 'Отклонен', 'Новая вакансия', 'Заинтересован'],
+      default: 'На рассмотрение',
+    },
+    employerStatus: {
+      type: String,
+      enum: ['Новая заявка', 'Принят', 'Отклонен', 'Ожидание ответа', 'Заинтересован'],
+      default: 'Новая заявка',
     },
   },
   { timestamps: true },
