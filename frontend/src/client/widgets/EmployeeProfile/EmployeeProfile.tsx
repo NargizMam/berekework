@@ -1,26 +1,37 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAllUser } from '../../../feachers/user/usersThunk';
-import { selectUsers, selectUsersLoading } from '../../../feachers/user/usersSlice';
+import { selectEmployer } from '../../page/Auth/model/AuthSlice';
+import { getSingleUser } from '../../../feachers/user/usersThunk';
+import { selectProfile, selectUsersLoading } from '../../../feachers/user/usersSlice';
 import { API_URL } from '../../../app/constants/links';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { Loader } from '../../../shared/loader';
 import './Employee.css';
 import './MediaEmployee.css';
+import { Box } from '@mui/material';
 
 const EmployeeProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const users = useAppSelector(selectUsers);
+  const user = useAppSelector(selectProfile);
+  const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectUsersLoading);
 
   useEffect(() => {
-    if (users.length === 0) {
-      dispatch(getAllUser());
+    if (id) {
+      dispatch(getSingleUser(id));
     }
-  }, [dispatch, users.length]);
+  }, [dispatch, id]);
 
-  const user = users.find((user) => user._id === id);
+  // const handleAction = async (action: number) => {
+  //   if(action === 1) {
+  //     /// на рассмотрении
+  //   } else if (action === 2) {
+  //     /// связаться
+  //   } else {
+  //     /// отклонить
+  //   }
+  // }
 
   if (isLoading) {
     return <Loader />;
@@ -50,14 +61,28 @@ const EmployeeProfile: React.FC = () => {
       <p>
         <span>Образование:</span> {user.education}
       </p>
-      <p>
-        <span>Опыт работы:</span>{' '}
-        {user.workExperience ? `${user.workExperience.fieldOfWork}, ${user.workExperience.duration}` : 'Не указано'}
-      </p>
+      {user.workExperience.map((work) => (
+        <p>
+          <span>Опыт работы:</span>{' '}
+          {`${work.fieldOfWork} - ${work.duration}`}
+        </p>
+      ))}
       <p>
         <span>О себе:</span> {user.aboutMe}
       </p>
-      <button className="employee-btn">На рассмотрение</button>
+      {
+        employer ?
+          <Box sx={{
+            display: "flex",
+            gap: "0 15px",
+          }}>
+            <button className="employee-btn">На рассмотрение</button>
+            <button className="employee-btn">Связаться</button>
+            <button className="employee-btn">Отклонить</button>
+          </Box>
+          :
+          null
+      }
     </div>
   );
 };

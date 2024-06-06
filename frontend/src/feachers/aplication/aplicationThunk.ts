@@ -18,6 +18,15 @@ export const getCandidateByEmployer = createAsyncThunk<[], string>('application/
   return response.data;
 });
 
+interface UpdateStatus {
+  id: string;
+  status: string;
+}
+
+export const updateApplication = createAsyncThunk<void, UpdateStatus>('application/update', async ({ id, status }) => {
+  await axiosApi.patch(`/applications/${id}`, { employerStatus: status });
+});
+
 export const deleteReply = createAsyncThunk<void, string>('application/delete', async (id) => {
   await axiosApi.delete(`/applications/${id}`);
 });
