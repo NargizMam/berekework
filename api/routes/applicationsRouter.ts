@@ -72,15 +72,7 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
 
 //Обновление статуса заявки - соисктелем и работодателем
 applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) => {
-  const validStatuses = [
-    'На рассмотрение',
-    'Принят',
-    'Отклонен',
-    'Новая вакансия',
-    'Заинтересован',
-    'Новая заявка',
-    'Ожидание ответа',
-  ];
+  const validStatuses = ['Принят', 'Заинтересован'];
   try {
     // Проверка на корректность ObjectId
     let _id: Types.ObjectId;
