@@ -152,7 +152,10 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
   }
 });
 
-// Получение всех заявок. Пользователь видит только свои заявки. Работодатели видят заявки, связанные с их вакансиями. Aдмины видят все заявки.
+// Получение всех заявок.
+// Администраторы видят все заявки, которые не удалены обеими сторонами, т.е не удалены из базы данных.
+// Пользователи видят только свои заявки, которые не удалены пользователем.
+// Работодатели видят заявки, связанные с их вакансиями, которые не удалены работодателем.
 applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
   try {
     const user = req.user;
@@ -163,17 +166,17 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
       // Администраторы видят все заявки
       filter = {};
     } else if (user) {
-      // Пользователи видят только свои заявки
-      filter = { user: user._id };
+      // Пользователи видят только свои заявки, которые не удалены пользователем
+      filter = { user: user._id, isDeletedByUser: false };
     } else if (employer) {
-      // Работодатели видят заявки, связанные с их вакансиями
+      // Работодатели видят заявки, связанные с их вакансиями, которые не удалены работодателем
       const vacancies = await Vacancy.find({ employer: employer._id });
 
       if (!vacancies || vacancies.length === 0) {
         return res.status(404).send({ error: 'No vacancies found for this employer' });
       }
 
-      filter = { vacancy: { $in: vacancies.map((v) => v._id) } };
+      filter = { vacancy: { $in: vacancies.map((v) => v._id) }, isDeletedByEmployer: false };
     } else {
       return res.status(403).send({ error: 'Not authorized' });
     }
@@ -190,7 +193,7 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
   }
 });
 
-//Получение всех заявок для конкретной вакансии работодателя - доступ только у работодателя и админов.
+// Получение всех заявок для конкретной вакансии работодателя - доступ только у работодателя и админов.
 applicationsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
   try {
     let _id: Types.ObjectId;
@@ -215,10 +218,15 @@ applicationsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => 
       return res.status(403).send({ error: 'Not authorized' });
     }
 
-    const applications = await Application.find({ vacancy: _id })
-      .populate('vacancy')
-      .populate('user')
-      .sort({ createdAt: -1 });
+    // Фильтр заявок для конкретной вакансии
+    let filter: { [key: string]: any } = { vacancy: _id };
+
+    // Работодатели видят заявки, которые не были удалены ими
+    if (isEmployer) {
+      filter = { vacancy: _id, isDeletedByEmployer: false };
+    }
+
+    const applications = await Application.find(filter).populate('vacancy').populate('user').sort({ createdAt: -1 });
 
     return res.send(applications);
   } catch (e) {
@@ -230,7 +238,7 @@ applicationsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => 
   }
 });
 
-// Удаление заявки. Доступ разрешен администратору и соискателям, работодателям создавшим заявку.
+//Удаление заявки. Доступ разрешен администратору, соискателям, работодателям.
 applicationsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
   try {
     let _id: Types.ObjectId;
@@ -240,10 +248,7 @@ applicationsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) 
       return res.status(404).send({ error: 'Wrong ObjectId!' });
     }
 
-    const application = await Application.findById(_id).populate({
-      path: 'vacancy',
-      populate: { path: 'employer' },
-    });
+    const application = await Application.findById(_id).populate('vacancy');
 
     if (!application) {
       return res.status(404).send({ error: 'Application not found' });
@@ -257,23 +262,45 @@ applicationsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) 
       return res.status(404).send({ error: 'Vacancy not found' });
     }
 
-    // Проверка роли пользователя, создателя заявки или работодателя, создавшего вакансию
+    // Проверка прав на удаление заявки
     const isAdmin = req.user?.role === 'superadmin';
     const isApplicant = application.user.equals(req.user?._id);
     const isEmployer = vacancy.employer ? vacancy.employer.equals(req.employer?._id) : false;
 
-    // Проверка прав на удаление заявки
     if (!isAdmin && !isApplicant && !isEmployer) {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
-    const result = await Application.findByIdAndDelete(_id);
+    let message = '';
 
-    if (!result) {
-      return res.status(404).send({ error: 'Failed to delete application' });
+    // Логика удаления для супер админа
+    if (isAdmin) {
+      await Application.findByIdAndDelete(_id);
+      return res.send({ message: 'Application permanently deleted by superadmin' });
     }
 
-    return res.send({ message: 'Application deleted successfully' });
+    // Установка флагов удаления и обновление статуса для всех пользователей
+    application.userStatus = 'Отклонен'; // Обновление статуса соискателя на "Отклонен"
+    application.employerStatus = 'Отклонен'; // Обновление статуса работодателя на "Отклонен"
+
+    if (isApplicant) {
+      application.isDeletedByUser = true;
+      message = 'Application deleted by applicant and both statuses set to "Отклонен"';
+    } else if (isEmployer) {
+      application.isDeletedByEmployer = true;
+      message = 'Application deleted by employer and both statuses set to "Отклонен"';
+    }
+
+    // Если оба флага установлены, удаляем заявку из базы данных
+    if (application.isDeletedByUser && application.isDeletedByEmployer) {
+      await Application.findByIdAndDelete(_id);
+      return res.send({ message: 'Application permanently deleted as both user and employer marked it deleted' });
+    }
+
+    // В противном случае сохраняем изменения
+    const result = await application.save();
+
+    return res.send({ message, application: result });
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(e);

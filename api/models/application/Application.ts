@@ -35,6 +35,14 @@ const applicationSchema = new Schema(
       enum: ['employer', 'user'],
       required: true,
     },
+    isDeletedByEmployer: {
+      type: Boolean,
+      default: false,
+    },
+    isDeletedByUser: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
