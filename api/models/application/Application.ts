@@ -30,6 +30,11 @@ const applicationSchema = new Schema(
       enum: ['Новая заявка', 'Принят', 'Отклонен', 'Ожидание ответа', 'Заинтересован'],
       default: 'Новая заявка',
     },
+    createdBy: {
+      type: String,
+      enum: ['employer', 'user'],
+      required: true,
+    },
   },
   { timestamps: true },
 );

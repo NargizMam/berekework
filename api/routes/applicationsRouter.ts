@@ -20,13 +20,16 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
 
     // Определение пользователя
     let user;
+    let createdBy;
     if (req.user) {
       user = req.user; // Аутентифицированный пользователь
+      createdBy = 'user';
     } else if (req.employer && userId) {
       user = await User.findById(userId); // Пользователь, выбранный работодателем
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
+      createdBy = 'employer';
     } else {
       return res.status(400).json({ error: 'User not authenticated or specified' });
     }
@@ -45,11 +48,13 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
         user: user._id,
         employerStatus: 'Ожидание ответа',
         userStatus: 'Новая вакансия',
+        createdBy,
       });
     } else {
       newApplication = new Application({
         vacancy: vacancyId,
         user: user._id,
+        createdBy,
       });
     }
 
