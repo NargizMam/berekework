@@ -28,8 +28,10 @@ export const VacancyDetailPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    dispatch(getCandidateByEmployer(id));
-  }, [dispatch, id]);
+    if (employer) {
+      dispatch(getCandidateByEmployer(id));
+    }
+  }, [dispatch, employer, id]);
 
   const sendReplyHandle = async (id: string) => {
     await dispatch(sendReplyByUser(id)).unwrap();
