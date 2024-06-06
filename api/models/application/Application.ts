@@ -20,11 +20,6 @@ const applicationSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    // status: {
-    //   type: String,
-    //   enum: ['Новая', 'На рассмотрении', 'Принят', 'Отклонен'],
-    //   default: 'Новая',
-    // },
     userStatus: {
       type: String,
       enum: ['На рассмотрение', 'Принят', 'Отклонен', 'Новая вакансия', 'Заинтересован'],
