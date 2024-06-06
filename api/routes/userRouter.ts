@@ -6,7 +6,7 @@ import Employer from '../models/employer/employerModel';
 import config from '../config';
 import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
-import auth from '../middleware/auth';
+import auth, { RequestWithUser } from '../middleware/auth';
 
 const client = new OAuth2Client(config.google.clientId);
 
@@ -118,7 +118,7 @@ userRouter.post('/sessions', async (req, res, next) => {
   }
 });
 
-userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req, res, next) => {
+userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req: RequestWithUser, res, next) => {
   try {
     if (req.query.filter === 'moderator') {
       const moderators = await User.find({ role: 'admin' });
@@ -138,7 +138,7 @@ userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req,
   }
 });
 
-userRouter.get('/:id', async (req, res, next) => {
+userRouter.get('/:id', auth, permit('superadmin', 'admin', 'employer'), async (req: RequestWithUser, res, next) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId);
