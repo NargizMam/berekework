@@ -16,7 +16,7 @@ interface Reply {
 interface Candidate {
   _id: string;
   createdAt: string;
-  status: string;
+  employerStatus: string;
   updatedAt: string;
   user: User;
 }
