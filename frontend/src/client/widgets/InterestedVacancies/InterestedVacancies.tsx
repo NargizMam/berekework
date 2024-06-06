@@ -110,94 +110,98 @@ const InterestedVacancies = () => {
             Отклики
           </h6>
         )}
-        {reply ? (
-          replies.map((reply) => (
-            <div className="card-vacancies">
-              <React.Fragment>
-                <CardContent>
-                  <Typography
-                    sx={{
-                      fontSize: 14,
-                      background: '#F0F0F0',
-                      padding: '10px 20px',
-                      borderRadius: '30px',
-                      width: '172px',
-                      fontWeight: '500',
-                      color: 'black',
-                      textAlign: 'center',
-                    }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {reply.status}
-                  </Typography>
-                  <img className="logo" src={logo} alt="logo" />
-                  <Typography
-                    sx={{
-                      fontSize: 14,
-                      fontWeight: '600',
-                      marginTop: '40px',
-                    }}
-                    component="div"
-                  >
-                    {reply.vacancy.vacancyTitle}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: '#8E8E8E',
-                      margin: '30px 0 20px 0',
-                    }}
-                    color="text.secondary"
-                  >
-                    {reply.vacancy.employer.companyName},{reply.vacancy.city}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: 20,
-                      fontWeight: '600',
-                      color: '#00000',
-                    }}
-                    variant="body2"
-                  >
-                    от {reply.vacancy.salary.minSalary} до {reply.vacancy.salary.maxSalary} сом
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: 14,
-                      color: '#8E8E8E',
-                      marginTop: '20px',
-                    }}
-                  >
-                    <span
-                      style={{
+        <div className="interested-vacancies-card-wrapper">
+          {reply ? (
+            replies.map((reply) => (
+              <div className="card-vacancies">
+                <React.Fragment>
+                  <CardContent>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        background: '#F0F0F0',
+                        padding: '10px 20px',
+                        borderRadius: '30px',
+                        width: '172px',
+                        fontWeight: '500',
                         color: 'black',
-                        marginRight: '5px',
+                        textAlign: 'center',
+                      }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {reply.status}
+                    </Typography>
+                    <img className="logo" src={logo} alt="logo" />
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        fontWeight: '600',
+                        marginTop: '40px',
+                      }}
+                      component="div"
+                    >
+                      {reply.vacancy.vacancyTitle}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: '#8E8E8E',
+                        margin: '30px 0 20px 0',
+                      }}
+                      color="text.secondary"
+                    >
+                      {reply.vacancy.employer.companyName},{reply.vacancy.city}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontWeight: '600',
+                        color: '#00000',
+                      }}
+                      variant="body2"
+                    >
+                      от {reply.vacancy.salary.minSalary} до {reply.vacancy.salary.maxSalary} сом
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        color: '#8E8E8E',
+                        marginTop: '20px',
                       }}
                     >
-                      Дата:
-                    </span>{' '}
-                    {dayjs(reply.createdAt).format('DD.MM.YYYY')}
-                  </Typography>
-                </CardContent>
-                <CardActions
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  {reply.status === 'Принят' ? <button className="btn-connect btn-vacancies">Связаться</button> : null}
-                  <button className="btn-recall btn-vacancies">Отозвать</button>
-                </CardActions>
-              </React.Fragment>
-            </div>
-          ))
-        ) : (
-          <>
-            <div className="card-vacancies">{card}</div>
-            <div className="card-vacancies">{card}</div>
-            <div className="card-vacancies">{card}</div>
-          </>
-        )}
+                      <span
+                        style={{
+                          color: 'black',
+                          marginRight: '5px',
+                        }}
+                      >
+                        Дата:
+                      </span>{' '}
+                      {dayjs(reply.createdAt).format('DD.MM.YYYY')}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {reply.status === 'Принят' ? (
+                      <button className="btn-connect btn-vacancies">Связаться</button>
+                    ) : null}
+                    <button className="btn-recall btn-vacancies">Отозвать</button>
+                  </CardActions>
+                </React.Fragment>
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="card-vacancies">{card}</div>
+              <div className="card-vacancies">{card}</div>
+              <div className="card-vacancies">{card}</div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
