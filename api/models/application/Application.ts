@@ -20,10 +20,28 @@ const applicationSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    status: {
+    userStatus: {
       type: String,
-      enum: ['Новая', 'На рассмотрении', 'Принят', 'Отклонен'],
-      default: 'Новая',
+      enum: ['На рассмотрение', 'Принят', 'Отклонен', 'Новая вакансия', 'Заинтересован'],
+      default: 'На рассмотрение',
+    },
+    employerStatus: {
+      type: String,
+      enum: ['Новая заявка', 'Принят', 'Отклонен', 'Ожидание ответа', 'Заинтересован'],
+      default: 'Новая заявка',
+    },
+    createdBy: {
+      type: String,
+      enum: ['employer', 'user'],
+      required: true,
+    },
+    isDeletedByEmployer: {
+      type: Boolean,
+      default: false,
+    },
+    isDeletedByUser: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },

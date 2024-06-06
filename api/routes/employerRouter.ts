@@ -129,4 +129,31 @@ employerRouter.delete('/:id', async (req, res, next) => {
   }
 });
 
+employerRouter.post('/sessions', async (req, res, next) => {
+  try {
+    let employer = await Employer.findOne({ email: req.body.email });
+
+    if (!employer) {
+      employer = await Employer.findOne({ email: req.body.email });
+    }
+
+    if (!employer) {
+      return res.status(422).send({ error: 'Email and password not correct!' });
+    }
+
+    const isMatch = await employer.checkPassword(req.body.password);
+
+    if (!isMatch) {
+      return res.status(422).send({ error: 'Email and password not correct!' });
+    }
+
+    employer.generateToken();
+    await employer.save();
+
+    return res.send({ message: 'Email and password are correct!', employer });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 export default employerRouter;
