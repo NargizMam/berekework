@@ -13,7 +13,9 @@ import { selectVacancies, selectVacanciesLoading } from '../../../feachers/vacan
 import { getAllVacancy } from '../../../feachers/vacancy/vacancyThunk';
 import { selectRepliesLoading } from '../../../feachers/aplication/applicationSlice';
 import { Loader } from '../../../shared/loader';
-import { openErrorMessage } from '../../../widgets/WarningMessage/warningMessageSlice';
+import { selectEmployer } from '../../page/Auth/model/AuthSlice';
+// import { enqueueSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 
 export interface SelectVacancyDialogProps {
   open: boolean;
@@ -24,8 +26,13 @@ export interface SelectVacancyDialogProps {
 const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose, userId }) => {
   const [value, setValue] = useState<string>('');
   const radioGroupRef = useRef<HTMLElement>(null);
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const options = useAppSelector(selectVacancies);
+  const currentEmployer = useAppSelector(selectEmployer);
+  const filteredOptions = currentEmployer
+    ? options.filter((option) => option.employer._id === currentEmployer._id)
+    : [];
   const isVacanciesLoading = useAppSelector(selectVacanciesLoading);
   const isRepliesLoading = useAppSelector(selectRepliesLoading);
 
@@ -52,9 +59,10 @@ const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose
   const handleOk = async () => {
     try {
       await dispatch(sendReplyByUser({ vacancyId: value, userId })).unwrap();
+      enqueueSnackbar('Отклик успешно отправлен кандидату', { variant: 'success' });
       onClose(value);
     } catch (error: any) {
-      dispatch(openErrorMessage(error.message || 'Произошла ошибка при отправке заявки.'));
+      enqueueSnackbar(error.error || 'Произошла ошибка при отправке заявки', { variant: 'error' });
     }
   };
 
@@ -80,7 +88,7 @@ const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose
       <DialogTitle>Выберите вакансию</DialogTitle>
       <DialogContent dividers>
         <RadioGroup ref={radioGroupRef} aria-label="vacancy" name="vacancy" value={value} onChange={handleChange}>
-          {options.map((option) => (
+          {filteredOptions.map((option) => (
             <FormControlLabel value={option._id} key={option._id} control={<Radio />} label={option.vacancyTitle} />
           ))}
         </RadioGroup>
