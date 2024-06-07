@@ -8,6 +8,7 @@ interface Reply {
   _id: string;
   createdAt: string;
   employerStatus: string;
+  userStatus: string;
   updatedAt: string;
   user: string;
   vacancy: Vacancy;
