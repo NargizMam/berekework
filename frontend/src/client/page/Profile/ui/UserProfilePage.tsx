@@ -77,7 +77,7 @@ export const UserProfilePage = () => {
 
           <p className="applicantInfo">{profile.aboutMe}</p>
 
-          <NavLink to="/userRefactor" className="changeBtn">
+          <NavLink to="/userProfile-submit" className="changeBtn">
             <EditIcon style={{color: '#FFFFFF', marginRight: '20px'}}/>
             Редактировать профиль
           </NavLink>
