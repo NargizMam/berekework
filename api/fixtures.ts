@@ -17,7 +17,16 @@ const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
 
-  const collections = ['vacancies', 'users', 'employers'];
+  const collections = [
+    'components',
+    'headings',
+    'vacanciesblocks',
+    'vacancies',
+    'users',
+    'employers',
+    'tariffs',
+    'lastnewsblocks',
+  ];
 
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
@@ -263,7 +272,6 @@ const run = async () => {
       password: 'password123',
       token: randomUUID(),
       role: 'employer',
-      isPublished: true,
       companyName: 'Company A',
       industry: 'Technology',
       description: 'Company A is a leading technology firm specializing in software development.',
@@ -272,6 +280,7 @@ const run = async () => {
       logo: 'fixtures/logo_company_megaservice.png',
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac1._id, vac2._id, vac3._id],
+      isPublished: true,
     },
     {
       email: 'employer2@example.com',
