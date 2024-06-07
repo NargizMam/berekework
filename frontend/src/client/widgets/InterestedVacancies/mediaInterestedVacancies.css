@@ -38,3 +38,9 @@
     margin: 20px 0;
   }
 }
+
+@media (max-width: 900px) {
+  .interested-vacancies-card-wrapper {
+    justify-content: center;
+  }
+}

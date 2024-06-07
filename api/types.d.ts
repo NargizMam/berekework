@@ -47,6 +47,7 @@ export interface UserFields {
     duration: string;
   };
   preferredJob?: string;
+  mainDuration: string;
   preferredCity?: string;
   contacts?: {
     phone?: string;

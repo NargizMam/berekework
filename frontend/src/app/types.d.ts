@@ -45,7 +45,8 @@ export interface User {
   _id: string;
   email: string;
   role: string;
-  avatar: File | string | null;
+  // avatar: File | string | null;
+  avatar: string | null;
   name?: string;
   surname?: string;
   patronymic?: string;

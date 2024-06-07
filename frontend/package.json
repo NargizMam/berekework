@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start:test": "VITE_API_URL=http://localhost:8010 PORT=5183 vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "@types/fslightbox-react": "^1.7.7",
+    "@types/node": "^20.14.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

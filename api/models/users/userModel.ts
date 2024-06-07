@@ -61,6 +61,7 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     },
   ],
   preferredJob: String,
+  mainDuration: String,
   preferredCity: String,
   contacts: {
     phone: String,

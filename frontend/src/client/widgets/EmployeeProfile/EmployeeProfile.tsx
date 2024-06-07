@@ -1,26 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAllUser } from '../../../feachers/user/usersThunk';
-import { selectUsers, selectUsersLoading } from '../../../feachers/user/usersSlice';
+import { selectEmployer } from '../../page/Auth/model/AuthSlice';
+import { getSingleUser } from '../../../feachers/user/usersThunk';
+import { selectProfile, selectUsersLoading } from '../../../feachers/user/usersSlice';
 import { API_URL } from '../../../app/constants/links';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { Loader } from '../../../shared/loader';
 import './Employee.css';
 import './MediaEmployee.css';
+import { Box } from '@mui/material';
+import SelectVacancyDialog from './selectVacancyDialog';
 
 const EmployeeProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const users = useAppSelector(selectUsers);
+  const user = useAppSelector(selectProfile);
+  const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectUsersLoading);
 
-  useEffect(() => {
-    if (users.length === 0) {
-      dispatch(getAllUser());
-    }
-  }, [dispatch, users.length]);
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const user = users.find((user) => user._id === id);
+  useEffect(() => {
+    if (id) {
+      dispatch(getSingleUser(id));
+    }
+  }, [dispatch, id]);
+
+  // const handleAction = async (action: number) => {
+  //   if(action === 1) {
+  //     /// на рассмотрении
+  //   } else if (action === 2) {
+  //     /// связаться
+  //   } else {
+  //     /// отклонить
+  //   }
+  // }
 
   if (isLoading) {
     return <Loader />;
@@ -29,6 +43,14 @@ const EmployeeProfile: React.FC = () => {
   if (!user) {
     return <div>Пользователь не найден</div>;
   }
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   const image = user.avatar ? API_URL + user.avatar : '/path/to/default-avatar.jpg';
 
@@ -50,14 +72,28 @@ const EmployeeProfile: React.FC = () => {
       <p>
         <span>Образование:</span> {user.education}
       </p>
-      <p>
-        <span>Опыт работы:</span>{' '}
-        {user.workExperience ? `${user.workExperience.fieldOfWork}, ${user.workExperience.duration}` : 'Не указано'}
-      </p>
+      {user.workExperience.map((work) => (
+        <p>
+          <span>Опыт работы:</span> {`${work.fieldOfWork} - ${work.duration}`}
+        </p>
+      ))}
       <p>
         <span>О себе:</span> {user.aboutMe}
       </p>
-      <button className="employee-btn">На рассмотрение</button>
+      <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
+      {employer ? (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '0 15px',
+          }}
+        >
+          <button className="employee-btn" onClick={handleOpenDialog}>
+            На рассмотрение
+          </button>
+          <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
+        </Box>
+      ) : null}
     </div>
   );
 };
