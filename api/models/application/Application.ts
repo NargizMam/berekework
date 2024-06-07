@@ -22,8 +22,8 @@ const applicationSchema = new Schema(
     },
     userStatus: {
       type: String,
-      enum: ['На рассмотрение', 'Принят', 'Отклонен', 'Новая вакансия', 'Заинтересован'],
-      default: 'На рассмотрение',
+      enum: ['На рассмотрении', 'Принят', 'Отклонен', 'Новая вакансия', 'Заинтересован'],
+      default: 'На рассмотрении',
     },
     employerStatus: {
       type: String,
