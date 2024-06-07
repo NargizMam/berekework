@@ -7,6 +7,7 @@ import { User } from '../../app/types';
 interface Reply {
   _id: string;
   createdAt: string;
+  createdBy: string;
   employerStatus: string;
   userStatus: string;
   updatedAt: string;

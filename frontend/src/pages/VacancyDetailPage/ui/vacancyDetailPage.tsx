@@ -15,10 +15,11 @@ import {
   updateApplication,
 } from '../../../feachers/aplication/aplicationThunk';
 import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
-import { selectEmployer } from '../../../client/page/Auth/model/AuthSlice';
+import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 
 export const VacancyDetailPage = () => {
   const employer = useAppSelector(selectEmployer);
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const { id } = useParams() as { id: string };
   const vacancy = useAppSelector(selectVacancy);
@@ -38,18 +39,7 @@ export const VacancyDetailPage = () => {
   }, [dispatch, employer, id]);
 
   const sendReplyHandle = async (id: string) => {
-    await dispatch(sendReplyByUser(id)).unwrap();
-  };
-
-  const handleApplicationAction = async (idApplication: string, action: number) => {
-    if (action === 1) {
-      await dispatch(updateApplication({ id: idApplication, status: 'Заинтересован' })).unwrap();
-    } else if (action === 2) {
-      await dispatch(updateApplication({ id: idApplication, status: 'Принят' })).unwrap();
-    } else {
-      await dispatch(updateApplication({ id: idApplication, status: 'Отклонен' })).unwrap();
-    }
-    await dispatch(getCandidateByEmployer(id));
+    await dispatch(sendReplyByUser({vacancyId: id, userId: user?._id})).unwrap();
   };
 
   if (loading) {
@@ -143,16 +133,6 @@ export const VacancyDetailPage = () => {
                 <span>{index + 1}</span>
                 {candidate.user.name} - {candidate.user.preferredJob} - {candidate.employerStatus}
               </p>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '0 15px',
-                }}
-              >
-                <button onClick={() => handleApplicationAction(candidate._id, 1)}>Заинтересовать</button>
-                <button onClick={() => handleApplicationAction(candidate._id, 2)}>Принят</button>
-                <button onClick={() => handleApplicationAction(candidate._id, 3)}>отклонить</button>
-              </Box>
             </Box>
           ))}
         </Box>

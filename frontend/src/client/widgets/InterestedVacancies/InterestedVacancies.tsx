@@ -7,7 +7,7 @@ import logo from './images/logo.png';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectReplies } from '../../../feachers/aplication/applicationSlice';
 import { useEffect, useState } from 'react';
-import { deleteReply, getReplyByUser } from '../../../feachers/aplication/aplicationThunk';
+import { deleteReply, getReplyByUser, updateApplication } from '../../../feachers/aplication/aplicationThunk';
 import dayjs from 'dayjs';
 
 interface TabPanelProps {
@@ -52,89 +52,15 @@ const InterestedVacancies = () => {
     setCurrentTab(current);
   };
 
+  const acceptedHandle = async (id: string) => {
+    await dispatch(updateApplication({ id, userStatus: 'Заинтересован' })).unwrap();
+    await dispatch(getReplyByUser());
+  };
+
   const deleteHandle = async (id: string) => {
     await dispatch(deleteReply(id)).unwrap();
     await dispatch(getReplyByUser());
   };
-
-  const card = (
-    <React.Fragment>
-      <CardContent>
-        <Typography
-          sx={{
-            fontSize: 14,
-            background: '#F0F0F0',
-            padding: '10px 20px',
-            borderRadius: '30px',
-            width: '172px',
-            fontWeight: '500',
-            color: 'black',
-            textAlign: 'center',
-          }}
-          color="text.secondary"
-          gutterBottom
-        >
-          На рассмотрении
-        </Typography>
-        <img className="logo" src={logo} alt="logo" />
-        <Typography
-          sx={{
-            fontSize: 14,
-            fontWeight: '600',
-            marginTop: '40px',
-          }}
-          component="div"
-        >
-          Менеджер по продажам услуг
-        </Typography>
-        <Typography
-          sx={{
-            color: '#8E8E8E',
-            margin: '30px 0 20px 0',
-          }}
-          color="text.secondary"
-        >
-          Satcom, Бишкек
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: 20,
-            fontWeight: '600',
-            color: '#00000',
-          }}
-          variant="body2"
-        >
-          от 25 000 до 35 000 сом
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: 14,
-            color: '#8E8E8E',
-            marginTop: '20px',
-          }}
-        >
-          <span
-            style={{
-              color: 'black',
-              marginRight: '5px',
-            }}
-          >
-            Дата:
-          </span>{' '}
-          21.04.2024
-        </Typography>
-      </CardContent>
-      <CardActions
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <button className="btn-connect btn-vacancies">Связаться</button>
-        <button className="btn-recall btn-vacancies">Отозвать</button>
-      </CardActions>
-    </React.Fragment>
-  );
 
   return (
     <div className="interested-vacancies-block">
@@ -146,93 +72,184 @@ const InterestedVacancies = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={currentTab} index={0}>
-          <div className="card-vacancies">{card}</div>
-          <div className="card-vacancies">{card}</div>
-          <div className="card-vacancies">{card}</div>
-        </CustomTabPanel>
-        <CustomTabPanel index={1} value={currentTab}>
-          {replies.map((reply) => (
-            <Box className="card-vacancies">
-              <CardContent>
-                <Typography
-                  sx={{
-                    fontSize: 14,
-                    background: '#F0F0F0',
-                    padding: '10px 20px',
-                    borderRadius: '30px',
-                    width: '172px',
-                    fontWeight: '500',
-                    color: 'black',
-                    textAlign: 'center',
-                  }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {reply.userStatus}
-                </Typography>
-                <img className="logo" src={logo} alt="logo" />
-                <Typography
-                  sx={{
-                    fontSize: 14,
-                    fontWeight: '600',
-                    marginTop: '40px',
-                  }}
-                  component="div"
-                >
-                  {reply.vacancy.vacancyTitle}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: '#8E8E8E',
-                    margin: '30px 0 20px 0',
-                  }}
-                  color="text.secondary"
-                >
-                  {reply.vacancy.employer.companyName},{reply.vacancy.city}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    fontWeight: '600',
-                    color: '#00000',
-                  }}
-                  variant="body2"
-                >
-                  от {reply.vacancy.salary.minSalary} до {reply.vacancy.salary.maxSalary} сом
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 14,
-                    color: '#8E8E8E',
-                    marginTop: '20px',
-                  }}
-                >
-                  <span
-                    style={{
-                      color: 'black',
-                      marginRight: '5px',
+          {replies.map((reply) => {
+            if (reply.createdBy === 'employer') {
+              return (
+                <Box className="card-vacancies">
+                  <CardContent>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        background: '#F0F0F0',
+                        padding: '10px 20px',
+                        borderRadius: '30px',
+                        width: '172px',
+                        fontWeight: '500',
+                        color: 'black',
+                        textAlign: 'center',
+                      }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {reply.userStatus}
+                    </Typography>
+                    <img className="logo" src={logo} alt="logo" />
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        fontWeight: '600',
+                        marginTop: '40px',
+                      }}
+                      component="div"
+                    >
+                      {reply.vacancy.vacancyTitle}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: '#8E8E8E',
+                        margin: '30px 0 20px 0',
+                      }}
+                      color="text.secondary"
+                    >
+                      {reply.vacancy.employer.companyName}, {reply.vacancy.city}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontWeight: '600',
+                        color: '#00000',
+                      }}
+                      variant="body2"
+                    >
+                      от {reply.vacancy.salary.minSalary} до {reply.vacancy.salary.maxSalary} сом
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        color: '#8E8E8E',
+                        marginTop: '20px',
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: 'black',
+                          marginRight: '5px',
+                        }}
+                      >
+                        Дата:
+                      </span>{' '}
+                      {dayjs(reply.createdAt).format('DD.MM.YYYY')}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
                     }}
                   >
-                    Дата:
-                  </span>{' '}
-                  {dayjs(reply.createdAt).format('DD.MM.YYYY')}
-                </Typography>
-              </CardContent>
-              <CardActions
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                {reply.employerStatus === 'Принят' ? (
-                  <button className="btn-connect btn-vacancies">Связаться</button>
-                ) : null}
-                <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">
-                  Отозвать
-                </button>
-              </CardActions>
-            </Box>
-          ))}
+                    {reply.userStatus !== 'Заинтересован' ? (
+                      <button onClick={() => acceptedHandle(reply._id)} className="btn-connect btn-vacancies">
+                        Связаться
+                      </button>
+                    ) : null}
+                    <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">
+                      Отозвать
+                    </button>
+                  </CardActions>
+                </Box>
+              );
+            }
+            return null;
+          })}
+        </CustomTabPanel>
+        <CustomTabPanel index={1} value={currentTab}>
+          {replies.map((reply) => {
+            if (reply.createdBy === 'user') {
+              return (
+                <Box className="card-vacancies">
+                  <CardContent>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        background: '#F0F0F0',
+                        padding: '10px 20px',
+                        borderRadius: '30px',
+                        width: '172px',
+                        fontWeight: '500',
+                        color: 'black',
+                        textAlign: 'center',
+                      }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {reply.userStatus}
+                    </Typography>
+                    <img className="logo" src={logo} alt="logo" />
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        fontWeight: '600',
+                        marginTop: '40px',
+                      }}
+                      component="div"
+                    >
+                      {reply.vacancy.vacancyTitle}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: '#8E8E8E',
+                        margin: '30px 0 20px 0',
+                      }}
+                      color="text.secondary"
+                    >
+                      {reply.vacancy.employer.companyName},{reply.vacancy.city}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontWeight: '600',
+                        color: '#00000',
+                      }}
+                      variant="body2"
+                    >
+                      от {reply.vacancy.salary.minSalary} до {reply.vacancy.salary.maxSalary} сом
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        color: '#8E8E8E',
+                        marginTop: '20px',
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: 'black',
+                          marginRight: '5px',
+                        }}
+                      >
+                        Дата:
+                      </span>{' '}
+                      {dayjs(reply.createdAt).format('DD.MM.YYYY')}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {reply.employerStatus === 'Принят' ? (
+                      <button className="btn-connect btn-vacancies">Связаться</button>
+                    ) : null}
+                    <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">
+                      Отозвать
+                    </button>
+                  </CardActions>
+                </Box>
+              );
+            }
+            return null;
+          })}
         </CustomTabPanel>
       </div>
     </div>
