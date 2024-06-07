@@ -9,11 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { getVacancyById } from '../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy, selectVacancyLoading } from '../../../feachers/vacancy/vacancySlice';
 import './vacancyDetailPage.css';
-import {
-  getCandidateByEmployer,
-  sendReplyByUser,
-  updateApplication,
-} from '../../../feachers/aplication/aplicationThunk';
+import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
 import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 
@@ -39,7 +35,7 @@ export const VacancyDetailPage = () => {
   }, [dispatch, employer, id]);
 
   const sendReplyHandle = async (id: string) => {
-    await dispatch(sendReplyByUser({vacancyId: id, userId: user?._id})).unwrap();
+    await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
   };
 
   if (loading) {

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../app/axiosApi';
+import { ApplicationResponse } from './types';
 
 //Создание новой заявки на вакансии
 export const sendReplyByUser = createAsyncThunk<void, { vacancyId: string; userId?: string }>(
@@ -42,4 +43,10 @@ export const updateApplication = createAsyncThunk<void, UpdateStatus>(
 
 export const deleteReply = createAsyncThunk<void, string>('application/delete', async (id) => {
   await axiosApi.delete(`/applications/${id}`);
+});
+
+// Личный кабинет работодателя
+export const getCandidates = createAsyncThunk<ApplicationResponse[]>('application/getAllForEmployee', async () => {
+  const response = await axiosApi.get<ApplicationResponse[]>('applications');
+  return response.data;
 });
