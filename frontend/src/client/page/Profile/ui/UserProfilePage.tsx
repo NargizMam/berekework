@@ -19,7 +19,7 @@ export const UserProfilePage = () => {
   const dispatch = useAppDispatch();
   const profile = useAppSelector(selectProfile);
   const loading = useAppSelector(selectProfileLoading);
-
+  console.log(profile);
   useEffect(() => {
     if (user) {
       dispatch(getSingleUser(user._id));
@@ -41,7 +41,6 @@ export const UserProfilePage = () => {
   return (
     <div style={{ marginTop: '40px', marginBottom: '100px' }}>
       <div className="profileContainer">
-        <div className="whiteBackground"></div>
         <div className="applicantContainer">
           <div className="photoFrame">
             {profile.avatar ? (
@@ -55,29 +54,34 @@ export const UserProfilePage = () => {
           <p className="profileTitle">
             {profile.surname} {profile.name}
           </p>
+          {profile.preferredJob && profile.country && profile.city && profile.dateOfBirth}
           <p className="applicantInfo">{profile.preferredJob}</p>
-          <div className="infoBlock">
-            <div style={{ display: 'flex', marginBottom: '40px', marginRight: '40px', alignItems: 'center' }}>
-              <PersonOutlineIcon sx={{ marginRight: '5px' }} />
-              <p style={{ margin: 0 }} className="applicantInfo">
-                {' '}
-                {age} года
-              </p>
+          {profile.dateOfBirth ?
+            <div className="infoBlock">
+              <div style={{display: 'flex', marginBottom: '40px', marginRight: '40px', alignItems: 'center'}}>
+                <PersonOutlineIcon sx={{marginRight: '5px'}}/>
+                <p style={{margin: 0}} className="applicantInfo">
+                  {age} года
+                </p>
+              </div>
+              <div style={{display: 'flex', marginBottom: '40px', alignItems: 'center'}}>
+                <LocationOnIcon sx={{marginRight: '5px'}}/>
+                <p style={{margin: 0}} className="applicantInfo">
+                  {profile.country}, {profile.city}
+                </p>
+              </div>
             </div>
-            <div style={{ display: 'flex', marginBottom: '40px', alignItems: 'center' }}>
-              <LocationOnIcon sx={{ marginRight: '5px' }} />
-              <p style={{ margin: 0 }} className="applicantInfo">
-                {profile.country}, {profile.city}
-              </p>
-            </div>
-          </div>
+              :
+            <p style={{margin: 0}} className="applicantInfo">Данных нет</p>
+          }
+
           <p className="applicantInfo">{profile.aboutMe}</p>
 
-          <NavLink to="/applicantRefactor" className="changeBtn">
-            <EditIcon style={{ color: '#FFFFFF', marginRight: '20px' }} />
+          <NavLink to="/userRefactor" className="changeBtn">
+            <EditIcon style={{color: '#FFFFFF', marginRight: '20px'}}/>
             Редактировать профиль
           </NavLink>
-          <InterestedVacancies />
+          <InterestedVacancies/>
         </div>
       </div>
     </div>

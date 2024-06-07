@@ -78,7 +78,7 @@ const ApplicantFullForm: React.FC<Props> = ({ applicant, onSubmit, loading }) =>
   };
 
   const addFieldToFormState = (newField: WorkExperience) => {
-    const existingFieldId = state.workExperience.findIndex((field) => field.id === newField.id);
+    const existingFieldId = state.workExperience.findIndex((field) => field._id === newField._id);
 
     if (existingFieldId !== -1) {
       setState((prevState) => ({
