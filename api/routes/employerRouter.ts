@@ -49,6 +49,30 @@ employerRouter.post(
     }
   },
 );
+
+employerRouter.patch('/:id', async (req, res, next) => {
+  try {
+    const employer = await Employer.findByIdAndUpdate(req.params.id, [
+      { $set: { isPublished: { $eq: [false, '$isPublished'] } } },
+    ]);
+
+    if (!employer) {
+      return res.status(404).send({ message: 'Employer not found!' });
+    }
+
+    // await transporter.sendMail({
+    //   from: '04072002mu@gmail.com',
+    //   to: req.body.email,
+    //   subject: 'Employer details updated',
+    //   text: `${req.body.email}, your employer status have been updated!`,
+    // });
+
+    return res.send({ message: 'Employer updated successfully!', employer });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 employerRouter.put(
   '/:id',
   multiUpload.fields([
