@@ -49,6 +49,14 @@ const Header = () => {
       <ul className="main-mav-web">
         {headerPrismicResponse?.body[0].items &&
           headerPrismicResponse.body[0].items.map((item, index) => {
+            if (user?.role !== "employer" || !user) {
+              if (item.name_link === 'Для работодателей'){
+                return null;
+              }
+              // if (item.name_link === 'Потенциальные сотрудники'){
+              //   return null;
+              // }
+            }
             return (
               <li key={index + headerPrismicResponse?.body[0].id} className="main-nav-item">
                 <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
