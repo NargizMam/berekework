@@ -138,7 +138,7 @@ userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req:
   }
 });
 
-userRouter.get('/:id', auth, permit('superadmin', 'admin', 'employer'), async (req: RequestWithUser, res, next) => {
+userRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId);
@@ -256,7 +256,7 @@ userRouter.delete('/:id', async (req, res, next) => {
       }
       return res.send({ text: 'User deleted' });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   } else {
     try {

@@ -72,7 +72,7 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
 
 //Обновление статуса заявки - соисктелем и работодателем
 applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) => {
-  const validStatuses = ['Принят', 'Заинтересован'];
+  const validStatuses = ['Принят', 'Заинтересован', 'Отклонен', 'Новая вакансия'];
   try {
     // Проверка на корректность ObjectId
     let _id: Types.ObjectId;
@@ -173,7 +173,10 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
-    const applications = await Application.find(filter).populate('vacancy').populate('user').sort({ createdAt: -1 });
+    const applications = await Application.find(filter)
+      .populate({ path: 'vacancy', populate: { path: 'employer' } })
+      .populate('user')
+      .sort({ createdAt: -1 });
 
     return res.send(applications);
   } catch (e) {
