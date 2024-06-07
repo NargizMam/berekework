@@ -28,7 +28,7 @@ const data: {
     age: '22',
     fieldOfWork: 'Повар',
     status: 'Отклонен',
-    contacts: '',
+    contacts: '888777555',
   },
   {
     employeeId: '124',
@@ -45,7 +45,7 @@ const data: {
     vacancyTitle: 'Вакансия менеджера',
     age: '35',
     fieldOfWork: 'Менеджер',
-    contacts: '',
+    contacts: '888777555',
     status: 'Ожидание ответа',
   },
 ];
@@ -79,7 +79,7 @@ export const MyPotentialEmployeeTable = () => {
               <TableCell align="left">{row.fieldOfWork}</TableCell>
               <TableCell align="left">{row.vacancyTitle}</TableCell>
               <TableCell align="left">{row.status}</TableCell>
-              <TableCell align="left">{row.contacts}</TableCell>
+              <TableCell align="left">{row.status === 'Заинтересован' ? row.contacts : ''}</TableCell>
               <TableCell align="center">
                 <Button variant="contained">Отклонить</Button>
               </TableCell>
