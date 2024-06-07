@@ -24,6 +24,9 @@ import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 import { MyPotentialEmployeeTable, NewPotentialEmployeeTable } from '../../../widgets/PotentialEmployeeTable';
 import { VacancyTable } from '../../../widgets/VacancyTable';
+import { getCandidates } from '../../../../feachers/aplication/aplicationThunk';
+import { selectApplicationForEmployees } from '../../../../feachers/aplication/applicationSlice';
+import { ApplicationResponse } from '../../../../feachers/aplication/types';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -54,10 +57,14 @@ const a11yProps = (index: number) => ({
 
 const EmployerProfile: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [openVacancyForm, setOpenVacancyForm] = useState(false);
   const profile = useAppSelector(selectEmployersProfileInfo);
   const loading = useAppSelector(selectEmployerLoading);
-  const navigate = useNavigate();
+
+  const application = useAppSelector(selectApplicationForEmployees);
+  const [myApplication, setMyApplication] = useState<ApplicationResponse[]>([]);
+  const [newApplication, setNewApplication] = useState<ApplicationResponse[]>([]);
 
   const [vacancyId, setVacancyId] = useState<string | null>(null);
   const [value, setValue] = React.useState(0);
@@ -92,6 +99,26 @@ const EmployerProfile: React.FC = () => {
   const onVacancyDelete = (id: string) => {
     setVacancyId(id);
   };
+
+  useEffect(() => {
+    dispatch(getCandidates());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (application.length > 1) {
+      setMyApplication([]);
+      setNewApplication([]);
+      application.forEach((item) => {
+        if (item['createdBy'] === 'employer') {
+          setMyApplication((prevState) => [...prevState, item]);
+        } else {
+          setNewApplication((prevState) => [...prevState, item]);
+        }
+      });
+    }
+  }, [application]);
+
+  console.log(application);
 
   if (loading) return <Loader />;
 
@@ -169,10 +196,10 @@ const EmployerProfile: React.FC = () => {
           )}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <NewPotentialEmployeeTable />
+          <NewPotentialEmployeeTable data={newApplication} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          <MyPotentialEmployeeTable />
+          <MyPotentialEmployeeTable data={myApplication} />
         </CustomTabPanel>
       </Box>
 

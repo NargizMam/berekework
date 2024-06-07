@@ -12,8 +12,10 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { ApplicationResponse } from '../../../../feachers/aplication/types';
+import React from 'react';
 
-const data: {
+/*const data: {
   employeeId: string;
   employeeName: string;
   vacancyTitle: string;
@@ -49,9 +51,13 @@ const data: {
     status: 'Принят',
     contacts: '999888777',
   },
-];
+];*/
 
-export const NewPotentialEmployeeTable = () => {
+interface Props {
+  data: ApplicationResponse[];
+}
+
+export const NewPotentialEmployeeTable: React.FC<Props> = ({ data }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }}>
@@ -68,19 +74,25 @@ export const NewPotentialEmployeeTable = () => {
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <TableRow key={row.employeeId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
                 <Tooltip title="Посмотреть профиль">
-                  <Typography component={Link} sx={{ fontWeight: '600' }} to={`/potential-employees/${row.employeeId}`}>
-                    {row.employeeName}
+                  <Typography component={Link} sx={{ fontWeight: '600' }} to={`/user/${row.user._id}`}>
+                    {row.user.surname} {row.user.name}
                   </Typography>
                 </Tooltip>
               </TableCell>
-              <TableCell align="left">{row.age}</TableCell>
-              <TableCell align="left">{row.fieldOfWork}</TableCell>
-              <TableCell align="left">{row.vacancyTitle}</TableCell>
-              <TableCell align="left">{row.status}</TableCell>
-              <TableCell align="left">{row.contacts}</TableCell>
+              <TableCell align="left">{row.user.dateOfBirth}</TableCell>
+              <TableCell align="left">{row.user.preferredJob}</TableCell>
+              <TableCell align="left">
+                <Tooltip title="Посмотреть вакансию">
+                  <Typography component={Link} sx={{ fontWeight: '600' }} to={`/vacancy/${row.vacancy._id}`}>
+                    {row.vacancy.vacancyTitle}
+                  </Typography>
+                </Tooltip>
+              </TableCell>
+              <TableCell align="left">{row.employerStatus}</TableCell>
+              <TableCell align="left">{row.user.contacts.phone}</TableCell>
               <TableCell align="center">
                 <Box sx={{ display: 'flex', justifyContent: 'spaceBetween' }}>
                   <Button variant="contained" sx={{ backgroundColor: 'green', marginRight: 1 }}>
