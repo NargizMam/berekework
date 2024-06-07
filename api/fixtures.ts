@@ -257,6 +257,7 @@ const run = async () => {
       logo: 'fixtures/logo_company_megaservice.png',
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac1._id, vac2._id, vac3._id],
+      isPublished: true,
     },
     {
       email: 'employer2@example.com',
