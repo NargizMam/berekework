@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getAllUser } from '../../../feachers/user/usersThunk';
 import { selectUsers, selectUsersLoading } from '../../../feachers/user/usersSlice';
@@ -7,12 +7,15 @@ import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { Loader } from '../../../shared/loader';
 import './Employee.css';
 import './MediaEmployee.css';
+import SelectVacancyDialog from './selectVacancyDialog';
 
 const EmployeeProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const users = useAppSelector(selectUsers);
   const isLoading = useAppSelector(selectUsersLoading);
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     if (users.length === 0) {
@@ -29,6 +32,14 @@ const EmployeeProfile: React.FC = () => {
   if (!user) {
     return <div>Пользователь не найден</div>;
   }
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   const image = user.avatar ? API_URL + user.avatar : '/path/to/default-avatar.jpg';
 
@@ -57,7 +68,10 @@ const EmployeeProfile: React.FC = () => {
       <p>
         <span>О себе:</span> {user.aboutMe}
       </p>
-      <button className="employee-btn">На рассмотрение</button>
+      <button className="employee-btn" onClick={handleOpenDialog}>
+        На рассмотрение
+      </button>
+      <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
     </div>
   );
 };
