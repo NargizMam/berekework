@@ -24,13 +24,15 @@ export const changeProfile = createAsyncThunk<void, ProfileChange>(
     const formData = new FormData();
 
     Object.entries(profileMutation).forEach(([key, value]) => {
-      if (key === 'workExperience') {
-        formData.append(key, JSON.stringify(value));
-      } else {
-        formData.append(key, value);
+      if (value !== null) {
+        if (typeof value === 'object' || Array.isArray(value)) {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, value as string);
+        }
       }
     });
-    return axiosApi.patch(userId ? `applicants?userId=${userId}` : '/applicants', formData);
+    return axiosApi.post(userId ? `applicants?userId=${userId}` : '/applicants', formData);
   },
 );
 

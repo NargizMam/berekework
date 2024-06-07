@@ -56,21 +56,21 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
             </Grid>
           </div>
           {/*отчество*/}
-          {/*<Grid item xs>*/}
-          {/*  <label className="labelForField" htmlFor="secondName">Отчество</label>*/}
-          {/*  <input*/}
-          {/*    className="field"*/}
-          {/*    id="secondName"*/}
-          {/*    value={state.secondName}*/}
-          {/*    onChange={inputChangeHandler}*/}
-          {/*    name="secondName"*/}
-          {/*    required*/}
-          {/*  />*/}
-          {/*</Grid>*/}
+          <Grid item xs>
+            <label className="labelForField" htmlFor="patronymic">Отчество</label>
+            <input
+              className="field"
+              id="patronymic"
+              value={state.patronymic}
+              onChange={inputChangeHandler}
+              name="patronymic"
+              required
+            />
+          </Grid>
           {/*пол и возраст*/}
           <div className="inputContainer">
             <Grid item xs={7}>
-              <label className="labelForField" htmlFor="sex">
+              <label className="labelForField" htmlFor="gender">
                 Пол
               </label>
               <select
@@ -168,15 +168,15 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
           </Grid>
           {/* о себе */}
           <Grid item xs>
-            <label className="labelForField" htmlFor="aboutApplicant">
+            <label className="labelForField" htmlFor="aboutMe">
               О себе
             </label>
             <textarea
               className="field"
-              id="aboutApplicant"
+              id="aboutMe"
               value={state.aboutMe}
               onChange={inputChangeHandler}
-              name="aboutApplicant"
+              name="aboutMe"
               required
             />
           </Grid>
@@ -198,15 +198,15 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
           {/* ищу работу */}
           <div className="inputContainer">
             <Grid item xs>
-              <label className="labelForField" htmlFor="wantedJob">
+              <label className="labelForField" htmlFor="preferredJob">
                 Ищу работу в сфере:
               </label>
               <select
                 className="field"
-                id="wantedJob"
+                id="preferredJob"
                 value={state.preferredJob}
                 onChange={inputChangeHandler}
-                name="wantedJob"
+                name="preferredJob"
                 required
               >
                 <option className="menuItem" value="">
@@ -220,15 +220,15 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
               </select>
             </Grid>
             <Grid item xs>
-              <label className="labelForField" htmlFor="wantedJobCity">
+              <label className="labelForField" htmlFor="preferredCity">
                 Выберите город
               </label>
               <select
                 className="field"
-                id="wantedJobCity"
+                id="preferredCity"
                 value={state.preferredCity}
                 onChange={inputChangeHandler}
-                name="wantedJobCity"
+                name="preferredCity"
                 required
               >
                 <option className="menuItem" value="">
