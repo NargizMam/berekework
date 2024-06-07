@@ -1,10 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../app/axiosApi';
 
-//Создание новой заявки на вакансию
-export const sendReplyByUser = createAsyncThunk<void, string>('application/createByUser', async (vacancyId) => {
-  await axiosApi.post(`/applications/${vacancyId}`);
-});
+//Создание новой заявки на вакансии
+export const sendReplyByUser = createAsyncThunk<void, { vacancyId: string; userId?: string }>(
+  'application/createByUser',
+  async ({ vacancyId, userId }, { rejectWithValue }) => {
+    try {
+      const url = userId ? `/applications/${vacancyId}/${userId}` : `/applications/${vacancyId}`;
+      await axiosApi.post(url);
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 // Получение всех заявок
 export const getReplyByUser = createAsyncThunk('application/getAll', async () => {
@@ -20,12 +28,18 @@ export const getCandidateByEmployer = createAsyncThunk<[], string>('application/
 
 interface UpdateStatus {
   id: string;
-  status: string;
+  userStatus?: string;
+  employerStatus?: string;
 }
 
-export const updateApplication = createAsyncThunk<void, UpdateStatus>('application/update', async ({ id, status }) => {
-  await axiosApi.patch(`/applications/${id}`, { employerStatus: status });
-});
+export const updateApplication = createAsyncThunk<void, UpdateStatus>(
+  'application/updateStatus',
+  async ({ id, userStatus, employerStatus }) => {
+    const data = userStatus ? { userStatus } : { employerStatus };
+    console.log(data);
+    await axiosApi.patch(`/applications/${id}`, data);
+  },
+);
 
 export const deleteReply = createAsyncThunk<void, string>('application/delete', async (id) => {
   await axiosApi.delete(`/applications/${id}`);

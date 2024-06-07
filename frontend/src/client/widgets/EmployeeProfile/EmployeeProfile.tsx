@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { selectEmployer } from '../../page/Auth/model/AuthSlice';
 import { getSingleUser } from '../../../feachers/user/usersThunk';
@@ -9,6 +9,7 @@ import { Loader } from '../../../shared/loader';
 import './Employee.css';
 import './MediaEmployee.css';
 import { Box } from '@mui/material';
+import SelectVacancyDialog from './selectVacancyDialog';
 
 const EmployeeProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +17,8 @@ const EmployeeProfile: React.FC = () => {
   const user = useAppSelector(selectProfile);
   const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectUsersLoading);
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -41,6 +44,14 @@ const EmployeeProfile: React.FC = () => {
     return <div>Пользователь не найден</div>;
   }
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   const image = user.avatar ? API_URL + user.avatar : '/path/to/default-avatar.jpg';
 
   return (
@@ -63,26 +74,26 @@ const EmployeeProfile: React.FC = () => {
       </p>
       {user.workExperience.map((work) => (
         <p>
-          <span>Опыт работы:</span>{' '}
-          {`${work.fieldOfWork} - ${work.duration}`}
+          <span>Опыт работы:</span> {`${work.fieldOfWork} - ${work.duration}`}
         </p>
       ))}
       <p>
         <span>О себе:</span> {user.aboutMe}
       </p>
-      {
-        employer ?
-          <Box sx={{
-            display: "flex",
-            gap: "0 15px",
-          }}>
-            <button className="employee-btn">На рассмотрение</button>
-            <button className="employee-btn">Связаться</button>
-            <button className="employee-btn">Отклонить</button>
-          </Box>
-          :
-          null
-      }
+      <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
+      {employer ? (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '0 15px',
+          }}
+        >
+          <button className="employee-btn" onClick={handleOpenDialog}>
+            На рассмотрение
+          </button>
+          <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
+        </Box>
+      ) : null}
     </div>
   );
 };
