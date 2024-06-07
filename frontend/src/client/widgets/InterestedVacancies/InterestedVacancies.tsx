@@ -163,88 +163,93 @@ const InterestedVacancies = () => {
           })}
         </CustomTabPanel>
         <CustomTabPanel index={1} value={currentTab}>
-          {replies.map((reply) => (
-            <Box className="card-vacancies">
-              <CardContent>
-                <Typography
-                  sx={{
-                    fontSize: 14,
-                    background: '#F0F0F0',
-                    padding: '10px 20px',
-                    borderRadius: '30px',
-                    width: '172px',
-                    fontWeight: '500',
-                    color: 'black',
-                    textAlign: 'center',
-                  }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {reply.userStatus}
-                </Typography>
-                <img className="logo" src={logo} alt="logo" />
-                <Typography
-                  sx={{
-                    fontSize: 14,
-                    fontWeight: '600',
-                    marginTop: '40px',
-                  }}
-                  component="div"
-                >
-                  {reply.vacancy.vacancyTitle}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: '#8E8E8E',
-                    margin: '30px 0 20px 0',
-                  }}
-                  color="text.secondary"
-                >
-                  {reply.vacancy.employer.companyName},{reply.vacancy.city}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    fontWeight: '600',
-                    color: '#00000',
-                  }}
-                  variant="body2"
-                >
-                  от {reply.vacancy.salary.minSalary} до {reply.vacancy.salary.maxSalary} сом
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 14,
-                    color: '#8E8E8E',
-                    marginTop: '20px',
-                  }}
-                >
-                  <span
-                    style={{
-                      color: 'black',
-                      marginRight: '5px',
+          {replies.map((reply) => {
+            if (reply.createdBy === 'user') {
+              return (
+                <Box className="card-vacancies">
+                  <CardContent>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        background: '#F0F0F0',
+                        padding: '10px 20px',
+                        borderRadius: '30px',
+                        width: '172px',
+                        fontWeight: '500',
+                        color: 'black',
+                        textAlign: 'center',
+                      }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {reply.userStatus}
+                    </Typography>
+                    <img className="logo" src={logo} alt="logo" />
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        fontWeight: '600',
+                        marginTop: '40px',
+                      }}
+                      component="div"
+                    >
+                      {reply.vacancy.vacancyTitle}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: '#8E8E8E',
+                        margin: '30px 0 20px 0',
+                      }}
+                      color="text.secondary"
+                    >
+                      {reply.vacancy.employer.companyName},{reply.vacancy.city}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontWeight: '600',
+                        color: '#00000',
+                      }}
+                      variant="body2"
+                    >
+                      от {reply.vacancy.salary.minSalary} до {reply.vacancy.salary.maxSalary} сом
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        color: '#8E8E8E',
+                        marginTop: '20px',
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: 'black',
+                          marginRight: '5px',
+                        }}
+                      >
+                        Дата:
+                      </span>{' '}
+                      {dayjs(reply.createdAt).format('DD.MM.YYYY')}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
                     }}
                   >
-                    Дата:
-                  </span>{' '}
-                  {dayjs(reply.createdAt).format('DD.MM.YYYY')}
-                </Typography>
-              </CardContent>
-              <CardActions
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                {reply.employerStatus === 'Принят' ? (
-                  <button className="btn-connect btn-vacancies">Связаться</button>
-                ) : null}
-                <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">
-                  Отозвать
-                </button>
-              </CardActions>
-            </Box>
-          ))}
+                    {reply.employerStatus === 'Принят' ? (
+                      <button className="btn-connect btn-vacancies">Связаться</button>
+                    ) : null}
+                    <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">
+                      Отозвать
+                    </button>
+                  </CardActions>
+                </Box>
+              );
+            }
+            return null;
+          })}
         </CustomTabPanel>
       </div>
     </div>
