@@ -147,7 +147,11 @@ const InterestedVacancies = () => {
                       flexDirection: 'column',
                     }}
                   >
-                    <button onClick={() => acceptedHandle(reply._id)} className="btn-connect btn-vacancies">Связаться</button>
+                    {reply.userStatus !== 'Заинтересован' ? (
+                      <button onClick={() => acceptedHandle(reply._id)} className="btn-connect btn-vacancies">
+                        Связаться
+                      </button>
+                    ) : null}
                     <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">
                       Отозвать
                     </button>
