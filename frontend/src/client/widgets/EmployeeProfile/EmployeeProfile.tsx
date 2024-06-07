@@ -74,31 +74,26 @@ const EmployeeProfile: React.FC = () => {
       </p>
       {user.workExperience.map((work) => (
         <p>
-          <span>Опыт работы:</span>{' '}
-          {`${work.fieldOfWork} - ${work.duration}`}
+          <span>Опыт работы:</span> {`${work.fieldOfWork} - ${work.duration}`}
         </p>
       ))}
       <p>
         <span>О себе:</span> {user.aboutMe}
       </p>
-      <button className="employee-btn" onClick={handleOpenDialog}>
-        На рассмотрение
-      </button>
       <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
-      {
-        employer ?
-          <Box sx={{
-            display: "flex",
-            gap: "0 15px",
-          }}>
-            <button className="employee-btn" onClick={handleOpenDialog}>
-              На рассмотрение
-            </button>
-            <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
-          </Box>
-          :
-          null
-      }
+      {employer ? (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '0 15px',
+          }}
+        >
+          <button className="employee-btn" onClick={handleOpenDialog}>
+            На рассмотрение
+          </button>
+          <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
+        </Box>
+      ) : null}
     </div>
   );
 };
