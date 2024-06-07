@@ -24,7 +24,7 @@ import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 import { MyPotentialEmployeeTable, NewPotentialEmployeeTable } from '../../../widgets/PotentialEmployeeTable';
 import { VacancyTable } from '../../../widgets/VacancyTable';
-import { getCandidates } from '../../../../feachers/aplication/aplicationThunk';
+import { deleteReply, getCandidates } from '../../../../feachers/aplication/aplicationThunk';
 import { selectApplicationForEmployees } from '../../../../feachers/aplication/applicationSlice';
 import { ApplicationResponse } from '../../../../feachers/aplication/types';
 
@@ -105,7 +105,7 @@ const EmployerProfile: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (application.length > 1) {
+    if (application.length > 0) {
       setMyApplication([]);
       setNewApplication([]);
       application.forEach((item) => {
@@ -115,10 +115,16 @@ const EmployerProfile: React.FC = () => {
           setNewApplication((prevState) => [...prevState, item]);
         }
       });
+    } else {
+      setMyApplication([]);
+      setNewApplication([]);
     }
   }, [application]);
 
-  console.log(application);
+  const deleteHandle = async (id: string) => {
+    await dispatch(deleteReply(id)).unwrap();
+    await dispatch(getCandidates());
+  };
 
   if (loading) return <Loader />;
 
@@ -196,10 +202,10 @@ const EmployerProfile: React.FC = () => {
           )}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <NewPotentialEmployeeTable data={newApplication} />
+          <NewPotentialEmployeeTable data={newApplication} deleteHandle={deleteHandle} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          <MyPotentialEmployeeTable data={myApplication} />
+          <MyPotentialEmployeeTable data={myApplication} deleteHandle={deleteHandle} />
         </CustomTabPanel>
       </Box>
 

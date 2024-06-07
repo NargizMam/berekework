@@ -14,50 +14,22 @@ import {
 import { Link } from 'react-router-dom';
 import { ApplicationResponse } from '../../../../feachers/aplication/types';
 import React from 'react';
-
-/*const data: {
-  employeeId: string;
-  employeeName: string;
-  vacancyTitle: string;
-  age: string;
-  fieldOfWork: string;
-  status: string;
-  contacts: string;
-}[] = [
-  {
-    employeeId: '123',
-    employeeName: 'Ivan Ivanov',
-    vacancyTitle: 'Повар',
-    age: '22',
-    fieldOfWork: 'Повар',
-    status: 'Новая заявка',
-    contacts: '888999444',
-  },
-  {
-    employeeId: '124',
-    employeeName: 'Maria Petrova',
-    vacancyTitle: 'Вакансия Бармен',
-    age: '28',
-    fieldOfWork: 'Бармен',
-    status: 'Принят',
-    contacts: '999888777',
-  },
-  {
-    employeeId: '125',
-    employeeName: 'Alexey Sidorov',
-    vacancyTitle: 'Вакансия Менеджер',
-    age: '35',
-    fieldOfWork: 'Менеджер',
-    status: 'Принят',
-    contacts: '999888777',
-  },
-];*/
+import { getCandidates, updateApplication } from '../../../../feachers/aplication/aplicationThunk';
+import { useAppDispatch } from '../../../../app/store/hooks';
 
 interface Props {
   data: ApplicationResponse[];
+  deleteHandle: (id: string) => void;
 }
 
-export const NewPotentialEmployeeTable: React.FC<Props> = ({ data }) => {
+export const NewPotentialEmployeeTable: React.FC<Props> = ({ data, deleteHandle }) => {
+  const dispatch = useAppDispatch();
+
+  const acceptedHandle = async (id: string) => {
+    await dispatch(updateApplication({ id, employerStatus: 'Принят' })).unwrap();
+    await dispatch(getCandidates());
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }}>
@@ -95,10 +67,18 @@ export const NewPotentialEmployeeTable: React.FC<Props> = ({ data }) => {
               <TableCell align="left">{row.user.contacts.phone}</TableCell>
               <TableCell align="center">
                 <Box sx={{ display: 'flex', justifyContent: 'spaceBetween' }}>
-                  <Button variant="contained" sx={{ backgroundColor: 'green', marginRight: 1 }}>
-                    Принять
+                  {row.employerStatus !== 'Принят' && (
+                    <Button
+                      variant="contained"
+                      sx={{ backgroundColor: 'green', marginRight: 1 }}
+                      onClick={() => acceptedHandle(row._id)}
+                    >
+                      Принять
+                    </Button>
+                  )}
+                  <Button variant="contained" onClick={() => deleteHandle(row._id)}>
+                    Отклонить
                   </Button>
-                  <Button variant="contained">Отклонить</Button>
                 </Box>
               </TableCell>
             </TableRow>

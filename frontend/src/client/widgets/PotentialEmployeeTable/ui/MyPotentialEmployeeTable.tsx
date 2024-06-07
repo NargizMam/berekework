@@ -14,49 +14,12 @@ import { Link } from 'react-router-dom';
 import { ApplicationResponse } from '../../../../feachers/aplication/types';
 import React from 'react';
 
-/*const data: {
-  employeeId: string;
-  employeeName: string;
-  vacancyTitle: string;
-  age: string;
-  fieldOfWork: string;
-  status: string;
-  contacts: string;
-}[] = [
-  {
-    employeeId: '123',
-    employeeName: 'Ivan Ivanov',
-    vacancyTitle: 'Вакансия повара',
-    age: '22',
-    fieldOfWork: 'Повар',
-    status: 'Отклонен',
-    contacts: '888777555',
-  },
-  {
-    employeeId: '124',
-    employeeName: 'Maria Petrova',
-    vacancyTitle: 'Вакансия бармена',
-    age: '28',
-    fieldOfWork: 'Бармен',
-    status: 'Заинтересован',
-    contacts: '888777555',
-  },
-  {
-    employeeId: '125',
-    employeeName: 'Alexey Sidorov',
-    vacancyTitle: 'Вакансия менеджера',
-    age: '35',
-    fieldOfWork: 'Менеджер',
-    contacts: '888777555',
-    status: 'Ожидание ответа',
-  },
-];*/
-
 interface Props {
   data: ApplicationResponse[];
+  deleteHandle: (id: string) => void;
 }
 
-export const MyPotentialEmployeeTable: React.FC<Props> = ({ data }) => {
+export const MyPotentialEmployeeTable: React.FC<Props> = ({ data, deleteHandle }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }}>
@@ -95,7 +58,9 @@ export const MyPotentialEmployeeTable: React.FC<Props> = ({ data }) => {
                 {row.employerStatus === 'Заинтересован' ? row.user.contacts.phone : ''}
               </TableCell>
               <TableCell align="center">
-                <Button variant="contained">Отклонить</Button>
+                <Button variant="contained" onClick={() => deleteHandle(row._id)}>
+                  {row.employerStatus === 'Отклонен' ? 'Удалить запись' : 'Отклонить'}
+                </Button>
               </TableCell>
             </TableRow>
           ))}

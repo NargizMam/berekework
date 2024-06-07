@@ -1,9 +1,21 @@
 import React from 'react';
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import dayjs from 'dayjs';
 import { VacancyCardApiData } from '../../../../app/types';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 dayjs.extend(LocalizedFormat);
 
@@ -34,7 +46,11 @@ export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete }) => {
           {vacancies.map((row) => (
             <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {row.vacancyTitle}
+                <Tooltip title="Посмотреть вакансию">
+                  <Typography component={Link} sx={{ fontWeight: '600' }} to={`/vacancy/${row._id}`}>
+                    {row.vacancyTitle}
+                  </Typography>
+                </Tooltip>
               </TableCell>
               <TableCell align="left"> {dayjs(row.createdAt).format('lll')}</TableCell>
               <TableCell align="left"> {dayjs(row.updatedAt).format('lll')}</TableCell>
