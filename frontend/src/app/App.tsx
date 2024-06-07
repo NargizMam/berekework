@@ -25,7 +25,8 @@ import { VacancyDetailPage } from '../pages/VacancyDetailPage';
 import { UserProfilePage } from '../client/page/Profile';
 import { UserProfileFormPage } from '../client/page/Profile';
 import { EmployerEditPage } from '../client/page/employerProfile';
-import { SnackbarProvider } from 'notistack';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -65,38 +66,32 @@ const App = () => {
 
   return (
     <>
-      <SnackbarProvider
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-      >
-        <WarningMessage />
-        {location.pathname.startsWith('/admin') ? (
-          adminRoutes
-        ) : (
-          <ClientLayout>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/users" element={<UserPanelPage />} />
-              <Route path="/vacancy" element={<VacancyPageClient />} />
-              <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
-              <Route path="/about-us" element={<AboutUsPage />} />
-              <Route path="/employersProfile/:id" element={<EmployerProfile />} />
-              <Route path="/edit-employer/:id" element={<EmployerEditPage />} />
-              <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
-              <Route path="/userProfile" element={<UserProfilePage />} />
-              <Route path="/userProfile-submit" element={<UserProfileFormPage />} />
-              <Route path="/for-employer" element={<ForEmployerPage />} />
-              <Route path="/news/:uid" element={<NewsPage />} />
-              <Route path="/user/:id" element={<EmployeeProfile />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </ClientLayout>
-        )}
-      </SnackbarProvider>
+      <WarningMessage />
+      <ToastContainer />
+      {location.pathname.startsWith('/admin') ? (
+        adminRoutes
+      ) : (
+        <ClientLayout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/users" element={<UserPanelPage />} />
+            <Route path="/vacancy" element={<VacancyPageClient />} />
+            <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
+            <Route path="/about-us" element={<AboutUsPage />} />
+            <Route path="/employersProfile/:id" element={<EmployerProfile />} />
+            <Route path="/edit-employer/:id" element={<EmployerEditPage />} />
+            <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
+            <Route path="/userProfile" element={<UserProfilePage />} />
+            <Route path="/userProfile-submit" element={<UserProfileFormPage />} />
+            <Route path="/for-employer" element={<ForEmployerPage />} />
+            <Route path="/news/:uid" element={<NewsPage />} />
+            <Route path="/user/:id" element={<EmployeeProfile />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ClientLayout>
+      )}
     </>
   );
 };

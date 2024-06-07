@@ -14,8 +14,7 @@ import { getAllVacancy } from '../../../feachers/vacancy/vacancyThunk';
 import { selectRepliesLoading } from '../../../feachers/aplication/applicationSlice';
 import { Loader } from '../../../shared/loader';
 import { selectEmployer } from '../../page/Auth/model/AuthSlice';
-// import { enqueueSnackbar } from 'notistack';
-import { useSnackbar } from 'notistack';
+import { toast } from 'react-toastify';
 
 export interface SelectVacancyDialogProps {
   open: boolean;
@@ -26,7 +25,6 @@ export interface SelectVacancyDialogProps {
 const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose, userId }) => {
   const [value, setValue] = useState<string>('');
   const radioGroupRef = useRef<HTMLElement>(null);
-  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const options = useAppSelector(selectVacancies);
   const currentEmployer = useAppSelector(selectEmployer);
@@ -59,10 +57,11 @@ const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose
   const handleOk = async () => {
     try {
       await dispatch(sendReplyByUser({ vacancyId: value, userId })).unwrap();
-      enqueueSnackbar('Отклик успешно отправлен кандидату', { variant: 'success' });
+      toast.success('Отклик успешно отправлен кандидату');
       onClose(value);
     } catch (error: any) {
-      enqueueSnackbar(error.error || 'Произошла ошибка при отправке заявки', { variant: 'error' });
+      const errorMessage = error.error || 'Произошла ошибка при отправке заявки.';
+      toast.error(errorMessage);
     }
   };
 
