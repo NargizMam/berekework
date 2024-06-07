@@ -36,7 +36,6 @@ export const updateApplication = createAsyncThunk<void, UpdateStatus>(
   'application/updateStatus',
   async ({ id, userStatus, employerStatus }) => {
     const data = userStatus ? { userStatus } : { employerStatus };
-    console.log(data);
     await axiosApi.patch(`/applications/${id}`, data);
   },
 );
