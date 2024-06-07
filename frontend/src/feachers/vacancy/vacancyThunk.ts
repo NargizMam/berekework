@@ -13,6 +13,16 @@ export const getAllVacancy = createAsyncThunk<VacancyCardApiData[], string | und
   },
 );
 
+export const getAllVacancyByKgOrAbroad = createAsyncThunk<VacancyCardApiData[], string>(
+  'vacancy/getAllVacancyByKgOrAbroad',
+  async (filter) => {
+    const response = await axiosApi.get<VacancyCardApiData[]>(
+      `/vacancy${filter === 'abroad' ? '?abroad=true' : '?kyrgyzstan=true'}`,
+    );
+    return response.data;
+  },
+);
+
 export const vacancyFetchCategory = createAsyncThunk<CategoryVacancyI[]>(
   'vacancyFetchCategories/getCategories',
   async () => {
