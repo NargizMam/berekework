@@ -68,5 +68,4 @@ export interface User {
     whatsapp?: string;
     telegram?: string;
   };
-  documents?: string[];
 }

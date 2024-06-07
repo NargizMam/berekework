@@ -17,7 +17,6 @@ const ApplicantFullForm: React.FC<Props> = ({ applicant, onSubmit, loading }) =>
   const [fields, setFields] = useState<React.ReactNode[]>([]);
   const [state, setState] = useState<UserMutation>({
     contacts:  applicant?.contacts || {},
-    documents:  applicant?.documents || [],
     email:  applicant?.email || '',
     patronymic:  applicant?.patronymic || '',
     role:  applicant?.patronymic || '',

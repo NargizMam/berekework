@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
   patronymic: String,
   gender: {
     type: String,
-    enum: ['male', 'female'],
+    enum: ['жен', 'муж'],
   },
   dateOfBirth: String,
   country: String,
@@ -56,6 +56,7 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
   },
   workExperience: [
     {
+      _id: String,
       fieldOfWork: String,
       duration: String,
     },
@@ -67,10 +68,7 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     phone: String,
     whatsapp: String,
     telegram: String,
-  },
-  documents: {
-    type: [String],
-  },
+  }
 });
 
 userSchema.methods.checkPassword = function (password: string) {

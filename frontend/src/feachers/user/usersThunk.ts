@@ -32,7 +32,7 @@ export const changeProfile = createAsyncThunk<void, ProfileChange>(
         }
       }
     });
-    return axiosApi.post(userId ? `applicants?userId=${userId}` : '/applicants', formData);
+    return axiosApi.patch(`user/${userId}`, formData);
   },
 );
 

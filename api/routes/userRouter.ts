@@ -153,7 +153,7 @@ userRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
   }
 });
 
-userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('documents'), async (req, res, next) => {
+userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
 
@@ -161,31 +161,23 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
       return res.status(404).send({ message: 'User not found!' });
     }
 
-    let avatar: string | undefined | null = undefined;
+    // let avatar: string | undefined | null = undefined;
+    //
+    // if (req.body.avatar === 'delete') {
+    //   avatar = null;
+    // } else if (req.file) {
+    //   avatar = req.file.filename;
+    // }
 
-    if (req.body.avatar === 'delete') {
-      avatar = null;
-    } else if (req.file) {
-      avatar = req.file.filename;
-    }
+    // const contacts = req.body.contacts
+    //   ? {
+    //       phone: req.body.contacts.phone || null,
+    //       whatsapp: req.body.contacts.whatsapp || null,
+    //       telegram: req.body.contacts.telegram || null,
+    //     }
+    //   : null;
 
-    let documents: string[] | null;
-
-    if (req.body.documents) {
-      documents = req.body.documents.filter((document: string) => document !== 'delete');
-    } else {
-      documents = [];
-    }
-
-    const contacts = req.body.contacts
-      ? {
-          phone: req.body.contacts.phone || null,
-          whatsapp: req.body.contacts.whatsapp || null,
-          telegram: req.body.contacts.telegram || null,
-        }
-      : null;
-
-    if (user.role !== 'admin' && user.role !== 'superadmin') {
+    if (user.role === 'user') {
       const requiredFields = [
         'name',
         'surname',
@@ -198,17 +190,16 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
         'workExperience',
         'preferredJob',
         'preferredCity',
-        'contacts.phone',
       ];
 
-      for (const field of requiredFields) {
-        // Проверка вложенных полей, таких как contacts.phone
-        const value = field.includes('.') ? req.body[field.split('.')[0]]?.[field.split('.')[1]] : req.body[field];
-
-        if (!value) {
-          return res.status(400).send({ message: `${field} is required` });
-        }
-      }
+      // for (const field of requiredFields) {
+      //   // Проверка вложенных полей, таких как contacts.phone
+      //   const value = field.includes('.') ? req.body[field.split('.')[0]]?.[field.split('.')[1]] : req.body[field];
+      //
+      //   if (!value) {
+      //     return res.status(400).send({ message: `${field} is required` });
+      //   }
+      // }
     }
 
     const result = await User.updateOne(
@@ -229,7 +220,6 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), documentsUpload.array('d
           preferredCity: req.body.preferredCity || null,
           contacts,
           avatar,
-          documents,
         },
       },
     );
