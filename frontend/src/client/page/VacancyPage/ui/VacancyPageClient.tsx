@@ -11,18 +11,35 @@ import {
   selectVacanciesLoading,
   selectVacancyLoading,
 } from '../../../../feachers/vacancy/vacancySlice';
-import { getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
+import { getAllVacancy, getAllVacancyByKgOrAbroad } from '../../../../feachers/vacancy/vacancyThunk';
+import { useLocation } from 'react-router-dom';
 
 export const VacancyPageClient = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const isLoading = useAppSelector(selectVacanciesLoading);
   const [showCategory, setShowCategory] = useState(false);
   const vacancies = useAppSelector(selectVacancies);
   const vacanciesFetching = useAppSelector(selectVacancyLoading);
+  const [vacancyFilter, setVacancyFilter] = useState('');
 
   useEffect(() => {
-    dispatch(getAllVacancy());
-  }, [dispatch]);
+    if (location) {
+      if (location?.search === '?Kyrgyzstan') {
+        setVacancyFilter('Kyrgyzstan');
+      } else if (location?.search === '?abroad') {
+        setVacancyFilter('abroad');
+      }
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (vacancyFilter.length > 0) {
+      dispatch(getAllVacancyByKgOrAbroad(vacancyFilter));
+    } else {
+      dispatch(getAllVacancy());
+    }
+  }, [dispatch, vacancyFilter]);
 
   const handleSearch = async (vacancyTitle: string) => {
     await dispatch(getAllVacancy(vacancyTitle));
