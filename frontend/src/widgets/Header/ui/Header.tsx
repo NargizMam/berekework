@@ -44,11 +44,24 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  console.log(user && employer);
+
   const nav = (
     <nav className="navigation-big-screen">
       <ul className="main-mav-web">
         {headerPrismicResponse?.body[0].items &&
           headerPrismicResponse.body[0].items.map((item, index) => {
+            if (!user || !employer) {
+              const isEmployerRole = user?.role === "employer";
+              const isForEmployers = item.name_link === 'Для работодателей';
+              const isForPotentialEmployees = item.name_link === 'Потенциальные сотрудники';
+
+              if (!isEmployerRole) {
+                if (isForEmployers || isForPotentialEmployees) {
+                  return null;
+                }
+              }
+            }
             return (
               <li key={index + headerPrismicResponse?.body[0].id} className="main-nav-item">
                 <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
@@ -81,6 +94,17 @@ const Header = () => {
           <ul className="main-nav-list">
             {headerPrismicResponse?.body[0].items &&
               headerPrismicResponse.body[0].items.map((item, index) => {
+                if (!user || !employer) {
+                  const isEmployerRole = user?.role === "employer";
+                  const isForEmployers = item.name_link === 'Для работодателей';
+                  const isForPotentialEmployees = item.name_link === 'Потенциальные сотрудники';
+
+                  if (!isEmployerRole) {
+                    if (isForEmployers || isForPotentialEmployees) {
+                      return null;
+                    }
+                  }
+                }
                 return (
                   <li key={index + 'navDrop'} className="main-nav-item">
                     <Typography component={Link} to={item.navbar_link} className={'main-nav-link'}>
