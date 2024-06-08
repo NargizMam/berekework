@@ -19,7 +19,7 @@ export const UserProfilePage = () => {
   const dispatch = useAppDispatch();
   const profile = useAppSelector(selectProfile);
   const loading = useAppSelector(selectProfileLoading);
-  console.log(profile);
+
   useEffect(() => {
     if (user) {
       dispatch(getSingleUser(user._id));
@@ -29,9 +29,8 @@ export const UserProfilePage = () => {
   const birthDateDayjs = dayjs(profile?.dateOfBirth);
   const now = dayjs();
   const age = now.diff(birthDateDayjs, 'year');
-
   if (loading) {
-    return <Loader />;
+    return <Loader/>;
   }
 
   if (!profile) {
@@ -39,12 +38,12 @@ export const UserProfilePage = () => {
   }
 
   return (
-    <div style={{ marginTop: '40px', marginBottom: '100px' }}>
+    <div style={{marginTop: '40px', marginBottom: '100px'}}>
       <div className="profileContainer">
         <div className="applicantContainer">
           <div className="photoFrame">
             {profile.avatar ? (
-              <img className="photo" src={API_URL + '/' + profile.avatar} alt="Photo" />
+              <img className="photo" src={API_URL + '/' + profile.avatar} alt="Photo"/>
             ) : (
               <div className="photo">
                 <Typography>Нет фото</Typography>
@@ -54,7 +53,6 @@ export const UserProfilePage = () => {
           <p className="profileTitle">
             {profile.surname} {profile.name}
           </p>
-          {profile.preferredJob && profile.country && profile.city && profile.dateOfBirth}
           <p className="applicantInfo">{profile.preferredJob}</p>
           {profile.dateOfBirth ?
             <div className="infoBlock">
@@ -71,12 +69,10 @@ export const UserProfilePage = () => {
                 </p>
               </div>
             </div>
-              :
+            :
             <p style={{margin: 0}} className="applicantInfo">Данных нет</p>
           }
-
-          <p className="applicantInfo">{profile.aboutMe}</p>
-
+            <p className="applicantInfo">{profile.aboutMe}</p>
           <NavLink to="/userProfile-submit" className="changeBtn">
             <EditIcon style={{color: '#FFFFFF', marginRight: '20px'}}/>
             Редактировать профиль

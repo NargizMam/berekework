@@ -49,6 +49,16 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
           name="fieldOfWork"
         />
       </Grid>
+      <Grid item xs={6}>
+        <input
+          style={{ marginLeft: '8px' }}
+          className="field"
+          id="duration"
+          value={state.duration}
+          onChange={fieldChangeHandler}
+          name="duration"
+        />
+      </Grid>
       <Grid>
         {!isAdded ? (
           <IconButton onClick={addFieldToFormState} aria-label="delete" color="primary">

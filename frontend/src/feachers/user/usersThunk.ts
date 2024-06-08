@@ -22,7 +22,6 @@ export const changeProfile = createAsyncThunk<void, ProfileChange>(
   'applicant/add',
   async ({ profileMutation, userId }) => {
     const formData = new FormData();
-
     Object.entries(profileMutation).forEach(([key, value]) => {
       if (value !== null) {
         if (typeof value === 'object' || Array.isArray(value)) {

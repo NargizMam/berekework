@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { useEffect } from 'react';
 import { selectUser } from '../../Auth/model/AuthSlice';
 import { UserMutation } from '../model/types';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ApplicantFullForm from '../../../widgets/Applicant/ApplicantFullForm';
 import { changeProfile, getSingleUser } from '../../../../feachers/user/usersThunk';
 import { selectProfile, selectProfileLoading } from '../../../../feachers/user/usersSlice';
@@ -25,15 +25,11 @@ export const UserProfileFormPage = () => {
       if (user) {
         await dispatch(changeProfile({ profileMutation, userId: user._id })).unwrap();
       }
-      navigate('/applicantProfile');
+      navigate('/userProfile');
     } catch (error) {
       console.log(error);
     }
   };
-
-  if (!profile) {
-    return <Navigate to="/login" />;
-  }
 
   return <ApplicantFullForm applicant={profile} onSubmit={onFormSubmit} loading={loading} />;
 };

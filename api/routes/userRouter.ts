@@ -153,88 +153,136 @@ userRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
   }
 });
 
-userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.id);
-
-    if (!user) {
-      return res.status(404).send({ message: 'User not found!' });
+userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWithUser, res, next) => {
+  // try {
+  //   const user = await User.findById(req.params.id);
+  //
+  //   if (!user) {
+  //     return res.status(404).send({ message: 'User not found!' });
+  //   }
+  //
+  //   // let avatar: string | undefined | null = undefined;
+  //   //
+  //   // if (req.body.avatar === 'delete') {
+  //   //   avatar = null;
+  //   // } else if (req.file) {
+  //   //   avatar = req.file.filename;
+  //   // }
+  //
+  //   // const contacts = req.body.contacts
+  //   //   ? {
+  //   //       phone: req.body.contacts.phone || null,
+  //   //       whatsapp: req.body.contacts.whatsapp || null,
+  //   //       telegram: req.body.contacts.telegram || null,
+  //   //     }
+  //   //   : null;
+  //
+  //   if (user.role === 'user') {
+  //     const requiredFields = [
+  //       'name',
+  //       'surname',
+  //       'gender',
+  //       'dateOfBirth',
+  //       'country',
+  //       'city',
+  //       'education',
+  //       'aboutMe',
+  //       'workExperience',
+  //       'preferredJob',
+  //       'preferredCity',
+  //     ];
+  //
+  //     // for (const field of requiredFields) {
+  //     //   // Проверка вложенных полей, таких как contacts.phone
+  //     //   const value = field.includes('.') ? req.body[field.split('.')[0]]?.[field.split('.')[1]] : req.body[field];
+  //     //
+  //     //   if (!value) {
+  //     //     return res.status(400).send({ message: `${field} is required` });
+  //     //   }
+  //     // }
+  //   }
+  //
+  //   const result = await User.updateOne(
+  //     { _id: req.params.id },
+  //     {
+  //       $set: {
+  //         name: req.body.name || null,
+  //         surname: req.body.surname || null,
+  //         patronymic: req.body.patronymic || null,
+  //         gender: req.body.gender || null,
+  //         dateOfBirth: req.body.dateOfBirth || null,
+  //         country: req.body.country || null,
+  //         city: req.body.city || null,
+  //         education: req.body.education || null,
+  //         aboutMe: req.body.aboutMe || null,
+  //         workExperience: req.body.workExperience || null,
+  //         preferredJob: req.body.preferredJob || null,
+  //         preferredCity: req.body.preferredCity || null,
+  //         contacts,
+  //         avatar,
+  //       },
+  //     },
+  //   );
+  //
+  //   if (result.matchedCount === 0) {
+  //     return res.status(404).send({ message: 'User not found!' });
+  //   }
+  //
+  //   return res.send({ message: 'ok' });
+  // } catch (e) {
+  //   if (e instanceof mongoose.Error.ValidationError) {
+  //     return res.status(422).send(e);
+  //   }
+  //   next(e);
+  // }
+    try {
+      const user = await User.findById(req.params.id);
+      const {
+        firstName,
+        surname,
+        patronymic,
+        gender,
+        dateOfBirth,
+        country,
+        city,
+        education,
+        aboutMe,
+        workExperience,
+        preferredJob,
+        preferredCity,
+        contacts
+      } = req.body;
+      if (user) {
+        const updated = await User.findOneAndUpdate(
+            {_id: user._id},
+            {
+              firstName,
+              surname,
+              patronymic,
+              avatar: req.file ? req.file.filename : req.body.avatar,
+              gender,
+              dateOfBirth,
+              country,
+              city,
+              education,
+              aboutMe,
+              workExperience: JSON.parse(workExperience),
+              preferredJob,
+              preferredCity,
+              contacts: JSON.parse(contacts),
+            },
+            {new: true}
+        );
+        return res.send(updated);
+      } else {
+        return res.status(404).send({ message: 'User not found!' });
+      }
+    } catch (e) {
+      if (e instanceof mongoose.Error.ValidationError) {
+        return res.status(422).send(e);
+      }
+      return next(e);
     }
-
-    // let avatar: string | undefined | null = undefined;
-    //
-    // if (req.body.avatar === 'delete') {
-    //   avatar = null;
-    // } else if (req.file) {
-    //   avatar = req.file.filename;
-    // }
-
-    // const contacts = req.body.contacts
-    //   ? {
-    //       phone: req.body.contacts.phone || null,
-    //       whatsapp: req.body.contacts.whatsapp || null,
-    //       telegram: req.body.contacts.telegram || null,
-    //     }
-    //   : null;
-
-    if (user.role === 'user') {
-      const requiredFields = [
-        'name',
-        'surname',
-        'gender',
-        'dateOfBirth',
-        'country',
-        'city',
-        'education',
-        'aboutMe',
-        'workExperience',
-        'preferredJob',
-        'preferredCity',
-      ];
-
-      // for (const field of requiredFields) {
-      //   // Проверка вложенных полей, таких как contacts.phone
-      //   const value = field.includes('.') ? req.body[field.split('.')[0]]?.[field.split('.')[1]] : req.body[field];
-      //
-      //   if (!value) {
-      //     return res.status(400).send({ message: `${field} is required` });
-      //   }
-      // }
-    }
-
-    const result = await User.updateOne(
-      { _id: req.params.id },
-      {
-        $set: {
-          name: req.body.name || null,
-          surname: req.body.surname || null,
-          patronymic: req.body.patronymic || null,
-          gender: req.body.gender || null,
-          dateOfBirth: req.body.dateOfBirth || null,
-          country: req.body.country || null,
-          city: req.body.city || null,
-          education: req.body.education || null,
-          aboutMe: req.body.aboutMe || null,
-          workExperience: req.body.workExperience || null,
-          preferredJob: req.body.preferredJob || null,
-          preferredCity: req.body.preferredCity || null,
-          contacts,
-          avatar,
-        },
-      },
-    );
-
-    if (result.matchedCount === 0) {
-      return res.status(404).send({ message: 'User not found!' });
-    }
-
-    return res.send({ message: 'ok' });
-  } catch (e) {
-    if (e instanceof mongoose.Error.ValidationError) {
-      return res.status(422).send(e);
-    }
-    next(e);
-  }
 });
 
 userRouter.delete('/:id', async (req, res, next) => {
