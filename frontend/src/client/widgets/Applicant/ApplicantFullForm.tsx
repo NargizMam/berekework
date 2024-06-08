@@ -37,7 +37,7 @@
       preferredJob: applicant?.preferredJob || '',
       preferredCity: applicant?.preferredCity || '',
     });
-    console.log(state);
+
     useEffect(() => {
       if (applicant) {
         setFields(

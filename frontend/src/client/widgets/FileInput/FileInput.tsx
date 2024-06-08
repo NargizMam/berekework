@@ -24,7 +24,6 @@ const FileInput: React.FC<Props> = ({ onChange, avatar }) => {
       inputRef.current.click();
     }
   };
-
   return (
     <>
       <input style={{ display: 'none' }} type="file" name="avatar" onChange={onFileChange} ref={inputRef} />

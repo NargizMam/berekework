@@ -41,7 +41,7 @@ export const UserProfilePage = () => {
     <div style={{marginTop: '40px', marginBottom: '100px'}}>
       <div className="profileContainer">
         <div className="applicantContainer">
-          <div className="photoFrame">
+          <div className="photoFrame" style={{marginTop: '10px'}}>
             {profile.avatar ? (
               <img className="photo" src={API_URL + '/' + profile.avatar} alt="Photo"/>
             ) : (
