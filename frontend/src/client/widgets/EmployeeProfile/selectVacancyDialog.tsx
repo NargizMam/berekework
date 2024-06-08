@@ -13,7 +13,8 @@ import { selectVacancies, selectVacanciesLoading } from '../../../feachers/vacan
 import { getAllVacancy } from '../../../feachers/vacancy/vacancyThunk';
 import { selectRepliesLoading } from '../../../feachers/aplication/applicationSlice';
 import { Loader } from '../../../shared/loader';
-import { openErrorMessage } from '../../../widgets/WarningMessage/warningMessageSlice';
+import { selectEmployer } from '../../page/Auth/model/AuthSlice';
+import { toast } from 'react-toastify';
 
 export interface SelectVacancyDialogProps {
   open: boolean;
@@ -26,6 +27,10 @@ const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose
   const radioGroupRef = useRef<HTMLElement>(null);
   const dispatch = useAppDispatch();
   const options = useAppSelector(selectVacancies);
+  const currentEmployer = useAppSelector(selectEmployer);
+  const filteredOptions = currentEmployer
+    ? options.filter((option) => option.employer._id === currentEmployer._id)
+    : [];
   const isVacanciesLoading = useAppSelector(selectVacanciesLoading);
   const isRepliesLoading = useAppSelector(selectRepliesLoading);
 
@@ -52,9 +57,11 @@ const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose
   const handleOk = async () => {
     try {
       await dispatch(sendReplyByUser({ vacancyId: value, userId })).unwrap();
+      toast.success('Отклик успешно отправлен кандидату');
       onClose(value);
     } catch (error: any) {
-      dispatch(openErrorMessage(error.message || 'Произошла ошибка при отправке заявки.'));
+      const errorMessage = error.error || 'Произошла ошибка при отправке заявки.';
+      toast.error(errorMessage);
     }
   };
 
@@ -80,7 +87,7 @@ const SelectVacancyDialog: React.FC<SelectVacancyDialogProps> = ({ open, onClose
       <DialogTitle>Выберите вакансию</DialogTitle>
       <DialogContent dividers>
         <RadioGroup ref={radioGroupRef} aria-label="vacancy" name="vacancy" value={value} onChange={handleChange}>
-          {options.map((option) => (
+          {filteredOptions.map((option) => (
             <FormControlLabel value={option._id} key={option._id} control={<Radio />} label={option.vacancyTitle} />
           ))}
         </RadioGroup>

@@ -61,6 +61,7 @@ vacancyRouter.get('/', async (req, res, next) => {
     const { vacancyTitle } = req.query;
     const filterCategory = req.query.category;
     const { salary, age, ...categories } = req.query;
+    const { abroad, kyrgyzstan } = req.query;
 
     if (vacancyTitle) {
       const filteredVacancies = await Vacancy.find({
@@ -74,6 +75,16 @@ vacancyRouter.get('/', async (req, res, next) => {
         .select('vacancyTitle salary city')
         .populate('employer', '-_id companyName logo');
       return res.send(result);
+    }
+
+    if (abroad) {
+      const filteredVacancies = await Vacancy.find({ country: { $ne: 'Кыргызстан' } }).populate('employer');
+      return res.send(filteredVacancies);
+    }
+
+    if (kyrgyzstan) {
+      const filteredVacancies = await Vacancy.find({ country: 'Кыргызстан' }).populate('employer');
+      return res.send(filteredVacancies);
     }
 
     if (categoryVacancy) {

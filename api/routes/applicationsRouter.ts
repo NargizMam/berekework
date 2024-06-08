@@ -34,10 +34,15 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
       return res.status(400).json({ error: 'User not authenticated or specified' });
     }
 
+    // Проверка принадлежности вакансии работодателю
+    if (req.employer && !vacancy.employer?.equals(req.employer._id)) {
+      return res.status(403).json({ error: 'You can only create an application for your own vacancies' });
+    }
+
     // Проверка на существование заявки, чтобы избежать дублирования
     const existingApplication = await Application.findOne({ vacancy: vacancyId, user: user._id });
     if (existingApplication) {
-      return res.status(400).json({ error: 'Application already exists' });
+      return res.status(400).json({ error: 'Отклик уже существует между вами и кандидатом' });
     }
 
     // Создание новой заявки
@@ -175,7 +180,7 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
 
     const applications = await Application.find(filter)
       .populate({ path: 'vacancy', populate: { path: 'employer' } })
-      .populate('user')
+      .populate('user', '_id name surname dateOfBirth preferredJob contacts')
       .sort({ createdAt: -1 });
 
     return res.send(applications);

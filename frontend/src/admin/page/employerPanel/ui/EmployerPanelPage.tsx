@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectEmployerLoading, selectEmployers } from '../model/employerSlice';
-import { deleteEmployer, getAllEmployer } from '../api/employerThunk';
+import { deleteEmployer, getAllEmployer, updateStatusEmployer } from '../api/employerThunk';
 import {
   Box,
   Button,
@@ -27,6 +27,11 @@ export const EmployerPanelPage = () => {
   useEffect(() => {
     dispatch(getAllEmployer());
   }, [dispatch]);
+
+  const handleUpdateEmployer = async (id: string, email: string) => {
+    await dispatch(updateStatusEmployer({ id, email })).unwrap();
+    await dispatch(getAllEmployer());
+  };
 
   const handleDeleteEmployer = async (id: string) => {
     await dispatch(deleteEmployer(id)).unwrap();
@@ -95,10 +100,15 @@ export const EmployerPanelPage = () => {
                 <TableCell component="th" scope="row">
                   <Link href={API_URL + '/' + employer.documents}>PDF</Link>
                 </TableCell>
-                <TableCell>{employer.isPublished}</TableCell>
+                <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
+                <TableCell align="right">
+                  <Button onClick={() => handleUpdateEmployer(employer._id, employer.email)} variant="contained">
+                    Изменить статус
+                  </Button>
+                </TableCell>
                 <TableCell align="right">
                   <Button onClick={() => handleDeleteEmployer(employer._id)} variant="contained">
-                    Delete
+                    Удалить
                   </Button>
                 </TableCell>
               </TableRow>

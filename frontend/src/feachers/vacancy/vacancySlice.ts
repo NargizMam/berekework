@@ -1,6 +1,12 @@
 import { CategoryVacancyI, VacancyCardApiData } from '../../app/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllVacancy, getVacancyById, vacancyFetchCategory, vacancyGetByCategory } from './vacancyThunk';
+import {
+  getAllVacancy,
+  getAllVacancyByKgOrAbroad,
+  getVacancyById,
+  vacancyFetchCategory,
+  vacancyGetByCategory,
+} from './vacancyThunk';
 import { RootState } from '../../app/store/store';
 
 interface VacancyState {
@@ -36,6 +42,21 @@ const vacancySlice = createSlice({
     builder.addCase(getAllVacancy.rejected, (state) => {
       state.vacanciesLoading = false;
     });
+
+    builder.addCase(getAllVacancyByKgOrAbroad.pending, (state) => {
+      state.vacanciesLoading = true;
+    });
+    builder.addCase(
+      getAllVacancyByKgOrAbroad.fulfilled,
+      (state, { payload: vacancies }: PayloadAction<VacancyCardApiData[]>) => {
+        state.vacanciesLoading = false;
+        state.vacancies = vacancies;
+      },
+    );
+    builder.addCase(getAllVacancyByKgOrAbroad.rejected, (state) => {
+      state.vacanciesLoading = false;
+    });
+
     builder.addCase(getVacancyById.pending, (state) => {
       state.vacancyLoading = true;
     });

@@ -36,7 +36,7 @@ export const ChooseSpecialistBlock: React.FC<Props> = ({ slice }) => {
     <div style={{ margin: '100px 0' }} className="chooseBlock">
       <div className="chooseBlockContent">
         <h2 className="chooseBlock-title">{slice.primary.title}</h2>
-        <a href={slice.primary.link.url} className="button-link">
+        <a href={'news/' + slice.primary.link.url} className="button-link">
           Читать подробнее
           <span className="span"></span>
         </a>

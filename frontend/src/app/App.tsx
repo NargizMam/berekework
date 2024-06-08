@@ -25,6 +25,8 @@ import { VacancyDetailPage } from '../pages/VacancyDetailPage';
 import { UserProfilePage } from '../client/page/Profile';
 import { UserProfileFormPage } from '../client/page/Profile';
 import { EmployerEditPage } from '../client/page/employerProfile';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -65,6 +67,7 @@ const App = () => {
   return (
     <>
       <WarningMessage />
+      <ToastContainer />
       {location.pathname.startsWith('/admin') ? (
         adminRoutes
       ) : (

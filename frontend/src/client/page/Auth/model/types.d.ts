@@ -1,5 +1,3 @@
-import { EmployerInfoApi } from '../../../../types';
-
 export interface RegisterMutation {
   name: string;
   surname: string;
@@ -36,6 +34,7 @@ export interface EmployerAuth {
   email: string;
   token: string;
   role: string;
+  isPublished?: boolean;
 }
 
 export interface ValidationError {

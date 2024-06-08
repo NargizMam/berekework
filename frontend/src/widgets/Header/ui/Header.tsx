@@ -44,22 +44,35 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  console.log(user && employer);
-
   const nav = (
     <nav className="navigation-big-screen">
       <ul className="main-mav-web">
         {headerPrismicResponse?.body[0].items &&
           headerPrismicResponse.body[0].items.map((item, index) => {
-            if (!user || !employer) {
-              const isEmployerRole = user?.role === "employer";
-              const isForEmployers = item.name_link === 'Для работодателей';
-              const isForPotentialEmployees = item.name_link === 'Потенциальные сотрудники';
-
-              if (!isEmployerRole) {
-                if (isForEmployers || isForPotentialEmployees) {
+            if (!user && !employer) {
+              if (item.name_link === 'Для работодателей') {
+                return null;
+              }
+              if (item.name_link === 'Потенциальные сотрудники') {
+                return null;
+              }
+            }
+            if (user) {
+              if (user?.role === 'user') {
+                if (item.name_link === 'Для работодателей') {
                   return null;
                 }
+                if (item.name_link === 'Потенциальные сотрудники') {
+                  return null;
+                }
+              }
+            }
+            if (employer && !employer.isPublished) {
+              if (item.name_link === 'Для работодателей') {
+                return null;
+              }
+              if (item.name_link === 'Потенциальные сотрудники') {
+                return null;
               }
             }
             return (
@@ -94,15 +107,30 @@ const Header = () => {
           <ul className="main-nav-list">
             {headerPrismicResponse?.body[0].items &&
               headerPrismicResponse.body[0].items.map((item, index) => {
-                if (!user || !employer) {
-                  const isEmployerRole = user?.role === "employer";
-                  const isForEmployers = item.name_link === 'Для работодателей';
-                  const isForPotentialEmployees = item.name_link === 'Потенциальные сотрудники';
-
-                  if (!isEmployerRole) {
-                    if (isForEmployers || isForPotentialEmployees) {
+                if (!user && !employer) {
+                  if (item.name_link === 'Для работодателей') {
+                    return null;
+                  }
+                  if (item.name_link === 'Потенциальные сотрудники') {
+                    return null;
+                  }
+                }
+                if (user) {
+                  if (user?.role === 'user') {
+                    if (item.name_link === 'Для работодателей') {
                       return null;
                     }
+                    if (item.name_link === 'Потенциальные сотрудники') {
+                      return null;
+                    }
+                  }
+                }
+                if (employer && !employer.isPublished) {
+                  if (item.name_link === 'Для работодателей') {
+                    return null;
+                  }
+                  if (item.name_link === 'Потенциальные сотрудники') {
+                    return null;
                   }
                 }
                 return (

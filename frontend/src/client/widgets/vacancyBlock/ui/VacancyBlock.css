@@ -36,3 +36,25 @@
     grid-template-columns: repeat(1, minmax(250px, 1fr));
   }
 }
+
+.vacancy_block {
+	margin-top: 200px;
+	margin-bottom: 150px;
+}
+
+.vacancy_block_title {
+	font-weight: 700;
+	font-size: 46px;
+}
+
+.vacancy_block_button {
+	width: 100%;
+	background-color: #0866ff;
+	color: #ffffff;
+	border-color: transparent;
+	padding: 25px;
+	border-radius: 50px;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: center;
+}
