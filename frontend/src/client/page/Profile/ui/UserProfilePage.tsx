@@ -6,7 +6,7 @@ import { Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import './Applicant.css';
 import { API_URL } from '../../../../app/constants/links';
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EditIcon from '@mui/icons-material/Edit';
@@ -35,7 +35,7 @@ export const UserProfilePage = () => {
   }
 
   if (!profile) {
-    return <Navigate to={'/login'} />;
+    return null;
   }
 
   return (

@@ -9,6 +9,12 @@
   font-weight: 600;
 }
 
+.interested-vacancies-card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+
 .logo {
   margin-top: 30px;
 }

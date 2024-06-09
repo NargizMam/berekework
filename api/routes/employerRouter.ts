@@ -49,6 +49,30 @@ employerRouter.post(
     }
   },
 );
+
+employerRouter.patch('/:id', async (req, res, next) => {
+  try {
+    const employer = await Employer.findByIdAndUpdate(req.params.id, [
+      { $set: { isPublished: { $eq: [false, '$isPublished'] } } },
+    ]);
+
+    if (!employer) {
+      return res.status(404).send({ message: 'Employer not found!' });
+    }
+
+    // await transporter.sendMail({
+    //   from: '04072002mu@gmail.com',
+    //   to: req.body.email,
+    //   subject: 'Employer details updated',
+    //   text: `${req.body.email}, your employer status have been updated!`,
+    // });
+
+    return res.send({ message: 'Employer updated successfully!', employer });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 employerRouter.put(
   '/:id',
   multiUpload.fields([
@@ -124,6 +148,33 @@ employerRouter.delete('/:id', async (req, res, next) => {
   try {
     await Employer.findByIdAndDelete(req.params.id);
     res.send({ message: 'Employer deleted!' });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+employerRouter.post('/sessions', async (req, res, next) => {
+  try {
+    let employer = await Employer.findOne({ email: req.body.email });
+
+    if (!employer) {
+      employer = await Employer.findOne({ email: req.body.email });
+    }
+
+    if (!employer) {
+      return res.status(422).send({ error: 'Email and password not correct!' });
+    }
+
+    const isMatch = await employer.checkPassword(req.body.password);
+
+    if (!isMatch) {
+      return res.status(422).send({ error: 'Email and password not correct!' });
+    }
+
+    employer.generateToken();
+    await employer.save();
+
+    return res.send({ message: 'Email and password are correct!', employer });
   } catch (error) {
     return next(error);
   }

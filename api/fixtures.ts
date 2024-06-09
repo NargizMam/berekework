@@ -101,7 +101,7 @@ const run = async () => {
     },
   ]);
 
-  const [vac1, vac2, vac3, vac4, vac5, vac6] = await Vacancy.create(
+  const [vac1, vac2, vac3, vac4, vac5, vac6, vac7] = await Vacancy.create(
     {
       vacancyTitle: 'Software Developer',
       salary: {
@@ -240,6 +240,29 @@ const run = async () => {
       employmentType: 'Полная',
       employer: null, // Will be updated later
     },
+    {
+      vacancyTitle: 'Project Manager',
+      salary: {
+        minSalary: 45000,
+        maxSalary: 75000,
+      },
+      city: 'Бишкек',
+      aboutVacancy:
+        'We are looking for an experienced Project Manager to join our team. The ideal candidate will have experience in project management and a strong organizational mindset. You will be responsible for overseeing projects from inception to completion.',
+      responsibilities:
+        'Oversee projects from inception to completion. Develop project plans and timelines. Coordinate with cross-functional teams. Ensure projects are completed on time and within budget.',
+      workConditions:
+        'Full-time position. Flexible working hours. Remote work options available. Competitive salary and benefits.',
+      country: 'Кыргызстан',
+      fieldOfWork: 'Project Management',
+      age: {
+        minAge: 28,
+        maxAge: 45,
+      },
+      education: 'Высшее',
+      employmentType: 'Полная',
+      employer: null, // Will be updated later
+    },
   );
 
   // Create employers
@@ -257,6 +280,7 @@ const run = async () => {
       logo: 'fixtures/logo_company_megaservice.png',
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac1._id, vac2._id, vac3._id],
+      isPublished: true,
     },
     {
       email: 'employer2@example.com',
@@ -288,7 +312,7 @@ const run = async () => {
     },
   );
 
-  await Vacancy.updateMany({ _id: { $in: [vac1._id, vac2._id, vac3._id] } }, { employer: employer1._id });
+  await Vacancy.updateMany({ _id: { $in: [vac1._id, vac2._id, vac3._id, vac7._id] } }, { employer: employer1._id });
   await Vacancy.updateMany({ _id: { $in: [vac4._id, vac5._id, vac6._id] } }, { employer: employer2._id });
 
   await db.close();

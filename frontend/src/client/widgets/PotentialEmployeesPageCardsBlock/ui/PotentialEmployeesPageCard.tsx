@@ -7,7 +7,7 @@ export interface PotentialEmployeesPageCardProps {
   _id?: string;
   name?: string;
   surname?: string;
-  avatar: string | File| null;
+  avatar?: string | null;
   preferredJob?: string;
   dateOfBirth?: string;
   country?: string;

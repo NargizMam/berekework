@@ -28,6 +28,9 @@ export const authSlice = createSlice({
     unsetUser: (state) => {
       state.user = null;
     },
+    unsetEmployer: (state) => {
+      state.employer = null;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(register.pending, (state) => {
@@ -83,7 +86,7 @@ export const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { unsetUser } = authSlice.actions;
+export const { unsetUser, unsetEmployer } = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectEmployer = (state: RootState) => state.auth.employer;

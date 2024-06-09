@@ -11,10 +11,11 @@ import { selectVacancy, selectVacancyLoading } from '../../../feachers/vacancy/v
 import './vacancyDetailPage.css';
 import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
-import { selectEmployer } from '../../../client/page/Auth/model/AuthSlice';
+import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 
 export const VacancyDetailPage = () => {
   const employer = useAppSelector(selectEmployer);
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const { id } = useParams() as { id: string };
   const vacancy = useAppSelector(selectVacancy);
@@ -28,11 +29,13 @@ export const VacancyDetailPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    dispatch(getCandidateByEmployer(id));
-  }, [dispatch, id]);
+    if (employer) {
+      dispatch(getCandidateByEmployer(id));
+    }
+  }, [dispatch, employer, id]);
 
   const sendReplyHandle = async (id: string) => {
-    await dispatch(sendReplyByUser(id)).unwrap();
+    await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
   };
 
   if (loading) {
@@ -56,17 +59,19 @@ export const VacancyDetailPage = () => {
               <span className="maxSalary"> до {vacancy.salary.maxSalary}</span>
             </div>
             <div className="employmentType">Тип занятости: {vacancy.employmentType}</div>
-            <div className="vacancyButtons">
-              <Button
-                onClick={() => sendReplyHandle(vacancy._id)}
-                variant="contained"
-                size="large"
-                color="success"
-                className="vacancyButton"
-              >
-                Откликнуться
-              </Button>
-            </div>
+            {employer ? null : (
+              <div className="vacancyButtons">
+                <Button
+                  onClick={() => sendReplyHandle(vacancy._id)}
+                  variant="contained"
+                  size="large"
+                  color="success"
+                  className="vacancyButton"
+                >
+                  Откликнуться
+                </Button>
+              </div>
+            )}
           </div>
           <div className="aboutEmployer">
             <div className="employer-logo">
@@ -119,10 +124,12 @@ export const VacancyDetailPage = () => {
         <Box>
           <h1>Откликнутые</h1>
           {candidates.map((candidate, index) => (
-            <p>
-              <span>{index + 1}</span>
-              {candidate.user.name} - {candidate.user.preferredJob} - {candidate.status}
-            </p>
+            <Box key={candidate._id}>
+              <p>
+                <span>{index + 1}</span>
+                {candidate.user.name} - {candidate.user.preferredJob} - {candidate.employerStatus}
+              </p>
+            </Box>
           ))}
         </Box>
       ) : null}

@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.ts",
+    "start:test": "NODE_ENV=test ts-node index.ts",
     "check": "npx prettier . --check",
     "fix": "npx prettier . --write",
-    "seed": "ts-node fixtures.ts"
+    "seed": "ts-node fixtures.ts",
+    "seed:test": "NODE_ENV=test ts-node fixtures.ts"
   },
   "keywords": [],
   "author": "",
