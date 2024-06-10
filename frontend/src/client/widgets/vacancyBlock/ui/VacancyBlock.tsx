@@ -1,11 +1,10 @@
 import { CircularProgress } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
+import { getAllVacancyToCard } from '../../../../feachers/vacancy/vacancyThunk';
 import { VacancyCard } from '../../../../feachers/vacancyCard';
-import { selectVacancy } from '../model/VacancyBlockSlice';
-import { getVacancyCard } from '../model/VacancyBlockThunks';
 import './VacancyBlock.css';
+import { selectVacancyToCards } from '../../../../feachers/vacancy/vacancySlice';
 
 interface IVacancyBlockProps {
 	slice: any;
@@ -13,14 +12,11 @@ interface IVacancyBlockProps {
 
 export const VacancyBlock: React.FC<IVacancyBlockProps> = (data) => {
 	const dispatch = useAppDispatch();
-	const vacancyCard = useAppSelector(selectVacancy);
+	const vacancyCard = useAppSelector(selectVacancyToCards);
 	
+
 	useEffect(() => {
-		dispatch(getVacancyCard()).unwrap();
-	}, [dispatch]);
-	
-	useEffect(() => {
-		dispatch(getAllVacancy());
+		dispatch(getAllVacancyToCard());
 	}, [dispatch]);
 	
 	const renderContent = () => {

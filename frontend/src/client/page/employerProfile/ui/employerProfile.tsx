@@ -27,6 +27,8 @@ import { VacancyTable } from '../../../widgets/VacancyTable';
 import { deleteReply, getCandidates } from '../../../../feachers/aplication/aplicationThunk';
 import { selectApplicationForEmployees } from '../../../../feachers/aplication/applicationSlice';
 import { ApplicationResponse } from '../../../../feachers/aplication/types';
+import { selectVacancyDeleteLoading } from '../../../../feachers/vacancy/vacancySlice';
+import { deleteVacancy } from '../../../../feachers/vacancy/vacancyThunk';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,11 +69,12 @@ const EmployerProfile: React.FC = () => {
   const [newApplication, setNewApplication] = useState<ApplicationResponse[]>([]);
 
   const [vacancyId, setVacancyId] = useState<string | null>(null);
+  const deleteLoading = useAppSelector(selectVacancyDeleteLoading);
   const [value, setValue] = React.useState(0);
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
 
   useEffect(() => {
     if (id) {
@@ -81,6 +84,11 @@ const EmployerProfile: React.FC = () => {
 
   const onDeleteConfirm = async () => {
     if (vacancyId) {
+      await dispatch(deleteVacancy(vacancyId));
+
+      if (id) {
+        dispatch(getEmployersProfileInfo(id));
+      }
       setVacancyId(null);
     }
   };
@@ -122,28 +130,13 @@ const EmployerProfile: React.FC = () => {
   if (loading) return <Loader />;
 
   return (
-    <div style={{ position: 'relative' }}>
-      <Button
-        variant="outlined"
-        sx={{ position: 'absolute', top: '20px', right: '50px' }}
-        onClick={() => navigate(`/edit-employer/${profile?._id}`)}
-      >
-        Редактировать профиль
-      </Button>
-      <div className="createVacancyContainer">
-        {profile?.isPublished && (
-          <Button variant="outlined" onClick={() => setOpenVacancyForm(true)}>
-            Создать вакансию
-          </Button>
-        )}
-      </div>
-
+    <>
       {profile && (
         <Grid mt={6}>
           <div className="companyHeader">
             <img
               className="companyLogo"
-              src={`http://localhost:8000/${profile.avatar}`}
+              src={`http://localhost:8000/${profile.logo}`}
               alt="Логотип компании"
               height="100px"
             />
@@ -166,6 +159,20 @@ const EmployerProfile: React.FC = () => {
           <a className="companyLink" href={profile.document || '#'} download>
             Скачать документы
           </a>
+          <Box sx={{ display: 'flex', mt: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
+            <Button variant="outlined" onClick={() => navigate(`/edit-employer/${profile?._id}`)}>
+              Редактировать профиль
+            </Button>
+            {profile?.isPublished && (
+              <Button
+                variant="outlined"
+                sx={{ marginLeft: { xs: 0, sm: 1 }, mt: { xs: 1, sm: 0 } }}
+                onClick={() => setOpenVacancyForm((prevState) => !prevState)}
+              >
+                Создать вакансию
+              </Button>
+            )}
+          </Box>
         </Grid>
       )}
 
@@ -187,7 +194,11 @@ const EmployerProfile: React.FC = () => {
               }}
             >
               {profile.vacancies.length > 0 ? (
-                <VacancyTable vacancies={profile.vacancies} vacancyDelete={onVacancyDelete} />
+                <VacancyTable
+                  vacancies={profile.vacancies}
+                  vacancyDelete={onVacancyDelete}
+                  deleteLoading={deleteLoading}
+                />
               ) : (
                 <h6>Добавьте свои вакансии</h6>
               )}
@@ -205,7 +216,7 @@ const EmployerProfile: React.FC = () => {
       {openVacancyForm && (
         <>
           <Typography variant="h4">Создайте свои вакансии</Typography>
-          <CreateVacancyForm setOpenForm={setOpenVacancyForm} />
+          <CreateVacancyForm setOpenForm={setOpenVacancyForm} employeeId={id} />
         </>
       )}
       <Dialog open={Boolean(vacancyId)} onClose={onDeleteCancel}>
@@ -216,7 +227,7 @@ const EmployerProfile: React.FC = () => {
           <Button onClick={onDeleteCancel}>Нет</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

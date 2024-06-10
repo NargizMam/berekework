@@ -47,6 +47,26 @@ export interface Vacancy {
   employer: Employer;
 }
 
+export interface VacancyMutation {
+  vacancyTitle: string;
+  aboutVacancy: string;
+  responsibilities: string;
+  workConditions: string;
+  country: string;
+  city: string;
+  fieldOfWork: string;
+  salary: {
+    minSalary: number;
+    maxSalary: number;
+  };
+  age: {
+    minAge: number;
+    maxAge: number;
+  };
+  education: srring;
+  employmentType: string;
+}
+
 export interface VacancyWithId {
   _id: string;
   vacancyTitle: string;
@@ -71,5 +91,5 @@ export interface VacancyWithId {
 
 export interface VacancyEdtiData {
   id: string;
-  vacancy: Vacancy;
+  vacancy: VacancyMutation;
 }

@@ -133,6 +133,7 @@ employerRouter.get('/:id', async (req, res, next) => {
   try {
     const results = await Employer.findById(req.params.id).populate({
       path: 'vacancies',
+      match: { archive: false },
       populate: { path: 'employer' },
     });
     res.send(results);
