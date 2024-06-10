@@ -1,6 +1,6 @@
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { components } from '../../../../app/constants/components';
-import LastNewsBlock from '../../../widgets/lastNewsBlock/ui/LastNewsBlock';
+import { LastNewsBlock } from '../../../widgets/lastNewsBlock';
 
 export const HomePage = () => {
 	const [document] = usePrismicDocumentByUID('pages', 'ps5');
