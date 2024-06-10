@@ -27,6 +27,7 @@ import { UserProfileFormPage } from '../client/page/Profile';
 import { EmployerEditPage } from '../client/page/employerProfile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Permit from '../shared/permit/Permit';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -82,10 +83,38 @@ const App = () => {
             <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/employersProfile/:id" element={<EmployerProfile />} />
-            <Route path="/edit-employer/:id" element={<EmployerEditPage />} />
-            <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
-            <Route path="/userProfile" element={<UserProfilePage />} />
+            <Route
+              path="/employersProfile/:id"
+              element={
+                <Permit employerOnly>
+                  <EmployerProfile />
+                </Permit>
+              }
+            />
+            <Route
+              path="/edit-employer/:id"
+              element={
+                <Permit employerOnly>
+                  <EmployerEditPage />
+                </Permit>
+              }
+            />
+            <Route
+              path="/potential-employees"
+              element={
+                <Permit employerOnly>
+                  <PotentialEmployeesPage />
+                </Permit>
+              }
+            />
+            <Route
+              path="/userProfile"
+              element={
+                <Permit>
+                  <UserProfilePage />
+                </Permit>
+              }
+            />
             <Route path="/userProfile-submit" element={<UserProfileFormPage />} />
             <Route path="/for-employer" element={<ForEmployerPage />} />
             <Route path="/news/:uid" element={<NewsPage />} />
