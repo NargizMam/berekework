@@ -4,7 +4,6 @@ import Employer from '../models/employer/employerModel';
 import { multiUpload } from '../multer';
 import { UploadedFiles } from '../types';
 import { transporter } from '../mailer';
-import path from 'path';
 
 const employerRouter = Router();
 
@@ -59,12 +58,12 @@ employerRouter.patch('/:id', async (req, res, next) => {
       return res.status(404).send({ message: 'Employer not found!' });
     }
 
-    await transporter.sendMail({
-      from: '04072002mu@gmail.com',
-      to: req.body.email,
-      subject: 'Employer details updated',
-      text: `${req.body.email}, your employer status have been updated!`,
-    });
+    // await transporter.sendMail({
+    //   from: '04072002mu@gmail.com',
+    //   to: req.body.email,
+    //   subject: 'Employer details updated',
+    //   text: `${req.body.email}, your employer status have been updated!`,
+    // });
 
     return res.send({ message: 'Employer updated successfully!', employer });
   } catch (error) {
@@ -95,7 +94,6 @@ employerRouter.put(
         description: req.body.description,
         address: req.body.address,
         contacts: req.body.contacts,
-        logo: files['logo'] ? files['logo'][0].filename : null,
         adminsComment: req.body.adminsComment,
       };
 
