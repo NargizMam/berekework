@@ -81,27 +81,27 @@ vacancyRouter.get('/', async (req, res, next) => {
           archive: false,
         })
           .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName logo');
+          .populate('employer', '-_id companyName avatar');
         return res.send(filteredVacancies);
       }
 
       const result = await Vacancy.find({ archive: false })
         .select('vacancyTitle salary city')
-        .populate('employer', '-_id companyName logo');
+        .populate('employer', '-_id companyName avatar');
       return res.send(result);
     }
 
     if (abroad) {
       const filteredVacancies = await Vacancy.find({ country: { $ne: 'Кыргызстан' }, archive: false })
         .select('vacancyTitle salary city')
-        .populate('employer', '-_id companyName logo');
+        .populate('employer', '-_id companyName avatar');
       return res.send(filteredVacancies);
     }
 
     if (kyrgyzstan) {
       const filteredVacancies = await Vacancy.find({ country: 'Кыргызстан', archive: false })
         .select('vacancyTitle salary city')
-        .populate('employer', '-_id companyName logo');
+        .populate('employer', '-_id companyName avatar');
       return res.send(filteredVacancies);
     }
 
@@ -142,40 +142,40 @@ vacancyRouter.get('/', async (req, res, next) => {
       let filteredVacancies: VacancyI[] = [];
       const vacancies: VacancyI[] = await Vacancy.find({ archive: false })
         .select('vacancyTitle salary city')
-        .populate('employer', '-_id companyName logo');
+        .populate('employer', '-_id companyName avatar');
 
       if (categories.hasOwnProperty('city')) {
         const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city, archive: false })
           .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName logo');
+          .populate('employer', '-_id companyName avatar');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('education')) {
         const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education, archive: false })
           .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName logo');
+          .populate('employer', '-_id companyName avatar');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('country')) {
         const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country, archive: false })
           .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName logo');
+          .populate('employer', '-_id companyName avatar');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('fieldOfWork')) {
         const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork, archive: false })
           .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName logo');
+          .populate('employer', '-_id companyName avatar');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('employmentType')) {
         const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType, archive: false })
           .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName logo');
+          .populate('employer', '-_id companyName avatar');
         filteredVacancies.push(...vacancies);
       }
 
