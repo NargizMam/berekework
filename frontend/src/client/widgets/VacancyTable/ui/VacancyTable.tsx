@@ -14,13 +14,13 @@ import {
 } from '@mui/material';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import dayjs from 'dayjs';
-import { VacancyCardApiData } from '../../../../app/types';
+import { VacancyApiData } from '../../../../app/types';
 import { Link, useNavigate } from 'react-router-dom';
 
 dayjs.extend(LocalizedFormat);
 
 interface Props {
-  vacancies: VacancyCardApiData[];
+  vacancies: VacancyApiData[];
   vacancyDelete: (id: string) => void;
 }
 

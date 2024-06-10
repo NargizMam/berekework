@@ -56,21 +56,23 @@ vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next
 
 vacancyRouter.get('/', async (req, res, next) => {
   try {
-    const vacancyPage = req.query.vacancyPage;
     const categoryVacancy = req.query.getCategory;
     const { vacancyTitle } = req.query;
     const filterCategory = req.query.category;
     const { salary, age, ...categories } = req.query;
     const { abroad, kyrgyzstan } = req.query;
+    const vacancyCard = req.query.vacancyCard;
 
-    if (vacancyTitle) {
-      const filteredVacancies = await Vacancy.find({
-        vacancyTitle: { $regex: vacancyTitle, $options: 'i' },
-      }).populate('employer');
-      return res.send(filteredVacancies);
-    }
+    if (vacancyCard) {
+      if (vacancyTitle) {
+        const filteredVacancies = await Vacancy.find({
+          vacancyTitle: { $regex: vacancyTitle, $options: 'i' },
+        })
+          .select('vacancyTitle salary city')
+          .populate('employer', '-_id companyName logo');
+        return res.send(filteredVacancies);
+      }
 
-    if (vacancyPage) {
       const result = await Vacancy.find()
         .select('vacancyTitle salary city')
         .populate('employer', '-_id companyName logo');
@@ -78,12 +80,16 @@ vacancyRouter.get('/', async (req, res, next) => {
     }
 
     if (abroad) {
-      const filteredVacancies = await Vacancy.find({ country: { $ne: 'Кыргызстан' } }).populate('employer');
+      const filteredVacancies = await Vacancy.find({ country: { $ne: 'Кыргызстан' } })
+        .select('vacancyTitle salary city')
+        .populate('employer', '-_id companyName logo');
       return res.send(filteredVacancies);
     }
 
     if (kyrgyzstan) {
-      const filteredVacancies = await Vacancy.find({ country: 'Кыргызстан' }).populate('employer');
+      const filteredVacancies = await Vacancy.find({ country: 'Кыргызстан' })
+        .select('vacancyTitle salary city')
+        .populate('employer', '-_id companyName logo');
       return res.send(filteredVacancies);
     }
 
@@ -122,32 +128,42 @@ vacancyRouter.get('/', async (req, res, next) => {
 
     if (filterCategory) {
       let filteredVacancies: VacancyI[] = [];
-      const vacancies: VacancyI[] = await Vacancy.find().populate('employer');
+      const vacancies: VacancyI[] = await Vacancy.find()
+        .select('vacancyTitle salary city')
+        .populate('employer', '-_id companyName logo');
 
       if (categories.hasOwnProperty('city')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city }).populate('employer');
+        const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city })
+          .select('vacancyTitle salary city')
+          .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('education')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education }).populate('employer');
+        const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education })
+          .select('vacancyTitle salary city')
+          .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('country')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country }).populate('employer');
+        const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country })
+          .select('vacancyTitle salary city')
+          .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('fieldOfWork')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork }).populate('employer');
+        const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork })
+          .select('vacancyTitle salary city')
+          .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('employmentType')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType }).populate(
-          'employer',
-        );
+        const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType })
+          .select('vacancyTitle salary city')
+          .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
@@ -198,7 +214,10 @@ vacancyRouter.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await Vacancy.findById(id).populate('employer');
+    const result = await Vacancy.findById(id).populate(
+      'employer',
+      '-_id -email -token -industry -documents -role -isPublished',
+    );
     return res.send(result);
   } catch (e) {
     next(e);

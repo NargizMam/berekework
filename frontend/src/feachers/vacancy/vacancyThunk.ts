@@ -1,22 +1,32 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { CategoryVacancyI, VacancyCardApiData, VacancyCategoryGet } from '../../app/types';
+import { CategoryVacancyI, VacancyApiData, VacancyCategoryGet, VacancyResponseToCard } from '../../app/types';
 import axiosApi from '../../app/axiosApi';
 import { titleVacancyFilter, vacancyCategory } from '../../app/constants/links';
 
-export const getAllVacancy = createAsyncThunk<VacancyCardApiData[], string | undefined>(
+export const getAllVacancy = createAsyncThunk<VacancyApiData[]>(
   'vacancy/getAll',
-  async (vacancyTitle) => {
-    const response = await axiosApi.get<VacancyCardApiData[]>(
-      `/vacancy${vacancyTitle ? `?vacancyTitle=${vacancyTitle.toLowerCase()}` : ''}`,
+  async () => {
+    const response = await axiosApi.get<VacancyApiData[]>(
+      "/vacancy",
     );
     return response.data;
   },
 );
 
-export const getAllVacancyByKgOrAbroad = createAsyncThunk<VacancyCardApiData[], string>(
+export const getAllVacancyToCard = createAsyncThunk<VacancyResponseToCard[], string | undefined>(
+  'vacancy/getAllToCard',
+  async (vacancyTitle) => {
+    const response = await axiosApi.get<VacancyResponseToCard[]>(
+      `/vacancy?vacancyCard=true${vacancyTitle ? `&vacancyTitle=${vacancyTitle.toLowerCase()}` : ''}`,
+    );
+    return response.data;
+  },
+);
+
+export const getAllVacancyByKgOrAbroad = createAsyncThunk<VacancyApiData[], string>(
   'vacancy/getAllVacancyByKgOrAbroad',
   async (filter) => {
-    const response = await axiosApi.get<VacancyCardApiData[]>(
+    const response = await axiosApi.get<VacancyApiData[]>(
       `/vacancy${filter === 'abroad' ? '?abroad=true' : '?kyrgyzstan=true'}`,
     );
     return response.data;
@@ -51,7 +61,7 @@ export const vacancyFetchCategory = createAsyncThunk<CategoryVacancyI[]>(
   },
 );
 
-export const vacancyGetByCategory = createAsyncThunk<VacancyCardApiData[], { [key: string]: string }>(
+export const vacancyGetByCategory = createAsyncThunk<VacancyResponseToCard[], { [key: string]: string }>(
   'vacancyGetByCategory/getByCategory',
   async (values) => {
     const params = new URLSearchParams({ category: 'true', ...values });
@@ -60,7 +70,7 @@ export const vacancyGetByCategory = createAsyncThunk<VacancyCardApiData[], { [ke
   },
 );
 
-export const getVacancyById = createAsyncThunk<VacancyCardApiData, string>('vacancy/getById', async (id) => {
+export const getVacancyById = createAsyncThunk<VacancyApiData, string>('vacancy/getById', async (id) => {
   const response = await axiosApi.get(`/vacancy/${id}`);
   return response.data;
 });
