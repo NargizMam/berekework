@@ -26,12 +26,11 @@ interface Props {
   className: string;
 }
 
-const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
+export const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
   const [toggler, setToggler] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const openLightbox = (index: number) => {
-    console.log('index = ', index);
     setCurrentIndex(index);
     setToggler(!toggler);
   };
@@ -123,5 +122,3 @@ const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
     </Box>
   );
 };
-
-export default MediaBlock;

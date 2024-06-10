@@ -1,13 +1,8 @@
-import * as React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { PropsWithChildren } from 'react';
 import MainNavAdmin from './MainNavAdmin';
 import Container from '@mui/material/Container';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
+const AdminLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <Container
@@ -20,10 +15,7 @@ const AdminLayout = ({ children }: LayoutProps): React.JSX.Element => {
       >
         <MainNavAdmin />
         <main>
-          <Container>
-            {children}
-            <Outlet />
-          </Container>
+          <Container>{children}</Container>
         </main>
       </Container>
     </>
