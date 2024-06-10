@@ -2,11 +2,11 @@ import React, { useRef, useState } from 'react';
 import { API_URL } from '../../../app/constants/links';
 
 interface Props {
-  photo: File | string | null;
+  avatar: File | string | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FileInput: React.FC<Props> = ({ onChange, photo }) => {
+const FileInput: React.FC<Props> = ({ onChange, avatar }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -24,15 +24,14 @@ const FileInput: React.FC<Props> = ({ onChange, photo }) => {
       inputRef.current.click();
     }
   };
-
   return (
     <>
-      <input style={{ display: 'none' }} type="file" name="photo" onChange={onFileChange} ref={inputRef} />
+      <input style={{ display: 'none' }} type="file" name="avatar" onChange={onFileChange} ref={inputRef} />
       <div className="photoFrame">
         {preview ? (
           <img src={preview} alt="Preview" className="photo" />
-        ) : photo ? (
-          <img className="photo" src={`${API_URL}/${photo}`} alt="Photo" />
+        ) : avatar ? (
+          <img className="photo" src={`${API_URL}/${avatar}`} alt="Photo" />
         ) : (
           <div className="photo"></div>
         )}

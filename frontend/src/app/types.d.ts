@@ -63,10 +63,9 @@ export interface User {
   }[];
   preferredJob?: string;
   preferredCity?: string;
-  contacts?: {
-    phone?: string;
-    whatsapp?: string;
-    telegram?: string;
+  contacts: {
+    phone: string;
+    whatsapp: string;
+    telegram: string;
   };
-  documents?: string[];
 }

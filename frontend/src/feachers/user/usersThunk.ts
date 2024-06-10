@@ -22,15 +22,18 @@ export const changeProfile = createAsyncThunk<void, ProfileChange>(
   'applicant/add',
   async ({ profileMutation, userId }) => {
     const formData = new FormData();
-
     Object.entries(profileMutation).forEach(([key, value]) => {
-      if (key === 'workExperience') {
-        formData.append(key, JSON.stringify(value));
-      } else {
-        formData.append(key, value);
+      if (value !== null) {
+        if (key === 'avatar' && value instanceof File) {
+          formData.append(key, value);
+        } else if (typeof value === 'object' || Array.isArray(value)) {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, value as string);
+        }
       }
     });
-    return axiosApi.patch(userId ? `applicants?userId=${userId}` : '/applicants', formData);
+    return axiosApi.patch(`user/${userId}`, formData);
   },
 );
 

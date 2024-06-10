@@ -29,9 +29,8 @@ export const UserProfilePage = () => {
   const birthDateDayjs = dayjs(profile?.dateOfBirth);
   const now = dayjs();
   const age = now.diff(birthDateDayjs, 'year');
-
   if (loading) {
-    return <Loader />;
+    return <Loader/>;
   }
 
   if (!profile) {
@@ -39,13 +38,12 @@ export const UserProfilePage = () => {
   }
 
   return (
-    <div style={{ marginTop: '40px', marginBottom: '100px' }}>
+    <div style={{marginTop: '40px', marginBottom: '100px'}}>
       <div className="profileContainer">
-        <div className="whiteBackground"></div>
         <div className="applicantContainer">
-          <div className="photoFrame">
+          <div className="photoFrame" style={{marginTop: '10px'}}>
             {profile.avatar ? (
-              <img className="photo" src={API_URL + '/' + profile.avatar} alt="Photo" />
+              <img className="photo" src={API_URL + '/' + profile.avatar} alt="Photo"/>
             ) : (
               <div className="photo">
                 <Typography>Нет фото</Typography>
@@ -56,28 +54,30 @@ export const UserProfilePage = () => {
             {profile.surname} {profile.name}
           </p>
           <p className="applicantInfo">{profile.preferredJob}</p>
-          <div className="infoBlock">
-            <div style={{ display: 'flex', marginBottom: '40px', marginRight: '40px', alignItems: 'center' }}>
-              <PersonOutlineIcon sx={{ marginRight: '5px' }} />
-              <p style={{ margin: 0 }} className="applicantInfo">
-                {' '}
-                {age} года
-              </p>
+          {profile.dateOfBirth ?
+            <div className="infoBlock">
+              <div style={{display: 'flex', marginBottom: '40px', marginRight: '40px', alignItems: 'center'}}>
+                <PersonOutlineIcon sx={{marginRight: '5px'}}/>
+                <p style={{margin: 0}} className="applicantInfo">
+                  {age} года
+                </p>
+              </div>
+              <div style={{display: 'flex', marginBottom: '40px', alignItems: 'center'}}>
+                <LocationOnIcon sx={{marginRight: '5px'}}/>
+                <p style={{margin: 0}} className="applicantInfo">
+                  {profile.country}, {profile.city}
+                </p>
+              </div>
             </div>
-            <div style={{ display: 'flex', marginBottom: '40px', alignItems: 'center' }}>
-              <LocationOnIcon sx={{ marginRight: '5px' }} />
-              <p style={{ margin: 0 }} className="applicantInfo">
-                {profile.country}, {profile.city}
-              </p>
-            </div>
-          </div>
-          <p className="applicantInfo">{profile.aboutMe}</p>
-
-          <NavLink to="/applicantRefactor" className="changeBtn">
-            <EditIcon style={{ color: '#FFFFFF', marginRight: '20px' }} />
+            :
+            <p style={{margin: 0}} className="applicantInfo">Данных нет</p>
+          }
+            <p className="applicantInfo">{profile.aboutMe}</p>
+          <NavLink to="/userProfile-submit" className="changeBtn">
+            <EditIcon style={{color: '#FFFFFF', marginRight: '20px'}}/>
             Редактировать профиль
           </NavLink>
-          <InterestedVacancies />
+          <InterestedVacancies/>
         </div>
       </div>
     </div>

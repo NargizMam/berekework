@@ -24,6 +24,22 @@ div.inputContainer {
   flex-direction: column;
 }
 
+.workExpWrapperField {
+  font-family: 'Montserrat', sans-serif;
+  border: #e9e9e9 solid 2px;
+  display: block;
+  color: #8E8E8E;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 35px;
+  line-height: 20px;
+  padding-left: 30px;
+  width: 250px;
+  height: 70px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
 .field {
   font-family: 'Montserrat', sans-serif;
   border: #e9e9e9 solid 2px;
@@ -62,12 +78,17 @@ button.sendBtn {
 }
 
 .workExpWrapper {
+  flex-wrap: wrap;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 @media (min-width: 600px) {
+  .workExpWrapperField {
+    width: 400px;
+  }
+
   .field {
     width: 400px;
   }
@@ -82,6 +103,13 @@ button.sendBtn {
 }
 
 @media (min-width: 800px) {
+  .workExpWrapper {
+    flex-wrap: nowrap;
+  }
+  .workExpWrapperField {
+    width: 350px;
+  }
+
   .field {
     width: 600px;
   }
@@ -121,6 +149,12 @@ button.sendBtn {
 
   .formContainer {
     align-items: start;
+  }
+
+  .workExpWrapperField {
+    padding-left: 30px;
+    width: 380px;
+    margin-right: 10px;
   }
 
   .field {
