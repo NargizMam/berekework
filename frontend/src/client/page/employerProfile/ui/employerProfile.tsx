@@ -136,7 +136,7 @@ const EmployerProfile: React.FC = () => {
           <div className="companyHeader">
             <img
               className="companyLogo"
-              src={`http://localhost:8000/${profile.logo}`}
+              src={`http://localhost:8000/${profile.avatar}`}
               alt="Логотип компании"
               height="100px"
             />
