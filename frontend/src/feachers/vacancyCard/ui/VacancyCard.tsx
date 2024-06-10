@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '../../../app/constants/links';
 import VacancyCardStyle from './VacancyCard-style';
 import './VacancyCard.css';
+import { VacancyResponseToCard } from '../../../app/types';
 
 interface Props {
-  data: any;
+  data: VacancyResponseToCard;
   visible: boolean;
 }
 

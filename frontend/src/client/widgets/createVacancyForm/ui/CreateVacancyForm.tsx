@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { countries, educationTypes, workTypes } from '../model/constants';
 import CreateVacancyFormStyle from './CreateVacancyForm-style';
-import { ICreateVacancyForm, Vacancy, VacancyEdtiData } from '../model/types';
+import { ICreateVacancyForm, VacancyEdtiData, VacancyMutation } from '../model/types';
 import TextAriaField from '../../textAriaField/ui/TextAriaField';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { clearEditVacancy, selectEditVacancy, selectError, selectIsLoading } from '../model/createVacancyFormSlice';
 import { postVacancy, updateVacancy } from '../model/createVacancyFormThuncks';
 import { Loader } from '../../../../shared/loader';
 import './CreateVacancyForm.css';
-import { selectUser } from '../../../page/Auth/model/AuthSlice';
 import { openErrorMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 import ErrorMessage from '../../../../widgets/WarningMessage/ErrorMessage';
+import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 
 interface Flag {
   aboutVacancy: boolean;
@@ -22,6 +22,7 @@ interface Flag {
 
 interface Props {
   setOpenForm: (open: boolean) => void;
+  employeeId: string;
 }
 
 const initialState = {
@@ -41,12 +42,11 @@ const initialState = {
   employer: '',
 };
 
-export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
+export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectEditVacancy);
-  const user = useAppSelector(selectUser);
   const [cities, setCities] = useState<string[]>([]);
 
   const [state, setState] = useState<ICreateVacancyForm>(initialState);
@@ -121,7 +121,7 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    const stateData: Vacancy = {
+    const stateData: VacancyMutation = {
       vacancyTitle: state.vacancyTitle,
       aboutVacancy: state.aboutVacancy,
       responsibilities: state.responsibilities,
@@ -139,7 +139,6 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
       },
       education: state.education,
       employmentType: state.employmentType,
-      employer: user && user.role === 'employer' ? user._id : undefined,
     };
     try {
       if (editVacancy) {
@@ -150,6 +149,7 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm }) => {
         await dispatch(updateVacancy(editData)).unwrap();
       } else {
         await dispatch(postVacancy(stateData)).unwrap();
+        dispatch(getEmployersProfileInfo(employeeId));
       }
       dispatch(clearEditVacancy());
       setState(initialState);
