@@ -9,6 +9,7 @@ import { VacancyBlock } from '../../client/widgets/vacancyBlock';
 import { AboutUsBlock } from '../../client/widgets/aboutAsBlock';
 import { EmployerBlock } from '../../client/widgets/employerBlock';
 import { MediaBlock } from '../../client/widgets/MediaBlock';
+import { LastNewsBlock } from '../../client/widgets/lastNewsBlock';
 
 
 export const components = {
@@ -25,4 +26,5 @@ export const components = {
   potentialemployees: EmployerBlock,
   galleryblock: MediaBlock,
   videoblock: MediaBlock,
+  lastnews: LastNewsBlock,
 };

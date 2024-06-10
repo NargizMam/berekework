@@ -1,1 +1,1 @@
-export {LastNewsBlock} from './ui/LastNewsBlock';
+export { LastNewsBlock } from './ui/LastNewsBlock';

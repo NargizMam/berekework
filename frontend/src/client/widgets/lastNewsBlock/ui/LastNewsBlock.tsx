@@ -38,6 +38,7 @@ export const LastNewsBlock = () => {
   const hasNextCards = activeStep < maxSteps - 1;
   const hasPreviousCards = activeStep > 0;
 
+
   return (
     <>
       <Box sx={LastNewsBlockStyle.block} style={{ marginTop: '30px' }}>
