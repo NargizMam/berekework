@@ -74,7 +74,6 @@ const EmployerProfile: React.FC = () => {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
   const { id } = useParams() as { id: string };
 
   useEffect(() => {
@@ -177,7 +176,7 @@ const EmployerProfile: React.FC = () => {
         </Grid>
       )}
 
-      <Box sx={{ width: '100%', mt: 2 }}>
+      <Box sx={{ width: '100%', mt: 4 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange}>
             <Tab label="Вакансии" {...a11yProps(0)} />

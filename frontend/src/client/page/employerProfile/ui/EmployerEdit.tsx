@@ -13,8 +13,6 @@ import {
 } from '../../../../admin/page/employerPanel/api/employerThunk';
 import { getExtension } from '../../../../feachers/checkExtensiion';
 import { Button, Grid, TextField } from '@mui/material';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { LoadingButton } from '@mui/lab';
 
 export interface EmployerInfoApiMutation {
@@ -25,7 +23,7 @@ export interface EmployerInfoApiMutation {
   description: string;
   address: string;
   contacts: string;
-  logo: File | string | null;
+  avatar: File | string | null;
   document: string | null;
   foundationYear: string;
 }
@@ -45,7 +43,7 @@ export const EmployerEditPage = () => {
     foundationYear: '',
     address: '',
     document: null,
-    logo: null,
+    avatar: null,
   });
   const employer = useAppSelector(selectEmployersProfileInfo);
   const error = useAppSelector(selectEmployerError);
@@ -95,7 +93,7 @@ export const EmployerEditPage = () => {
         foundationYear: '',
         address: '',
         document: null,
-        logo: null,
+        avatar: null,
       });
       navigate(`/employer/${id}`);
     } else {
@@ -111,7 +109,7 @@ export const EmployerEditPage = () => {
       foundationYear: '',
       address: '',
       document: null,
-      logo: null,
+      avatar: null,
     });
     navigate('/');
   };

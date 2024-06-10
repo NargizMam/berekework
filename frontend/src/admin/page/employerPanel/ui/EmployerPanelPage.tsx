@@ -80,7 +80,7 @@ export const EmployerPanelPage = () => {
                   {employer.companyName}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <img src={API_URL + '/' + employer.logo} alt="Logo" />
+                  <img src={API_URL + '/' + employer.avatar} alt="Logo" />
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {employer.foundationYear}

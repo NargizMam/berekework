@@ -44,7 +44,6 @@ export const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
   }
 
   const isVideoBlock = className === 'video';
-
   const showNavigation = slice.items.length > 3;
 
   const sources = slice.items
