@@ -17,16 +17,7 @@ const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
 
-  const collections = [
-    'components',
-    'headings',
-    'vacanciesblocks',
-    'vacancies',
-    'users',
-    'employers',
-    'tariffs',
-    'lastnewsblocks',
-  ];
+  const collections = ['components', 'headings', 'vacancies', 'users', 'employers', 'tariffs'];
 
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
@@ -48,7 +39,6 @@ const run = async () => {
       name: 'Арсен',
       surname: 'Белеков',
       patronymic: 'Кызаев',
-      gender: 'муж',
       dateOfBirth: '2006-10-03',
       country: 'Кыргызстан',
       city: 'Бишкек',
@@ -78,7 +68,6 @@ const run = async () => {
       name: 'Иван',
       surname: 'Иванов',
       patronymic: 'Иванович',
-      gender: 'муж',
       dateOfBirth: '2000-05-15',
       country: 'Кыргызстан',
       city: 'Ош',

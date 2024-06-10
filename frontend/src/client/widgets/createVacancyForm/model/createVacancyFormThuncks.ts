@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
-import { Vacancy, VacancyEdtiData } from './types';
+import { VacancyEdtiData, VacancyMutation } from './types';
 import axiosApi from '../../../../app/axiosApi';
 import { ValidationError } from '../../../../types';
 
-export const postVacancy = createAsyncThunk<void, Vacancy, { rejectValue: ValidationError }>(
+export const postVacancy = createAsyncThunk<void, VacancyMutation, { rejectValue: ValidationError }>(
   'reateVacancyForm/postVacancy',
   async (vacancy, { rejectWithValue }) => {
     try {

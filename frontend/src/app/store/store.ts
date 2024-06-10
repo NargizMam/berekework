@@ -1,8 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer } from '../../client/page/Auth/model/AuthSlice';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
-import { vacancyBlockReducer } from '../../client/widgets/vacancyBlock/model/VacancyBlockSlice';
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { usersReducer } from '../../feachers/user/usersSlice';
 import { lastNewsReducer } from '../../admin/widgets/lastNews/blocks/model/blockSlice';
 import { employerReducer } from '../../admin/page/employerPanel/model/employerSlice';
@@ -21,7 +20,6 @@ const usersPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(usersPersistConfig, authReducer),
-  vacancyBlock: vacancyBlockReducer,
   lastNews: lastNewsReducer,
   users: usersReducer,
   vacancy: vacancyReducer,

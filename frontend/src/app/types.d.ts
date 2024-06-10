@@ -1,6 +1,6 @@
 import { Employer } from '../admin/page/employerPanel/model/types';
 
-export interface VacancyCardApiData {
+export interface VacancyApiData {
   _id: string;
   city: string;
   vacancyTitle: string;
@@ -24,6 +24,20 @@ export interface VacancyCardApiData {
   employer: Employer;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface VacancyResponseToCard {
+  _id: string;
+  city: string;
+  vacancyTitle: string;
+  salary: {
+    minSalary: string;
+    maxSalary: string;
+  };
+  employer: {
+    logo: string;
+    companyName: string;
+  };
 }
 
 export interface VacancyCategoryGet {
@@ -63,9 +77,10 @@ export interface User {
   }[];
   preferredJob?: string;
   preferredCity?: string;
-  contacts: {
-    phone: string;
-    whatsapp: string;
-    telegram: string;
+  contacts?: {
+    phone?: string;
+    whatsapp?: string;
+    telegram?: string;
   };
+  documents?: string[];
 }
