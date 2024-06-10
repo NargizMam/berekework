@@ -61,6 +61,10 @@ const vacancySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Employer',
     },
+    archive: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

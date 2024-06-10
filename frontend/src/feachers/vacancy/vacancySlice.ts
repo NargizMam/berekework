@@ -1,6 +1,7 @@
 import { CategoryVacancyI, VacancyApiData, VacancyResponseToCard } from '../../app/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  deleteVacancy,
   getAllVacancy,
   getAllVacancyByKgOrAbroad, getAllVacancyToCard,
   getVacancyById,
@@ -17,6 +18,7 @@ interface VacancyState {
   vacancyCategoryLoading: boolean;
   vacanciesLoading: boolean;
   vacancyLoading: boolean;
+  vacancyDeleteLoading: boolean;
 }
 
 const initialState: VacancyState = {
@@ -27,6 +29,7 @@ const initialState: VacancyState = {
   vacanciesLoading: false,
   vacancyLoading: false,
   vacancyCategoryLoading: false,
+  vacancyDeleteLoading: false,
 };
 
 const vacancySlice = createSlice({
@@ -98,6 +101,14 @@ const vacancySlice = createSlice({
     }).addCase(getAllVacancyToCard.rejected, (state) => {
       state.vacanciesLoading = false;
     });
+
+    builder.addCase(deleteVacancy.pending, (state) => {
+      state.vacancyDeleteLoading = true;
+    }).addCase(deleteVacancy.fulfilled, (state) => {
+      state.vacancyDeleteLoading = false;
+    }).addCase(deleteVacancy.rejected, (state) => {
+      state.vacancyDeleteLoading = false;
+    });
   },
 });
 
@@ -109,3 +120,4 @@ export const selectClientVacancyCategoryFetching = (state: RootState) => state.v
 export const selectVacanciesLoading = (state: RootState) => state.vacancy.vacanciesLoading;
 export const selectVacancyLoading = (state: RootState) => state.vacancy.vacancyLoading;
 export const selectVacancyToCards = (state: RootState) => state.vacancy.vacanciesToCard;
+export const selectVacancyDeleteLoading = (state: RootState) => state.vacancy.vacancyDeleteLoading;

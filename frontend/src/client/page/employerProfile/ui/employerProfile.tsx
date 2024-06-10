@@ -27,6 +27,8 @@ import { VacancyTable } from '../../../widgets/VacancyTable';
 import { deleteReply, getCandidates } from '../../../../feachers/aplication/aplicationThunk';
 import { selectApplicationForEmployees } from '../../../../feachers/aplication/applicationSlice';
 import { ApplicationResponse } from '../../../../feachers/aplication/types';
+import { selectVacancyDeleteLoading } from '../../../../feachers/vacancy/vacancySlice';
+import { deleteVacancy } from '../../../../feachers/vacancy/vacancyThunk';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,6 +69,7 @@ const EmployerProfile: React.FC = () => {
   const [newApplication, setNewApplication] = useState<ApplicationResponse[]>([]);
 
   const [vacancyId, setVacancyId] = useState<string | null>(null);
+  const deleteLoading = useAppSelector(selectVacancyDeleteLoading);
   const [value, setValue] = React.useState(0);
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -84,10 +87,11 @@ const EmployerProfile: React.FC = () => {
 
   const onDeleteConfirm = async () => {
     if (vacancyId) {
-      /*await dispatch(deleteVacancy(vacancyId));
-      await dispatch(f());*/
+      await dispatch(deleteVacancy(vacancyId));
 
-      console.log(vacancyId);
+      if (id) {
+        dispatch(getEmployersProfileInfo(id));
+      }
       setVacancyId(null);
     }
   };
@@ -194,7 +198,7 @@ const EmployerProfile: React.FC = () => {
               }}
             >
               {profile.vacancies.length > 0 ? (
-                <VacancyTable vacancies={profile.vacancies} vacancyDelete={onVacancyDelete} />
+                <VacancyTable vacancies={profile.vacancies} vacancyDelete={onVacancyDelete} deleteLoading={deleteLoading}/>
               ) : (
                 <h6>Добавьте свои вакансии</h6>
               )}

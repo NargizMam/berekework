@@ -22,9 +22,10 @@ dayjs.extend(LocalizedFormat);
 interface Props {
   vacancies: VacancyApiData[];
   vacancyDelete: (id: string) => void;
+  deleteLoading: boolean;
 }
 
-export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete }) => {
+export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete, deleteLoading }) => {
   const navigate = useNavigate();
 
   const onEdit = (id: string) => {
@@ -63,7 +64,7 @@ export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete }) => {
                   >
                     Редактировать
                   </Button>
-                  <Button variant="contained" onClick={() => vacancyDelete(row._id)}>
+                  <Button variant="contained" onClick={() => vacancyDelete(row._id)} disabled={deleteLoading}>
                     Удалить
                   </Button>
                 </Box>

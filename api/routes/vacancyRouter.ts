@@ -1,8 +1,10 @@
 import express from 'express';
 import Vacancy from '../models/vacancy/Vacancy';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
 import { VacancyI } from '../types';
+import auth, { RequestWithUser } from '../middleware/auth';
+import vacancy from '../models/vacancy/Vacancy';
 
 const vacancyRouter = express.Router();
 
@@ -67,27 +69,28 @@ vacancyRouter.get('/', async (req, res, next) => {
       if (vacancyTitle) {
         const filteredVacancies = await Vacancy.find({
           vacancyTitle: { $regex: vacancyTitle, $options: 'i' },
+          archive: false,
         })
           .select('vacancyTitle salary city')
           .populate('employer', '-_id companyName logo');
         return res.send(filteredVacancies);
       }
 
-      const result = await Vacancy.find()
+      const result = await Vacancy.find({ archive: false })
         .select('vacancyTitle salary city')
         .populate('employer', '-_id companyName logo');
       return res.send(result);
     }
 
     if (abroad) {
-      const filteredVacancies = await Vacancy.find({ country: { $ne: 'Кыргызстан' } })
+      const filteredVacancies = await Vacancy.find({ country: { $ne: 'Кыргызстан' }, archive: false })
         .select('vacancyTitle salary city')
         .populate('employer', '-_id companyName logo');
       return res.send(filteredVacancies);
     }
 
     if (kyrgyzstan) {
-      const filteredVacancies = await Vacancy.find({ country: 'Кыргызстан' })
+      const filteredVacancies = await Vacancy.find({ country: 'Кыргызстан', archive: false })
         .select('vacancyTitle salary city')
         .populate('employer', '-_id companyName logo');
       return res.send(filteredVacancies);
@@ -108,7 +111,7 @@ vacancyRouter.get('/', async (req, res, next) => {
         employmentType: [''],
       };
 
-      const vacancies: VacancyI[] = await Vacancy.find();
+      const vacancies: VacancyI[] = await Vacancy.find({ archive: false });
       vacancies.forEach((vacancy) => {
         countryCategory.push(vacancy.country);
         cityCategory.push(vacancy.city);
@@ -128,40 +131,40 @@ vacancyRouter.get('/', async (req, res, next) => {
 
     if (filterCategory) {
       let filteredVacancies: VacancyI[] = [];
-      const vacancies: VacancyI[] = await Vacancy.find()
+      const vacancies: VacancyI[] = await Vacancy.find({ archive: false })
         .select('vacancyTitle salary city')
         .populate('employer', '-_id companyName logo');
 
       if (categories.hasOwnProperty('city')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city })
+        const vacancies: VacancyI[] = await Vacancy.find({ city: categories.city, archive: false })
           .select('vacancyTitle salary city')
           .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('education')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education })
+        const vacancies: VacancyI[] = await Vacancy.find({ education: categories.education, archive: false })
           .select('vacancyTitle salary city')
           .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('country')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country })
+        const vacancies: VacancyI[] = await Vacancy.find({ country: categories.country, archive: false })
           .select('vacancyTitle salary city')
           .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('fieldOfWork')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork })
+        const vacancies: VacancyI[] = await Vacancy.find({ fieldOfWork: categories.fieldOfWork, archive: false })
           .select('vacancyTitle salary city')
           .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
       }
 
       if (categories.hasOwnProperty('employmentType')) {
-        const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType })
+        const vacancies: VacancyI[] = await Vacancy.find({ employmentType: categories.employmentType, archive: false })
           .select('vacancyTitle salary city')
           .populate('employer', '-_id companyName logo');
         filteredVacancies.push(...vacancies);
@@ -203,7 +206,7 @@ vacancyRouter.get('/', async (req, res, next) => {
       return res.send(uniqueArr);
     }
 
-    const result = await Vacancy.find().populate('employer');
+    const result = await Vacancy.find({ archive: false }).populate('employer');
     return res.send(result);
   } catch (error) {
     return next(error);
@@ -214,7 +217,7 @@ vacancyRouter.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await Vacancy.findById(id).populate(
+    const result = await Vacancy.findById({ _id: id, archive: false }).populate(
       'employer',
       '-_id -email -token -industry -documents -role -isPublished',
     );
@@ -278,14 +281,35 @@ vacancyRouter.put('/:id', async (req, res, next) => {
     next(e);
   }
 });
-vacancyRouter.delete('/:id', async (req, res, next) => {
-  const { id } = req.params;
-
+vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
   try {
-    const deletedVacancy = await Vacancy.findByIdAndDelete(id);
+    let _id: Types.ObjectId;
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(404).send({ error: 'Wrong ObjectId!' });
+    }
 
-    if (!deletedVacancy) {
-      return res.status(404).send({ message: 'Vacancy not found' });
+    const vacancyById = await Vacancy.findById(_id);
+
+    if (!vacancyById) {
+      return res.status(404).send({ error: 'Vacancy not found' });
+    }
+
+    const isAdmin = req.user?.role === 'superadmin';
+    const isEmployer = vacancyById.employer ? vacancyById.employer.equals(req.employer?._id) : false;
+
+    if (!isAdmin && !isEmployer) {
+      return res.status(403).send({ error: 'Not authorized' });
+    }
+
+    if (isAdmin) {
+      await Vacancy.findByIdAndDelete(_id);
+    }
+
+    if (isEmployer) {
+      vacancyById.archive = true;
+      await vacancyById.save();
     }
 
     return res.send({ message: 'Vacancy deleted successfully' });

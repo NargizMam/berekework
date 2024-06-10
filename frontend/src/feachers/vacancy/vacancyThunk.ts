@@ -76,5 +76,5 @@ export const getVacancyById = createAsyncThunk<VacancyApiData, string>('vacancy/
 });
 
 export const deleteVacancy = createAsyncThunk<void, string>('vacancy/delete', async (id) => {
-  await axiosApi.delete(`/vacancies/${id}`);
+  await axiosApi.delete(`/vacancy/${id}`);
 });
