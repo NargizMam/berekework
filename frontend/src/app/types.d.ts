@@ -35,7 +35,7 @@ export interface VacancyResponseToCard {
     maxSalary: string;
   };
   employer: {
-    logo: string;
+    avatar: string;
     companyName: string;
   };
 }
