@@ -9,7 +9,7 @@ export interface Employer {
   address: string;
   contacts: string;
   isPublished: string;
-  logo: string;
+  avatar: string;
   documents: string;
 }
 
@@ -21,7 +21,7 @@ export interface EmployerMutation {
   industry: string;
   description: string;
   document: File | string | null;
-  logo: File | string | null;
+  avatar: File | string | null;
   address: string;
   contacts: string;
 }

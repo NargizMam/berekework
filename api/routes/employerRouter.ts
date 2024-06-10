@@ -22,7 +22,6 @@ employerRouter.post(
       const employer = new Employer({
         email: req.body.email,
         password: req.body.password,
-        avatar: files['avatar'] ? files['avatar'][0].filename : null,
         companyName: req.body.companyName,
         foundationYear: req.body.foundationYear,
         documents: files['document'] ? files['document'][0].filename : null,
@@ -30,7 +29,7 @@ employerRouter.post(
         description: req.body.description,
         address: req.body.address,
         contacts: req.body.contacts,
-        logo: files['logo'] ? files['logo'][0].filename : null,
+        avatar: files['avatar'] ? files['avatar'][0].filename : null,
       });
       employer.generateToken();
       await employer.save();
@@ -60,12 +59,12 @@ employerRouter.patch('/:id', async (req, res, next) => {
       return res.status(404).send({ message: 'Employer not found!' });
     }
 
-    // await transporter.sendMail({
-    //   from: '04072002mu@gmail.com',
-    //   to: req.body.email,
-    //   subject: 'Employer details updated',
-    //   text: `${req.body.email}, your employer status have been updated!`,
-    // });
+    await transporter.sendMail({
+      from: '04072002mu@gmail.com',
+      to: req.body.email,
+      subject: 'Employer details updated',
+      text: `${req.body.email}, your employer status have been updated!`,
+    });
 
     return res.send({ message: 'Employer updated successfully!', employer });
   } catch (error) {

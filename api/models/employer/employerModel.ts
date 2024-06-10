@@ -68,9 +68,6 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
   },
   googleID: String,
   avatar: String,
-  logo: {
-    type: String,
-  },
   vacancies: [
     {
       type: mongoose.Schema.Types.ObjectId,

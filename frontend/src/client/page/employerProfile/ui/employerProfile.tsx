@@ -71,9 +71,6 @@ const EmployerProfile: React.FC = () => {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
-  // const apiURL = 'http://localhost:8000';
-  // const image = apiURL + '/' + profile?.logo;
   const { id } = useParams();
 
   useEffect(() => {
@@ -84,10 +81,6 @@ const EmployerProfile: React.FC = () => {
 
   const onDeleteConfirm = async () => {
     if (vacancyId) {
-      /*await dispatch(deleteVacancy(vacancyId));
-      await dispatch(f());*/
-
-      console.log(vacancyId);
       setVacancyId(null);
     }
   };
@@ -150,7 +143,7 @@ const EmployerProfile: React.FC = () => {
           <div className="companyHeader">
             <img
               className="companyLogo"
-              src={`http://localhost:8000/${profile.logo}`}
+              src={`http://localhost:8000/${profile.avatar}`}
               alt="Логотип компании"
               height="100px"
             />

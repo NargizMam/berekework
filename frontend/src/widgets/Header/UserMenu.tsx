@@ -4,20 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { logout } from '../../client/page/Auth/api/AuthThunk';
-import { User } from '../../client/page/Auth/model/types';
+import { EmployerAuth, User } from '../../client/page/Auth/model/types';
 import { useAppDispatch } from '../../app/store/hooks';
 import { apiURL } from '../../constants';
 
 interface Props {
-  user: User | EmployerInfoApi;
+  user: User | EmployerAuth | null;
 }
 
 const UserMenu: React.FC<Props> = ({ user }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-  const avatar = apiURL + '/avatars/' + user.avatar;
+  const avatar = apiURL + '/avatars/' + user?.avatar;
 
   const handleLogout = () => {
     dispatch(logout()).unwrap();
@@ -33,9 +32,9 @@ const UserMenu: React.FC<Props> = ({ user }) => {
   };
 
   const getProfile = () => {
-    if (user.role === 'employer') {
+    if (user?.role === 'employer') {
       return navigate(`/employersProfile/${user._id}`);
-    } else if (user.role === 'user') {
+    } else if (user?.role === 'user') {
       return navigate(`/userProfile`);
     }
     navigate('/');
@@ -47,7 +46,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
       onMouseLeave={handleMouseLeave}
       sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
     >
-      {avatar && <Avatar alt={user.email} src={avatar} sx={{ borderRadius: 50 }} />}
+      <Avatar alt={user?.email} src={avatar} sx={{ borderRadius: 50 }} />
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"

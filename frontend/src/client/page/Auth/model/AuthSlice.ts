@@ -87,7 +87,6 @@ export const authSlice = createSlice({
 
 export const authReducer = authSlice.reducer;
 export const { unsetUser, unsetEmployer } = authSlice.actions;
-
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectEmployer = (state: RootState) => state.auth.employer;
 export const selectRegisterLoading = (state: RootState) => state.auth.registerLoading;
