@@ -50,27 +50,18 @@ const Header = () => {
         {headerPrismicResponse?.body[0].items &&
           headerPrismicResponse.body[0].items.map((item, index) => {
             if (!user && !employer) {
-              if (item.name_link === 'Для работодателей') {
-                return null;
-              }
               if (item.name_link === 'Потенциальные сотрудники') {
                 return null;
               }
             }
             if (user) {
               if (user?.role === 'user') {
-                if (item.name_link === 'Для работодателей') {
-                  return null;
-                }
                 if (item.name_link === 'Потенциальные сотрудники') {
                   return null;
                 }
               }
             }
             if (employer && !employer.isPublished) {
-              if (item.name_link === 'Для работодателей') {
-                return null;
-              }
               if (item.name_link === 'Потенциальные сотрудники') {
                 return null;
               }
@@ -108,27 +99,18 @@ const Header = () => {
             {headerPrismicResponse?.body[0].items &&
               headerPrismicResponse.body[0].items.map((item, index) => {
                 if (!user && !employer) {
-                  if (item.name_link === 'Для работодателей') {
-                    return null;
-                  }
                   if (item.name_link === 'Потенциальные сотрудники') {
                     return null;
                   }
                 }
                 if (user) {
                   if (user?.role === 'user') {
-                    if (item.name_link === 'Для работодателей') {
-                      return null;
-                    }
                     if (item.name_link === 'Потенциальные сотрудники') {
                       return null;
                     }
                   }
                 }
                 if (employer && !employer.isPublished) {
-                  if (item.name_link === 'Для работодателей') {
-                    return null;
-                  }
                   if (item.name_link === 'Потенциальные сотрудники') {
                     return null;
                   }
