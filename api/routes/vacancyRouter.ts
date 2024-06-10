@@ -1,14 +1,13 @@
 import express from 'express';
 import Vacancy from '../models/vacancy/Vacancy';
-import mongoose, { Types } from 'mongoose';
-import employerAuth, { RequestWithEmployer } from '../middleware/employerAuth';
+import mongoose from 'mongoose';
 import { VacancyI } from '../types';
 import auth, { RequestWithUser } from '../middleware/auth';
-import vacancy from '../models/vacancy/Vacancy';
+import Employer from '../models/employer/employerModel';
 
 const vacancyRouter = express.Router();
 
-vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next) => {
+vacancyRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
   const {
     vacancyTitle,
     salary,
@@ -42,10 +41,20 @@ vacancyRouter.post('/', employerAuth, async (req: RequestWithEmployer, res, next
       },
       education,
       employmentType,
-      employer: req.body.employer,
+      employer: req.employer?._id,
     });
 
-    await vacancyBlock.save();
+    const vacancy = await vacancyBlock.save();
+    const employee = await Employer.findById(req.employer?._id);
+
+    if (!employee) {
+      return res.status(404).json({ error: 'Employee Not Found' });
+    }
+
+    employee.vacancies.push(vacancy._id);
+
+    await employee.save();
+
     return res.send({ message: 'Vacancies successfully saved' });
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
@@ -281,16 +290,10 @@ vacancyRouter.put('/:id', async (req, res, next) => {
     next(e);
   }
 });
+
 vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
   try {
-    let _id: Types.ObjectId;
-    try {
-      _id = new Types.ObjectId(req.params.id);
-    } catch {
-      return res.status(404).send({ error: 'Wrong ObjectId!' });
-    }
-
-    const vacancyById = await Vacancy.findById(_id);
+    const vacancyById = await Vacancy.findById(req.params.id);
 
     if (!vacancyById) {
       return res.status(404).send({ error: 'Vacancy not found' });
@@ -304,7 +307,7 @@ vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
     }
 
     if (isAdmin) {
-      await Vacancy.findByIdAndDelete(_id);
+      await Vacancy.findByIdAndDelete(req.params.id);
     }
 
     if (isEmployer) {
