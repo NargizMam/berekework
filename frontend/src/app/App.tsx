@@ -31,6 +31,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   const user = useAppSelector(selectUser);
   const location = useLocation();
+
   const AdminRoutes = () => (
     <AdminLayout>
       <Container>
@@ -53,6 +54,7 @@ const App = () => {
       </Container>
     </AdminLayout>
   );
+
   const adminRoutes = useRoutes([
     {
       path: '/admin/*',

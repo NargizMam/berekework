@@ -11,12 +11,6 @@ export const HomePage = () => {
 				<SliceZone slices={document?.data.body} components={{ ...components }} />
 			</div>
 			<div style={{ marginTop: 100 }}>
-				{/*<SliceZone*/}
-				{/*  slices={document?.data.body}*/}
-				{/*  components={{*/}
-				{/*    startscreen: StartScreen,*/}
-				{/*  }}*/}
-				{/*/>*/}
 				<LastNewsBlock />
 			</div>
 		</>

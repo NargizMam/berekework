@@ -1,8 +1,8 @@
+import React, { PropsWithChildren } from 'react';
 import Header from '../../../widgets/Header/ui/Header';
 import Footer from '../../../client/widgets/footer/ui/Footer';
-import React from 'react';
 
-const ClientLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
+const ClientLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <header>
