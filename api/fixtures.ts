@@ -266,10 +266,11 @@ const run = async () => {
       description: 'Company A is a leading technology firm specializing in software development.',
       address: '123 Main St, City, Country',
       contacts: '+1 (123) 456-7890',
-      logo: 'fixtures/logo_company_megaservice.png',
+      avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac1._id, vac2._id, vac3._id],
       isPublished: true,
+      tariff: 'Базовый',
     },
     {
       email: 'employer2@example.com',
@@ -281,9 +282,10 @@ const run = async () => {
       description: 'Company B is a financial services company providing investment solutions.',
       address: '456 Elm St, City, Country',
       contacts: '+1 (234) 567-8901',
-      logo: 'fixtures/logo_company_megaservice.png',
+      avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'https://example.com/documentsB.pdf',
       vacancies: [vac6._id, vac5._id, vac4._id],
+      tariff: 'Базовый',
     },
     {
       email: 'employer3@example.com',
@@ -295,9 +297,10 @@ const run = async () => {
       description: 'Company C is a healthcare organization committed to improving patient care.',
       address: '789 Oak St, City, Country',
       contacts: '+1 (345) 678-9012',
-      logo: 'fixtures/logo_company_megaservice.png',
+      avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'https://example.com/documentsC.pdf',
       vacancies: [],
+      tariff: 'Базовый',
     },
   );
 

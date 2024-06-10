@@ -9,8 +9,8 @@ import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { getVacancyById } from '../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy, selectVacancyLoading } from '../../../feachers/vacancy/vacancySlice';
 import './vacancyDetailPage.css';
-import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
-import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
+import { sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
+// import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
 import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 
 export const VacancyDetailPage = () => {
@@ -20,7 +20,7 @@ export const VacancyDetailPage = () => {
   const { id } = useParams() as { id: string };
   const vacancy = useAppSelector(selectVacancy);
   const loading = useAppSelector(selectVacancyLoading);
-  const candidates = useAppSelector(selectCandidates);
+  // const candidates = useAppSelector(selectCandidates);
 
   useEffect(() => {
     if (id) {
@@ -28,11 +28,11 @@ export const VacancyDetailPage = () => {
     }
   }, [dispatch, id]);
 
-  useEffect(() => {
-    if (employer) {
-      dispatch(getCandidateByEmployer(id));
-    }
-  }, [dispatch, employer, id]);
+  // useEffect(() => {
+  //   if (employer) {
+  //     dispatch(getCandidateByEmployer(id));
+  //   }
+  // }, [dispatch, employer, id]);
 
   const sendReplyHandle = async (id: string) => {
     await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
@@ -75,7 +75,7 @@ export const VacancyDetailPage = () => {
           </div>
           <div className="aboutEmployer">
             <div className="employer-logo">
-              {vacancy.employer ? <img src={API_URL + '/' + vacancy.employer.logo} alt="" /> : ''}
+              {vacancy.employer ? <img src={API_URL + '/' + vacancy.employer.avatar} alt="avatar compnay" /> : ''}
             </div>
             <div className="companyInfo">
               <h3 className="companyName">{vacancy.employer?.companyName}</h3>
@@ -120,19 +120,19 @@ export const VacancyDetailPage = () => {
           </Typography>
         </div>
       </Box>
-      {employer ? (
-        <Box>
-          <h1>Откликнутые</h1>
-          {candidates.map((candidate, index) => (
-            <Box key={candidate._id}>
-              <p>
-                <span>{index + 1}</span>
-                {candidate.user.name} - {candidate.user.preferredJob} - {candidate.employerStatus}
-              </p>
-            </Box>
-          ))}
-        </Box>
-      ) : null}
+      {/*{employer ? (*/}
+      {/*  <Box>*/}
+      {/*    <h1>Откликнутые</h1>*/}
+      {/*    {candidates.map((candidate, index) => (*/}
+      {/*      <Box key={candidate._id}>*/}
+      {/*        <p>*/}
+      {/*          <span>{index + 1}</span>*/}
+      {/*          {candidate.user.name} - {candidate.user.preferredJob} - {candidate.employerStatus}*/}
+      {/*        </p>*/}
+      {/*      </Box>*/}
+      {/*    ))}*/}
+      {/*  </Box>*/}
+      {/*) : null}*/}
     </>
   );
 };
