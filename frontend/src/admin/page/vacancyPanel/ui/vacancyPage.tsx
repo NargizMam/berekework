@@ -31,13 +31,13 @@ export const VacancyPage = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Type employment</TableCell>
-            <TableCell align="right">Company</TableCell>
-            <TableCell align="right">City</TableCell>
-            <TableCell align="right">Salary</TableCell>
-            <TableCell align="right">Created</TableCell>
-            <TableCell align="right">Updated</TableCell>
+            <TableCell>Название</TableCell>
+            <TableCell>Вид занятости</TableCell>
+            <TableCell align="right">Компания</TableCell>
+            <TableCell align="right">город</TableCell>
+            <TableCell align="right">Заработная плата</TableCell>
+            <TableCell align="right">Дата создания</TableCell>
+            <TableCell align="right">Дата редактирования</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -68,12 +68,12 @@ export const VacancyPage = () => {
               </TableCell>
               <TableCell align="right">
                 <Button onClick={() => navigate('/vacancy/' + vacancy._id)} variant="contained">
-                  View
+                  Предпросмотр
                 </Button>
               </TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleDeleteVacancy(vacancy._id)} variant="contained">
-                  Delete
+                  Удаление
                 </Button>
               </TableCell>
             </TableRow>

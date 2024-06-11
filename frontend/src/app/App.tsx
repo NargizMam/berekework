@@ -14,7 +14,6 @@ import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
 import EmployerProfile from '../client/page/employerProfile/ui/employerProfile';
-import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import { PotentialEmployeesPage } from '../client/page/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
@@ -22,11 +21,12 @@ import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
 import { VacancyPageClient } from '../client/page/VacancyPage';
 import { VacancyDetailPage } from '../pages/VacancyDetailPage';
-import { UserProfilePage } from '../client/page/Profile';
-import { UserProfileFormPage } from '../client/page/Profile';
+import { UserProfileFormPage, UserProfilePage } from '../client/page/Profile';
 import { EmployerEditPage } from '../client/page/employerProfile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SuccessMessage from '../widgets/WarningMessage/SuccessMessage';
+import ErrorMessage from '../widgets/WarningMessage/ErrorMessage';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -66,7 +66,8 @@ const App = () => {
 
   return (
     <>
-      <WarningMessage />
+      <SuccessMessage />
+      <ErrorMessage />
       <ToastContainer />
       {location.pathname.startsWith('/admin') ? (
         adminRoutes

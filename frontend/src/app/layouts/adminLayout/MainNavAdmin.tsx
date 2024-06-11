@@ -71,11 +71,11 @@ const MainNavAdmin = (): React.JSX.Element => {
         <Avatar src="/assets/avatar.png" sx={{ cursor: 'pointer' }} onClick={handleClickAvatar} />
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu} keepMounted>
           {user ? (
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Выйти</MenuItem>
           ) : (
             <MenuItem>
               <Link component={RouterLink} to="/login">
-                Login
+                Войти
               </Link>
             </MenuItem>
           )}

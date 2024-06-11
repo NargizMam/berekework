@@ -76,5 +76,5 @@ export const moderatorsReducer = moderatorsSlice.reducer;
 export const selectModerators = (state: RootState) => state.moderator.moderators;
 export const selectModeratorsLoading = (state: RootState) => state.moderator.moderatorsLoading;
 export const selectModeratorsCreating = (state: RootState) => state.moderator.createLoading;
-export const selectModeratorsCreateError = (state: RootState) => state.moderator.errorMessage;
+export const selectModeratorsCreateError = (state: RootState) => state.moderator.createErrorMessage;
 export const selectModeratorsSuccessMessage = (state: RootState) => state.moderator.successMessage;

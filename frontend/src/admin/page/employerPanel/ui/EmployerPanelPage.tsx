@@ -51,7 +51,7 @@ export const EmployerPanelPage = () => {
           component={RouterLink}
           to="/admin/employers-submit"
         >
-          <Typography>Create</Typography>
+          <Typography>Создать</Typography>
         </Link>
       </Box>
       <TableContainer component={Paper}>
@@ -59,15 +59,15 @@ export const EmployerPanelPage = () => {
           <TableHead>
             <TableRow>
               <TableCell>Email</TableCell>
-              <TableCell>Company Name</TableCell>
-              <TableCell>Logo</TableCell>
-              <TableCell>Foundation Year</TableCell>
-              <TableCell>Industry</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>Contacts</TableCell>
-              <TableCell>Document</TableCell>
-              <TableCell align="right">Published</TableCell>
+              <TableCell>Название компании</TableCell>
+              <TableCell>Логотип</TableCell>
+              <TableCell>Год создания компании</TableCell>
+              <TableCell>Вид деятельности</TableCell>
+              <TableCell>Краткое описание</TableCell>
+              <TableCell>Адрес</TableCell>
+              <TableCell>Контакты</TableCell>
+              <TableCell>Документы</TableCell>
+              <TableCell align="right">Статус</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
