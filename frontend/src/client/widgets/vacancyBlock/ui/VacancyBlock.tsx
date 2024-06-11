@@ -31,12 +31,6 @@ export const VacancyBlock: React.FC<IVacancyBlockProps> = (data) => {
     return (
       <>
         <div className="VacancyBlock__flex">
-          {/*{vacancyCard.map((data, index) => {*/}
-          {/*  if (index < 6) {*/}
-          {/*    return <VacancyCard key={index} data={data} visible={true} />;*/}
-          {/*  }*/}
-          {/*  return null;*/}
-          {/*})}*/}
           {vacancyCards.slice(0, visibleCount).map((data, index) => (
             <VacancyCard key={index} data={data} visible={true} />
           ))}
@@ -49,7 +43,6 @@ export const VacancyBlock: React.FC<IVacancyBlockProps> = (data) => {
     <div className="vacancy_block">
       <h1 className="vacancy_block_title">{data.slice.primary.vacancies_block_title}</h1>
       <div>{renderContent()}</div>
-      {/*<button className="vacancy_block_button">{data.slice.primary.button_text_vacancies_block}</button>*/}
       {vacancyCards && visibleCount < vacancyCards.length && (
         <button className="vacancy_block_button" onClick={handleLoadMore}>
           {data.slice.primary.button_text_vacancies_block}
