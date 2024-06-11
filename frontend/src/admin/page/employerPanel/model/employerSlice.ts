@@ -97,5 +97,6 @@ export const selectEmployerLoading = (state: RootState) => state.employerAdmin.e
 export const selectEmployerError = (state: RootState) => state.employerAdmin.employerError;
 export const selectEmployersProfileInfo = (state: RootState) => state.employerAdmin.employersProfile;
 export const selectEmployersProfileLoading = (state: RootState) => state.employerAdmin.employersProfileLoading;
+export const selectEmployerCreateLoading = (state: RootState) => state.employerAdmin.createEmployerLoading;
 export const selectEmployerUpdateLoading = (state: RootState) => state.employerAdmin.employerUpdateLoading;
 export const selectEmployerDeleteLoading = (state: RootState) => state.employerAdmin.employerDeleteLoading;
