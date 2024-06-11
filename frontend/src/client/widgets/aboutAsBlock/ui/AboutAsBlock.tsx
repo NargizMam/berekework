@@ -27,7 +27,7 @@ interface Props {
 
 export const AboutUsBlock: React.FC<Props> = ({ slice }) => {
   return (
-    <Box key={slice.id} sx={{ marginBottom: { xs: '7%', md: '161px' }, marginTop: { xs: '7%', md: '180px' } }}>
+    <Box id='our-company' key={slice.id} sx={{ marginBottom: { xs: '7%', md: '161px' }, marginTop: { xs: '7%', md: '180px' } }}>
       {slice.primary.aboutustitle && slice.primary.aboutustitle[0] && (
         <Typography
           variant="h4"

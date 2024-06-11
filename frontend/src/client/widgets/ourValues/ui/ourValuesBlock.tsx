@@ -32,7 +32,7 @@ export const OurValuesBlock: React.FC<Props> = ({ slice }) => {
   const slidesPerView = slice.items.length < 3 ? slice.items.length : 3;
 
   return (
-    <Box sx={OurValuesBlockStyle}>
+    <Box id='our-values' sx={OurValuesBlockStyle}>
       <Typography variant="h4" sx={OurValuesBlockStyle.ourValuesBlockTitle}>
         {slice.primary.valuestitle[0].text}
       </Typography>
