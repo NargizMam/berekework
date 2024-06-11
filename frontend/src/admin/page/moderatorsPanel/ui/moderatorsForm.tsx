@@ -1,24 +1,32 @@
-import { Alert, Box, Container, Grid, TextField, Typography } from '@mui/material';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { Box, Container, Grid, TextField, Typography } from '@mui/material';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectModeratorsCreateError, selectModeratorsCreating } from '../model/moderatorsSlice';
+import { selectModeratorsCreating } from '../model/moderatorsSlice';
 import { createModerator, getAllModerators } from '../api/moderatorsThunk';
 import { Moderator } from '../../../../types';
 
 interface Props {
   close: () => void;
 }
+
 const initialState = {
   name: '',
   email: '',
   password: '',
 };
+
 export const ModeratorsForm: React.FC<Props> = ({ close }) => {
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectModeratorsCreateError);
   const loading = useAppSelector(selectModeratorsCreating);
   const [state, setState] = useState<Moderator>(initialState);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const { name, email, password } = state;
+    setIsFormValid(name.trim() !== '' && email.trim() !== '' && password.trim() !== '');
+  }, [state]);
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -29,12 +37,10 @@ export const ModeratorsForm: React.FC<Props> = ({ close }) => {
 
   const submitFormHandler = async (event: FormEvent) => {
     event.preventDefault();
-    try {
-      dispatch(createModerator(state)).unwrap();
-      dispatch(getAllModerators());
-      setState(initialState);
-      close();
-    } catch (e) {}
+    await dispatch(createModerator(state)).unwrap();
+    dispatch(getAllModerators());
+    setState(initialState);
+    close();
   };
 
   return (
@@ -47,21 +53,16 @@ export const ModeratorsForm: React.FC<Props> = ({ close }) => {
           alignItems: 'center',
         }}
       >
-        {error && (
-          <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
-            {error?.error}
-          </Alert>
-        )}
         <Typography component="h1" variant="h5">
-          Create admin
+          Создайте модератора
         </Typography>
-
         <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                label="Name"
+                label="Имя"
                 name="name"
+                required
                 autoComplete="current-username"
                 value={state.name}
                 onChange={inputChangeHandler}
@@ -71,6 +72,8 @@ export const ModeratorsForm: React.FC<Props> = ({ close }) => {
               <TextField
                 label="E-mail"
                 name="email"
+                type="email"
+                required
                 autoComplete="current-username"
                 value={state.email}
                 onChange={inputChangeHandler}
@@ -81,6 +84,7 @@ export const ModeratorsForm: React.FC<Props> = ({ close }) => {
                 name="password"
                 label="Пароль"
                 type="password"
+                required
                 value={state.password}
                 onChange={inputChangeHandler}
                 autoComplete="current-password"
@@ -93,6 +97,7 @@ export const ModeratorsForm: React.FC<Props> = ({ close }) => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2, backgroundColor: '#0866FF', borderRadius: '30px' }}
+            disabled={!isFormValid}
           >
             Создать
           </LoadingButton>
