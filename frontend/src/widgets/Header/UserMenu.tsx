@@ -36,6 +36,8 @@ const UserMenu: React.FC<Props> = ({ user }) => {
       return navigate(`/employersProfile/${user._id}`);
     } else if (user?.role === 'user') {
       return navigate(`/userProfile`);
+    } else if (user?.role === 'admin' || user?.role === 'superadmin') {
+      return navigate(`/admin`);
     }
     navigate('/');
   };
@@ -63,7 +65,11 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         open={Boolean(anchorEl)}
         onClose={handleMouseLeave}
       >
-        <MenuItem onClick={getProfile}>My profile</MenuItem>
+        {user?.role === 'admin' || user?.role === 'superadmin' ? (
+          <MenuItem onClick={getProfile}>CRM</MenuItem>
+        ) : (
+          <MenuItem onClick={getProfile}>My profile</MenuItem>
+        )}
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </Box>
