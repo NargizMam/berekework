@@ -1,1 +1,1 @@
-export { MediaBlock } from './ui/MediaBlock';
+export { GalleryBlock } from './ui/GalleryBlock';

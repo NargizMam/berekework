@@ -8,15 +8,14 @@ import { RatesBLock } from '../../client/widgets/tariff/ui/ratesBLock';
 import { VacancyBlock } from '../../client/widgets/vacancyBlock';
 import { AboutUsBlock } from '../../client/widgets/aboutAsBlock';
 import { EmployerBlock } from '../../client/widgets/employerBlock';
-import { MediaBlock } from '../../client/widgets/MediaBlock';
+import { GalleryBlock } from '../../client/widgets/MediaBlock';
 import { LastNewsBlock } from '../../client/widgets/lastNewsBlock';
-
 
 export const components = {
   titleblock: TitleBlock,
   maincard: MainCards,
   choosespecialist: ChooseSpecialistBlock,
-	vacancies_block: VacancyBlock,
+  vacancies_block: VacancyBlock,
   tariff: RatesBLock,
   startblock: PotentialEmployeesStartBlock,
   ourvalues: OurValuesBlock,
@@ -24,7 +23,6 @@ export const components = {
   aboutusinfo: AboutUsBlock,
   aboutusvalues: OurValuesBlock,
   potentialemployees: EmployerBlock,
-  galleryblock: MediaBlock,
-  videoblock: MediaBlock,
+  galleryblock: GalleryBlock,
   lastnews: LastNewsBlock,
 };
