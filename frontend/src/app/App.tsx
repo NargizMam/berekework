@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import Container from '@mui/material/Container';
 import { Route, Routes, useLocation, useRoutes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,7 +24,7 @@ import { VacancyDetailPage } from '../pages/VacancyDetailPage';
 import Permit from '../shared/permit/Permit';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import NotFound from '../widgets/NotFound/NotFound';
-import SuccessMessage from '../widgets/WarningMessage/SuccessMessage';
+import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import AdminLayout from './layouts/adminLayout/AdminLayout';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
 import { useAppSelector } from './store/hooks';
@@ -69,7 +69,7 @@ const App = () => {
 	
 	return (
 		<>
-			<SuccessMessage />
+			<WarningMessage />
 			<ToastContainer />
 			<ScrollToAnchor />
 			{location.pathname.startsWith('/admin') ? (
@@ -126,6 +126,5 @@ const App = () => {
 			)}
 		</>
 	);
-	
 };
 export default App;

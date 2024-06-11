@@ -2,13 +2,9 @@ import '../css/footer.css';
 import '../css/footerMedia.css';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../../../app/store/hooks';
-import { selectEmployer, selectUser } from '../../../page/Auth/model/AuthSlice';
 
 const Footer = () => {
   const [document] = useSinglePrismicDocument('footer');
-  const user = useAppSelector(selectUser);
-  const employer = useAppSelector(selectEmployer);
 
   if (!document) {
     return null;
@@ -26,27 +22,13 @@ const Footer = () => {
                 <h6 className="footer-title">{section.primary.links_block_title}</h6>
               )}
               <nav className="footer-nav">
-                {section.items.map((item: any, index: number) => {
-                  if (!user && !employer) {
-                    if (item.links_name === 'Ищешь работника') {
-                      return null;
-                    }
-                  }
-                  if (user) {
-                    if (user?.role === 'user') {
-                      if (item.links_name === 'Ищешь работника') {
-                        return null;
-                      }
-                    }
-                  }
-                  return (
-                    <li key={index} className="footer-nav-item">
-                      <a href={item.reference_path} className="footer-nav-link">
-                        {item.links_name}
-                      </a>
-                    </li>
-                  );
-                })}
+                {section.items.map((item: any, index: number) => (
+                  <li key={index} className="footer-nav-item">
+                    <a href={item.reference_path} className="footer-nav-link">
+                      {item.links_name}
+                    </a>
+                  </li>
+                ))}
               </nav>
             </div>
           ))}

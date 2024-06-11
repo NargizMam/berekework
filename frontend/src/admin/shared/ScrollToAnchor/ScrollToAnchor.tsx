@@ -5,13 +5,12 @@ function ScrollToAnchor() {
 	const location = useLocation();
 	
 	React.useEffect(() => {
-		const lastHash = location.hash.slice(1);
+		const lastHash = location.hash.slice(1); // safe hash for further use after navigation
 		
-		if (lastHash) {
-			console.log('IN IF: ', lastHash);
+		if (lastHash && document.getElementById(lastHash)) {
 			setTimeout(() => {
 				document.getElementById(lastHash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}, 500);
+			}, 100);
 		}
 	}, [location]);
 	
