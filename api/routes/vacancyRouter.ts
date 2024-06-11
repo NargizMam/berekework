@@ -81,13 +81,15 @@ vacancyRouter.get('/', async (req, res, next) => {
           archive: false,
         })
           .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName avatar');
+          .populate('employer', '-_id companyName avatar')
+          .sort({ createdAt: -1 });
         return res.send(filteredVacancies);
       }
 
       const result = await Vacancy.find({ archive: false })
         .select('vacancyTitle salary city')
-        .populate('employer', '-_id companyName avatar');
+        .populate('employer', '-_id companyName avatar')
+        .sort({ createdAt: -1 });
       return res.send(result);
     }
 
