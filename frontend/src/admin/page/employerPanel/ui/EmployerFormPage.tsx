@@ -25,7 +25,7 @@ export const EmployerFormPage = () => {
     foundationYear: '',
     document: null,
     address: '',
-    logo: null,
+    avatar: null,
   });
   const error = useAppSelector(selectEmployerError);
   const documentSelect = useRef<HTMLInputElement>(null);
@@ -55,7 +55,7 @@ export const EmployerFormPage = () => {
   const changeFileField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (files && files[0]) {
-      if (name === 'logo') {
+      if (name === 'avatar') {
         setFilenameImage(files[0].name);
       } else if (name === 'document') {
         setFilename(files[0].name);
@@ -73,7 +73,7 @@ export const EmployerFormPage = () => {
     setFilenameImage('');
     setState((prevState) => ({
       ...prevState,
-      logo: null,
+      avatar: null,
     }));
     if (documentSelect.current) {
       documentSelect.current.value = '';
@@ -283,17 +283,17 @@ export const EmployerFormPage = () => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <input style={{ display: 'none' }} type="file" name="logo" onChange={changeFileField} ref={imageSelect} />
+            <input style={{ display: 'none' }} type="file" name="avatar" onChange={changeFileField} ref={imageSelect} />
             <Grid container direction="row" spacing={2} alignItems="center">
               <Grid item xs>
                 <TextField
                   disabled
-                  label="Logo"
+                  label="Avatar"
                   InputProps={{ style: inputStyle }}
                   value={filenameImage || ''}
                   onClick={() => selectFile('image')}
-                  error={Boolean(getFieldError('logo'))}
-                  helperText={getFieldError('logo')}
+                  error={Boolean(getFieldError('avatar'))}
+                  helperText={getFieldError('avatar')}
                 />
               </Grid>
               <Grid item>

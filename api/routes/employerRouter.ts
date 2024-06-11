@@ -58,12 +58,12 @@ employerRouter.patch('/:id', async (req, res, next) => {
       return res.status(404).send({ message: 'Employer not found!' });
     }
 
-    // await transporter.sendMail({
-    //   from: '04072002mu@gmail.com',
-    //   to: req.body.email,
-    //   subject: 'Employer details updated',
-    //   text: `${req.body.email}, your employer status have been updated!`,
-    // });
+    await transporter.sendMail({
+      from: '04072002mu@gmail.com',
+      to: req.body.email,
+      subject: 'Employer details updated',
+      text: `${req.body.email}, your employer status have been updated!`,
+    });
 
     return res.send({ message: 'Employer updated successfully!', employer });
   } catch (error) {
