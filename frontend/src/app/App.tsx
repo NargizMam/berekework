@@ -9,7 +9,7 @@ import { LoginPage, RegisterPage } from '../client/page/Auth';
 import { UserPanelPage } from '../admin/page/usersPanel';
 import { VacancyPage } from '../admin/page/vacancyPanel';
 import { useAppSelector } from './store/hooks';
-import { selectUser } from '../client/page/Auth/model/AuthSlice';
+import { selectEmployer, selectUser } from '../client/page/Auth/model/AuthSlice';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
@@ -31,6 +31,7 @@ import Permit from '../shared/permit/Permit';
 
 const App = () => {
   const user = useAppSelector(selectUser);
+  const employer = useAppSelector(selectEmployer);
   const location = useLocation();
 
   const AdminRoutes = () => (
@@ -80,7 +81,6 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/users" element={<UserPanelPage />} />
             <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
@@ -117,7 +117,14 @@ const App = () => {
               }
             />
             <Route path="/userProfile-submit" element={<UserProfileFormPage />} />
-            <Route path="/for-employer" element={<ForEmployerPage />} />
+            <Route
+              path="/for-employer"
+              element={
+                <ProtectedRoute isAllowed={(user && user.role !== 'user') || !!employer}>
+                  <ForEmployerPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/news/:uid" element={<NewsPage />} />
             <Route path="/user/:id" element={<EmployeeProfile />} />
             <Route path="*" element={<NotFound />} />
