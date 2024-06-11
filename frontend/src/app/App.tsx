@@ -85,6 +85,7 @@ const App = () => {
             <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/vacancy/edit/:id" element={<CreateVacancyForm />} />
+            <Route path="/vacancy/edit/" element={<CreateVacancyForm />} />
             <Route path="/about-us" element={<AboutUsPage />} />
             <Route
               path="/employersProfile/:id"

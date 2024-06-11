@@ -6,26 +6,21 @@ import CreateVacancyFormStyle from './CreateVacancyForm-style';
 import { ICreateVacancyForm, VacancyEdtiData, VacancyMutation } from '../model/types';
 import TextAriaField from '../../textAriaField/ui/TextAriaField';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { clearEditVacancy, selectEditVacancy, selectError, selectIsLoading } from '../model/createVacancyFormSlice';
+import { clearEditVacancy, selectError, selectIsLoading } from '../model/createVacancyFormSlice';
 import { postVacancy, updateVacancy } from '../model/createVacancyFormThuncks';
 import { Loader } from '../../../../shared/loader';
 import './CreateVacancyForm.css';
 import { openErrorMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 import ErrorMessage from '../../../../widgets/WarningMessage/ErrorMessage';
-import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getVacancyById } from '../../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy } from '../../../../feachers/vacancy/vacancySlice';
+import { selectEmployer } from '../../../page/Auth/model/AuthSlice';
 
 interface Flag {
   aboutVacancy: boolean;
   responsibilities: boolean;
   workConditions: boolean;
-}
-
-interface Props {
-  setOpenForm?: (open: boolean) => void;
-  employeeId?: string;
 }
 
 const initialState = {
@@ -45,8 +40,9 @@ const initialState = {
   employer: '',
 };
 
-export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) => {
+export const CreateVacancyForm = () => {
   const dispatch = useAppDispatch();
+  const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectVacancy);
@@ -61,7 +57,7 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) 
     workConditions: true,
   });
 
-  const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+  // const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
 
   useEffect(() => {
     if (id) {
@@ -70,34 +66,48 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) 
   }, [id, dispatch]);
 
   useEffect(() => {
-    const editData: ICreateVacancyForm = {
-      vacancyTitle: editVacancy?.vacancyTitle || '',
-      aboutVacancy: editVacancy?.aboutVacancy || '',
-      responsibilities: editVacancy?.responsibilities || '',
-      workConditions: editVacancy?.workConditions || '',
-      country: editVacancy?.country || '',
-      city: editVacancy?.city || '',
-      fieldOfWork: editVacancy?.fieldOfWork || '',
-      minAge: editVacancy?.age.minAge.toString() || '',
-      maxAge: editVacancy?.age.maxAge.toString() || '',
-      minSalary: editVacancy?.salary.minSalary.toString() || '',
-      maxSalary: editVacancy?.salary.maxSalary.toString() || '',
-      education: editVacancy?.education,
-      employmentType: editVacancy?.employmentType || '',
-      employer: '',
-    };
-    if (editVacancy) {
-      setState(editData);
+    if (id && editVacancy) {
+      setState(prevState => ({
+        ...prevState,
+        ...editVacancy,
+        minAge: editVacancy.age.minAge.toString(),
+        maxAge: editVacancy.age.maxAge.toString(),
+        minSalary: editVacancy.salary.minSalary.toString(),
+        maxSalary: editVacancy.salary.maxSalary.toString(),
+        employer: employer?._id || '',
+      }));
     }
-  }, [editVacancy, dispatch]);
+  }, [editVacancy, employer?._id, id]);
 
-  useEffect(() => {
-    if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
-      setIsDisabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [isFull]);
+  // useEffect(() => {
+  //   const editData: ICreateVacancyForm = {
+  //     vacancyTitle: editVacancy?.vacancyTitle || '',
+  //     aboutVacancy: editVacancy?.aboutVacancy || '',
+  //     responsibilities: editVacancy?.responsibilities || '',
+  //     workConditions: editVacancy?.workConditions || '',
+  //     country: editVacancy?.country || '',
+  //     city: editVacancy?.city || '',
+  //     fieldOfWork: editVacancy?.fieldOfWork || '',
+  //     minAge: editVacancy?.age.minAge.toString() || '',
+  //     maxAge: editVacancy?.age.maxAge.toString() || '',
+  //     minSalary: editVacancy?.salary.minSalary.toString() || '',
+  //     maxSalary: editVacancy?.salary.maxSalary.toString() || '',
+  //     education: editVacancy?.education,
+  //     employmentType: editVacancy?.employmentType || '',
+  //     employer: '',
+  //   };
+  //   if (editVacancy) {
+  //     setState(editData);
+  //   }
+  // }, [editVacancy, dispatch]);
+
+  // useEffect(() => {
+  //   if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
+  //     setIsDisabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+  //   } else {
+  //     setIsDisabled(true);
+  //   }
+  // }, [isFull]);
 
   const inputChangeHandler = (
     e:

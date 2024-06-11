@@ -20,7 +20,7 @@ import {
   selectEmployersProfileInfo,
 } from '../../../../admin/page/employerPanel/model/employerSlice';
 import './employerProfile.css';
-import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
+// import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 import { MyPotentialEmployeeTable, NewPotentialEmployeeTable } from '../../../widgets/PotentialEmployeeTable';
 import { VacancyTable } from '../../../widgets/VacancyTable';
@@ -61,7 +61,7 @@ const a11yProps = (index: number) => ({
 const EmployerProfile: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [openVacancyForm, setOpenVacancyForm] = useState(false);
+  // const [openVacancyForm, setOpenVacancyForm] = useState(false);
   const profile = useAppSelector(selectEmployersProfileInfo);
   const loading = useAppSelector(selectEmployerLoading);
 
@@ -168,7 +168,7 @@ const EmployerProfile: React.FC = () => {
               <Button
                 variant="outlined"
                 sx={{ marginLeft: { xs: 0, sm: 1 }, mt: { xs: 1, sm: 0 } }}
-                onClick={() => setOpenVacancyForm((prevState) => !prevState)}
+                onClick={() => navigate('/vacancy/edit')}
               >
                 Создать вакансию
               </Button>
@@ -214,12 +214,12 @@ const EmployerProfile: React.FC = () => {
         </CustomTabPanel>
       </Box>
 
-      {openVacancyForm && (
-        <>
-          <Typography variant="h4">Создайте свои вакансии</Typography>
-          <CreateVacancyForm setOpenForm={setOpenVacancyForm} employeeId={id} />
-        </>
-      )}
+      {/*{openVacancyForm && (*/}
+      {/*  <>*/}
+      {/*    <Typography variant="h4">Создайте свои вакансии</Typography>*/}
+      {/*    <CreateVacancyForm/>*/}
+      {/*  </>*/}
+      {/*)}*/}
       <Dialog open={Boolean(vacancyId)} onClose={onDeleteCancel}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>Вы действительно хотите удалить эту вакансию ?</DialogContent>
