@@ -32,6 +32,7 @@ employerRouter.post(
       });
       employer.generateToken();
       await employer.save();
+
       await transporter.sendMail({
         from: '04072002mu@gmail.com',
         to: req.body.email,
@@ -160,6 +161,12 @@ employerRouter.get('/:id', async (req, res, next) => {
 employerRouter.delete('/:id', async (req, res, next) => {
   try {
     await Employer.findByIdAndDelete(req.params.id);
+    await transporter.sendMail({
+      from: '04072002mu@gmail.com',
+      to: req.body.email,
+      subject: 'Employer deleted!',
+      text: `${req.body.email}, deleted!`,
+    });
     res.send({ message: 'Employer deleted!' });
   } catch (error) {
     return next(error);

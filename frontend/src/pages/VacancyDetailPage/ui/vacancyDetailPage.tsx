@@ -59,7 +59,7 @@ export const VacancyDetailPage = () => {
               <span className="maxSalary"> до {vacancy.salary.maxSalary}</span>
             </div>
             <div className="employmentType">Тип занятости: {vacancy.employmentType}</div>
-            {employer || user?.role === "superadmin" || user?.role === "admin" ? null : (
+            {!user || employer || user?.role === "superadmin" || user?.role === "admin" ? null : (
               <div className="vacancyButtons">
                 <Button
                   onClick={() => sendReplyHandle(vacancy._id)}

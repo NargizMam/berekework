@@ -2,7 +2,11 @@ import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, Grid, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { createEmployer } from '../api/employerThunk';
-import { selectEmployerError, selectEmployersProfileLoading } from '../model/employerSlice';
+import {
+  selectEmployerCreateLoading,
+  selectEmployerError,
+  selectEmployersProfileLoading,
+} from '../model/employerSlice';
 import { getExtension } from '../../../../feachers/checkExtensiion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
@@ -35,6 +39,7 @@ export const EmployerFormPage = () => {
   const [errorDocument, setErrorDocument] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const loading = useAppSelector(selectEmployersProfileLoading);
+  const createLoading = useAppSelector(selectEmployerCreateLoading);
   const inputStyle = { borderRadius: '30px' };
 
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
@@ -310,7 +315,7 @@ export const EmployerFormPage = () => {
           </Grid>
           <Grid item xs={isRegisterPath ? 12 : 6}>
             <LoadingButton
-              loading={loading}
+              loading={loading || createLoading}
               type="submit"
               variant="contained"
               sx={{ width: '100%', borderRadius: isRegisterPath ? '30px' : '4px' }}
