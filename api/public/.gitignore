@@ -1,7 +1,5 @@
 /images/*
 /logos/*
-cards
-employees
-documents
-avatars
-videos
+/employers/*
+/documents/*
+/avatars/*

@@ -7,11 +7,11 @@ import { Tune } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import VacancySearch from '../../../widgets/vacancySearch/VacancySearch';
 import {
-  selectVacancies,
   selectVacanciesLoading,
   selectVacancyLoading,
+  selectVacancyToCards,
 } from '../../../../feachers/vacancy/vacancySlice';
-import { getAllVacancy, getAllVacancyByKgOrAbroad } from '../../../../feachers/vacancy/vacancyThunk';
+import { getAllVacancyByKgOrAbroad, getAllVacancyToCard } from '../../../../feachers/vacancy/vacancyThunk';
 import { useLocation } from 'react-router-dom';
 
 export const VacancyPageClient = () => {
@@ -19,7 +19,7 @@ export const VacancyPageClient = () => {
   const location = useLocation();
   const isLoading = useAppSelector(selectVacanciesLoading);
   const [showCategory, setShowCategory] = useState(false);
-  const vacancies = useAppSelector(selectVacancies);
+  const vacancies = useAppSelector(selectVacancyToCards);
   const vacanciesFetching = useAppSelector(selectVacancyLoading);
   const [vacancyFilter, setVacancyFilter] = useState('');
 
@@ -29,20 +29,22 @@ export const VacancyPageClient = () => {
         setVacancyFilter('Kyrgyzstan');
       } else if (location?.search === '?abroad') {
         setVacancyFilter('abroad');
+      } else {
+        dispatch(getAllVacancyToCard());
       }
     }
-  }, [location]);
+  }, [location, dispatch]);
 
   useEffect(() => {
     if (vacancyFilter.length > 0) {
       dispatch(getAllVacancyByKgOrAbroad(vacancyFilter));
     } else {
-      dispatch(getAllVacancy());
+      dispatch(getAllVacancyToCard());
     }
   }, [dispatch, vacancyFilter]);
 
   const handleSearch = async (vacancyTitle: string) => {
-    await dispatch(getAllVacancy(vacancyTitle));
+    await dispatch(getAllVacancyToCard(vacancyTitle));
   };
 
   return (

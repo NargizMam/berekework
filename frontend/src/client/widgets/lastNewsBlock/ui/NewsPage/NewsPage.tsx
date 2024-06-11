@@ -1,4 +1,4 @@
-import { usePrismicDocumentByUID } from '@prismicio/react';
+import { usePrismicDocumentByUID, PrismicRichText } from '@prismicio/react';
 import { useParams } from 'react-router-dom';
 import * as prismicH from '@prismicio/helpers';
 import dayjs from 'dayjs';
@@ -12,7 +12,8 @@ const NewsPage = () => {
   const safeUid = uid || '';
   const [document] = usePrismicDocumentByUID('lastnews', safeUid);
 
-  const description = prismicH.asText(document?.data.body[0].primary.description);
+  // const description = prismicH.asText(document?.data.body[0].primary.description);
+  const description = document?.data.body[0].primary.description;
   const title = prismicH.asText(document?.data.title);
   const date = document?.data.date;
   const formattedDate = dayjs(date).format('DD.MM  HH:mm');
@@ -23,7 +24,8 @@ const NewsPage = () => {
         {title}
       </Typography>
       <Grid xs={4}>
-        <p className="newsPageText"> {description}</p>
+        <PrismicRichText field={description} />
+        {/*<p className="newsPageText"> {description}</p>*/}
       </Grid>
       <div>
         <p className="cardDateText">

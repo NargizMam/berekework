@@ -34,6 +34,7 @@ export interface EmployerAuth {
   email: string;
   token: string;
   role: string;
+  avatar: string;
   isPublished?: boolean;
 }
 

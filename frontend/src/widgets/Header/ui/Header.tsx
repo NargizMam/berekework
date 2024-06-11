@@ -68,9 +68,6 @@ const Header = () => {
               }
             }
             if (employer && !employer.isPublished) {
-              if (item.name_link === 'Для работодателей') {
-                return null;
-              }
               if (item.name_link === 'Потенциальные сотрудники') {
                 return null;
               }
@@ -126,9 +123,6 @@ const Header = () => {
                   }
                 }
                 if (employer && !employer.isPublished) {
-                  if (item.name_link === 'Для работодателей') {
-                    return null;
-                  }
                   if (item.name_link === 'Потенциальные сотрудники') {
                     return null;
                   }

@@ -27,10 +27,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SuccessMessage from '../widgets/WarningMessage/SuccessMessage';
 import ErrorMessage from '../widgets/WarningMessage/ErrorMessage';
+import Permit from '../shared/permit/Permit';
 
 const App = () => {
   const user = useAppSelector(selectUser);
   const location = useLocation();
+
   const AdminRoutes = () => (
     <AdminLayout>
       <Container>
@@ -53,6 +55,7 @@ const App = () => {
       </Container>
     </AdminLayout>
   );
+
   const adminRoutes = useRoutes([
     {
       path: '/admin/*',
@@ -81,10 +84,38 @@ const App = () => {
             <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/employersProfile/:id" element={<EmployerProfile />} />
-            <Route path="/edit-employer/:id" element={<EmployerEditPage />} />
-            <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
-            <Route path="/userProfile" element={<UserProfilePage />} />
+            <Route
+              path="/employersProfile/:id"
+              element={
+                <Permit employerOnly>
+                  <EmployerProfile />
+                </Permit>
+              }
+            />
+            <Route
+              path="/edit-employer/:id"
+              element={
+                <Permit employerOnly>
+                  <EmployerEditPage />
+                </Permit>
+              }
+            />
+            <Route
+              path="/potential-employees"
+              element={
+                <Permit employerOnly>
+                  <PotentialEmployeesPage />
+                </Permit>
+              }
+            />
+            <Route
+              path="/userProfile"
+              element={
+                <Permit>
+                  <UserProfilePage />
+                </Permit>
+              }
+            />
             <Route path="/userProfile-submit" element={<UserProfileFormPage />} />
             <Route path="/for-employer" element={<ForEmployerPage />} />
             <Route path="/news/:uid" element={<NewsPage />} />

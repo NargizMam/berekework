@@ -13,7 +13,6 @@ interface Props {
 
 export const LastNewsCards: React.FC<Props> = ({ uid }) => {
   const safeUid = uid || '';
-
   const [document] = usePrismicDocumentByUID('lastnews', safeUid);
 
   const title = prismicH.asText(document?.data.title);

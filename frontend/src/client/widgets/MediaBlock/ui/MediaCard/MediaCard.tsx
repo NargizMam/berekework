@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, CardMedia } from '@mui/material';
-import iconPlay from '../../images/icon-play.png';
+import { Box } from '@mui/material';
+// import iconPlay from '../../images/icon-play.png';
 import getMediaCardStyle from './getMediaCardStyle';
 
 export interface MediaCardApiData {
@@ -12,6 +12,7 @@ export interface MediaCardApiData {
   video?: {
     url: string;
     alt: string;
+    html: string;
   };
   mediaCardsLength: number;
   onClick: (index: number) => void;
@@ -21,18 +22,19 @@ const MediaCard: React.FC<MediaCardApiData> = ({ index, image, video, mediaCards
   const MediaCardStyle = getMediaCardStyle(mediaCardsLength);
 
   const imageUrl = image ? image.url : null;
-  const videoUrl = video ? video.url : null;
+  // const videoUrl = video ? video.html : null;
 
   const mediaElement = imageUrl ? (
     <Box sx={MediaCardStyle.card} onClick={() => onClick(index)}>
       {imageUrl && (
-        <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt || video?.alt || ''} />
+        // <CardMedia sx={MediaCardStyle.image} component="img" image={imageUrl} alt={image?.alt || video?.alt || ''} />
+        <Box sx={MediaCardStyle.image} dangerouslySetInnerHTML={{ __html: video ? video.html : '' }} />
       )}
-      {videoUrl && (
-        <Box sx={MediaCardStyle.iconPlayWrapper}>
-          <img src={iconPlay} alt="play" />
-        </Box>
-      )}
+      {/*{videoUrl && (*/}
+      {/*  <Box sx={MediaCardStyle.iconPlayWrapper}>*/}
+      {/*    <img src={iconPlay} alt="play" />*/}
+      {/*  </Box>*/}
+      {/*)}*/}
     </Box>
   ) : null;
 

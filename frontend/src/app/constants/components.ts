@@ -6,6 +6,10 @@ import { PotentialEmployeesStartBlock } from '../../client/widgets/potentialEmpl
 import { ChooseSpecialistBlock } from '../../client/widgets/specialistBlock';
 import { RatesBLock } from '../../client/widgets/tariff/ui/ratesBLock';
 import { VacancyBlock } from '../../client/widgets/vacancyBlock';
+import { AboutUsBlock } from '../../client/widgets/aboutAsBlock';
+import { EmployerBlock } from '../../client/widgets/employerBlock';
+import { MediaBlock } from '../../client/widgets/MediaBlock';
+import { LastNewsBlock } from '../../client/widgets/lastNewsBlock';
 
 
 export const components = {
@@ -15,6 +19,12 @@ export const components = {
 	vacancies_block: VacancyBlock,
   tariff: RatesBLock,
   startblock: PotentialEmployeesStartBlock,
-  potentialemployeescardsblock: PotentialEmployeesPageCardsBlock,
   ourvalues: OurValuesBlock,
+  potentialemployeescardsblock: PotentialEmployeesPageCardsBlock,
+  aboutusinfo: AboutUsBlock,
+  aboutusvalues: OurValuesBlock,
+  potentialemployees: EmployerBlock,
+  galleryblock: MediaBlock,
+  videoblock: MediaBlock,
+  lastnews: LastNewsBlock,
 };

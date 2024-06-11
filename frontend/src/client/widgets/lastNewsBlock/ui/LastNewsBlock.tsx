@@ -6,7 +6,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useAllPrismicDocumentsByType } from '@prismicio/react';
 
-const LastNewsBlock = () => {
+export const LastNewsBlock = () => {
   const [pages] = useAllPrismicDocumentsByType('lastnews');
   const [activeStep, setActiveStep] = useState<number>(0);
   const [maxSteps, setMaxSteps] = useState<number>(2);
@@ -38,6 +38,7 @@ const LastNewsBlock = () => {
   const hasNextCards = activeStep < maxSteps - 1;
   const hasPreviousCards = activeStep > 0;
 
+
   return (
     <>
       <Box sx={LastNewsBlockStyle.block} style={{ marginTop: '30px' }}>
@@ -64,5 +65,3 @@ const LastNewsBlock = () => {
     </>
   );
 };
-
-export default LastNewsBlock;

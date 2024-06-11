@@ -26,12 +26,11 @@ interface Props {
   className: string;
 }
 
-const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
+export const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
   const [toggler, setToggler] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const openLightbox = (index: number) => {
-    console.log('index = ', index);
     setCurrentIndex(index);
     setToggler(!toggler);
   };
@@ -45,12 +44,13 @@ const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
   }
 
   const isVideoBlock = className === 'video';
-
   const showNavigation = slice.items.length > 3;
 
   const sources = slice.items
     .map((item) => (isVideoBlock ? item.video?.url : item.image?.url))
     .filter((url): url is string => Boolean(url));
+
+  console.log(slice.items);
 
   return (
     <Box sx={{ ...MediaBlockStyle.container, ...style }}>
@@ -123,5 +123,3 @@ const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
     </Box>
   );
 };
-
-export default MediaBlock;

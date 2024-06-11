@@ -75,6 +75,7 @@ export interface EmployerFields {
   foundationYear: string;
   vacancies: Types.ObjectId[];
   adminsComment: string;
+  tariff: string;
 }
 
 export interface UserMethods {

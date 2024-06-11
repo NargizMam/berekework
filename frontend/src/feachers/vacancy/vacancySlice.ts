@@ -1,8 +1,9 @@
-import { CategoryVacancyI, VacancyCardApiData } from '../../app/types';
+import { CategoryVacancyI, VacancyApiData, VacancyResponseToCard } from '../../app/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  deleteVacancy,
   getAllVacancy,
-  getAllVacancyByKgOrAbroad,
+  getAllVacancyByKgOrAbroad, getAllVacancyToCard,
   getVacancyById,
   vacancyFetchCategory,
   vacancyGetByCategory,
@@ -10,21 +11,25 @@ import {
 import { RootState } from '../../app/store/store';
 
 interface VacancyState {
-  vacancies: VacancyCardApiData[];
-  vacancy: VacancyCardApiData | null;
+  vacancies: VacancyApiData[];
+  vacanciesToCard: VacancyResponseToCard[];
+  vacancy: VacancyApiData | null;
   vacancyCategory: CategoryVacancyI[];
   vacancyCategoryLoading: boolean;
   vacanciesLoading: boolean;
   vacancyLoading: boolean;
+  vacancyDeleteLoading: boolean;
 }
 
 const initialState: VacancyState = {
   vacancies: [],
+  vacanciesToCard: [],
   vacancy: null,
   vacancyCategory: [],
   vacanciesLoading: false,
   vacancyLoading: false,
   vacancyCategoryLoading: false,
+  vacancyDeleteLoading: false,
 };
 
 const vacancySlice = createSlice({
@@ -35,7 +40,7 @@ const vacancySlice = createSlice({
     builder.addCase(getAllVacancy.pending, (state) => {
       state.vacanciesLoading = true;
     });
-    builder.addCase(getAllVacancy.fulfilled, (state, { payload: vacancies }: PayloadAction<VacancyCardApiData[]>) => {
+    builder.addCase(getAllVacancy.fulfilled, (state, { payload: vacancies }: PayloadAction<VacancyApiData[]>) => {
       state.vacanciesLoading = false;
       state.vacancies = vacancies;
     });
@@ -48,7 +53,7 @@ const vacancySlice = createSlice({
     });
     builder.addCase(
       getAllVacancyByKgOrAbroad.fulfilled,
-      (state, { payload: vacancies }: PayloadAction<VacancyCardApiData[]>) => {
+      (state, { payload: vacancies }: PayloadAction<VacancyApiData[]>) => {
         state.vacanciesLoading = false;
         state.vacancies = vacancies;
       },
@@ -60,7 +65,7 @@ const vacancySlice = createSlice({
     builder.addCase(getVacancyById.pending, (state) => {
       state.vacancyLoading = true;
     });
-    builder.addCase(getVacancyById.fulfilled, (state, { payload: vacancy }: PayloadAction<VacancyCardApiData>) => {
+    builder.addCase(getVacancyById.fulfilled, (state, { payload: vacancy }: PayloadAction<VacancyApiData>) => {
       state.vacancyLoading = false;
       state.vacancy = vacancy;
     });
@@ -71,7 +76,7 @@ const vacancySlice = createSlice({
       state.vacanciesLoading = true;
     });
     builder.addCase(vacancyGetByCategory.fulfilled, (state, { payload: vacancy }) => {
-      state.vacancies = vacancy;
+      state.vacanciesToCard = vacancy;
       state.vacanciesLoading = false;
     });
     builder.addCase(vacancyGetByCategory.rejected, (state) => {
@@ -87,6 +92,23 @@ const vacancySlice = createSlice({
     builder.addCase(vacancyFetchCategory.rejected, (state) => {
       state.vacancyCategoryLoading = false;
     });
+
+    builder.addCase(getAllVacancyToCard.pending, (state) => {
+      state.vacanciesLoading = true;
+    }).addCase(getAllVacancyToCard.fulfilled, (state, {payload}) => {
+      state.vacanciesLoading = false;
+      state.vacanciesToCard = payload;
+    }).addCase(getAllVacancyToCard.rejected, (state) => {
+      state.vacanciesLoading = false;
+    });
+
+    builder.addCase(deleteVacancy.pending, (state) => {
+      state.vacancyDeleteLoading = true;
+    }).addCase(deleteVacancy.fulfilled, (state) => {
+      state.vacancyDeleteLoading = false;
+    }).addCase(deleteVacancy.rejected, (state) => {
+      state.vacancyDeleteLoading = false;
+    });
   },
 });
 
@@ -97,3 +119,5 @@ export const selectClientVacancyCategory = (state: RootState) => state.vacancy.v
 export const selectClientVacancyCategoryFetching = (state: RootState) => state.vacancy.vacancyCategoryLoading;
 export const selectVacanciesLoading = (state: RootState) => state.vacancy.vacanciesLoading;
 export const selectVacancyLoading = (state: RootState) => state.vacancy.vacancyLoading;
+export const selectVacancyToCards = (state: RootState) => state.vacancy.vacanciesToCard;
+export const selectVacancyDeleteLoading = (state: RootState) => state.vacancy.vacancyDeleteLoading;
