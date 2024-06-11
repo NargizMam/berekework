@@ -74,13 +74,23 @@
       e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>
     ) => {
       const { name, value } = e.target;
-      setState((prevState) => ({
-        ...prevState,
-        contacts: {
-          ...prevState.contacts,
-          [name]: value,
-        },
-      }));
+
+      setState((prevState) => {
+        if (['phone', 'whatsapp', 'telegram'].includes(name)) {
+          return {
+            ...prevState,
+            contacts: {
+              ...prevState.contacts,
+              [name]: value,
+            },
+          };
+        } else {
+          return {
+            ...prevState,
+            [name]: value,
+          };
+        }
+      });
     };
 
     const addFieldToFormState = (newField: WorkExperience) => {
