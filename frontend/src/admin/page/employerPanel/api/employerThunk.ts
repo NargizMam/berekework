@@ -54,11 +54,15 @@ export const getEmployersProfileInfo = createAsyncThunk<EmployerInfoApi, string>
 interface UpdateStatusEmployer {
   id: string;
   email: string;
+  tariff: string;
 }
 
-export const updateStatusEmployer = createAsyncThunk<void, UpdateStatusEmployer>('employer/updateStatus', async ({id, email}) => {
-  await axiosApi.patch(`/employer/${id}`, email);
-});
+export const updateStatusEmployer = createAsyncThunk<void, UpdateStatusEmployer>(
+  'employer/updateStatus',
+  async ({ id, email , tariff}) => {
+    await axiosApi.patch(`/employer/${id}`, { email , tariff});
+  },
+);
 
 export const updateEmployer = createAsyncThunk<
   void,
