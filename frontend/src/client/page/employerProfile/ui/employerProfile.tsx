@@ -6,7 +6,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
+  Grid, Link,
   Tab,
   Tabs,
   Typography,
@@ -29,6 +29,7 @@ import { selectApplicationForEmployees } from '../../../../feachers/aplication/a
 import { ApplicationResponse } from '../../../../feachers/aplication/types';
 import { selectVacancyDeleteLoading } from '../../../../feachers/vacancy/vacancySlice';
 import { deleteVacancy } from '../../../../feachers/vacancy/vacancyThunk';
+import { API_URL } from '../../../../app/constants/links';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -156,9 +157,9 @@ const EmployerProfile: React.FC = () => {
           <p className="companyInfo">
             <strong>Контакты:</strong> {profile.contacts}
           </p>
-          <a className="companyLink" href={profile.document || '#'} download>
+          <Link target="_blank" className="companyLink" href={API_URL + '/' + profile.documents}>
             Скачать документы
-          </a>
+          </Link>
           <Box sx={{ display: 'flex', mt: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
             <Button variant="outlined" onClick={() => navigate(`/edit-employer/${profile?._id}`)}>
               Редактировать профиль

@@ -39,7 +39,7 @@ export interface EmployerInfoApi {
   address: string;
   contacts: string;
   avatar: File | string | null;
-  document: string | null;
+  documents: string | null;
   foundationYear: string;
   vacancies: VacancyCardApiData[];
   createdAt: string;

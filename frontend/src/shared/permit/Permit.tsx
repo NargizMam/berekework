@@ -11,8 +11,6 @@ const Permit: React.FC<Props> = ({ children, employerOnly }) => {
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
   const employer = useAppSelector(selectEmployer);
-  console.log(user);
-  console.log(employer);
 
   useEffect(() => {
     if (!user && !employer) {
