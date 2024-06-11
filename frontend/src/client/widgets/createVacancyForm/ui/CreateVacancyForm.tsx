@@ -13,6 +13,9 @@ import './CreateVacancyForm.css';
 import { openErrorMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 import ErrorMessage from '../../../../widgets/WarningMessage/ErrorMessage';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getVacancyById } from '../../../../feachers/vacancy/vacancyThunk';
+import { selectVacancy } from '../../../../feachers/vacancy/vacancySlice';
 
 interface Flag {
   aboutVacancy: boolean;
@@ -21,8 +24,8 @@ interface Flag {
 }
 
 interface Props {
-  setOpenForm: (open: boolean) => void;
-  employeeId: string;
+  setOpenForm?: (open: boolean) => void;
+  employeeId?: string;
 }
 
 const initialState = {
@@ -46,10 +49,11 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) 
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
-  const editVacancy = useAppSelector(selectEditVacancy);
+  const editVacancy = useAppSelector(selectVacancy);
   const [cities, setCities] = useState<string[]>([]);
-
   const [state, setState] = useState<ICreateVacancyForm>(initialState);
+  const { id } = useParams() as { id: string };
+  const navigate = useNavigate();
 
   const [isFull, setIsFull] = useState<Flag>({
     aboutVacancy: true,
@@ -58,6 +62,12 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) 
   });
 
   const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getVacancyById(id));
+    }
+  }, [id, dispatch]);
 
   useEffect(() => {
     const editData: ICreateVacancyForm = {
@@ -147,21 +157,23 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) 
           vacancy: stateData,
         };
         await dispatch(updateVacancy(editData)).unwrap();
+        navigate(-1);
       } else {
         await dispatch(postVacancy(stateData)).unwrap();
-        dispatch(getEmployersProfileInfo(employeeId));
+        // dispatch(getEmployersProfileInfo(employeeId));
+        navigate(-1);
       }
       dispatch(clearEditVacancy());
       setState(initialState);
-      setOpenForm(false);
+      // setOpenForm(false);
     } catch (e) {
-      dispatch(openErrorMessage());
+      dispatch(openErrorMessage);
     }
   };
 
   return (
     <>
-      {error && <ErrorMessage errorMessage={error.message} />}
+      {error && <ErrorMessage />}
       {isLoading ? (
         <Loader />
       ) : (
@@ -411,7 +423,7 @@ export const CreateVacancyForm: React.FC<Props> = ({ setOpenForm, employeeId }) 
               color="primary"
               variant="contained"
               loading={isLoading}
-              disabled={isDisabled}
+              // disabled={isDisabled}
             >
               <Typography>Сохранить</Typography>
             </LoadingButton>

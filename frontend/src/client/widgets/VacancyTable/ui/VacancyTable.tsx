@@ -29,7 +29,7 @@ export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete, delete
   const navigate = useNavigate();
 
   const onEdit = (id: string) => {
-    navigate(`/vacancies/edit/${id}`);
+    navigate(`/vacancy/edit/${id}`);
   };
 
   return (

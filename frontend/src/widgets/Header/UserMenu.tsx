@@ -68,9 +68,9 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         {user?.role === 'admin' || user?.role === 'superadmin' ? (
           <MenuItem onClick={getProfile}>CRM</MenuItem>
         ) : (
-          <MenuItem onClick={getProfile}>My profile</MenuItem>
+          <MenuItem onClick={getProfile}>Мой личный кабинет</MenuItem>
         )}
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Выйти</MenuItem>
       </Menu>
     </Box>
   );

@@ -28,6 +28,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SuccessMessage from '../widgets/WarningMessage/SuccessMessage';
 import ErrorMessage from '../widgets/WarningMessage/ErrorMessage';
 import Permit from '../shared/permit/Permit';
+import { CreateVacancyForm } from '../client/widgets/createVacancyForm';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -83,6 +84,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
+            <Route path="/vacancy/edit/:id" element={<CreateVacancyForm />} />
             <Route path="/about-us" element={<AboutUsPage />} />
             <Route
               path="/employersProfile/:id"
