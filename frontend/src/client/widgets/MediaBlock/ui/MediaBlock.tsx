@@ -50,6 +50,8 @@ export const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
     .map((item) => (isVideoBlock ? item.video?.url : item.image?.url))
     .filter((url): url is string => Boolean(url));
 
+  console.log(slice.items);
+
   return (
     <Box sx={{ ...MediaBlockStyle.container, ...style }}>
       <Box sx={MediaBlockStyle.row}>
