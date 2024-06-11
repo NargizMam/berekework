@@ -49,7 +49,7 @@ export const VacancyBlock: React.FC<IVacancyBlockProps> = (data) => {
   };
   
   return (
-    <div className="vacancy_block">
+    <div id='last-vacancy' className="vacancy_block">
       <h1 className="vacancy_block_title">{data.slice.primary.vacancies_block_title}</h1>
       <div>{renderContent()}</div>
       {vacancyCards && visibleVacancies.length < vacancyCards.length && visibleVacancies.length > 0 && (

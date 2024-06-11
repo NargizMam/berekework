@@ -33,7 +33,7 @@ export const ChooseSpecialistBlock: React.FC<Props> = ({ slice }) => {
   // }, [dispatch]);
 
   return (
-    <div style={{ margin: '100px 0' }} className="chooseBlock">
+    <div id='specialist' style={{ margin: '100px 0' }} className="chooseBlock">
       <div className="chooseBlockContent">
         <h2 className="chooseBlock-title">{slice.primary.title}</h2>
         <a href={'news/' + slice.primary.link.url} className="button-link">
