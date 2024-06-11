@@ -121,7 +121,7 @@ export const EmployerPanelPage = () => {
                   {employer.companyName}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <img src={API_URL + '/' + employer.avatar} alt="Logo" />
+                  <img width={50} height={50} src={API_URL + '/' + employer.avatar} alt="Logo" />
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {employer.foundationYear}
@@ -139,7 +139,9 @@ export const EmployerPanelPage = () => {
                   {employer.contacts}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <Link href={API_URL + '/' + employer.documents}>PDF</Link>
+                  <Link target="_blank" href={API_URL + '/' + employer.documents}>
+                    PDF
+                  </Link>
                 </TableCell>
                 <TableCell>{employer.tariff}</TableCell>
                 <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
@@ -187,9 +189,9 @@ export const EmployerPanelPage = () => {
           </DialogContent>
           <DialogActions>
             <Button type="button" onClick={handleClose}>
-              Disagree
+              Отклонить
             </Button>
-            <Button type="submit">Agree</Button>
+            <Button type="submit">Подтвердить</Button>
           </DialogActions>
         </form>
       </Dialog>
