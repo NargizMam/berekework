@@ -26,16 +26,6 @@ const EmployeeProfile: React.FC = () => {
     }
   }, [dispatch, id]);
 
-  // const handleAction = async (action: number) => {
-  //   if(action === 1) {
-  //     /// на рассмотрении
-  //   } else if (action === 2) {
-  //     /// связаться
-  //   } else {
-  //     /// отклонить
-  //   }
-  // }
-
   if (isLoading) {
     return <Loader />;
   }

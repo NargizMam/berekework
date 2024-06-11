@@ -32,6 +32,7 @@ const UserInfo: React.FC<Props> = ({ photo, name, jobTitle, age, location, descr
       </Link>
     );
   }
+
   return (
     <div className="UserInfo">
       <PhotoAvatar src={photo} alt={name} width={280} height={280} button />

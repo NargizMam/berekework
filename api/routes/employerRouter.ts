@@ -50,9 +50,24 @@ employerRouter.post(
 
 employerRouter.patch('/:id', async (req, res, next) => {
   try {
-    const employer = await Employer.findByIdAndUpdate(req.params.id, [
-      { $set: { isPublished: { $eq: [false, '$isPublished'] } } },
-    ]);
+    const employer = await Employer.findByIdAndUpdate(
+      req.params.id,
+      [
+        {
+          $set: {
+            isPublished: {
+              $cond: {
+                if: { $eq: [req.body.tariff, ''] },
+                then: false,
+                else: true,
+              },
+            },
+          },
+        },
+        { $set: { tariff: req.body.tariff } },
+      ],
+      { new: true },
+    );
 
     if (!employer) {
       return res.status(404).send({ message: 'Employer not found!' });
