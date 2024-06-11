@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '../../../app/constants/links';
 import VacancyCardStyle from './VacancyCard-style';
 import './VacancyCard.css';
+import { VacancyResponseToCard } from '../../../app/types';
 
 interface Props {
-  data: any;
+  data: VacancyResponseToCard;
   visible: boolean;
 }
 
 export const VacancyCard: React.FC<Props> = ({ data, visible }) => {
-	
-  const image = data.employer.logo ? (
+  const image = data.employer.avatar ? (
     <Box sx={VacancyCardStyle.imageWrapper}>
-      <img src={API_URL + '/' + data.employer.logo} alt={data.vacancyTitle} />
+      <img src={API_URL + '/' + data.employer.avatar} alt={data.vacancyTitle} />
     </Box>
   ) : null;
   let salary = 'з/п не указана';

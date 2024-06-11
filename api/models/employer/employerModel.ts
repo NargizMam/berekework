@@ -13,11 +13,9 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     validate: {
       validator: async function (this: HydratedDocument<UserFields>, email: string): Promise<boolean> {
         if (!this.isModified('email')) return true;
-
         const user: HydratedDocument<UserFields> | null = await Employer.findOne({
           email,
         });
-
         return !user;
       },
       message: 'This user is already registered!',
@@ -68,8 +66,9 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
   },
   googleID: String,
   avatar: String,
-  logo: {
+  tariff: {
     type: String,
+    default: 'Базовый',
   },
   vacancies: [
     {

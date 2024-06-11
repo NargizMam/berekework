@@ -91,7 +91,7 @@ export const SideNavAdmin: React.FC<SideNavProps> = ({ open, onClose }) => {
                 <ListItemIcon>
                   <LabelImportantIcon sx={{ pl: isMobileScreen ? '2px' : '12px' }} />
                 </ListItemIcon>
-                <ListItemText primary="Moderators" sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
+                <ListItemText primary="Модераторы" sx={{ mr: isMobileScreen ? '2px' : '12px' }} />
               </ListItemButton>
             </ListItem>
           )}

@@ -14,17 +14,18 @@ import {
 } from '@mui/material';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import dayjs from 'dayjs';
-import { VacancyCardApiData } from '../../../../app/types';
+import { VacancyApiData } from '../../../../app/types';
 import { Link, useNavigate } from 'react-router-dom';
 
 dayjs.extend(LocalizedFormat);
 
 interface Props {
-  vacancies: VacancyCardApiData[];
+  vacancies: VacancyApiData[];
   vacancyDelete: (id: string) => void;
+  deleteLoading: boolean;
 }
 
-export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete }) => {
+export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete, deleteLoading }) => {
   const navigate = useNavigate();
 
   const onEdit = (id: string) => {
@@ -63,7 +64,7 @@ export const VacancyTable: React.FC<Props> = ({ vacancies, vacancyDelete }) => {
                   >
                     Редактировать
                   </Button>
-                  <Button variant="contained" onClick={() => vacancyDelete(row._id)}>
+                  <Button variant="contained" onClick={() => vacancyDelete(row._id)} disabled={deleteLoading}>
                     Удалить
                   </Button>
                 </Box>

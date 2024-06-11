@@ -25,7 +25,7 @@ export const EmployerFormPage = () => {
     foundationYear: '',
     document: null,
     address: '',
-    logo: null,
+    avatar: null,
   });
   const error = useAppSelector(selectEmployerError);
   const documentSelect = useRef<HTMLInputElement>(null);
@@ -55,7 +55,7 @@ export const EmployerFormPage = () => {
   const changeFileField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (files && files[0]) {
-      if (name === 'logo') {
+      if (name === 'avatar') {
         setFilenameImage(files[0].name);
       } else if (name === 'document') {
         setFilename(files[0].name);
@@ -73,7 +73,7 @@ export const EmployerFormPage = () => {
     setFilenameImage('');
     setState((prevState) => ({
       ...prevState,
-      logo: null,
+      avatar: null,
     }));
     if (documentSelect.current) {
       documentSelect.current.value = '';
@@ -125,7 +125,7 @@ export const EmployerFormPage = () => {
               name="email"
               type="email"
               id="standard-basic"
-              label="Email"
+              label="Email почта"
               variant="outlined"
               required={true}
               InputProps={{ style: inputStyle }}
@@ -140,7 +140,7 @@ export const EmployerFormPage = () => {
                 onChange={changeField}
                 name="password"
                 id="standard-basic"
-                label="Password"
+                label="Пароль"
                 type={showPassword ? 'text' : 'password'}
                 variant="outlined"
                 required={true}
@@ -169,7 +169,7 @@ export const EmployerFormPage = () => {
               onChange={changeField}
               name="companyName"
               id="standard-basic"
-              label="Company name"
+              label="Название компании"
               variant="outlined"
               required={true}
               InputProps={{ style: inputStyle }}
@@ -183,7 +183,7 @@ export const EmployerFormPage = () => {
               onChange={changeField}
               name="industry"
               id="standard-basic"
-              label="Industry"
+              label="Вид деятельности"
               variant="outlined"
               required={true}
               InputProps={{ style: inputStyle }}
@@ -197,7 +197,7 @@ export const EmployerFormPage = () => {
               onChange={changeField}
               name="description"
               id="standard-basic"
-              label="Description"
+              label="Краткое описание"
               variant="outlined"
               required={true}
               InputProps={{ style: inputStyle }}
@@ -212,7 +212,7 @@ export const EmployerFormPage = () => {
               name="foundationYear"
               type="number"
               id="standard-basic"
-              label="Foundation Year"
+              label="Действует с .... года"
               variant="outlined"
               required={true}
               InputProps={{ style: inputStyle }}
@@ -226,7 +226,7 @@ export const EmployerFormPage = () => {
               onChange={changeField}
               name="address"
               id="standard-basic"
-              label="Address"
+              label="Адрес"
               variant="outlined"
               required={true}
               InputProps={{ style: inputStyle }}
@@ -240,7 +240,7 @@ export const EmployerFormPage = () => {
               onChange={changeField}
               name="contacts"
               id="standard-basic"
-              label="Contacts"
+              label="Контакты"
               variant="outlined"
               required={true}
               InputProps={{ style: inputStyle }}
@@ -260,7 +260,7 @@ export const EmployerFormPage = () => {
               <Grid item xs>
                 <TextField
                   disabled
-                  label="Document"
+                  label="Документы"
                   value={filename || ''}
                   InputProps={{ style: inputStyle }}
                   onClick={() => selectFile('document')}
@@ -270,41 +270,42 @@ export const EmployerFormPage = () => {
               </Grid>
               <Grid item>
                 <Button variant="contained" onClick={() => selectFile('document')}>
-                  Browse
+                  Загрузить
                 </Button>
               </Grid>
               {filename.length !== 0 && (
                 <Grid item>
                   <Button variant="contained" onClick={clearDocumentField}>
-                    Clear
+                    Очистить
                   </Button>
                 </Grid>
               )}
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <input style={{ display: 'none' }} type="file" name="logo" onChange={changeFileField} ref={imageSelect} />
+            <input style={{ display: 'none' }} type="file" name="avatar" onChange={changeFileField} ref={imageSelect} />
             <Grid container direction="row" spacing={2} alignItems="center">
               <Grid item xs>
                 <TextField
                   disabled
-                  label="Logo"
+                  label="Логотип"
+
                   InputProps={{ style: inputStyle }}
                   value={filenameImage || ''}
                   onClick={() => selectFile('image')}
-                  error={Boolean(getFieldError('logo'))}
-                  helperText={getFieldError('logo')}
+                  error={Boolean(getFieldError('avatar'))}
+                  helperText={getFieldError('avatar')}
                 />
               </Grid>
               <Grid item>
                 <Button variant="contained" onClick={() => selectFile('image')}>
-                  Browse
+                  Загрузить
                 </Button>
               </Grid>
               {filenameImage.length !== 0 && (
                 <Grid item>
                   <Button variant="contained" onClick={clearDocumentField}>
-                    Clear
+                    Очистить
                   </Button>
                 </Grid>
               )}
@@ -317,7 +318,7 @@ export const EmployerFormPage = () => {
               variant="contained"
               sx={{ width: '100%', borderRadius: isRegisterPath ? '30px' : '4px' }}
             >
-              Create
+              Создать
             </LoadingButton>
           </Grid>
         </Grid>

@@ -18,8 +18,7 @@ interface Props {
   slice: EmployerBlockApiData;
 }
 
-const EmployerBlock: React.FC<Props> = ({ slice }) => {
-  console.log(slice);
+export const EmployerBlock: React.FC<Props> = ({ slice }) => {
   const [currentRow, setCurrentRow] = useState(5);
   const [currentWrap, setCurrentWrap] = useState(false);
 
@@ -55,5 +54,3 @@ const EmployerBlock: React.FC<Props> = ({ slice }) => {
     </>
   );
 };
-
-export default EmployerBlock;

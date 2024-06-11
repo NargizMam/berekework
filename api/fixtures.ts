@@ -17,16 +17,7 @@ const run = async () => {
   await mongoose.connect(config.mongoose.db);
   const db = mongoose.connection;
 
-  const collections = [
-    'components',
-    'headings',
-    'vacanciesblocks',
-    'vacancies',
-    'users',
-    'employers',
-    'tariffs',
-    'lastnewsblocks',
-  ];
+  const collections = ['components', 'headings', 'vacancies', 'users', 'employers', 'tariffs'];
 
   for (const collectionName of collections) {
     await dropCollection(db, collectionName);
@@ -48,7 +39,6 @@ const run = async () => {
       name: 'Арсен',
       surname: 'Белеков',
       patronymic: 'Кызаев',
-      gender: 'male',
       dateOfBirth: '2006-10-03',
       country: 'Кыргызстан',
       city: 'Бишкек',
@@ -78,7 +68,6 @@ const run = async () => {
       name: 'Иван',
       surname: 'Иванов',
       patronymic: 'Иванович',
-      gender: 'male',
       dateOfBirth: '2000-05-15',
       country: 'Кыргызстан',
       city: 'Ош',
@@ -101,7 +90,7 @@ const run = async () => {
     },
   ]);
 
-  const [vac1, vac2, vac3, vac4, vac5, vac6, vac7] = await Vacancy.create(
+  const [vac1, vac2, vac3, vac4, vac5, vac6, vac7, vac8] = await Vacancy.create(
     {
       vacancyTitle: 'Software Developer',
       salary: {
@@ -241,25 +230,48 @@ const run = async () => {
       employer: null, // Will be updated later
     },
     {
-      vacancyTitle: 'Project Manager',
+      vacancyTitle: 'Механик',
+      salary: {
+        minSalary: 60000,
+        maxSalary: 80000,
+      },
+      city: 'Бишкек',
+      aboutVacancy:
+        'Мы ищем опытного механика для нашей команды. Идеальный кандидат должен иметь опыт работы механиком и быть способным решать сложные технические задачи. Вы будете отвечать за диагностику, ремонт и обслуживание техники.',
+      responsibilities:
+        'Проводить диагностику и ремонт техники. Обеспечивать техническое обслуживание и профилактику оборудования. Координировать работу с другими членами команды. Обеспечивать выполнение задач в срок и в рамках бюджета.',
+      workConditions:
+        'Полная занятость. Гибкий график работы. Возможность удаленной работы. Конкурентоспособная зарплата и социальный пакет.',
+      country: 'Кыргызстан',
+      fieldOfWork: 'Техническое обслуживание и ремонт',
+      age: {
+        minAge: 28,
+        maxAge: 45,
+      },
+      education: 'Среднее',
+      employmentType: 'Полная',
+      employer: null, // Will be updated later
+    },
+    {
+      vacancyTitle: 'Водитель',
       salary: {
         minSalary: 45000,
         maxSalary: 75000,
       },
       city: 'Бишкек',
       aboutVacancy:
-        'We are looking for an experienced Project Manager to join our team. The ideal candidate will have experience in project management and a strong organizational mindset. You will be responsible for overseeing projects from inception to completion.',
+        'Мы ищем опытного водителя для нашей команды. Идеальный кандидат должен иметь опыт работы водителем и хорошие навыки вождения. Вы будете отвечать за безопасную и своевременную доставку людей и грузов.',
       responsibilities:
-        'Oversee projects from inception to completion. Develop project plans and timelines. Coordinate with cross-functional teams. Ensure projects are completed on time and within budget.',
+        'Обеспечивать безопасную и своевременную доставку людей и грузов. Следить за техническим состоянием автомобиля. Выполнять мелкий ремонт и техническое обслуживание. Вести отчетность по пробегу и расходу топлива.',
       workConditions:
-        'Full-time position. Flexible working hours. Remote work options available. Competitive salary and benefits.',
+        'Полная занятость. Гибкий график работы. Возможность переработок. Конкурентоспособная зарплата и социальный пакет.',
       country: 'Кыргызстан',
-      fieldOfWork: 'Project Management',
+      fieldOfWork: 'Транспорт и логистика',
       age: {
         minAge: 28,
         maxAge: 45,
       },
-      education: 'Высшее',
+      education: 'Среднее',
       employmentType: 'Полная',
       employer: null, // Will be updated later
     },
@@ -277,10 +289,11 @@ const run = async () => {
       description: 'Company A is a leading technology firm specializing in software development.',
       address: '123 Main St, City, Country',
       contacts: '+1 (123) 456-7890',
-      logo: 'fixtures/logo_company_megaservice.png',
+      avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'fixtures/dummy.pdf',
-      vacancies: [vac1._id, vac2._id, vac3._id],
+      vacancies: [vac1._id, vac2._id, vac3._id, vac7._id],
       isPublished: true,
+      tariff: 'Базовый',
     },
     {
       email: 'employer2@example.com',
@@ -292,9 +305,10 @@ const run = async () => {
       description: 'Company B is a financial services company providing investment solutions.',
       address: '456 Elm St, City, Country',
       contacts: '+1 (234) 567-8901',
-      logo: 'fixtures/logo_company_megaservice.png',
+      avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'https://example.com/documentsB.pdf',
-      vacancies: [vac6._id, vac5._id, vac4._id],
+      vacancies: [vac8._id, vac6._id, vac5._id, vac4._id],
+      tariff: 'Базовый',
     },
     {
       email: 'employer3@example.com',
@@ -306,14 +320,15 @@ const run = async () => {
       description: 'Company C is a healthcare organization committed to improving patient care.',
       address: '789 Oak St, City, Country',
       contacts: '+1 (345) 678-9012',
-      logo: 'fixtures/logo_company_megaservice.png',
+      avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'https://example.com/documentsC.pdf',
       vacancies: [],
+      tariff: 'Базовый',
     },
   );
 
   await Vacancy.updateMany({ _id: { $in: [vac1._id, vac2._id, vac3._id, vac7._id] } }, { employer: employer1._id });
-  await Vacancy.updateMany({ _id: { $in: [vac4._id, vac5._id, vac6._id] } }, { employer: employer2._id });
+  await Vacancy.updateMany({ _id: { $in: [vac4._id, vac5._id, vac6._id, vac8._id] } }, { employer: employer2._id });
 
   await db.close();
 };

@@ -14,7 +14,6 @@ import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import { ModeratorsPage } from '../admin/page/moderatorsPanel';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
 import EmployerProfile from '../client/page/employerProfile/ui/employerProfile';
-import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import { EmployerFormPage, EmployerPanelPage } from '../admin/page/employerPanel';
 import { PotentialEmployeesPage } from '../client/page/PotentialEmployeesPage';
 import { ForEmployerPage } from '../client/page/ForEmployerPage';
@@ -22,15 +21,18 @@ import AboutUsPage from '../client/page/AboutUsPage/AboutUsPage';
 import NewsPage from '../client/widgets/lastNewsBlock/ui/NewsPage/NewsPage';
 import { VacancyPageClient } from '../client/page/VacancyPage';
 import { VacancyDetailPage } from '../pages/VacancyDetailPage';
-import { UserProfilePage } from '../client/page/Profile';
-import { UserProfileFormPage } from '../client/page/Profile';
+import { UserProfileFormPage, UserProfilePage } from '../client/page/Profile';
 import { EmployerEditPage } from '../client/page/employerProfile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SuccessMessage from '../widgets/WarningMessage/SuccessMessage';
+import ErrorMessage from '../widgets/WarningMessage/ErrorMessage';
+import Permit from '../shared/permit/Permit';
 
 const App = () => {
   const user = useAppSelector(selectUser);
   const location = useLocation();
+
   const AdminRoutes = () => (
     <AdminLayout>
       <Container>
@@ -53,6 +55,7 @@ const App = () => {
       </Container>
     </AdminLayout>
   );
+
   const adminRoutes = useRoutes([
     {
       path: '/admin/*',
@@ -66,7 +69,8 @@ const App = () => {
 
   return (
     <>
-      <WarningMessage />
+      <SuccessMessage />
+      <ErrorMessage />
       <ToastContainer />
       {location.pathname.startsWith('/admin') ? (
         adminRoutes
@@ -80,10 +84,38 @@ const App = () => {
             <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/employersProfile/:id" element={<EmployerProfile />} />
-            <Route path="/edit-employer/:id" element={<EmployerEditPage />} />
-            <Route path="/potential-employees" element={<PotentialEmployeesPage />} />
-            <Route path="/userProfile" element={<UserProfilePage />} />
+            <Route
+              path="/employersProfile/:id"
+              element={
+                <Permit employerOnly>
+                  <EmployerProfile />
+                </Permit>
+              }
+            />
+            <Route
+              path="/edit-employer/:id"
+              element={
+                <Permit employerOnly>
+                  <EmployerEditPage />
+                </Permit>
+              }
+            />
+            <Route
+              path="/potential-employees"
+              element={
+                <Permit employerOnly>
+                  <PotentialEmployeesPage />
+                </Permit>
+              }
+            />
+            <Route
+              path="/userProfile"
+              element={
+                <Permit>
+                  <UserProfilePage />
+                </Permit>
+              }
+            />
             <Route path="/userProfile-submit" element={<UserProfileFormPage />} />
             <Route path="/for-employer" element={<ForEmployerPage />} />
             <Route path="/news/:uid" element={<NewsPage />} />

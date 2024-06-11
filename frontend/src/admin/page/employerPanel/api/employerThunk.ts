@@ -25,8 +25,8 @@ export const createEmployer = createAsyncThunk<
     if (employer.document) {
       formData.append('document', employer.document);
     }
-    if (employer.logo) {
-      formData.append('logo', employer.logo);
+    if (employer.avatar) {
+      formData.append('logo', employer.avatar);
     }
     await axiosApi.post('/employer', formData);
   } catch (error) {
@@ -54,11 +54,15 @@ export const getEmployersProfileInfo = createAsyncThunk<EmployerInfoApi, string>
 interface UpdateStatusEmployer {
   id: string;
   email: string;
+  tariff: string;
 }
 
-export const updateStatusEmployer = createAsyncThunk<void, UpdateStatusEmployer>('employer/updateStatus', async ({id, email}) => {
-  await axiosApi.patch(`/employer/${id}`, email);
-});
+export const updateStatusEmployer = createAsyncThunk<void, UpdateStatusEmployer>(
+  'employer/updateStatus',
+  async ({ id, email , tariff}) => {
+    await axiosApi.patch(`/employer/${id}`, { email , tariff});
+  },
+);
 
 export const updateEmployer = createAsyncThunk<
   void,
@@ -81,8 +85,8 @@ export const updateEmployer = createAsyncThunk<
     if (data.document) {
       formData.append('document', data.document);
     }
-    if (data.logo) {
-      formData.append('logo', data.logo);
+    if (data.avatar) {
+      formData.append('logo', data.avatar);
     }
     if (data.document) {
       formData.append('document', data.document);

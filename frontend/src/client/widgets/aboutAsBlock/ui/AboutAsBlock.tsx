@@ -25,7 +25,7 @@ interface Props {
   slice: AboutUsInfoProps;
 }
 
-const AboutUsBlock: React.FC<Props> = ({ slice }) => {
+export const AboutUsBlock: React.FC<Props> = ({ slice }) => {
   return (
     <Box key={slice.id} sx={{ marginBottom: { xs: '7%', md: '161px' }, marginTop: { xs: '7%', md: '180px' } }}>
       {slice.primary.aboutustitle && slice.primary.aboutustitle[0] && (
@@ -89,5 +89,3 @@ const AboutUsBlock: React.FC<Props> = ({ slice }) => {
     </Box>
   );
 };
-
-export default AboutUsBlock;

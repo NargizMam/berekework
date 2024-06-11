@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     whatsapp: String,
     telegram: String,
   }
-});
+},{ timestamps: true },);
 
 userSchema.methods.checkPassword = function (password: string) {
   return bcrypt.compare(password, this.password);

@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
-import { Router } from 'express';
+import {Router} from 'express';
 import User from '../models/users/userModel';
-import { imagesUpload, documentsUpload } from '../multer';
+import {imagesUpload} from '../multer';
 import Employer from '../models/employer/employerModel';
 import config from '../config';
-import { OAuth2Client } from 'google-auth-library';
+import {OAuth2Client} from 'google-auth-library';
 import permit from '../middleware/permit';
-import auth, { RequestWithUser } from '../middleware/auth';
+import auth, {RequestWithUser} from '../middleware/auth';
 
 const client = new OAuth2Client(config.google.clientId);
 
@@ -23,7 +23,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
       });
       user.generateToken();
       await user.save();
-      return res.send({ message: 'Admin was created!' });
+      return res.send({ message: 'Администратор успешно создан!', user });
     } else {
       const user = new User({
         email: req.body.email,
@@ -34,7 +34,7 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
       });
       user.generateToken();
       await user.save();
-      return res.send({ message: 'Registered!', user });
+      return res.send({ message: 'Регистрация прошла успешно!', user });
     }
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
@@ -55,7 +55,7 @@ userRouter.post('/google', async (req, res, next) => {
     const payload = ticket.getPayload();
 
     if (!payload) {
-      return res.status(400).send({ error: 'Google login error!' });
+      return res.status(400).send({ error: 'Ошибка Google логина!' });
     }
 
     const email = payload['email'];
@@ -65,7 +65,7 @@ userRouter.post('/google', async (req, res, next) => {
     const image = payload['picture'];
 
     if (!email) {
-      return res.status(400).send({ error: 'Not enough user data to continue' });
+      return res.status(400).send({ error: 'Недостаточно данных пользователя для продолжения' });
     }
 
     let user = await User.findOne({ googleID: id });
@@ -82,7 +82,7 @@ userRouter.post('/google', async (req, res, next) => {
     user.generateToken();
 
     await user.save();
-    return res.send({ message: 'Login with Google successful!', user });
+    return res.send({ message: 'Вход через Google выполнен успешно!', user });
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(e);
@@ -100,19 +100,19 @@ userRouter.post('/sessions', async (req, res, next) => {
     }
 
     if (!user) {
-      return res.status(422).send({ error: 'Email and password not correct!' });
+      return res.status(422).send({ error: 'Электронная почта и пароль не верны!' });
     }
 
     const isMatch = await user.checkPassword(req.body.password);
 
     if (!isMatch) {
-      return res.status(422).send({ error: 'Email and password not correct!' });
+      return res.status(422).send({ error: 'Электронная почта и пароль не верны!' });
     }
 
     user.generateToken();
     await user.save();
 
-    return res.send({ message: 'Email and password are correct!', user });
+    return res.send({ message: 'Вход выполнен успешно', user });
   } catch (error) {
     return next(error);
   }
@@ -122,6 +122,7 @@ userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req:
   try {
     if (req.query.filter === 'moderator') {
       const moderators = await User.find({ role: 'admin' });
+      console.log(moderators)
       return res.send(moderators);
     }
     if (req.query.filter) {
@@ -144,7 +145,7 @@ userRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).send({ message: 'User not found!' });
+      return res.status(404).send({ message: 'Пользователь не найден' });
     }
 
     return res.send(user);
@@ -275,7 +276,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
         );
         return res.send(updated);
       } else {
-        return res.status(404).send({ message: 'User not found!' });
+        return res.status(404).send({ message: 'Пользователь не найден' });
       }
     } catch (e) {
       if (e instanceof mongoose.Error.ValidationError) {
@@ -290,9 +291,9 @@ userRouter.delete('/:id', async (req, res, next) => {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
-        return res.send({ text: 'not found!' });
+        return res.send({ text: 'Пользователь не найден!' });
       }
-      return res.send({ text: 'User deleted' });
+      return res.send({ text: 'Администратор успешно удален!' });
     } catch (e) {
       return next(e);
     }

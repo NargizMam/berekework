@@ -29,11 +29,11 @@ export const UserPanelPage = () => {
         <TableHead>
           <TableRow>
             <TableCell>Email</TableCell>
-            <TableCell>Prof</TableCell>
-            <TableCell>Phone</TableCell>
-            <TableCell>City</TableCell>
-            <TableCell>Country</TableCell>
-            <TableCell align="right">Role</TableCell>
+            <TableCell>Профессия</TableCell>
+            <TableCell>Номер</TableCell>
+            <TableCell>Город</TableCell>
+            <TableCell>Страна</TableCell>
+            <TableCell align="right">Роль</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -57,7 +57,7 @@ export const UserPanelPage = () => {
               <TableCell align="right">{user.role}</TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleDeleteUser(user._id)} variant="contained">
-                  Delete
+                  Удалить
                 </Button>
               </TableCell>
             </TableRow>
