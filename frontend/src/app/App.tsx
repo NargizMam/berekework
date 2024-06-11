@@ -24,9 +24,9 @@ import { VacancyDetailPage } from '../pages/VacancyDetailPage';
 import Permit from '../shared/permit/Permit';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import NotFound from '../widgets/NotFound/NotFound';
-import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import AdminLayout from './layouts/adminLayout/AdminLayout';
 import ClientLayout from './layouts/clientLayout/ClientLayout';
+import WarningMessage from '../widgets/WarningMessage/WarningMessages';
 import { useAppSelector } from './store/hooks';
 
 const App = () => {
@@ -127,5 +127,5 @@ const App = () => {
 		</>
 	);
 	
- };
+};
 export default App;
