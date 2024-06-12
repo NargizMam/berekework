@@ -49,7 +49,7 @@ export const VideoBlock: React.FC<Props> = ({ slice }) => {
     <Box sx={MediaBlockStyle.container}>
       <Box sx={MediaBlockStyle.row}>
         {slice.primary.title.map((title, index) => (
-          <Typography key={index} variant="h4" sx={MediaBlockStyle.title}>
+          <Typography id='video' key={index} variant="h4" sx={MediaBlockStyle.title}>
             {title.text}
           </Typography>
         ))}

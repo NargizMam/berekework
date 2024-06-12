@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation, useRoutes } from 'react-router-dom';
 import EmployeeProfile from '../client/widgets/EmployeeProfile/EmployeeProfile';
 import NotFound from '../widgets/NotFound/NotFound';
+import ScrollToAnchor from '../widgets/ScrollToAnchor/ScrollToAnchor';
 import AdminLayout from './layouts/adminLayout/AdminLayout';
 import { HomePage } from '../client/page/HomePage';
 import { AdminMainPage } from '../admin/page/adminMainPage';
@@ -31,110 +32,111 @@ import Permit from '../shared/permit/Permit';
 import { CreateVacancyForm } from '../client/widgets/createVacancyForm';
 
 const App = () => {
-  const user = useAppSelector(selectUser);
-  const employer = useAppSelector(selectEmployer);
-  const location = useLocation();
-
-  const AdminRoutes = () => (
-    <AdminLayout>
-      <Container>
-        <Routes>
-          <Route path="/" element={<AdminMainPage />} />
-          <Route
-            path="/moderators"
-            element={
-              <ProtectedRoute isAllowed={user?.role === 'superadmin'}>
-                <ModeratorsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/employers" element={<EmployerPanelPage />} />
-          <Route path="/employers-submit" element={<EmployerFormPage />} />
-          <Route path="/vacancy" element={<VacancyPage />} />
-          <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
-          <Route path="/users" element={<UserPanelPage />} />
-        </Routes>
-      </Container>
-    </AdminLayout>
-  );
-
-  const adminRoutes = useRoutes([
-    {
-      path: '/admin/*',
-      element: (
-        <ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'}>
-          <AdminRoutes />
-        </ProtectedRoute>
-      ),
-    },
-  ]);
-
-  return (
-    <>
-      <SuccessMessage />
-      <ErrorMessage />
-      <ToastContainer />
-      {location.pathname.startsWith('/admin') ? (
-        adminRoutes
-      ) : (
-        <ClientLayout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/vacancy" element={<VacancyPageClient />} />
-            <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
-            <Route path="/vacancy/edit/:id" element={<CreateVacancyForm />} />
-            <Route path="/vacancy/edit/" element={<CreateVacancyForm />} />
-            <Route path="/about-us" element={<AboutUsPage />} />
-            <Route
-              path="/employersProfile/:id"
-              element={
-                <Permit employerOnly>
-                  <EmployerProfile />
-                </Permit>
-              }
-            />
-            <Route
-              path="/edit-employer/:id"
-              element={
-                <Permit employerOnly>
-                  <EmployerEditPage />
-                </Permit>
-              }
-            />
-            <Route
-              path="/potential-employees"
-              element={
-                <Permit employerOnly>
-                  <PotentialEmployeesPage />
-                </Permit>
-              }
-            />
-            <Route
-              path="/userProfile"
-              element={
-                <Permit>
-                  <UserProfilePage />
-                </Permit>
-              }
-            />
-            <Route path="/userProfile-submit" element={<UserProfileFormPage />} />
-            <Route
-              path="/for-employer"
-              element={
-                <ProtectedRoute isAllowed={(user && user.role !== 'user') || !!employer}>
-                  <ForEmployerPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/news/:uid" element={<NewsPage />} />
-            <Route path="/user/:id" element={<EmployeeProfile />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </ClientLayout>
-      )}
-    </>
-  );
+	const user = useAppSelector(selectUser);
+	const employer = useAppSelector(selectEmployer);
+	const location = useLocation();
+	
+	const AdminRoutes = () => (
+		<AdminLayout>
+			<Container>
+				<Routes>
+					<Route path='/' element={<AdminMainPage />} />
+					<Route
+						path='/moderators'
+						element={
+							<ProtectedRoute isAllowed={user?.role === 'superadmin'}>
+								<ModeratorsPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route path='/employers' element={<EmployerPanelPage />} />
+					<Route path='/employers-submit' element={<EmployerFormPage />} />
+					<Route path='/vacancy' element={<VacancyPage />} />
+					<Route path='/vacancy/:id' element={<VacancyDetailPage />} />
+					<Route path='/users' element={<UserPanelPage />} />
+				</Routes>
+			</Container>
+		</AdminLayout>
+	);
+	
+	const adminRoutes = useRoutes([
+		{
+			path: '/admin/*',
+			element: (
+				<ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'}>
+					<AdminRoutes />
+				</ProtectedRoute>
+			)
+		}
+	]);
+	
+	return (
+		<>
+			<SuccessMessage />
+			<ErrorMessage />
+			<ToastContainer />
+			<ScrollToAnchor />
+			{location.pathname.startsWith('/admin') ? (
+				adminRoutes
+			) : (
+				<ClientLayout>
+					<Routes>
+						<Route path='/' element={<HomePage />} />
+						<Route path='/register' element={<RegisterPage />} />
+						<Route path='/login' element={<LoginPage />} />
+						<Route path='/vacancy' element={<VacancyPageClient />} />
+						<Route path='/vacancy/:id' element={<VacancyDetailPage />} />
+						<Route path='/vacancy/edit/:id' element={<CreateVacancyForm />} />
+						<Route path='/vacancy/edit/' element={<CreateVacancyForm />} />
+						<Route path='/about-us' element={<AboutUsPage />} />
+						<Route
+							path='/employersProfile/:id'
+							element={
+								<Permit employerOnly>
+									<EmployerProfile />
+								</Permit>
+							}
+						/>
+						<Route
+							path='/edit-employer/:id'
+							element={
+								<Permit employerOnly>
+									<EmployerEditPage />
+								</Permit>
+							}
+						/>
+						<Route
+							path='/potential-employees'
+							element={
+								<Permit employerOnly>
+									<PotentialEmployeesPage />
+								</Permit>
+							}
+						/>
+						<Route
+							path='/userProfile'
+							element={
+								<Permit>
+									<UserProfilePage />
+								</Permit>
+							}
+						/>
+						<Route path='/userProfile-submit' element={<UserProfileFormPage />} />
+						<Route
+							path='/for-employer'
+							element={
+								<ProtectedRoute isAllowed={(user && user.role !== 'user') || !!employer}>
+									<ForEmployerPage />
+								</ProtectedRoute>
+							}
+						/>
+						<Route path='/news/:uid' element={<NewsPage />} />
+						<Route path='/user/:id' element={<EmployeeProfile />} />
+						<Route path='*' element={<NotFound />} />
+					</Routes>
+				</ClientLayout>
+			)}
+		</>
+	);
 };
 export default App;
