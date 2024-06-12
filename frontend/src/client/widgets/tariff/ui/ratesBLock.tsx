@@ -57,7 +57,7 @@ export const RatesBLock: React.FC<Props> = ({ slice }) => {
   return (
     <>
       <div className="titlePart">
-        <h2 className="rateBlockTitle">Тарифы</h2>
+        <h2 id='tariff' className="rateBlockTitle">Тарифы</h2>
         <div className="titleButtons">
           <button className="titleButton" onClick={handleBack} disabled={!hasPreviousCards}>
             <NavigateBeforeIcon sx={{ fontSize: 24 }} />

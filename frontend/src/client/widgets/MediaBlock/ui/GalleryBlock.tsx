@@ -22,6 +22,8 @@ export interface MediaBlockApiData {
 
 interface Props {
   slice: MediaBlockApiData;
+  style?: React.CSSProperties;
+  className: string;
 }
 
 export const GalleryBlock: React.FC<Props> = ({ slice }) => {

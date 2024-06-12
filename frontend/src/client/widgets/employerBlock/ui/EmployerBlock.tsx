@@ -29,7 +29,7 @@ export const EmployerBlock: React.FC<Props> = ({ slice }) => {
 
   return (
     <>
-      <div>
+      <div id='our-staff'>
         <Typography variant="h3" sx={{ mb: 5, fontWeight: 'bold' }}>
           {slice?.primary.empltitle[0].text}
         </Typography>
