@@ -43,7 +43,7 @@ export const LastNewsBlock = () => {
     <>
       <Box sx={LastNewsBlockStyle.block} style={{ marginTop: '30px' }}>
         <Box sx={LastNewsBlockStyle.row}>
-          <Typography variant="h2" sx={LastNewsBlockStyle.title}>
+          <Typography id='news' variant="h2" sx={LastNewsBlockStyle.title}>
             Последние новости
           </Typography>
           <div className="lastNewsButtons">
