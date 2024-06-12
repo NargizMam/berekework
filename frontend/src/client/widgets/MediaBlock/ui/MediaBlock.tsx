@@ -49,11 +49,9 @@ export const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
   const sources = slice.items
     .map((item) => (isVideoBlock ? item.video?.url : item.image?.url))
     .filter((url): url is string => Boolean(url));
-
-  console.log(slice.items);
-
+	
   return (
-    <Box sx={{ ...MediaBlockStyle.container, ...style }}>
+    <Box id='gallery' sx={{ ...MediaBlockStyle.container, ...style }}>
       <Box sx={MediaBlockStyle.row}>
         {slice.primary.title.map((title, index) => (
           <Typography key={index} variant="h4" sx={MediaBlockStyle.title}>
@@ -71,7 +69,7 @@ export const MediaBlock: React.FC<Props> = ({ slice, style, className }) => {
           </Box>
         )}
       </Box>
-      <Box sx={MediaBlockStyle.cards}>
+      <Box id='video' sx={MediaBlockStyle.cards}>
         {slice.items.length === 1 ? (
           <MediaCard
             index={0}

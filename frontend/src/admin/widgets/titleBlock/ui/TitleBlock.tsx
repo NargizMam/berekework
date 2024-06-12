@@ -46,7 +46,7 @@ export const TitleBlock: React.FC<Props> = ({ slice }) => {
 
   return (
     <>
-      <Box sx={TitleBlockStyle.block}>
+      <Box id='our-company' sx={TitleBlockStyle.block}>
         <Box sx={slice.primary.titleimage?.url ? TitleBlockStyle.infoBlock : {}}>
           <Typography
             variant="h1"
