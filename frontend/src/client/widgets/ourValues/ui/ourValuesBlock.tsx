@@ -33,7 +33,7 @@ export const OurValuesBlock: React.FC<Props> = ({ slice }) => {
 
   return (
     <Box sx={OurValuesBlockStyle}>
-      <Typography variant="h4" sx={OurValuesBlockStyle.ourValuesBlockTitle}>
+      <Typography id='our-values' variant="h4" sx={OurValuesBlockStyle.ourValuesBlockTitle}>
         {slice.primary.valuestitle[0].text}
       </Typography>
       <Box sx={OurValuesBlockStyle.ourValuesCardBlock}>
@@ -65,7 +65,7 @@ export const OurValuesBlock: React.FC<Props> = ({ slice }) => {
           >
             {slice.items.map((item, index) => (
               <SwiperSlide key={index} style={OurValuesBlockStyle.OurValuesSwiperSlide}>
-                <Box sx={OurValuesBlockStyle.ourValuesCard}>
+                <Box id='our-advantages' sx={OurValuesBlockStyle.ourValuesCard}>
                   <Box sx={OurValuesBlockStyle.ourValuesImgFrame}>
                     <img src={item.icon.url} alt={item.icon.alt} />
                   </Box>

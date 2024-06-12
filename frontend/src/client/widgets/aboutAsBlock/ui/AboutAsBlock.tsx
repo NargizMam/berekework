@@ -31,6 +31,7 @@ export const AboutUsBlock: React.FC<Props> = ({ slice }) => {
       {slice.primary.aboutustitle && slice.primary.aboutustitle[0] && (
         <Typography
           variant="h4"
+          id='about-us'
           sx={{
             fontSize: { xs: '1.5rem', sm: '2rem', md: '2.875rem' },
             fontWeight: 700,
