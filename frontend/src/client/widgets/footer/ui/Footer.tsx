@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const [document] = useSinglePrismicDocument('footer');
-
+	
   if (!document) {
     return null;
   }
