@@ -40,8 +40,8 @@ export const EmployerBlock: React.FC<Props> = ({ slice }) => {
           flexWrap: currentWrap ? 'wrap' : 'nowrap',
         }}
       >
-        {slice.items.slice(0, currentRow).map((empl) => (
-          <EmployerCard key={empl.id} data={empl} />
+        {slice.items.slice(0, currentRow).map((employer, index) => (
+          <EmployerCard key={index} data={employer} />
         ))}
       </div>
       {slice.items.length > currentRow && (

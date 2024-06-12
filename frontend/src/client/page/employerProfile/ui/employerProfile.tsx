@@ -6,7 +6,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
+  Grid, Link,
   Tab,
   Tabs,
   Typography,
@@ -20,7 +20,7 @@ import {
   selectEmployersProfileInfo,
 } from '../../../../admin/page/employerPanel/model/employerSlice';
 import './employerProfile.css';
-import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
+// import { CreateVacancyForm } from '../../../widgets/createVacancyForm';
 import { getEmployersProfileInfo } from '../../../../admin/page/employerPanel/api/employerThunk';
 import { MyPotentialEmployeeTable, NewPotentialEmployeeTable } from '../../../widgets/PotentialEmployeeTable';
 import { VacancyTable } from '../../../widgets/VacancyTable';
@@ -29,6 +29,7 @@ import { selectApplicationForEmployees } from '../../../../feachers/aplication/a
 import { ApplicationResponse } from '../../../../feachers/aplication/types';
 import { selectVacancyDeleteLoading } from '../../../../feachers/vacancy/vacancySlice';
 import { deleteVacancy } from '../../../../feachers/vacancy/vacancyThunk';
+import { API_URL } from '../../../../app/constants/links';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -60,7 +61,7 @@ const a11yProps = (index: number) => ({
 const EmployerProfile: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [openVacancyForm, setOpenVacancyForm] = useState(false);
+  // const [openVacancyForm, setOpenVacancyForm] = useState(false);
   const profile = useAppSelector(selectEmployersProfileInfo);
   const loading = useAppSelector(selectEmployerLoading);
 
@@ -156,9 +157,9 @@ const EmployerProfile: React.FC = () => {
           <p className="companyInfo">
             <strong>Контакты:</strong> {profile.contacts}
           </p>
-          <a className="companyLink" href={profile.document || '#'} download>
+          <Link target="_blank" className="companyLink" href={API_URL + '/' + profile.documents}>
             Скачать документы
-          </a>
+          </Link>
           <Box sx={{ display: 'flex', mt: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
             <Button variant="outlined" onClick={() => navigate(`/edit-employer/${profile?._id}`)}>
               Редактировать профиль
@@ -167,7 +168,7 @@ const EmployerProfile: React.FC = () => {
               <Button
                 variant="outlined"
                 sx={{ marginLeft: { xs: 0, sm: 1 }, mt: { xs: 1, sm: 0 } }}
-                onClick={() => setOpenVacancyForm((prevState) => !prevState)}
+                onClick={() => navigate('/vacancy/edit')}
               >
                 Создать вакансию
               </Button>
@@ -213,12 +214,12 @@ const EmployerProfile: React.FC = () => {
         </CustomTabPanel>
       </Box>
 
-      {openVacancyForm && (
-        <>
-          <Typography variant="h4">Создайте свои вакансии</Typography>
-          <CreateVacancyForm setOpenForm={setOpenVacancyForm} employeeId={id} />
-        </>
-      )}
+      {/*{openVacancyForm && (*/}
+      {/*  <>*/}
+      {/*    <Typography variant="h4">Создайте свои вакансии</Typography>*/}
+      {/*    <CreateVacancyForm/>*/}
+      {/*  </>*/}
+      {/*)}*/}
       <Dialog open={Boolean(vacancyId)} onClose={onDeleteCancel}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>Вы действительно хотите удалить эту вакансию ?</DialogContent>

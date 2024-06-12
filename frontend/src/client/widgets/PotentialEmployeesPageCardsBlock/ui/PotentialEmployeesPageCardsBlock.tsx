@@ -28,8 +28,6 @@ export const PotentialEmployeesPageCardsBlock: React.FC<Props> = ({ slice }) => 
     dispatch(getAllUser());
   }, [dispatch]);
 
-  console.log('users', users);
-
   const searchHandle = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(getAllUser(prof));
