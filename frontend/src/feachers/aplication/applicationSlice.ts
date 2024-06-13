@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCandidateByEmployer, getCandidates, getReplyByUser } from './aplicationThunk';
+import { deleteReply, getCandidateByEmployer, getCandidates, getReplyByUser } from './aplicationThunk';
 import { RootState } from '../../app/store/store';
 import { Vacancy } from '../../client/widgets/createVacancyForm/model/types';
-import { User } from '../../app/types';
+import { ApplicationByVacancy } from '../../app/types';
 import { ApplicationResponse } from './types';
 
 interface Reply {
@@ -16,21 +16,22 @@ interface Reply {
   vacancy: Vacancy;
 }
 
-interface Candidate {
-  _id: string;
-  createdAt: string;
-  employerStatus: string;
-  updatedAt: string;
-  user: User;
-}
+// interface Candidate {
+//   _id: string;
+//   createdAt: string;
+//   employerStatus: string;
+//   updatedAt: string;
+//   user: User;
+// }
 
 interface ApplicationState {
   replies: Reply[];
-  candidates: Candidate[];
+  candidates: ApplicationByVacancy[];
   candidatesLoading: boolean;
   repliesLoading: boolean;
   applicationForEmployees: ApplicationResponse[];
   applicationForEmployeesLoading: boolean;
+  applicationDeleteLoading: boolean;
 }
 
 const initialState: ApplicationState = {
@@ -40,6 +41,7 @@ const initialState: ApplicationState = {
   repliesLoading: false,
   applicationForEmployees: [],
   applicationForEmployeesLoading: false,
+  applicationDeleteLoading: false,
 };
 
 const applicationSlice = createSlice({
@@ -79,6 +81,15 @@ const applicationSlice = createSlice({
       .addCase(getCandidates.rejected, (state) => {
         state.applicationForEmployeesLoading = false;
       });
+    builder.addCase(deleteReply.pending, (state) => {
+      state.applicationDeleteLoading = true;
+    });
+    builder.addCase(deleteReply.fulfilled, (state) => {
+      state.applicationDeleteLoading = false;
+    });
+    builder.addCase(deleteReply.rejected, (state) => {
+      state.applicationDeleteLoading = false;
+    });
   },
 });
 
@@ -90,3 +101,4 @@ export const selectCandidatesLoading = (state: RootState) => state.application.c
 export const selectApplicationForEmployees = (state: RootState) => state.application.applicationForEmployees;
 export const selectApplicationForEmployeesLoading = (state: RootState) =>
   state.application.applicationForEmployeesLoading;
+export const selectApplicationDeleteLoading = (state: RootState) => state.application.applicationDeleteLoading;
