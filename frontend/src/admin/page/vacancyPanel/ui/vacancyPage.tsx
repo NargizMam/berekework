@@ -1,6 +1,17 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { Button, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Button,
+  ListItemButton,
+  Paper,
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Loader } from '../../../../shared/loader';
 import { selectVacancies, selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';
@@ -51,7 +62,9 @@ export const VacancyPage = () => {
           {vacancies.map((vacancy) => (
             <TableRow key={vacancy._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {vacancy.vacancyTitle}
+                <ListItemButton  component={Link} to={`/admin/applications/${vacancy._id}`}>
+                  {vacancy.vacancyTitle}
+                </ListItemButton>
               </TableCell>
               <TableCell component="th" scope="row">
                 {vacancy.employmentType}
