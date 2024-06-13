@@ -51,7 +51,6 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
   },
   documents: {
     type: String,
-    required: true,
   },
   foundationYear: {
     type: String,

@@ -6,15 +6,18 @@ import { unsetEmployer, unsetUser } from '../model/AuthSlice';
 import { RootState } from '../../../../app/store/store';
 import { ValidationError } from '../../../../types';
 import { EmployerMutation } from '../../../../admin/page/employerPanel/model/types';
+import { openErrorMessage, openSuccessMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 
 export const register = createAsyncThunk<AuthResponse, RegisterMutation, { rejectValue: ValidationError }>(
   'auth/register',
-  async (registerMutation, { rejectWithValue }) => {
+  async (registerMutation, { rejectWithValue, dispatch}) => {
     try {
       const response = await axiosApi.post('/user', registerMutation);
+      dispatch(openSuccessMessage(response.data.message));
       return response.data;
     } catch (error) {
       if (isAxiosError(error) && error.response && error.response.status === 422) {
+        dispatch(openErrorMessage(error.response.data.message));
         return rejectWithValue(error.response.data as ValidationError);
       }
       throw error;
@@ -26,7 +29,7 @@ class EmployerRegisterMutation {}
 
 export const registerEmployer = createAsyncThunk<AuthResponse, EmployerMutation, { rejectValue: ValidationError }>(
   'employer/registerEmployer',
-  async (employerData: EmployerRegisterMutation, { rejectWithValue }) => {
+  async (employerData: EmployerRegisterMutation, { rejectWithValue, dispatch }) => {
     try {
       const formData = new FormData();
       Object.keys(employerData).forEach((key) => {
@@ -37,9 +40,11 @@ export const registerEmployer = createAsyncThunk<AuthResponse, EmployerMutation,
           'Content-Type': 'multipart/form-data',
         },
       });
+      dispatch(openSuccessMessage(response.data.message));
       return response.data;
     } catch (error) {
       if (isAxiosError(error) && error.response && error.response.status === 422) {
+        dispatch(openErrorMessage(error.response.data.message));
         return rejectWithValue(error.response.data as ValidationError);
       }
       throw error;
@@ -48,12 +53,14 @@ export const registerEmployer = createAsyncThunk<AuthResponse, EmployerMutation,
 );
 export const googleAuth = createAsyncThunk<AuthResponse, string, { rejectValue: GlobalError }>(
   'auth/googleAuth',
-  async (credential, { rejectWithValue }) => {
+  async (credential, { rejectWithValue , dispatch}) => {
     try {
       const response = await axiosApi.post('/user/google', { credential });
+      dispatch(openSuccessMessage(response.data.message));
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 422) {
+        dispatch(openErrorMessage(e.response.data.message));
         return rejectWithValue(e.response.data);
       }
       throw e;
@@ -63,12 +70,15 @@ export const googleAuth = createAsyncThunk<AuthResponse, string, { rejectValue: 
 
 export const login = createAsyncThunk<AuthResponse, LoginMutation, { rejectValue: GlobalError }>(
   'users/login',
-  async (loginMutation, { rejectWithValue }) => {
+  async (loginMutation, { rejectWithValue, dispatch }) => {
     try {
       const response = await axiosApi.post<AuthResponse>('/user/sessions', loginMutation);
+      dispatch(openSuccessMessage(response.data.message));
       return response.data;
     } catch (error) {
       if (isAxiosError(error) && error.response && error.response.status === 422) {
+        dispatch(openErrorMessage(error.response.data.message));
+
         return rejectWithValue(error.response.data);
       }
 
