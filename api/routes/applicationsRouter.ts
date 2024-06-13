@@ -41,11 +41,17 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
 
     // Проверка на существование заявки, чтобы избежать дублирования
     const existingApplication = await Application.findOne({ vacancy: vacancyId, user: user._id });
-    if (existingApplication) {
+    if (existingApplication && existingApplication.userStatus !== 'Отклонен') {
       return res.status(400).json({ error: 'Отклик уже существует между вами и кандидатом' });
     }
 
     // Создание новой заявки
+    const statusHistoryEntry = {
+      status: createdBy === 'employer' ? 'Ожидание ответа' : 'Новая вакансия',
+      changedBy: createdBy,
+      changedAt: new Date(),
+    };
+
     let newApplication;
     if (req.employer) {
       newApplication = new Application({
@@ -54,12 +60,14 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
         employerStatus: 'Ожидание ответа',
         userStatus: 'Новая вакансия',
         createdBy,
+        statusHistory: [statusHistoryEntry],
       });
     } else {
       newApplication = new Application({
         vacancy: vacancyId,
         user: user._id,
         createdBy,
+        statusHistory: [statusHistoryEntry],
       });
     }
 
@@ -93,9 +101,12 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
       return res.status(404).send({ error: 'Application not found' });
     }
 
+    let updatedBy, newStatus;
+
     // Если запрос исходит от пользователя
     if (req.user) {
-      if (!validStatuses.includes(req.body.userStatus)) {
+      newStatus = req.body.userStatus;
+      if (!validStatuses.includes(newStatus)) {
         return res.status(400).json({ error: 'Invalid status' });
       }
 
@@ -103,18 +114,20 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
         return res.status(403).send({ error: 'Not authorized' });
       }
 
-      application.userStatus = req.body.userStatus;
-      application.employerStatus = req.body.userStatus; // Синхронизация статуса работодателя с пользовательским статусом
+      application.userStatus = newStatus;
+      application.employerStatus = newStatus; // Синхронизация статуса работодателя с пользовательским статусом
+      updatedBy = 'user';
 
-      const result = await application.save();
-      if (!result) {
-        return res.status(404).send({ message: 'Application not found' });
-      }
+      // const result = await application.save();
+      // if (!result) {
+      //   return res.status(404).send({ message: 'Application not found' });
+      // }
 
-      return res.send({ message: 'Status updated', application: result });
+      // return res.send({ message: 'Status updated', application: result });
     } else if (req.employer) {
       // Если запрос исходит от работодателя
-      if (!validStatuses.includes(req.body.employerStatus)) {
+      newStatus = req.body.employerStatus;
+      if (!validStatuses.includes(newStatus)) {
         return res.status(400).json({ error: 'Invalid status' });
       }
 
@@ -129,18 +142,35 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
         return res.status(403).send({ error: 'Not authorized' });
       }
 
-      application.employerStatus = req.body.employerStatus;
-      application.userStatus = req.body.employerStatus; // Синхронизация статуса соискателя с работодателем
+      application.employerStatus = newStatus;
+      application.userStatus = newStatus; // Синхронизация статуса соискателя с работодателем
+      updatedBy = 'employer';
 
-      const result = await application.save();
-      if (!result) {
-        return res.status(404).send({ message: 'Application not found' });
-      }
-
-      return res.send({ message: 'Status updated', application: result });
+      // const result = await application.save();
+      // if (!result) {
+      //   return res.status(404).send({ message: 'Application not found' });
+      // }
+      //
+      // return res.send({ message: 'Status updated', application: result });
     } else {
       return res.status(403).send({ error: 'Not authorized' });
     }
+
+    // Создание записи в статус истории и добавление её в массив статус истории
+    const statusHistoryEntry = {
+      status: newStatus,
+      changedBy: updatedBy,
+      changedAt: new Date(),
+    };
+
+    application.statusHistory.push(statusHistoryEntry);
+
+    const result = await application.save();
+    if (!result) {
+      return res.status(404).send({ message: 'Application not found' });
+    }
+
+    return res.send({ message: 'Status updated', application: result });
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(e);
@@ -283,21 +313,37 @@ applicationsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) 
     application.userStatus = 'Отклонен'; // Обновление статуса соискателя на "Отклонен"
     application.employerStatus = 'Отклонен'; // Обновление статуса работодателя на "Отклонен"
 
+    let statusHistoryEntry;
     if (isApplicant) {
       application.isDeletedByUser = true;
       message = 'Application deleted by applicant and both statuses set to "Отклонен"';
+      statusHistoryEntry = {
+        status: 'Отклонен',
+        changedBy: 'user',
+        changedAt: new Date(),
+      };
     } else if (isEmployer) {
       application.isDeletedByEmployer = true;
       message = 'Application deleted by employer and both statuses set to "Отклонен"';
+      statusHistoryEntry = {
+        status: 'Отклонен',
+        changedBy: 'employer',
+        changedAt: new Date(),
+      };
     }
 
-    // Если оба флага установлены, удаляем заявку из базы данных
-    if (application.isDeletedByUser && application.isDeletedByEmployer) {
-      await Application.findByIdAndDelete(_id);
-      return res.send({ message: 'Application permanently deleted as both user and employer marked it deleted' });
+    // // Если оба флага установлены, удаляем заявку из базы данных
+    // if (application.isDeletedByUser && application.isDeletedByEmployer) {
+    //   await Application.findByIdAndDelete(_id);
+    //   return res.send({ message: 'Application permanently deleted as both user and employer marked it deleted' });
+    // }
+
+    // Добавление записи в историю статусов
+    if (statusHistoryEntry) {
+      application.statusHistory.push(statusHistoryEntry);
     }
 
-    // В противном случае сохраняем изменения
+    // Сохраняем изменения
     const result = await application.save();
 
     return res.send({ message, application: result });

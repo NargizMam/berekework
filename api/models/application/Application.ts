@@ -1,6 +1,22 @@
 import { Schema, model, Types } from 'mongoose';
 import Vacancy from '../vacancy/Vacancy';
 
+const statusHistorySchema = new Schema({
+  status: {
+    type: String,
+    required: true,
+  },
+  changedBy: {
+    type: String,
+    enum: ['employer', 'user'],
+    required: true,
+  },
+  changedAt: {
+    type: Date,
+    default: Date.now,
+  },
+}, { _id: false });
+
 const applicationSchema = new Schema(
   {
     vacancy: {
@@ -43,6 +59,7 @@ const applicationSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    statusHistory: [statusHistorySchema],
   },
   { timestamps: true },
 );
