@@ -19,19 +19,33 @@ import {
 
 interface Props {
   toggleCategory: (show: boolean) => void;
+  scrollUp: () => void;
 }
 
-export const VacancyCategory: React.FC<Props> = ({ toggleCategory }) => {
+export const VacancyCategory: React.FC<Props> = ({ toggleCategory, scrollUp }) => {
   const dispatch = useAppDispatch();
   const fetchCategoryLoading = useAppSelector(selectClientVacancyCategoryFetching);
   const categoriesGet = useAppSelector(selectClientVacancyCategory);
 
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: string }>({});
   const [customValues, setCustomValues] = useState<{ [key: string]: string }>({});
+  const [shouldScroll, setShouldScroll] = useState(false);
 
   useEffect(() => {
     dispatch(vacancyFetchCategory());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (shouldScroll) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+
+      console.log('HERE');
+      setShouldScroll(false);
+    }
+  }, [shouldScroll]);
 
   const handleChange = (name: string, value: string) => {
     if (checkedItems[name] === value) {
@@ -66,6 +80,7 @@ export const VacancyCategory: React.FC<Props> = ({ toggleCategory }) => {
 
     await dispatch(vacancyGetByCategory(combined));
     toggleCategory(false);
+    scrollUp();
   };
 
   return (

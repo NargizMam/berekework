@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Grid, Tooltip, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { VacancyCard } from '../../../../feachers/vacancyCard';
 import { VacancyCategory } from '../../../widgets/vacancyCategory';
 import { Tune } from '@mui/icons-material';
@@ -22,6 +22,8 @@ export const VacancyPageClient = () => {
   const vacancies = useAppSelector(selectVacancyToCards);
   const vacanciesFetching = useAppSelector(selectVacancyLoading);
   const [vacancyFilter, setVacancyFilter] = useState('');
+
+  const upRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (location) {
@@ -47,8 +49,14 @@ export const VacancyPageClient = () => {
     await dispatch(getAllVacancyToCard(vacancyTitle));
   };
 
+  const scrollUp = () => {
+    upRef.current?.scrollIntoView({
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <Box sx={{ margin: '10px 0 20px' }}>
+    <Box sx={{ margin: '10px 0 20px', position: 'relative' }} id={'up'} ref={upRef}>
       <Box sx={{ display: { xs: 'flex', md: 'block' }, justifyContent: 'space-between' }}>
         <VacancySearch onSearch={handleSearch} isLoading={isLoading} />
         <Tooltip title={'Расширенный поиск'}>
@@ -68,7 +76,7 @@ export const VacancyPageClient = () => {
             width: { sm: showCategory ? '100%' : '300px', md: '400px', lg: '500px' },
           }}
         >
-          <VacancyCategory toggleCategory={setShowCategory} />
+          <VacancyCategory toggleCategory={setShowCategory} scrollUp={scrollUp} />
         </Box>
         <Grid container spacing={2}>
           {vacanciesFetching ? (
