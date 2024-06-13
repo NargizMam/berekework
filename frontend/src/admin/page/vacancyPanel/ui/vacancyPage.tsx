@@ -1,16 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import {
-  Button,
-  Paper,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material';
+import { Button, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Loader } from '../../../../shared/loader';
 import { selectVacancies, selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';
@@ -84,10 +74,9 @@ export const VacancyPage = () => {
                 {dayjs(vacancy.updatedAt).format('DD MMMM YYYY')}
               </TableCell>
               <TableCell align="right">
-                <Button onClick={() => navigate('/vacancy/' + vacancy._id)} variant="contained">
+                <LinkItem to={'/vacancy/' + vacancy._id} target="_blank">
                   Предпросмотр
-                </Button>
-
+                </LinkItem>
               </TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleDeleteVacancy(vacancy._id)} variant="contained">
