@@ -77,8 +77,6 @@ export const login = createAsyncThunk<AuthResponse, LoginMutation, { rejectValue
       return response.data;
     } catch (error) {
       if (isAxiosError(error) && error.response && error.response.status === 422) {
-        dispatch(openErrorMessage(error.response.data.message));
-
         return rejectWithValue(error.response.data);
       }
 
@@ -91,10 +89,12 @@ export const logout = createAsyncThunk<void, undefined, { state: RootState }>(
   'users/logout',
   async (_, { getState, dispatch }) => {
     const token = getState().auth.user?.token || getState().auth.employer?.token;
-    await axiosApi.delete('/user/sessions', { headers: { Authorization: 'Bearer ' + token } });
+      const response = await axiosApi.delete('/user/sessions', { headers: { Authorization: 'Bearer ' + token } });
     if (getState().auth.user?.token) {
+      dispatch(openSuccessMessage(response.data.message));
       dispatch(unsetUser());
     } else {
+      dispatch(openSuccessMessage(response.data.message));
       dispatch(unsetEmployer());
     }
   },

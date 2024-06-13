@@ -299,7 +299,7 @@ userRouter.delete('/:id', async (req, res, next) => {
   } else {
     try {
       const headerValue = req.get('Authorization');
-      const successMessage = { message: 'Success!' };
+      const successMessage = { message: 'Вы вышли из приложения!' };
 
       if (!headerValue) {
         return res.send({ ...successMessage, stage: 'No header' });
@@ -320,7 +320,7 @@ userRouter.delete('/:id', async (req, res, next) => {
       user.generateToken();
       await user.save();
 
-      return res.send({ ...successMessage, stage: 'Success' });
+      return res.send({ ...successMessage, stage: 'Вы вышли из приложения!' });
     } catch (e) {
       return next(e);
     }

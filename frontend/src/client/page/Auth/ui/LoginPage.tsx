@@ -1,12 +1,14 @@
-import { Alert, Box, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { Alert, Box, Container, Grid, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { ChangeEvent, FormEvent, useState } from 'react';
 import { LoginMutation } from '../model/types';
 import { googleAuth, login } from '../api/AuthThunk';
 import { selectLoginError, selectLoginLoading } from '../model/AuthSlice';
 import { LoadingButton } from '@mui/lab';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const initialState = {
   email: '',
@@ -19,13 +21,20 @@ export const LoginPage = () => {
   const error = useAppSelector(selectLoginError);
   const loading = useAppSelector(selectLoginLoading);
   const [state, setState] = useState<LoginMutation>(initialState);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    // Check if both email and password are not empty to enable the button
+    setFormValid(state.email.trim() !== '' && state.password.trim() !== '');
+  }, [state.email, state.password]);
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
-    setState((prevState) => {
-      return { ...prevState, [name]: value };
-    });
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const submitFormHandler = async (event: FormEvent) => {
@@ -34,9 +43,18 @@ export const LoginPage = () => {
     setState(initialState);
     navigate('/');
   };
+
   const googleLoginHandler = async (credential: string) => {
     await dispatch(googleAuth(credential)).unwrap();
     navigate('/');
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
   };
 
   return (
@@ -84,14 +102,23 @@ export const LoginPage = () => {
               fullWidth
               name="password"
               label="Пароль"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               value={state.password}
               onChange={inputChangeHandler}
               autoComplete="current-password"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '30px',
-                },
+              InputProps={{
+                style: { borderRadius: '30px' },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
           </Grid>
@@ -101,7 +128,15 @@ export const LoginPage = () => {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2, backgroundColor: '#FFE585', color: 'black', borderRadius: '30px', p: 1.5 }}
+          sx={{
+            mt: 3,
+            mb: 2,
+            backgroundColor: '#FFE585',
+            color: 'black',
+            borderRadius: '30px',
+            p: 1.5,
+          }}
+          disabled={!formValid} // Disable button if form is not valid
         >
           Войти
         </LoadingButton>
