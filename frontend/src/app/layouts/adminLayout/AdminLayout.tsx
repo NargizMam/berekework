@@ -11,11 +11,12 @@ const AdminLayout: React.FC<PropsWithChildren> = ({ children }) => {
           flexDirection: 'column',
           position: 'relative',
           padding: '20px',
+          border: '1px solid black',
         }}
       >
         <MainNavAdmin />
-        <main>
-          <Container>{children}</Container>
+        <main style={{ border: '1px solid red' }}>
+          <Container sx={{ border: '1px solid black' }}>{children}</Container>
         </main>
       </Container>
     </>

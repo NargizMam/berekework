@@ -1,4 +1,8 @@
 import { CategoryVacancyI } from '../types';
+import HomeIcon from '@mui/icons-material/Home';
+import PeopleIcon from '@mui/icons-material/People';
+import FolderSharedIcon from '@mui/icons-material/FolderShared';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 export const API_URL = 'http://localhost:8000';
 
@@ -54,3 +58,44 @@ export const titleVacancyFilter = {
   education: 'Образование',
   employmentType: 'Тип занятости',
 };
+
+export const dashboardAdminRouters = [
+  {
+    id: 'page_admin_panel',
+    title: 'Админ Панель',
+    tooltip: 'Админ панель',
+    url: '',
+    icon: HomeIcon,
+  },
+  {
+    id: 'page_home111',
+    title: 'Пользователи',
+    tooltip: 'Добавить пользователя',
+    url: 'users',
+    icon: PeopleIcon,
+  },
+  {
+    id: 'page_schedule111',
+    title: 'Вакансии',
+    tooltip: 'Вакансии',
+    url: 'vacancy',
+    icon: FolderSharedIcon,
+  },
+  {
+    id: 'page_work_out_111',
+    title: 'Работодатели',
+    tooltip: 'Добавить работодателя',
+    url: 'employers',
+    icon: PersonAddAltIcon,
+  },
+];
+
+export const dashboardSuperAdminRoutes = [
+  {
+    id: 'page_create_active_333',
+    title: 'Модераторы',
+    tooltip: 'Добавить модератора',
+    url: 'admin/moderators',
+    icon: PersonAddAltIcon,
+  },
+];
