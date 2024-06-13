@@ -84,3 +84,35 @@ export interface User {
   };
   documents?: string[];
 }
+
+export interface StatusHistory {
+  status: string;
+  changedBy: 'employer' | 'user';
+  changedAt: Date;
+}
+
+export interface EmployerCompanyName {
+  _id: string;
+  companyName: string;
+}
+
+export interface ApplicationByVacancy {
+  _id: string;
+  vacancy: {
+    _id: string;
+    vacancyTitle: string;
+    employer: EmployerCompanyName;
+  };
+  user: {
+    _id: string;
+    email: string;
+  };
+  userStatus: string;
+  employerStatus: string;
+  createdBy: 'employer' | 'user';
+  isDeletedByEmployer: boolean;
+  isDeletedByUser: boolean;
+  statusHistory: StatusHistory[];
+  createdAt: Date;
+  updatedAt: Date;
+}
