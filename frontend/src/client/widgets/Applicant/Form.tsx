@@ -32,7 +32,7 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
           </div>
           <Grid item xs>
             <label className="labelForField" htmlFor="patronymic">Отчество</label>
-            <input className="field" id="patronymic" value={state.patronymic} onChange={inputChangeHandler} name="patronymic" required />
+            <input className="field" id="patronymic" value={state.patronymic} onChange={inputChangeHandler} name="patronymic"  />
           </Grid>
           <div className="inputContainer">
             <Grid item xs={7}>

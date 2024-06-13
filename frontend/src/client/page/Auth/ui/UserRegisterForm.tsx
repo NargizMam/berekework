@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { RegisterMutation } from '../model/types';
 import { Box, Grid, TextField, InputAdornment, IconButton } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -20,11 +20,22 @@ const initialState = {
 const UserRegisterForm = () => {
   const [state, setState] = useState<RegisterMutation>(initialState);
   const [showPassword, setShowPassword] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectRegisterError);
   const loading = useAppSelector(selectRegisterLoading);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const { name, surname, email, password } = state;
+    setIsFormValid(
+      name.trim() !== '' &&
+      surname.trim() !== '' &&
+      email.trim() !== '' &&
+      password.trim() !== ''
+    );
+  }, [state]);
 
   const changeFields = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -64,11 +75,13 @@ const UserRegisterForm = () => {
             fullWidth
             label="Имя"
             name="name"
+            type="text"
             value={state.name}
             onChange={changeFields}
             autoComplete="given-name"
             error={Boolean(getFieldError('name'))}
             helperText={getFieldError('name')}
+            required
             InputProps={{
               style: { borderRadius: '30px' },
             }}
@@ -79,11 +92,13 @@ const UserRegisterForm = () => {
             fullWidth
             label="Фамилия"
             name="surname"
+            type="text"
             value={state.surname}
             onChange={changeFields}
             autoComplete="family-name"
             error={Boolean(getFieldError('surname'))}
             helperText={getFieldError('surname')}
+            required
             InputProps={{
               style: { borderRadius: '30px' },
             }}
@@ -94,11 +109,13 @@ const UserRegisterForm = () => {
             fullWidth
             label="Email"
             name="email"
+            type="email"
             value={state.email}
             onChange={changeFields}
             autoComplete="new-email"
             error={Boolean(getFieldError('email'))}
             helperText={getFieldError('email')}
+            required
             InputProps={{
               style: { borderRadius: '30px' },
             }}
@@ -115,6 +132,7 @@ const UserRegisterForm = () => {
             autoComplete="new-password"
             error={Boolean(getFieldError('password'))}
             helperText={getFieldError('password')}
+            required
             InputProps={{
               style: { borderRadius: '30px' },
               endAdornment: (
@@ -138,6 +156,7 @@ const UserRegisterForm = () => {
         fullWidth
         variant="contained"
         sx={{ my: 3, py: 2, backgroundColor: '#FFD700', borderRadius: '30px' }}
+        disabled={!isFormValid}
       >
         Зарегистрироваться
       </LoadingButton>
