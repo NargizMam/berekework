@@ -1,6 +1,5 @@
 .applicantFormContainer {
   width: 350px;
-  padding: 40px 50px;
 }
 
 .labelForField {
@@ -40,7 +39,7 @@ div.inputContainer {
   margin-bottom: 10px;
 }
 
-.field {
+.applicantField {
   font-family: 'Montserrat', sans-serif;
   border: #e9e9e9 solid 2px;
   display: block;
@@ -55,12 +54,7 @@ div.inputContainer {
   margin-bottom: 10px;
 }
 
-select.field {
-  width: 250px;
-  height: 70px;
-}
-
-textarea.field {
+textarea.applicantField {
   height: 360px;
   width: 270px;
 }
@@ -78,8 +72,8 @@ button.sendBtn {
 }
 
 .workExpWrapper {
-  flex-wrap: wrap;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
@@ -89,36 +83,29 @@ button.sendBtn {
     width: 400px;
   }
 
-  .field {
+  .applicantField {
     width: 400px;
   }
 
-  select.field {
-    width: 400px;
-  }
-
-  textarea.field {
+  textarea.applicantField {
     width: 380px;
   }
 }
 
 @media (min-width: 800px) {
   .workExpWrapper {
+    flex-direction: row;
     flex-wrap: nowrap;
   }
   .workExpWrapperField {
     width: 350px;
   }
 
-  .field {
+  .applicantField {
     width: 600px;
   }
 
-  select.field {
-    width: 600px;
-  }
-
-  textarea.field {
+  textarea.applicantField {
     width: 600px;
   }
 
@@ -132,7 +119,7 @@ button.sendBtn {
     background-color: #ffffff;
     border-radius: 30px;
     width: 850px;
-    padding: 40px 50px;
+    padding: 40px;
   }
 }
 
@@ -157,13 +144,13 @@ button.sendBtn {
     margin-right: 10px;
   }
 
-  .field {
+  .applicantField {
     padding-left: 30px;
     width: 380px;
     margin-right: 10px;
   }
 
-  .field:focus {
+  .applicantField:focus {
     outline: none;
     border-color: #0866ff;
   }
@@ -172,7 +159,7 @@ button.sendBtn {
     width: 205px;
   }
 
-  textarea.field {
+  textarea.applicantField {
     width: 770px;
     height: 330px;
   }
@@ -185,12 +172,8 @@ button.sendBtn {
     margin-top: 50px;
   }
 
-  textarea.field {
+  textarea.applicantField {
     padding-top: 20px;
     padding-right: 20px;
-  }
-
-  select.field {
-    width: 380px;
   }
 }

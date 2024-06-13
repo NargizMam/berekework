@@ -1,6 +1,11 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { selectEmployerLoading, selectEmployers } from '../model/employerSlice';
+import {
+  selectEmployerDeleteLoading,
+  selectEmployerLoading,
+  selectEmployers,
+  selectEmployerUpdateLoading,
+} from '../model/employerSlice';
 import { deleteEmployer, getAllEmployer, updateStatusEmployer } from '../api/employerThunk';
 import {
   Box,
@@ -53,6 +58,8 @@ export const EmployerPanelPage = () => {
     email: '',
   });
   const tariffs = document?.data.body.filter((slice: TariffGet) => slice.slice_type === 'tariff')[0].items || [];
+  const updateLoading = useAppSelector(selectEmployerUpdateLoading);
+  const deleteLoading = useAppSelector(selectEmployerDeleteLoading);
 
   useEffect(() => {
     dispatch(getAllEmployer());
@@ -82,6 +89,8 @@ export const EmployerPanelPage = () => {
   if (loading) {
     return <Loader />;
   }
+
+  console.log(employers);
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
@@ -121,7 +130,7 @@ export const EmployerPanelPage = () => {
                   {employer.companyName}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <img src={API_URL + '/' + employer.avatar} alt="Logo" />
+                  <img width={50} height={50} src={API_URL + '/' + employer.avatar} alt="Logo" />
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {employer.foundationYear}
@@ -139,7 +148,9 @@ export const EmployerPanelPage = () => {
                   {employer.contacts}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <Link href={API_URL + '/' + employer.documents}>PDF</Link>
+                  <Link target="_blank" href={API_URL + '/' + employer.documents}>
+                    PDF
+                  </Link>
                 </TableCell>
                 <TableCell>{employer.tariff}</TableCell>
                 <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
@@ -149,8 +160,12 @@ export const EmployerPanelPage = () => {
                   </Button>
                 </TableCell>
                 <TableCell align="right">
-                  <Button onClick={() => handleDeleteEmployer(employer._id)} variant="contained">
-                    Удалить
+                  <Button
+                    disabled={deleteLoading}
+                    onClick={() => handleDeleteEmployer(employer._id)}
+                    variant="contained"
+                  >
+                    {deleteLoading ? 'Loading' : 'Удалить'}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -187,9 +202,11 @@ export const EmployerPanelPage = () => {
           </DialogContent>
           <DialogActions>
             <Button type="button" onClick={handleClose}>
-              Disagree
+              Отклонить
             </Button>
-            <Button type="submit">Agree</Button>
+            <Button type="submit" disabled={updateLoading}>
+              {updateLoading ? 'Loading' : 'Подтвердить'}
+            </Button>
           </DialogActions>
         </form>
       </Dialog>

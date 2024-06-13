@@ -30,7 +30,7 @@ export const EmployerBlock: React.FC<Props> = ({ slice }) => {
   return (
     <>
       <div>
-        <Typography variant="h3" sx={{ mb: 5, fontWeight: 'bold' }}>
+        <Typography id='our-staff' variant="h3" sx={{ mb: 5, fontWeight: 'bold' }}>
           {slice?.primary.empltitle[0].text}
         </Typography>
       </div>
@@ -40,8 +40,8 @@ export const EmployerBlock: React.FC<Props> = ({ slice }) => {
           flexWrap: currentWrap ? 'wrap' : 'nowrap',
         }}
       >
-        {slice.items.slice(0, currentRow).map((empl) => (
-          <EmployerCard key={empl.id} data={empl} />
+        {slice.items.slice(0, currentRow).map((employer, index) => (
+          <EmployerCard key={index} data={employer} />
         ))}
       </div>
       {slice.items.length > currentRow && (

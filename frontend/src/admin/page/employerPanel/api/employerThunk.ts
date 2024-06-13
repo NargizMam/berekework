@@ -26,7 +26,7 @@ export const createEmployer = createAsyncThunk<
       formData.append('document', employer.document);
     }
     if (employer.avatar) {
-      formData.append('logo', employer.avatar);
+      formData.append('avatar', employer.avatar);
     }
     await axiosApi.post('/employer', formData);
   } catch (error) {

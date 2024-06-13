@@ -18,7 +18,7 @@ const warningMessageSlice = createSlice({
   name: 'warningMessage',
   initialState,
   reducers: {
-    openErrorMessage: (state, {payload}) => {
+    openErrorMessage: (state, { payload }) => {
       state.showErrorMessage = true;
       state.errorMessage = payload;
     },
@@ -26,7 +26,7 @@ const warningMessageSlice = createSlice({
       state.showErrorMessage = false;
       state.errorMessage = null;
     },
-    openSuccessMessage: (state, {payload}) => {
+    openSuccessMessage: (state, { payload }) => {
       state.showSuccessMessage = true;
       state.successMessage = payload;
     },
@@ -38,7 +38,8 @@ const warningMessageSlice = createSlice({
 });
 export const warningMessageReducer = warningMessageSlice.reducer;
 
-export const { openErrorMessage, openSuccessMessage, closeSuccessMessage, closeErrorMessage,  } = warningMessageSlice.actions;
+export const { openErrorMessage, openSuccessMessage, closeSuccessMessage, closeErrorMessage } =
+  warningMessageSlice.actions;
 export const selectShowErrorMessage = (state: RootState) => state.warningMessage.showErrorMessage;
 export const selectShowSuccessMessage = (state: RootState) => state.warningMessage.showSuccessMessage;
 export const selectErrorMessage = (state: RootState) => state.warningMessage.errorMessage;

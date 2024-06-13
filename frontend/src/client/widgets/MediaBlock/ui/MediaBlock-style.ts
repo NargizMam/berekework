@@ -50,20 +50,6 @@ const MediaBlockStyle = {
     margin: '0 auto',
     position: 'relative',
   },
-  swiperButton: {
-    display: 'flex',
-    flexShrink: '0',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '50%',
-    backgroundColor: '#D2D2D2',
-    border: '1px solid #D2D2D2',
-    minWidth: '50px',
-    height: '50px',
-    padding: 0,
-    cursor: 'pointer',
-    outline: '#D2D2D2',
-  },
 };
 
 export default MediaBlockStyle;

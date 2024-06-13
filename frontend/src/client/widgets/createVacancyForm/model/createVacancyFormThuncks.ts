@@ -22,7 +22,7 @@ export const updateVacancy = createAsyncThunk<void, VacancyEdtiData, { rejectVal
   'reateVacancyForm/updateVacancy',
   async (vacancyEdtiData, { rejectWithValue }) => {
     try {
-      await axiosApi.put(`/vacancy${vacancyEdtiData.id}`, vacancyEdtiData.vacancy);
+      await axiosApi.put(`/vacancy/${vacancyEdtiData.id}`, vacancyEdtiData.vacancy);
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 422) {
         return rejectWithValue(e.response.data);

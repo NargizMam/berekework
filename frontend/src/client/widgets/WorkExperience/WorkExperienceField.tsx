@@ -19,7 +19,7 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
     duration: duration || '0 лет',
   });
   const [isAdded, setIsAdded] = useState(false);
-
+  console.log(isAdded);
   const fieldChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setState((prevState) => ({
@@ -37,15 +37,6 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
     setIsAdded(true);
   };
 
-  const fieldBlurHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === 'duration' && value && !value.endsWith(' лет')) {
-      setState((prevState) => ({
-        ...prevState,
-        [name]: `${value} лет`,
-      }));
-    }
-  };
   return (
     <div className="workExpWrapper">
       <Grid item xs={6}>
@@ -61,11 +52,10 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
       <Grid item xs={6}>
         <input
           style={{ marginLeft: '8px', width: '205px' }}
-          className="field"
+          className="applicantField"
           id="duration"
           value={state.duration}
           onChange={fieldChangeHandler}
-          onBlur={fieldBlurHandler}
           name="duration"
         />
       </Grid>
