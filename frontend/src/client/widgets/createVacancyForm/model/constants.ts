@@ -7,7 +7,7 @@ export const educationTypes: string[] = [
   'высшее образование - магистратура',
 ];
 
-export const workTypes: string[] = ['Полная', 'Неполная'];
+export const workTypes: string[] = ['Полная', 'Неполная', 'Стажировка'];
 
 export const countries: Country[] = [
   { name: 'Кыргызстан', cities: ['Бишкек', 'Ош', 'Жалал-Абад', 'Каракол', 'Нарын', 'Талас', 'Карабалта'] },
