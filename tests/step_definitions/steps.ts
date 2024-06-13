@@ -7,25 +7,17 @@ Given('I have a defined step', () => {
 Given('я нахожусь на странице {string}', (page: string) => {
   console.log(page);
   I.amOnPage(page);
-  I.wait(20);
+  I.wait(2);
 });
 
-Given('я ввожу {string} в поле {string}', () => {
-  // From "features/auth.feature" {"line":9,"column":5}
-  throw new Error('Not implemented yet');
+Given('я ввожу {string} в поле {string}', (text: string, field: string) => {
+  I.fillField(field, text);
 });
 
-Given('я ввожу {string} в поле {string}', () => {
-  // From "features/auth.feature" {"line":10,"column":5}
-  throw new Error('Not implemented yet');
+Given('я нажимаю на кнопку {string}', (button: string) => {
+  I.click(button);
 });
 
-Given('я нажимаю на кнопку {string}', () => {
-  // From "features/auth.feature" {"line":11,"column":5}
-  throw new Error('Not implemented yet');
-});
-
-Given('я вижу текст {string}', () => {
-  // From "features/auth.feature" {"line":12,"column":5}
-  throw new Error('Not implemented yet');
+Given('я вижу текст {string}', (text: string) => {
+  I.see(text);
 });
