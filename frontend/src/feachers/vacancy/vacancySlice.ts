@@ -3,7 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   deleteVacancy,
   getAllVacancy,
-  getAllVacancyByKgOrAbroad, getAllVacancyToCard,
+  getAllVacancyByKgOrAbroad,
+  getAllVacancyToCard,
   getVacancyById,
   vacancyFetchCategory,
   vacancyGetByCategory,
@@ -53,9 +54,9 @@ const vacancySlice = createSlice({
     });
     builder.addCase(
       getAllVacancyByKgOrAbroad.fulfilled,
-      (state, { payload: vacancies }: PayloadAction<VacancyApiData[]>) => {
+      (state, { payload: vacancies }: PayloadAction<VacancyResponseToCard[]>) => {
         state.vacanciesLoading = false;
-        state.vacancies = vacancies;
+        state.vacanciesToCard = vacancies;
       },
     );
     builder.addCase(getAllVacancyByKgOrAbroad.rejected, (state) => {
@@ -93,22 +94,28 @@ const vacancySlice = createSlice({
       state.vacancyCategoryLoading = false;
     });
 
-    builder.addCase(getAllVacancyToCard.pending, (state) => {
-      state.vacanciesLoading = true;
-    }).addCase(getAllVacancyToCard.fulfilled, (state, {payload}) => {
-      state.vacanciesLoading = false;
-      state.vacanciesToCard = payload;
-    }).addCase(getAllVacancyToCard.rejected, (state) => {
-      state.vacanciesLoading = false;
-    });
+    builder
+      .addCase(getAllVacancyToCard.pending, (state) => {
+        state.vacanciesLoading = true;
+      })
+      .addCase(getAllVacancyToCard.fulfilled, (state, { payload }) => {
+        state.vacanciesLoading = false;
+        state.vacanciesToCard = payload;
+      })
+      .addCase(getAllVacancyToCard.rejected, (state) => {
+        state.vacanciesLoading = false;
+      });
 
-    builder.addCase(deleteVacancy.pending, (state) => {
-      state.vacancyDeleteLoading = true;
-    }).addCase(deleteVacancy.fulfilled, (state) => {
-      state.vacancyDeleteLoading = false;
-    }).addCase(deleteVacancy.rejected, (state) => {
-      state.vacancyDeleteLoading = false;
-    });
+    builder
+      .addCase(deleteVacancy.pending, (state) => {
+        state.vacancyDeleteLoading = true;
+      })
+      .addCase(deleteVacancy.fulfilled, (state) => {
+        state.vacancyDeleteLoading = false;
+      })
+      .addCase(deleteVacancy.rejected, (state) => {
+        state.vacancyDeleteLoading = false;
+      });
   },
 });
 
