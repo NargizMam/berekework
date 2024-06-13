@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.ts",
+    "start": "ts-node index.ts",
     "start:test": "NODE_ENV=test ts-node index.ts",
     "check": "npx prettier . --check",
     "fix": "npx prettier . --write",

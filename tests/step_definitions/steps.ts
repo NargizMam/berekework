@@ -1,9 +1,5 @@
 const { I } = inject();
 
-Given('I have a defined step', () => {
-  // TODO: replace with your own step
-});
-
 Given('я нахожусь на странице {string}', (page: string) => {
   console.log(page);
   I.amOnPage(page);
