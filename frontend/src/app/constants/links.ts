@@ -1,6 +1,6 @@
 import { CategoryVacancyI } from '../types';
 
-export const API_URL = 'http://localhost:8000';
+export const API_URL = import.meta.env[''];
 
 //ADMIN SIDE BAR LINKS
 
