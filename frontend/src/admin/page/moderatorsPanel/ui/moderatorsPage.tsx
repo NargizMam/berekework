@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { deleteModerator, getAllModerators } from '../api/moderatorsThunk';
 import {
+  Box,
   Button,
-  Container,
   Paper,
   Table,
   TableBody,
@@ -29,19 +29,18 @@ export const ModeratorsPage = () => {
   }, [dispatch]);
 
   const onDeleteModerator = async (id: string) => {
-      await dispatch(deleteModerator(id)).unwrap();
-      dispatch(getAllModerators());
-
+    await dispatch(deleteModerator(id)).unwrap();
+    dispatch(getAllModerators());
   };
 
   return (
-    <Container>
+    <Box>
       {loading && <Loader />}
       <Button variant="outlined" onClick={() => setOpenForm(true)}>
         Создать модератора
       </Button>
       {moderators.length === 0 ? (
-        <Typography sx={{ mt: 2}}>Модераторы еще не созданы</Typography>
+        <Typography sx={{ mt: 2 }}>Модераторы еще не созданы</Typography>
       ) : (
         <>
           <TableContainer component={Paper} sx={{ mt: 5 }}>
@@ -63,7 +62,9 @@ export const ModeratorsPage = () => {
                     <TableCell align="left">{new Date(moderator.createdAt).toLocaleString()}</TableCell>
                     <TableCell align="left">{new Date(moderator.updatedAt).toLocaleString()}</TableCell>
                     <TableCell align="left">
-                      <Button onClick={() => onDeleteModerator(moderator._id)}><DeleteForeverIcon /></Button>
+                      <Button onClick={() => onDeleteModerator(moderator._id)}>
+                        <DeleteForeverIcon />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -73,6 +74,6 @@ export const ModeratorsPage = () => {
         </>
       )}
       {openForm && <ModeratorsForm close={() => setOpenForm(false)} />}
-    </Container>
+    </Box>
   );
 };

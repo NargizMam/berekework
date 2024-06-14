@@ -57,7 +57,7 @@ export const CreateVacancyForm = () => {
     workConditions: true,
   });
 
-  // const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+  const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
 
   useEffect(() => {
     if (id) {
@@ -79,35 +79,35 @@ export const CreateVacancyForm = () => {
     }
   }, [editVacancy, employer?._id, id]);
 
-  // useEffect(() => {
-  //   const editData: ICreateVacancyForm = {
-  //     vacancyTitle: editVacancy?.vacancyTitle || '',
-  //     aboutVacancy: editVacancy?.aboutVacancy || '',
-  //     responsibilities: editVacancy?.responsibilities || '',
-  //     workConditions: editVacancy?.workConditions || '',
-  //     country: editVacancy?.country || '',
-  //     city: editVacancy?.city || '',
-  //     fieldOfWork: editVacancy?.fieldOfWork || '',
-  //     minAge: editVacancy?.age.minAge.toString() || '',
-  //     maxAge: editVacancy?.age.maxAge.toString() || '',
-  //     minSalary: editVacancy?.salary.minSalary.toString() || '',
-  //     maxSalary: editVacancy?.salary.maxSalary.toString() || '',
-  //     education: editVacancy?.education,
-  //     employmentType: editVacancy?.employmentType || '',
-  //     employer: '',
-  //   };
-  //   if (editVacancy) {
-  //     setState(editData);
-  //   }
-  // }, [editVacancy, dispatch]);
+  useEffect(() => {
+    const editData: ICreateVacancyForm = {
+      vacancyTitle: editVacancy?.vacancyTitle || '',
+      aboutVacancy: editVacancy?.aboutVacancy || '',
+      responsibilities: editVacancy?.responsibilities || '',
+      workConditions: editVacancy?.workConditions || '',
+      country: editVacancy?.country || '',
+      city: editVacancy?.city || '',
+      fieldOfWork: editVacancy?.fieldOfWork || '',
+      minAge: editVacancy?.age.minAge.toString() || '',
+      maxAge: editVacancy?.age.maxAge.toString() || '',
+      minSalary: editVacancy?.salary.minSalary.toString() || '',
+      maxSalary: editVacancy?.salary.maxSalary.toString() || '',
+      education: editVacancy?.education,
+      employmentType: editVacancy?.employmentType || '',
+      employer: '',
+    };
+    if (editVacancy) {
+      setState(editData);
+    }
+  }, [editVacancy, dispatch]);
 
-  // useEffect(() => {
-  //   if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
-  //     setIsDisabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
-  //   } else {
-  //     setIsDisabled(true);
-  //   }
-  // }, [isFull]);
+  useEffect(() => {
+    if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
+      setIsDisabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [isFull]);
 
   const inputChangeHandler = (
     e:
@@ -238,66 +238,68 @@ export const CreateVacancyForm = () => {
               required
               changeFlag={changeFlag}
             />
-            <div>
-              <label className="labelForField" htmlFor="country">
-                <Typography sx={CreateVacancyFormStyle.lable}>Страна</Typography>
-              </label>
-              <span className="selectWrapper">
-                <select
-                  className="field"
-                  id="country"
-                  name="country"
-                  onChange={inputChangeHandler}
-                  value={state.country}
-                  required
-                >
-                  <option className="menuItem" value="">
-                    Не указан
-                  </option>
-                  {countries.map((country, index) => (
-                    <option key={index} className="menuItem" value={country.name}>
-                      {country.name}
+            <section className="dableSection">
+              <div>
+                <label className="labelForField" htmlFor="country">
+                  <Typography sx={CreateVacancyFormStyle.lable}>Страна</Typography>
+                </label>
+                <span className="selectWrapper">
+                  <select
+                    className="field"
+                    id="country"
+                    name="country"
+                    onChange={inputChangeHandler}
+                    value={state.country}
+                    required
+                  >
+                    <option className="menuItem" value="">
+                      Не указан
                     </option>
-                  ))}
-                </select>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
-                    fill="#8E8E8E"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div>
-              <label className="labelForField" htmlFor="city">
-                <Typography sx={CreateVacancyFormStyle.lable}>Город</Typography>
-              </label>
-              <span className="selectWrapper">
-                <select
-                  className="field"
-                  id="city"
-                  name="city"
-                  onChange={inputChangeHandler}
-                  value={state.city}
-                  required
-                >
-                  <option className="menuItem" value="">
-                    Не указан
-                  </option>
-                  {cities.map((city, index) => (
-                    <option key={index} className="menuItem" value={city}>
-                      {city}
+                    {countries.map((country, index) => (
+                      <option key={index} className="menuItem" value={country.name}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </select>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
+                      fill="#8E8E8E"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div>
+                <label className="labelForField" htmlFor="city">
+                  <Typography sx={CreateVacancyFormStyle.lable}>Город</Typography>
+                </label>
+                <span className="selectWrapper">
+                  <select
+                    className="field"
+                    id="city"
+                    name="city"
+                    onChange={inputChangeHandler}
+                    value={state.city}
+                    required
+                  >
+                    <option className="menuItem" value="">
+                      Не указан
                     </option>
-                  ))}
-                </select>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
-                    fill="#8E8E8E"
-                  />
-                </svg>
-              </span>
-            </div>
+                    {cities.map((city, index) => (
+                      <option key={index} className="menuItem" value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
+                      fill="#8E8E8E"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </section>
             <div>
               <label className="labelForField" htmlFor="fieldOfWork">
                 <Typography sx={CreateVacancyFormStyle.lable}>Сфера деятельности</Typography>
@@ -367,73 +369,75 @@ export const CreateVacancyForm = () => {
                 />
               </div>
             </section>
-            <div>
-              <label className="labelForField" htmlFor="education">
-                <Typography sx={CreateVacancyFormStyle.lable}>Образование</Typography>
-              </label>
-              <span className="selectWrapper">
-                <select
-                  className="field"
-                  id="education"
-                  name="education"
-                  onChange={inputChangeHandler}
-                  value={state.education}
-                  required
-                >
-                  <option className="menuItem" value="">
-                    Не указан
-                  </option>
-                  {educationTypes.map((education, index) => (
-                    <option key={index} className="menuItem" value={education}>
-                      {education}
+            <section className="dableSection">
+              <div>
+                <label className="labelForField" htmlFor="education">
+                  <Typography sx={CreateVacancyFormStyle.lable}>Образование</Typography>
+                </label>
+                <span className="selectWrapper">
+                  <select
+                    className="field"
+                    id="education"
+                    name="education"
+                    onChange={inputChangeHandler}
+                    value={state.education}
+                    required
+                  >
+                    <option className="menuItem" value="">
+                      Не указан
                     </option>
-                  ))}
-                </select>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
-                    fill="#8E8E8E"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div>
-              <label className="labelForField" htmlFor="employmentType">
-                <Typography sx={CreateVacancyFormStyle.lable}>Тип занятости</Typography>
-              </label>
-              <span className="selectWrapper">
-                <select
-                  className="field"
-                  id="employmentType"
-                  name="employmentType"
-                  onChange={inputChangeHandler}
-                  value={state.employmentType}
-                  required
-                >
-                  <option className="menuItem" value="">
-                    Не указан
-                  </option>
-                  {workTypes.map((type, index) => (
-                    <option key={index} className="menuItem" value={type}>
-                      {type}
+                    {educationTypes.map((education, index) => (
+                      <option key={index} className="menuItem" value={education}>
+                        {education}
+                      </option>
+                    ))}
+                  </select>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
+                      fill="#8E8E8E"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div>
+                <label className="labelForField" htmlFor="employmentType">
+                  <Typography sx={CreateVacancyFormStyle.lable}>Тип занятости</Typography>
+                </label>
+                <span className="selectWrapper">
+                  <select
+                    className="field"
+                    id="employmentType"
+                    name="employmentType"
+                    onChange={inputChangeHandler}
+                    value={state.employmentType}
+                    required
+                  >
+                    <option className="menuItem" value="">
+                      Не указан
                     </option>
-                  ))}
-                </select>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
-                    fill="#8E8E8E"
-                  />
-                </svg>
-              </span>
-            </div>
+                    {workTypes.map((type, index) => (
+                      <option key={index} className="menuItem" value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11.9995 16.8C11.2995 16.8 10.5995 16.53 10.0695 16L3.54953 9.48001C3.25953 9.19001 3.25953 8.71001 3.54953 8.42001C3.83953 8.13001 4.31953 8.13001 4.60953 8.42001L11.1295 14.94C11.6095 15.42 12.3895 15.42 12.8695 14.94L19.3895 8.42001C19.6795 8.13001 20.1595 8.13001 20.4495 8.42001C20.7395 8.71001 20.7395 9.19001 20.4495 9.48001L13.9295 16C13.3995 16.53 12.6995 16.8 11.9995 16.8Z"
+                      fill="#8E8E8E"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </section>
             <LoadingButton
               className="sendBtn"
               type="submit"
               color="primary"
               variant="contained"
               loading={isLoading}
-              // disabled={isDisabled}
+              disabled={isDisabled}
             >
               <Typography>Сохранить</Typography>
             </LoadingButton>
