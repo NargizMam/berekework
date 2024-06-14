@@ -53,10 +53,10 @@ export const VacancyPageClient = () => {
         <VacancySearch onSearch={handleSearch} isLoading={isLoading} />
         <Tooltip title={'Расширенный поиск'}>
           <IconButton
-            sx={{ display: { xs: 'block', md: 'none' } }}
+            sx={{ display: { xs: 'block', md: 'none' }, height: '40px', marginTop: '30px' }}
             onClick={() => setShowCategory((prevState) => !prevState)}
           >
-            <Tune />
+            <Tune sx={{ borderRadius: '50%' }} />
           </IconButton>
         </Tooltip>
       </Box>
@@ -75,7 +75,7 @@ export const VacancyPageClient = () => {
             <CircularProgress />
           ) : vacancies.length > 0 ? (
             vacancies.map((vacancy) => (
-              <Grid item key={vacancy._id} xs={12} sm={6}>
+              <Grid item key={vacancy._id} xs={12} md={6}>
                 <VacancyCard data={vacancy} visible={true} />
               </Grid>
             ))
