@@ -28,6 +28,7 @@ import SuccessMessage from '../widgets/WarningMessage/SuccessMessage';
 import ErrorMessage from '../widgets/WarningMessage/ErrorMessage';
 import Permit from '../shared/permit/Permit';
 import { CreateVacancyForm } from '../client/widgets/createVacancyForm';
+import { ApplicationPanelPage } from '../admin/page/applicationPanel/ui/ApplicationPanelPage';
 import AdminBaseLayout from './layouts/adminLayout/AdminBaseLayout';
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/vacancy" element={<VacancyPage />} />
         <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
         <Route path="/users" element={<UserPanelPage />} />
+        <Route path='/applications/:id' element={<ApplicationPanelPage />} />
       </Routes>
     </AdminBaseLayout>
   );

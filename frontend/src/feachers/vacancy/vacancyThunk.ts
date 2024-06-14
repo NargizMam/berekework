@@ -3,15 +3,10 @@ import { CategoryVacancyI, VacancyApiData, VacancyCategoryGet, VacancyResponseTo
 import axiosApi from '../../app/axiosApi';
 import { titleVacancyFilter, vacancyCategory } from '../../app/constants/links';
 
-export const getAllVacancy = createAsyncThunk<VacancyApiData[]>(
-  'vacancy/getAll',
-  async () => {
-    const response = await axiosApi.get<VacancyApiData[]>(
-      "/vacancy",
-    );
-    return response.data;
-  },
-);
+export const getAllVacancy = createAsyncThunk<VacancyApiData[]>('vacancy/getAll', async () => {
+  const response = await axiosApi.get<VacancyApiData[]>('/vacancy');
+  return response.data;
+});
 
 export const getAllVacancyToCard = createAsyncThunk<VacancyResponseToCard[], string | undefined>(
   'vacancy/getAllToCard',
@@ -23,10 +18,10 @@ export const getAllVacancyToCard = createAsyncThunk<VacancyResponseToCard[], str
   },
 );
 
-export const getAllVacancyByKgOrAbroad = createAsyncThunk<VacancyApiData[], string>(
+export const getAllVacancyByKgOrAbroad = createAsyncThunk<VacancyResponseToCard[], string>(
   'vacancy/getAllVacancyByKgOrAbroad',
   async (filter) => {
-    const response = await axiosApi.get<VacancyApiData[]>(
+    const response = await axiosApi.get<VacancyResponseToCard[]>(
       `/vacancy${filter === 'abroad' ? '?abroad=true' : '?kyrgyzstan=true'}`,
     );
     return response.data;

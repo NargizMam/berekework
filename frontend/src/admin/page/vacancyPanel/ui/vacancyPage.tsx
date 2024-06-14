@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import {
   Button,
+  ListItemButton,
   Paper,
   styled,
   Table,
@@ -61,7 +62,9 @@ export const VacancyPage = () => {
           {vacancies.map((vacancy) => (
             <TableRow key={vacancy._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {vacancy.vacancyTitle}
+                <ListItemButton  component={Link} to={`/admin/applications/${vacancy._id}`}>
+                  {vacancy.vacancyTitle}
+                </ListItemButton>
               </TableCell>
               <TableCell component="th" scope="row">
                 {vacancy.employmentType}
@@ -84,10 +87,9 @@ export const VacancyPage = () => {
                 {dayjs(vacancy.updatedAt).format('DD MMMM YYYY')}
               </TableCell>
               <TableCell align="right">
-                <Button onClick={() => navigate('/vacancy/' + vacancy._id)} variant="contained">
+                <LinkItem to={'/vacancy/' + vacancy._id} target="_blank">
                   Предпросмотр
-                </Button>
-
+                </LinkItem>
               </TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleDeleteVacancy(vacancy._id)} variant="contained">

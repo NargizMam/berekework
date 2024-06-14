@@ -132,6 +132,17 @@ const EmployerProfile: React.FC = () => {
 
   return (
     <>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          mt: 3,
+        }}
+      >
+        <Button variant="outlined" onClick={() => navigate(`/edit-employer/${profile?._id}`)}>
+          Редактировать профиль
+        </Button>
+      </Box>
       {profile && (
         <Grid mt={6}>
           <div className="companyHeader">
@@ -161,9 +172,7 @@ const EmployerProfile: React.FC = () => {
             Скачать документы
           </Link>
           <Box sx={{ display: 'flex', mt: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
-            <Button variant="outlined" onClick={() => navigate(`/edit-employer/${profile?._id}`)}>
-              Редактировать профиль
-            </Button>
+
             {profile?.isPublished && (
               <Button
                 variant="outlined"

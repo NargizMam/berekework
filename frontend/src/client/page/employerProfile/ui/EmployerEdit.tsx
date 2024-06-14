@@ -52,7 +52,6 @@ export const EmployerEditPage = () => {
   const [filename, setFilename] = useState('');
   const [filenameImage, setFilenameImage] = useState('');
   const [errorDocument, setErrorDocument] = useState(false);
-  // const [showPassword, setShowPassword] = useState(false);
 
   const loading = useAppSelector(selectEmployersProfileLoading);
   const inputStyle = { borderRadius: '30px' };
@@ -111,7 +110,7 @@ export const EmployerEditPage = () => {
       document: null,
       avatar: null,
     });
-    navigate('/');
+    navigate(`/employer/${id}`);
   };
 
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
@@ -159,12 +158,7 @@ export const EmployerEditPage = () => {
     }
   };
 
-  // const handleClickShowPassword = () => {
-  //   setShowPassword(!showPassword);
-  // };
-  // const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   event.preventDefault();
-  // };
+
 
   return (
     <>
@@ -191,36 +185,6 @@ export const EmployerEditPage = () => {
               helperText={getFieldError('email')}
             />
           </Grid>
-          {/*{*/}
-          {/*  <Grid item xs={registerStyle ? 12 : 6}>*/}
-          {/*    <TextField*/}
-          {/*      value={state.password}*/}
-          {/*      onChange={changeField}*/}
-          {/*      name="password"*/}
-          {/*      id="standard-basic"*/}
-          {/*      label="Password"*/}
-          {/*      type="password"*/}
-          {/*      variant="outlined"*/}
-          {/*      required={true}*/}
-          {/*      InputProps={{*/}
-          {/*        style: inputStyle,*/}
-          {/*        endAdornment: (*/}
-          {/*          <InputAdornment position="end">*/}
-          {/*            <IconButton*/}
-          {/*              aria-label="toggle password visibility"*/}
-          {/*              onClick={handleClickShowPassword}*/}
-          {/*              onMouseDown={handleMouseDownPassword}*/}
-          {/*            >*/}
-          {/*              {showPassword ? <Visibility /> : <VisibilityOff />}*/}
-          {/*            </IconButton>*/}
-          {/*          </InputAdornment>*/}
-          {/*        ),*/}
-          {/*      }}*/}
-          {/*      error={Boolean(getFieldError('password'))}*/}
-          {/*      helperText={getFieldError('password')}*/}
-          {/*    />*/}
-          {/*  </Grid>*/}
-          {/*  )}*/}
           <Grid item xs={registerStyle ? 12 : 6}>
             <TextField
               value={state.companyName}

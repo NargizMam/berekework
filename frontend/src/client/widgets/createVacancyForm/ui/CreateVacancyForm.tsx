@@ -57,7 +57,7 @@ export const CreateVacancyForm = () => {
     workConditions: true,
   });
 
-  // const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+  const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
 
   useEffect(() => {
     if (id) {
@@ -79,35 +79,35 @@ export const CreateVacancyForm = () => {
     }
   }, [editVacancy, employer?._id, id]);
 
-  // useEffect(() => {
-  //   const editData: ICreateVacancyForm = {
-  //     vacancyTitle: editVacancy?.vacancyTitle || '',
-  //     aboutVacancy: editVacancy?.aboutVacancy || '',
-  //     responsibilities: editVacancy?.responsibilities || '',
-  //     workConditions: editVacancy?.workConditions || '',
-  //     country: editVacancy?.country || '',
-  //     city: editVacancy?.city || '',
-  //     fieldOfWork: editVacancy?.fieldOfWork || '',
-  //     minAge: editVacancy?.age.minAge.toString() || '',
-  //     maxAge: editVacancy?.age.maxAge.toString() || '',
-  //     minSalary: editVacancy?.salary.minSalary.toString() || '',
-  //     maxSalary: editVacancy?.salary.maxSalary.toString() || '',
-  //     education: editVacancy?.education,
-  //     employmentType: editVacancy?.employmentType || '',
-  //     employer: '',
-  //   };
-  //   if (editVacancy) {
-  //     setState(editData);
-  //   }
-  // }, [editVacancy, dispatch]);
+  useEffect(() => {
+    const editData: ICreateVacancyForm = {
+      vacancyTitle: editVacancy?.vacancyTitle || '',
+      aboutVacancy: editVacancy?.aboutVacancy || '',
+      responsibilities: editVacancy?.responsibilities || '',
+      workConditions: editVacancy?.workConditions || '',
+      country: editVacancy?.country || '',
+      city: editVacancy?.city || '',
+      fieldOfWork: editVacancy?.fieldOfWork || '',
+      minAge: editVacancy?.age.minAge.toString() || '',
+      maxAge: editVacancy?.age.maxAge.toString() || '',
+      minSalary: editVacancy?.salary.minSalary.toString() || '',
+      maxSalary: editVacancy?.salary.maxSalary.toString() || '',
+      education: editVacancy?.education,
+      employmentType: editVacancy?.employmentType || '',
+      employer: '',
+    };
+    if (editVacancy) {
+      setState(editData);
+    }
+  }, [editVacancy, dispatch]);
 
-  // useEffect(() => {
-  //   if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
-  //     setIsDisabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
-  //   } else {
-  //     setIsDisabled(true);
-  //   }
-  // }, [isFull]);
+  useEffect(() => {
+    if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
+      setIsDisabled(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [isFull]);
 
   const inputChangeHandler = (
     e:
@@ -433,7 +433,7 @@ export const CreateVacancyForm = () => {
               color="primary"
               variant="contained"
               loading={isLoading}
-              // disabled={isDisabled}
+              disabled={isDisabled}
             >
               <Typography>Сохранить</Typography>
             </LoadingButton>
