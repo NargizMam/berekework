@@ -35,29 +35,6 @@ const App = () => {
   const employer = useAppSelector(selectEmployer);
   const location = useLocation();
 
-  /*const AdminRoutes = () => (
-		<AdminLayout>
-			<Container>
-				<Routes>
-					<Route path='/' element={<AdminMainPage />} />
-					<Route
-						path='/moderators'
-						element={
-							<ProtectedRoute isAllowed={user?.role === 'superadmin'}>
-								<ModeratorsPage />
-							</ProtectedRoute>
-						}
-					/>
-					<Route path='/employers' element={<EmployerPanelPage />} />
-					<Route path='/employers-submit' element={<EmployerFormPage />} />
-					<Route path='/vacancy' element={<VacancyPage />} />
-					<Route path='/vacancy/:id' element={<VacancyDetailPage />} />
-					<Route path='/users' element={<UserPanelPage />} />
-				</Routes>
-			</Container>
-		</AdminLayout>
-	);*/
-
   const AdminRoutes = () => (
     <AdminBaseLayout>
       <Routes>

@@ -6,14 +6,6 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 export const API_URL = 'http://localhost:8000';
 
-//ADMIN SIDE BAR LINKS
-
-export const SIDE_BAR_LINKS = [
-  { id: parseFloat(Math.random().toString()), value: 'Пользователи', path: 'users' },
-  { id: parseFloat(Math.random().toString()), value: 'Вакансии', path: 'vacancy' },
-  { id: parseFloat(Math.random().toString()), value: 'Работодатели', path: 'employers' },
-];
-
 export const vacancyCategory: CategoryVacancyI[] = [
   {
     id: Math.random().toString(),
