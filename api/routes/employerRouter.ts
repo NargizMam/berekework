@@ -11,7 +11,6 @@ employerRouter.post(
   '/',
   multiUpload.fields([
     { name: 'document', maxCount: 1 },
-    { name: 'logo', maxCount: 1 },
     { name: 'avatar', maxCount: 1 },
   ]),
 
@@ -39,7 +38,7 @@ employerRouter.post(
         subject: 'new employer!!',
         text: `${req.body.email} already to employer!`,
       });
-      return res.send({ message: 'Employer is ready!', employer });
+      return res.send({ message: 'Работодатель создан!', employer });
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
         return res.status(422).send(error);
@@ -71,17 +70,17 @@ employerRouter.patch('/:id', async (req, res, next) => {
     );
 
     if (!employer) {
-      return res.status(404).send({ message: 'Employer not found!' });
+      return res.status(404).send({ message: 'Работодатель не найден!' });
     }
 
     await transporter.sendMail({
       from: '04072002mu@gmail.com',
       to: req.body.email,
       subject: 'Employer details updated',
-      text: `${req.body.email}, your employer status have been updated!`,
+      text: `${req.body.email}, Ваш статус работодателя был обновлен!`,
     });
 
-    return res.send({ message: 'Employer updated successfully!', employer });
+    return res.send({ message: 'Работодатель обновлен успешно!', employer });
   } catch (error) {
     return next(error);
   }
@@ -91,14 +90,13 @@ employerRouter.put(
     '/:id',
     multiUpload.fields([
       { name: 'document', maxCount: 1 },
-      { name: 'logo', maxCount: 1 },
       { name: 'avatar', maxCount: 1 },
     ]),
     async (req, res, next) => {
       try {
         const files = req.files as UploadedFiles;
         const employerId = req.params.id;
-
+        console.log(req.body)
         const updateData: any = {};
 
         if (req.body.email) updateData.email = req.body.email;
@@ -114,7 +112,7 @@ employerRouter.put(
         if (req.body.adminsComment) updateData.adminsComment = req.body.adminsComment;
 
         const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });
-
+        console.log(employer, 'employer')
         if (!employer) {
           return res.status(404).send({ message: 'Employer not found!' });
         }
@@ -169,7 +167,7 @@ employerRouter.delete('/:id', async (req, res, next) => {
       subject: 'Employer deleted!',
       text: `${req.body.email}, deleted!`,
     });
-    res.send({ message: 'Employer deleted!' });
+    res.send({ message: 'Работодатель удален!' });
   } catch (error) {
     return next(error);
   }
@@ -184,19 +182,19 @@ employerRouter.post('/sessions', async (req, res, next) => {
     }
 
     if (!employer) {
-      return res.status(422).send({ error: 'Email and password not correct!' });
+      return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
     }
 
     const isMatch = await employer.checkPassword(req.body.password);
 
     if (!isMatch) {
-      return res.status(422).send({ error: 'Email and password not correct!' });
+      return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
     }
 
     employer.generateToken();
     await employer.save();
 
-    return res.send({ message: 'Email and password are correct!', employer });
+    return res.send({ message: 'Вы успешно вошли в приложение!', employer });
   } catch (error) {
     return next(error);
   }

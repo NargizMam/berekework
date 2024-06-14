@@ -35,7 +35,7 @@ const App = () => {
 	const user = useAppSelector(selectUser);
 	const employer = useAppSelector(selectEmployer);
 	const location = useLocation();
-	
+
 	const AdminRoutes = () => (
 		<AdminLayout>
 			<Container>
@@ -44,7 +44,7 @@ const App = () => {
 					<Route
 						path='/moderators'
 						element={
-							<ProtectedRoute isAllowed={user?.role === 'superadmin'}>
+							<ProtectedRoute isAllowed={user?.role === 'superadmin' && !!user.token}>
 								<ModeratorsPage />
 							</ProtectedRoute>
 						}
@@ -63,9 +63,9 @@ const App = () => {
 		{
 			path: '/admin/*',
 			element: (
-				<ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'}>
-					<AdminRoutes />
-				</ProtectedRoute>
+        <ProtectedRoute isAllowed={(user?.role === 'superadmin' || user?.role === 'admin') && !!user?.token}>
+          <AdminRoutes />
+        </ProtectedRoute>
 			)
 		}
 	]);
@@ -92,17 +92,13 @@ const App = () => {
 						<Route
 							path='/employersProfile/:id'
 							element={
-								<Permit employerOnly>
 									<EmployerProfile />
-								</Permit>
 							}
 						/>
 						<Route
 							path='/edit-employer/:id'
 							element={
-								<Permit employerOnly>
 									<EmployerEditPage />
-								</Permit>
 							}
 						/>
 						<Route

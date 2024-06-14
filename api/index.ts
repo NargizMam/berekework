@@ -9,6 +9,7 @@ import employerRouter from './routes/employerRouter';
 import applicationsRouter from './routes/applicationsRouter';
 import imageUploadRouter from './routes/imageUploadRouter';
 import employeesCardRouter from './routes/employeesCardRouter';
+import moderatorRouter from "./routes/moderatorRouter";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use('/user', userRouter);
 app.use('/employer', employerRouter);
+app.use('/moderator', moderatorRouter);
 app.use('/vacancy', vacancyRouter);
 app.use('/upload-image', imageUploadRouter);
 app.use('/applications', applicationsRouter);

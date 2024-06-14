@@ -1,23 +1,14 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import {
-  Button,
-  Paper,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 import { selectVacancies, selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';
 import { deleteVacancy, getAllVacancy } from '../../../../feachers/vacancy/vacancyThunk';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
 export const VacancyPage = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const vacancies = useAppSelector(selectVacancies);
   const loading = useAppSelector(selectVacanciesLoading);
@@ -30,14 +21,6 @@ export const VacancyPage = () => {
     await dispatch(deleteVacancy(id));
     await dispatch(getAllVacancy());
   };
-
-  const LinkItem = styled(Link)({
-    color: 'inherit',
-    textDecoration: 'none',
-    '&:hover': {
-      color: 'inherit',
-    },
-  });
 
   if (loading) {
     return <Loader />;

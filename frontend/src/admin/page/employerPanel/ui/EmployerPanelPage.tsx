@@ -90,7 +90,6 @@ export const EmployerPanelPage = () => {
     return <Loader />;
   }
 
-  console.log(employers);
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
