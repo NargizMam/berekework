@@ -1,9 +1,8 @@
-@media screen and (min-width: 830px) {
+@media screen and (min-width: 1107px) {
   .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: nowrap;
   }
 
   .navigation-big-screen {
@@ -11,7 +10,7 @@
   }
 
   .header-logo-wrapper {
-    flex-basis: 0%;
+    flex-basis: 0;
   }
 
   .main-mav-web {
@@ -49,7 +48,7 @@
   }
 }
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 720px) {
   .main-nav-list {
     display: flex;
     justify-content: space-between;
