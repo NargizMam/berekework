@@ -12,7 +12,7 @@ import { Loader } from '../../../../shared/loader';
 import './CreateVacancyForm.css';
 import { openErrorMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 import ErrorMessage from '../../../../widgets/WarningMessage/ErrorMessage';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getVacancyById } from '../../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy } from '../../../../feachers/vacancy/vacancySlice';
 import { selectEmployer } from '../../../page/Auth/model/AuthSlice';
@@ -23,22 +23,22 @@ interface Flag {
   workConditions: boolean;
 }
 
-const initialState = {
-  vacancyTitle: '',
-  aboutVacancy: '',
-  responsibilities: '',
-  workConditions: '',
-  country: '',
-  city: '',
-  fieldOfWork: '',
-  minAge: '',
-  maxAge: '',
-  minSalary: '',
-  maxSalary: '',
-  education: '',
-  employmentType: '',
-  employer: '',
-};
+// const initialState = {
+//   vacancyTitle: '',
+//   aboutVacancy: '',
+//   responsibilities: '',
+//   workConditions: '',
+//   country: '',
+//   city: '',
+//   fieldOfWork: '',
+//   minAge: '',
+//   maxAge: '',
+//   minSalary: '',
+//   maxSalary: '',
+//   education: '',
+//   employmentType: '',
+//   employer: '',
+// };
 
 export const CreateVacancyForm = () => {
   const dispatch = useAppDispatch();
@@ -46,8 +46,23 @@ export const CreateVacancyForm = () => {
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectVacancy);
-  const [cities, setCities] = useState<string[]>([]);
-  const [state, setState] = useState<ICreateVacancyForm>(initialState);
+  const [cities, setCities] = useState<any>([]);
+  const [state, setState] = useState<ICreateVacancyForm>({
+    vacancyTitle: '',
+    aboutVacancy: '',
+    responsibilities: '',
+    workConditions: '',
+    country: '',
+    city: '',
+    fieldOfWork: '',
+    minAge: '',
+    maxAge: '',
+    minSalary: '',
+    maxSalary: '',
+    education: '',
+    employmentType: '',
+    employer: '',
+  });
   const { id } = useParams() as { id: string };
   const navigate = useNavigate();
 
@@ -66,20 +81,6 @@ export const CreateVacancyForm = () => {
   }, [id, dispatch]);
 
   useEffect(() => {
-    if (id && editVacancy) {
-      setState(prevState => ({
-        ...prevState,
-        ...editVacancy,
-        minAge: editVacancy.age.minAge.toString(),
-        maxAge: editVacancy.age.maxAge.toString(),
-        minSalary: editVacancy.salary.minSalary.toString(),
-        maxSalary: editVacancy.salary.maxSalary.toString(),
-        employer: employer?._id || '',
-      }));
-    }
-  }, [editVacancy, employer?._id, id]);
-
-  useEffect(() => {
     const editData: ICreateVacancyForm = {
       vacancyTitle: editVacancy?.vacancyTitle || '',
       aboutVacancy: editVacancy?.aboutVacancy || '',
@@ -96,8 +97,26 @@ export const CreateVacancyForm = () => {
       employmentType: editVacancy?.employmentType || '',
       employer: '',
     };
-    if (editVacancy) {
+    if (id && editData) {
       setState(editData);
+      dispatch(clearEditVacancy());
+    } else {
+      setState({
+        vacancyTitle: '',
+        aboutVacancy: '',
+        responsibilities: '',
+        workConditions: '',
+        country: '',
+        city: '',
+        fieldOfWork: '',
+        minAge: '',
+        maxAge: '',
+        minSalary: '',
+        maxSalary: '',
+        education: '',
+        employmentType: '',
+        employer: '',
+      });
     }
   }, [editVacancy, dispatch]);
 
@@ -116,16 +135,28 @@ export const CreateVacancyForm = () => {
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    if (name === 'country') {
-      const index = countries.findIndex((item) => item.name === value);
-      if (index >= 0) {
-        setCities(countries[index].cities);
-      }
+    if (name === 'country' || state.country !== '') {
+      const cities = countries.map((item) => {
+        if (item.name === value) {
+          return item.cities;
+        } else if (item.name === state.country) {
+          return item.cities;
+        }
+      });
+      
+        setCities(cities[0]);
+        console.log(cities[0]);
+        
+      
     }
     setState((prevState) => {
       return { ...prevState, [name]: value };
     });
   };
+
+  console.log(cities);
+  
+
 
   const textareaChangeHandler = (name: string, value: string) => {
     setState((prevState) => {
@@ -161,7 +192,7 @@ export const CreateVacancyForm = () => {
       employmentType: state.employmentType,
     };
     try {
-      if (editVacancy) {
+      if (editVacancy && id) {
         const editData: VacancyEdtiData = {
           id: editVacancy._id,
           vacancy: stateData,
@@ -170,12 +201,25 @@ export const CreateVacancyForm = () => {
         navigate(-1);
       } else {
         await dispatch(postVacancy(stateData)).unwrap();
-        // dispatch(getEmployersProfileInfo(employeeId));
         navigate(-1);
       }
       dispatch(clearEditVacancy());
-      setState(initialState);
-      // setOpenForm(false);
+      setState({
+        vacancyTitle: '',
+        aboutVacancy: '',
+        responsibilities: '',
+        workConditions: '',
+        country: '',
+        city: '',
+        fieldOfWork: '',
+        minAge: '',
+        maxAge: '',
+        minSalary: '',
+        maxSalary: '',
+        education: '',
+        employmentType: '',
+        employer: '',
+      });
     } catch (e) {
       dispatch(openErrorMessage);
     }
@@ -252,14 +296,20 @@ export const CreateVacancyForm = () => {
                     value={state.country}
                     required
                   >
+                    {state.country ? <option className="menuItem">{state.country}</option> : null}
                     <option className="menuItem" value="">
                       Не указан
                     </option>
-                    {countries.map((country, index) => (
-                      <option key={index} className="menuItem" value={country.name}>
-                        {country.name}
-                      </option>
-                    ))}
+                    {countries.map((country, index) => {
+                      if (state.country === country.name) {
+                        return null;
+                      }
+                      return (
+                        <option key={index} className="menuItem" value={country.name}>
+                          {country.name}
+                        </option>
+                      );
+                    })}
                   </select>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -282,14 +332,28 @@ export const CreateVacancyForm = () => {
                     value={state.city}
                     required
                   >
+                    {state.city ? <option className="menuItem">{state.city}</option> : null}
                     <option className="menuItem" value="">
+                      Не указан
+                    </option>
+                    {cities.map((city, index) => {
+                      if (city === city) {
+                        return null;
+                      }
+                      return (
+                        <option key={index} className="menuItem">
+                          {city}
+                        </option>
+                      );
+                    })}
+                    {/* <option className="menuItem" value="">
                       Не указан
                     </option>
                     {cities.map((city, index) => (
                       <option key={index} className="menuItem" value={city}>
                         {city}
                       </option>
-                    ))}
+                    ))} */}
                   </select>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
