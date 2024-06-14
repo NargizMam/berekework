@@ -90,8 +90,6 @@ export const EmployerPanelPage = () => {
     return <Loader />;
   }
 
-  console.log(employers);
-
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
       <Box sx={{ display: 'flex', justifyContent: 'right' }}>
@@ -105,19 +103,23 @@ export const EmployerPanelPage = () => {
         </Link>
       </Box>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 500, overflowX: 'auto' }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Email</TableCell>
-              <TableCell>Название компании</TableCell>
-              <TableCell>Логотип</TableCell>
-              <TableCell>Год создания компании</TableCell>
-              <TableCell>Вид деятельности</TableCell>
-              <TableCell>Краткое описание</TableCell>
-              <TableCell>Адрес</TableCell>
-              <TableCell>Контакты</TableCell>
-              <TableCell>Документы</TableCell>
-              <TableCell align="right">Статус</TableCell>
+              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">Название компании</TableCell>
+              <TableCell align="left">Логотип</TableCell>
+              <TableCell align="left">Год создания компании</TableCell>
+              <TableCell align="left">Вид деятельности</TableCell>
+              <TableCell align="left">Краткое описание</TableCell>
+              <TableCell align="left">Адрес</TableCell>
+              <TableCell align="left">Контакты</TableCell>
+              <TableCell align="left">Документы</TableCell>
+              <TableCell align="left">Статус</TableCell>
+              <TableCell align="left">Оплата</TableCell>
+              <TableCell align="center" colSpan={2}>
+                Дейсвие
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
