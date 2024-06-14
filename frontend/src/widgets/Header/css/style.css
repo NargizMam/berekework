@@ -1,6 +1,6 @@
 .main-nav-link {
   color: #a9a9a9;
-  text-wrap: nowrap;
+
 }
 
 .navigation-big-screen {
@@ -10,8 +10,6 @@
 .header-logo-wrapper {
   display: flex;
   align-items: center;
-  /* margin-right: auto; */
-  /* flex-basis: 85%; */
 }
 
 .header-content {
@@ -50,6 +48,10 @@
 .main-nav-item {
   margin-top: 10px;
   padding: 0 10px;
+}
+
+.main-nav-link {
+	white-space: nowrap;
 }
 
 .main-nav-open .main-nav-list {
