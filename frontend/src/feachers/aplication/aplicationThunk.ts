@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../app/axiosApi';
 import { ApplicationResponse } from './types';
+import { ApplicationByVacancy } from '../../app/types';
 
 //Создание новой заявки на вакансии
 export const sendReplyByUser = createAsyncThunk<void, { vacancyId: string; userId?: string }>(
@@ -22,7 +23,7 @@ export const getReplyByUser = createAsyncThunk('application/getAll', async () =>
 });
 
 //Получение всех заявок для конкретной вакансии
-export const getCandidateByEmployer = createAsyncThunk<[], string>('application/getSingleVacation', async (id) => {
+export const getCandidateByEmployer = createAsyncThunk<ApplicationByVacancy[], string>('application/getSingleVacation', async (id) => {
   const response = await axiosApi.get(`/applications/${id}`);
   return response.data;
 });
