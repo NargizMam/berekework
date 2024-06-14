@@ -294,7 +294,7 @@ const run = async () => {
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac1._id, vac2._id, vac3._id, vac7._id],
       isPublished: true,
-      tariff: 'Базовый',
+      tariff: 'Годовой',
     },
     {
       email: 'employer2@example.com',
@@ -310,7 +310,8 @@ const run = async () => {
       avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac8._id, vac6._id, vac5._id, vac4._id],
-      tariff: 'Базовый',
+      isPublished: true,
+      tariff: 'Месячный',
     },
     {
       email: 'employer3@example.com',
@@ -326,6 +327,7 @@ const run = async () => {
       avatar: 'fixtures/logo_company_megaservice.png',
       documents: 'fixtures/dummy.pdf',
       vacancies: [],
+      isPublished: false,
       tariff: 'Базовый',
     },
   );

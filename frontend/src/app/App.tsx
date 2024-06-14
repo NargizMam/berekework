@@ -62,7 +62,7 @@ const App = () => {
     {
       path: '/admin/*',
       element: (
-        <ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'}>
+        <ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'  && !!user?.token}>
           <AdminRoutes />
         </ProtectedRoute>
       ),
