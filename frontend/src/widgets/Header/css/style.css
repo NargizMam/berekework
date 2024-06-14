@@ -50,6 +50,10 @@
   padding: 0 10px;
 }
 
+.main-nav-link {
+	white-space: nowrap;
+}
+
 .main-nav-open .main-nav-list {
   max-height: 200px;
 }
