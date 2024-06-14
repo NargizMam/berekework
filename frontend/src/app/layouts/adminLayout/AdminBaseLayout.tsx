@@ -1,12 +1,12 @@
 import React from 'react';
-import Dashboard from './Dashboard';
+import DashboardAdmin from './DashboardAdmin';
 import { CssBaseline } from '@mui/material';
 
 const BaseLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <>
       <CssBaseline />
-      <Dashboard>{children}</Dashboard>
+      <DashboardAdmin>{children}</DashboardAdmin>
     </>
   );
 };

@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  IconButton,
   InputLabel,
   Link,
   MenuItem,
@@ -26,12 +27,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 import { Link as RouterLink } from 'react-router-dom';
 import { API_URL } from '../../../../app/constants/links';
 import { usePrismicDocumentByUID } from '@prismicio/react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface TariffGet {
   slice_type: string;
@@ -94,12 +98,12 @@ export const EmployerPanelPage = () => {
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
       <Box sx={{ display: 'flex', justifyContent: 'right' }}>
         <Link
-          sx={{ margin: '5px', backgroundColor: 'gray', borderRadius: '5px', padding: '5px 10px', color: '#fff' }}
+          sx={{ margin: '5px', backgroundColor: 'gray', borderRadius: '5px', padding: '8px 20px', color: '#fff' }}
           underline="none"
           component={RouterLink}
           to="/admin/employers-submit"
         >
-          <Typography>Создать</Typography>
+          <Typography variant={'h6'}>Создать</Typography>
         </Link>
       </Box>
       <TableContainer component={Paper}>
@@ -108,10 +112,7 @@ export const EmployerPanelPage = () => {
             <TableRow>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Название компании</TableCell>
-              <TableCell align="left">Логотип</TableCell>
-              <TableCell align="left">Год создания компании</TableCell>
               <TableCell align="left">Вид деятельности</TableCell>
-              <TableCell align="left">Краткое описание</TableCell>
               <TableCell align="left">Адрес</TableCell>
               <TableCell align="left">Контакты</TableCell>
               <TableCell align="left">Документы</TableCell>
@@ -132,16 +133,7 @@ export const EmployerPanelPage = () => {
                   {employer.companyName}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <img width={50} height={50} src={API_URL + '/' + employer.avatar} alt="Logo" />
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {employer.foundationYear}
-                </TableCell>
-                <TableCell component="th" scope="row">
                   {employer.industry}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {employer.description}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {employer.address}
@@ -157,18 +149,22 @@ export const EmployerPanelPage = () => {
                 <TableCell>{employer.tariff}</TableCell>
                 <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
                 <TableCell align="right">
-                  <Button onClick={() => handleClickOpen(employer._id, employer.email)} variant="contained">
-                    Изменить статус
-                  </Button>
+                  <Tooltip title={'Изменить статус'}>
+                    <IconButton onClick={() => handleClickOpen(employer._id, employer.email)}>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
                 <TableCell align="right">
-                  <Button
-                    disabled={deleteLoading}
-                    onClick={() => handleDeleteEmployer(employer._id)}
-                    variant="contained"
-                  >
-                    {deleteLoading ? 'Loading' : 'Удалить'}
-                  </Button>
+                  <Tooltip title={'Удалить работодателя'}>
+                    <IconButton
+                      aria-label="delete"
+                      disabled={deleteLoading}
+                      onClick={() => handleDeleteEmployer(employer._id)}
+                    >
+                      <DeleteIcon color={'error'} sx={{ fontSize: '30px' }} />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
