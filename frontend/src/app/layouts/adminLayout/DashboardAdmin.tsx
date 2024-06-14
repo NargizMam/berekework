@@ -21,7 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import { logout } from '../../../client/page/Auth/api/AuthThunk';
-import { Tooltip } from '@mui/material';
+import { Container, Tooltip } from '@mui/material';
 
 const drawerWidth = 260;
 
@@ -93,7 +93,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Dashboard: React.FC<React.PropsWithChildren> = ({ children }) => {
+const DashboardAdmin: React.FC<React.PropsWithChildren> = ({ children }) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -278,12 +278,12 @@ const Dashboard: React.FC<React.PropsWithChildren> = ({ children }) => {
       ) : (
         ''
       )}
-      <Box sx={{ flexGrow: 1, padding: 3 }}>
+      <Box sx={{ flexGrow: 1, paddingTop: 3, paddingBottom: 3 }}>
         <DrawerHeader />
-        {children}
+        <Container maxWidth={'xl'}>{children}</Container>
       </Box>
     </Box>
   );
 };
 
-export default Dashboard;
+export default DashboardAdmin;
