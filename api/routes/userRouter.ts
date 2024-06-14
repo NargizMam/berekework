@@ -100,13 +100,13 @@ userRouter.post('/sessions', async (req, res, next) => {
     }
 
     if (!user) {
-      return res.status(422).send({ error: 'Электронная почта и пароль не верны!' });
+      return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
     }
 
     const isMatch = await user.checkPassword(req.body.password);
 
     if (!isMatch) {
-      return res.status(422).send({ error: 'Электронная почта и пароль не верны!' });
+      return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
     }
 
     user.generateToken();
@@ -122,7 +122,6 @@ userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req:
   try {
     if (req.query.filter === 'moderator') {
       const moderators = await User.find({ role: 'admin' });
-      console.log(moderators)
       return res.send(moderators);
     }
     if (req.query.filter) {
