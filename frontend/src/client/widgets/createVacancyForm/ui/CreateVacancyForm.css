@@ -29,7 +29,7 @@
   line-height: 1.25;
   color: #8e8e8e;
   padding-left: 30px;
-  width: 380px;
+  width: 70%;
   height: 70px;
   background-color: #ffffff;
 }
@@ -59,7 +59,6 @@ textarea.field {
 select.field {
   position: relative;
   -webkit-appearance: none;
-  width: 420px;
   z-index: 50;
   background: transparent;
 }
@@ -68,6 +67,11 @@ select.field {
   display: flex;
   gap: 25px;
   flex-wrap: wrap;
+}
+
+.dableSection input,
+.dableSection select {
+  width: 100%;
 }
 
 .selectWrapper {
