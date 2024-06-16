@@ -49,6 +49,7 @@
               duration={work.duration}
               deleteField={deleteField}
               addField={addFieldToFormState}
+              isExisting={true}
             />
           ))
         );
@@ -137,6 +138,7 @@
           id={fieldId}
           addField={addFieldToFormState}
           deleteField={deleteField}
+          isExisting={false}
         />,
       ]);
     };
