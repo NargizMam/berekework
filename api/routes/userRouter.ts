@@ -226,6 +226,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
     try {
       const user = await User.findById(req.params.id);
       const {
+        name,
         firstName,
         surname,
         patronymic,
@@ -244,6 +245,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
         const updated = await User.findOneAndUpdate(
             {_id: user._id},
             {
+              name,
               firstName,
               surname,
               patronymic,

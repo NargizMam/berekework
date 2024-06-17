@@ -10,15 +10,16 @@ interface Props {
   duration: string;
   deleteField: (id: string) => void;
   addField: (newField: WorkExperience) => void;
+  isExisting: boolean;
 }
 
-const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, addField }) => {
+const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, addField, isExisting }) => {
   const [state, setState] = useState<WorkExperience>({
     _id: id,
     fieldOfWork: job || '',
     duration: duration || '0 лет',
   });
-  const [isAdded, setIsAdded] = useState(false);
+  const [isAdded, setIsAdded] = useState(isExisting);
   console.log(isAdded);
   const fieldChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
