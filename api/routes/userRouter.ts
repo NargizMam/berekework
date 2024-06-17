@@ -7,6 +7,7 @@ import config from '../config';
 import {OAuth2Client} from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth, {RequestWithUser} from '../middleware/auth';
+import ignoreAuth from "../middleware/ignoreAuth";
 
 const client = new OAuth2Client(config.google.clientId);
 
@@ -273,10 +274,21 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
     }
 });
 
-userRouter.delete('/:id', async (req, res, next) => {
+userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) => {
+  if (req.params.id !== 'sessions' && req.user?.role === 'superadmin') {
+    try {
+      const deletedModerator = await User.findByIdAndDelete(req.params.id);
+      if (!deletedModerator) {
+        return res.send({ text: 'Пользователь не найден!' });
+      }
+      return res.send({ text: 'Администратор успешно удален!' });
+    } catch (e) {
+      return next(e);
+    }
+  } else {
     try {
       const headerValue = req.get('Authorization');
-      const successMessage = { message: 'Вы вышли из приложения!' };
+      const successMessage = { message: 'Success!' };
 
       if (!headerValue) {
         return res.send({ ...successMessage, stage: 'No header' });
@@ -297,10 +309,12 @@ userRouter.delete('/:id', async (req, res, next) => {
       user.generateToken();
       await user.save();
 
-      return res.send({ ...successMessage, stage: 'Вы вышли из приложения!' });
+      return res.send({ ...successMessage, stage: 'Success' });
     } catch (e) {
       return next(e);
     }
+  }
 });
+
 
 export default userRouter;

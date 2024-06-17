@@ -33,17 +33,16 @@ moderatorRouter.post('/', auth,  permit('superadmin'), imagesUpload.single('avat
 
 moderatorRouter.get('/',auth,  permit('superadmin'), async (req , res, next) => {
     try {
-
-            const moderators = await User.find({ role: 'admin' });
-            return res.send(moderators);
-          } catch (error) {
+        const moderators = await User.find({ role: 'admin' });
+        return res.send(moderators);
+    } catch (error) {
         return next(error);
     }
 });
 
 
 
-moderatorRouter.delete('/:id',auth, permit('superadmin') , async (req, res, next) => {
+moderatorRouter.delete('/:id', auth, permit('superadmin') , async (req, res, next) => {
         try {
             const deletedModerator = await User.findByIdAndDelete(req.params.id);
             if (!deletedModerator) {
