@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { countries, educationTypes, workTypes } from '../model/constants';
 import CreateVacancyFormStyle from './CreateVacancyForm-style';
@@ -41,12 +41,14 @@ interface Flag {
 // };
 
 export const CreateVacancyForm = () => {
+
   const dispatch = useAppDispatch();
   const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectVacancy);
   const [cities, setCities] = useState<any>([]);
+  let test = useRef<string[]>([]);
   const [state, setState] = useState<ICreateVacancyForm>({
     vacancyTitle: '',
     aboutVacancy: '',
@@ -118,6 +120,13 @@ export const CreateVacancyForm = () => {
         employer: '',
       });
     }
+
+    countries.forEach((item) => {
+      if (item.name === state.country) {
+        test.current = item.cities;
+      }
+    });
+    console.log(test.current);
   }, [editVacancy, dispatch]);
 
   useEffect(() => {
@@ -135,28 +144,20 @@ export const CreateVacancyForm = () => {
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    if (name === 'country' || state.country !== '') {
-      const cities = countries.map((item) => {
-        if (item.name === value) {
-          return item.cities;
-        } else if (item.name === state.country) {
-          return item.cities;
-        }
-      });
-      
-        setCities(cities[0]);
-        console.log(cities[0]);
-        
-      
-    }
     setState((prevState) => {
       return { ...prevState, [name]: value };
     });
+    if (name === 'country' || state.country !== '') {
+      countries.forEach((item) => {
+        if (item.name === value) {
+          setState((prevState) => {
+            return { ...prevState, city: '' };
+          });
+          test.current = item.cities;
+        }
+      });
+    }
   };
-
-  console.log(cities);
-  
-
 
   const textareaChangeHandler = (name: string, value: string) => {
     setState((prevState) => {
@@ -336,8 +337,9 @@ export const CreateVacancyForm = () => {
                     <option className="menuItem" value="">
                       Не указан
                     </option>
-                    {cities.map((city, index) => {
-                      if (city === city) {
+                    {test.current.map((city, index) => {
+                      console.log(city);
+                      if (city === state.city) {
                         return null;
                       }
                       return (
