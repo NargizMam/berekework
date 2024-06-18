@@ -96,7 +96,6 @@ employerRouter.put(
       try {
         const files = req.files as UploadedFiles;
         const employerId = req.params.id;
-        console.log(req.body)
         const updateData: any = {};
 
         if (req.body.email) updateData.email = req.body.email;
@@ -112,7 +111,7 @@ employerRouter.put(
         if (req.body.adminsComment) updateData.adminsComment = req.body.adminsComment;
 
         const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });
-        console.log(employer, 'employer')
+        // console.log(employer, 'employer')
         if (!employer) {
           return res.status(404).send({ message: 'Employer not found!' });
         }
