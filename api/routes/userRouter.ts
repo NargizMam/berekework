@@ -264,7 +264,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
             },
             {new: true}
         );
-        return res.send(updated);
+        return res.send({ message: 'Данные изменены', updated });
       } else {
         return res.status(404).send({ message: 'Пользователь не найден' });
       }
