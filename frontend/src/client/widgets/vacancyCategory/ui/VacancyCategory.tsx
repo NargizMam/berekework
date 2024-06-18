@@ -42,7 +42,7 @@ export const VacancyCategory: React.FC<Props> = ({ toggleCategory, scrollUp }) =
         behavior: 'smooth',
       });
 
-      console.log('HERE');
+      // console.log('HERE');
       setShouldScroll(false);
     }
   }, [shouldScroll]);
