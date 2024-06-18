@@ -2,7 +2,7 @@ const OurValuesBlockStyle = {
   ourValuesCardBlock: {
     marginBottom: {
       xs: '7%',
-      md: '178px',
+      lg: '178px',
     },
   },
   ourValuesBlockTitle: {
@@ -16,13 +16,15 @@ const OurValuesBlockStyle = {
     color: '#000',
     margin: {
       xs: '0 0 7% 0',
-      md: '0 0 60px 0',
+      lg: '0 0 60px 0',
     },
   },
   ourValuesCard: {
     boxSizing: 'border-box',
     display: 'flex',
-    flexDirection: 'column',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '30px',
     padding: {
       xs: '24px',
       md: '40px',
@@ -32,19 +34,32 @@ const OurValuesBlockStyle = {
     background: '#ECECEC',
     margin: 0,
     borderRadius: '30px',
+    '@media (max-width: 1290px)': {
+      flexWrap: 'nowrap',
+      flexDirection: 'column',
+      alignItems: 'start',
+    },
+  },
+  content: {
+    flexBasis: '80%',
+    flexGrow: 1,
   },
   ourValuesImgFrame: {
     display: 'flex',
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
     width: '54px',
     height: '54px',
     background: '#FFFFFF',
     borderRadius: '50%',
-    margin: '0 0 30px 0',
+    margin: 0,
   },
   ourValuesCardTitle: {
-    fontSize: '20px',
+    fontSize: {
+      xs: '1rem',
+      sm: '20px',
+    },
     fontWeight: 600,
     color: '#000',
     lineHeight: 1.1,
