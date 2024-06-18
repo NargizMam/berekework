@@ -41,7 +41,7 @@ export const GalleryBlock: React.FC<Props> = ({ slice }) => {
     );
   }
 
-  const showNavigation = slice.items.length > 3;
+  const showNavigation = slice.items.length > 2;
 
   const sources = slice.items.map((item) => item.image?.url).filter((url): url is string => Boolean(url));
 

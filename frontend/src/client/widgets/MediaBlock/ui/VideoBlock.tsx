@@ -41,12 +41,12 @@ export const VideoBlock: React.FC<Props> = ({ slice }) => {
     );
   }
 
-  const showNavigation = slice.items.length > 3;
+  const showNavigation = slice.items.length > 2;
 
   const sources = slice.items.map((item) => item.video?.embed_url || '').filter((url): url is string => Boolean(url));
 
   return (
-    <Box sx={MediaBlockStyle.container}>
+    <Box sx={MediaBlockStyle.videoContainer}>
       <Box sx={MediaBlockStyle.row}>
         {slice.primary.title.map((title, index) => (
           <Typography id='video' key={index} variant="h4" sx={MediaBlockStyle.title}>

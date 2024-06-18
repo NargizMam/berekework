@@ -1,11 +1,14 @@
 const MediaBlockStyle = {
   container: {
     maxWidth: '1280px',
-    margin: '8% auto',
-    '@media (max-width: 900px)': {
-      marginTop: '7%',
-      marginBottom: '7%',
+    margin: '0 auto',
+    marginBottom: {
+      xs: '7%',
+      lg: '219px',
     },
+  },
+  videoContainer: {
+    margin: '0 auto',
   },
   row: {
     display: 'flex',
@@ -13,8 +16,7 @@ const MediaBlockStyle = {
     justifyContent: 'space-between',
     marginBottom: {
       xs: '7%',
-      sm: '2rem',
-      md: '60px',
+      lg: '60px',
     },
   },
   title: {
@@ -35,7 +37,7 @@ const MediaBlockStyle = {
   paginationControls: {
     display: 'flex',
     gap: '10px',
-    '@media (max-width: 600px)': {
+    '@media (max-width: 599.9px)': {
       display: 'none',
     },
   },
