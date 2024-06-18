@@ -6,8 +6,8 @@ import { Navigation } from 'swiper/modules';
 import MediaCard, { MediaCardApiData } from './MediaCard/MediaCard';
 import MediaBlockStyle from './MediaBlock-style';
 import FsLightbox from 'fslightbox-react';
-import arrowLeft from '../images/arrow-left.png';
-import arrowRight from '../images/arrow-right.png';
+import arrowLeft from '../../../../shared/assets/arrow-left.png';
+import arrowRight from '../../../../shared/assets/arrow-right.png';
 import './SwiperNavigation.css';
 
 export interface MediaBlockApiData {
