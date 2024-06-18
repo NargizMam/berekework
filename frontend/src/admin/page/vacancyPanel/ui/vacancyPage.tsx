@@ -1,17 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import {
-  Button,
-  ListItemButton,
-  Paper,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material';
+import { Button, styled, ListItemButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Loader } from '../../../../shared/loader';
 import { selectVacancies, selectVacanciesLoading } from '../../../../feachers/vacancy/vacancySlice';

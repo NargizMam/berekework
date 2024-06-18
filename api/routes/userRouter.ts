@@ -7,25 +7,15 @@ import config from '../config';
 import {OAuth2Client} from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth, {RequestWithUser} from '../middleware/auth';
+import ignoreAuth from "../middleware/ignoreAuth";
 
 const client = new OAuth2Client(config.google.clientId);
 
 const userRouter = Router();
 
-userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
+userRouter.post('/', imagesUpload.single('avatar'), async (req: RequestWithUser, res, next) => {
   try {
-    if (req.query && req.query.role) {
-      const user = new User({
-        displayName: req.body.displayName,
-        email: req.body.email,
-        password: req.body.password,
-        role: 'admin',
-      });
-      user.generateToken();
-      await user.save();
-      return res.send({ message: 'Администратор успешно создан!', user });
-    } else {
-      const user = new User({
+    const user = new User({
         email: req.body.email,
         name: req.body.name,
         surname: req.body.surname,
@@ -35,7 +25,6 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
       user.generateToken();
       await user.save();
       return res.send({ message: 'Регистрация прошла успешно!', user });
-    }
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(error);
@@ -238,6 +227,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
     try {
       const user = await User.findById(req.params.id);
       const {
+        name,
         firstName,
         surname,
         patronymic,
@@ -256,6 +246,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
         const updated = await User.findOneAndUpdate(
             {_id: user._id},
             {
+              name,
               firstName,
               surname,
               patronymic,
@@ -285,8 +276,8 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
     }
 });
 
-userRouter.delete('/:id', async (req, res, next) => {
-  if (req.params.id !== 'sessions') {
+userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) => {
+  if (req.params.id !== 'sessions' && req.user?.role === 'superadmin') {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
@@ -326,5 +317,6 @@ userRouter.delete('/:id', async (req, res, next) => {
     }
   }
 });
+
 
 export default userRouter;

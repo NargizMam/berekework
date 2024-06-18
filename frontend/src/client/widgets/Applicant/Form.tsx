@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Button, Grid } from '@mui/material';
 import { cities, educationTypes, jobCities, jobs } from '../../../app/constants/constant';
 import { LoadingButton } from '@mui/lab';
@@ -6,16 +6,24 @@ import { UserMutation } from '../../page/Profile/model/types';
 
 interface Props {
   state: UserMutation;
-  submitFormHandler: (e: React.FormEvent) => void;
-  inputChangeHandler: (
-    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
+  submitFormHandler: (e: FormEvent) => void;
+  inputChangeHandler: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLTextAreaElement>) => void;
   addField: () => void;
   fields: ReactNode[];
   loading: boolean;
 }
 
 const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inputChangeHandler, addField }) => {
+  const [allFieldsEmpty, setAllFieldsEmpty] = useState(true);
+
+  useEffect(() => {
+    const fieldsEmpty = !state.name && !state.surname && !state.patronymic && !state.gender && !state.dateOfBirth &&
+      !state.country && !state.city && !state.education && !state.aboutMe && !state.preferredJob && !state.preferredCity &&
+      !state.contacts?.phone && !state.contacts?.whatsapp && !state.contacts?.telegram;
+
+    setAllFieldsEmpty(fieldsEmpty);
+  }, [state]);
+
   return (
     <div className="applicantFormContainer">
       <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} autoComplete="off" onSubmit={submitFormHandler}>
@@ -32,7 +40,7 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
           </div>
           <Grid item xs>
             <label className="labelForField" htmlFor="patronymic">Отчество</label>
-            <input className="field" id="patronymic" value={state.patronymic} onChange={inputChangeHandler} name="patronymic"  />
+            <input className="field" id="patronymic" value={state.patronymic} onChange={inputChangeHandler} name="patronymic" />
           </Grid>
           <div className="inputContainer">
             <Grid item xs={7}>
@@ -85,7 +93,7 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
                 Добавить опыт работы
               </Button>
             </Grid>
-              {fields.map((field) => field)}
+            {fields.map((field) => field)}
           </Grid>
           <div className="inputContainer">
             <Grid item xs>
@@ -122,7 +130,14 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
             <input className="applicantField" id="telegram" value={state.contacts?.telegram} onChange={inputChangeHandler} name="telegram" required />
           </Grid>
         </div>
-        <LoadingButton className="sendBtn" type="submit" color="primary" variant="contained" loading={loading}>
+        <LoadingButton
+          className="sendBtn"
+          type="submit"
+          color="primary"
+          variant="contained"
+          loading={loading}
+          disabled={allFieldsEmpty}
+        >
           Сохранить изменения
         </LoadingButton>
       </form>

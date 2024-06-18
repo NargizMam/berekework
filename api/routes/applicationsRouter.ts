@@ -7,7 +7,6 @@ import User from '../models/users/userModel';
 
 const applicationsRouter = express.Router();
 
-// Cоздать заявку может и соискатель и работодаель
 applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUser, res, next) => {
   try {
     const { vacancyId, userId } = req.params;
@@ -18,7 +17,6 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
       return res.status(404).json({ error: 'Vacancy not found' });
     }
 
-    // Определение пользователя
     let user;
     let createdBy;
     if (req.user) {

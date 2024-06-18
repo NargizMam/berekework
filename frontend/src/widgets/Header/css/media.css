@@ -1,9 +1,8 @@
-@media screen and (min-width: 830px) {
+@media screen and (min-width: 1107px) {
   .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: nowrap;
   }
 
   .navigation-big-screen {
@@ -11,19 +10,23 @@
   }
 
   .header-logo-wrapper {
-    flex-basis: 0%;
+    flex-basis: 0;
   }
-
-  .main-mav-web {
+	
+	.main-mav-web {
     display: flex;
     list-style: none;
   }
 
+  .main-nav-open {
+	  display: block;
+  }
+  
   .main-nav-login {
     display: none;
   }
-
-  .main-nav-item {
+  
+	.main-nav-item {
     margin: 0 10px;
     padding: 0 5px;
   }
@@ -43,16 +46,16 @@
   .main-nav-list {
     display: flex;
   }
-
-  .login {
+  
+	.login {
     display: block;
   }
 }
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 720px) {
   .main-nav-list {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 }
 
