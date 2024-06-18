@@ -82,19 +82,6 @@ export const EmployerEditPage = () => {
     event.preventDefault();
     if (id) {
       await dispatch(updateEmployer({ id, data: state })).unwrap();
-      setState({
-        email: '',
-        password: '',
-        industry: '',
-        companyName: '',
-        description: '',
-        contacts: '',
-        foundationYear: '',
-        address: '',
-        document: null,
-        avatar: null,
-      });
-      navigate(`/employer/${id}`);
     } else {
       await dispatch(createEmployer(state)).unwrap();
     }
@@ -110,7 +97,7 @@ export const EmployerEditPage = () => {
       document: null,
       avatar: null,
     });
-    navigate(`/employer/${id}`);
+    navigate(`/employersProfile/${id}`);
   };
 
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
