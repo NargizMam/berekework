@@ -177,7 +177,7 @@ const EmployerProfile: React.FC = () => {
               <Button
                 variant="outlined"
                 sx={{ marginLeft: { xs: 0, sm: 1 }, mt: { xs: 1, sm: 0 } }}
-                onClick={() => navigate('/vacancy/edit')}
+                onClick={() => navigate('/vacancy/submit/')}
               >
                 Создать вакансию
               </Button>

@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { countries, educationTypes, workTypes } from '../model/constants';
 import CreateVacancyFormStyle from './CreateVacancyForm-style';
@@ -23,31 +23,29 @@ interface Flag {
   workConditions: boolean;
 }
 
-const initialState = {
-  vacancyTitle: '',
-  aboutVacancy: '',
-  responsibilities: '',
-  workConditions: '',
-  country: '',
-  city: '',
-  fieldOfWork: '',
-  minAge: '',
-  maxAge: '',
-  minSalary: '',
-  maxSalary: '',
-  education: '',
-  employmentType: '',
-  employer: '',
-};
-
 export const CreateVacancyForm = () => {
   const dispatch = useAppDispatch();
   const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectVacancy);
-  const [cities, setCities] = useState<string[]>([]);
-  const [state, setState] = useState<ICreateVacancyForm>(initialState);
+  let cities = useRef<string[]>([]);
+  const [state, setState] = useState<ICreateVacancyForm>({
+    vacancyTitle: '',
+    aboutVacancy: '',
+    responsibilities: '',
+    workConditions: '',
+    country: '',
+    city: '',
+    fieldOfWork: '',
+    minAge: '',
+    maxAge: '',
+    minSalary: '',
+    maxSalary: '',
+    education: '',
+    employmentType: '',
+    employer: '',
+  });
   const { id } = useParams() as { id: string };
   const navigate = useNavigate();
 
@@ -66,20 +64,6 @@ export const CreateVacancyForm = () => {
   }, [id, dispatch]);
 
   useEffect(() => {
-    if (id && editVacancy) {
-      setState(prevState => ({
-        ...prevState,
-        ...editVacancy,
-        minAge: editVacancy.age.minAge.toString(),
-        maxAge: editVacancy.age.maxAge.toString(),
-        minSalary: editVacancy.salary.minSalary.toString(),
-        maxSalary: editVacancy.salary.maxSalary.toString(),
-        employer: employer?._id || '',
-      }));
-    }
-  }, [editVacancy, employer?._id, id]);
-
-  useEffect(() => {
     const editData: ICreateVacancyForm = {
       vacancyTitle: editVacancy?.vacancyTitle || '',
       aboutVacancy: editVacancy?.aboutVacancy || '',
@@ -96,9 +80,33 @@ export const CreateVacancyForm = () => {
       employmentType: editVacancy?.employmentType || '',
       employer: '',
     };
-    if (editVacancy) {
+    if (id && editData) {
       setState(editData);
+      dispatch(clearEditVacancy());
+    } else {
+      setState({
+        vacancyTitle: '',
+        aboutVacancy: '',
+        responsibilities: '',
+        workConditions: '',
+        country: '',
+        city: '',
+        fieldOfWork: '',
+        minAge: '',
+        maxAge: '',
+        minSalary: '',
+        maxSalary: '',
+        education: '',
+        employmentType: '',
+        employer: '',
+      });
     }
+
+    countries.forEach((item) => {
+      if (item.name === state.country) {
+        cities.current = item.cities;
+      }
+    });
   }, [editVacancy, dispatch]);
 
   useEffect(() => {
@@ -116,15 +124,19 @@ export const CreateVacancyForm = () => {
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    if (name === 'country') {
-      const index = countries.findIndex((item) => item.name === value);
-      if (index >= 0) {
-        setCities(countries[index].cities);
-      }
-    }
     setState((prevState) => {
       return { ...prevState, [name]: value };
     });
+    if (name === 'country' || state.country !== '') {
+      countries.forEach((item) => {
+        if (item.name === value) {
+          setState((prevState) => {
+            return { ...prevState, city: '' };
+          });
+          cities.current = item.cities;
+        }
+      });
+    }
   };
 
   const textareaChangeHandler = (name: string, value: string) => {
@@ -161,7 +173,7 @@ export const CreateVacancyForm = () => {
       employmentType: state.employmentType,
     };
     try {
-      if (editVacancy) {
+      if (editVacancy && id) {
         const editData: VacancyEdtiData = {
           id: editVacancy._id,
           vacancy: stateData,
@@ -170,12 +182,25 @@ export const CreateVacancyForm = () => {
         navigate(-1);
       } else {
         await dispatch(postVacancy(stateData)).unwrap();
-        // dispatch(getEmployersProfileInfo(employeeId));
         navigate(-1);
       }
       dispatch(clearEditVacancy());
-      setState(initialState);
-      // setOpenForm(false);
+      setState({
+        vacancyTitle: '',
+        aboutVacancy: '',
+        responsibilities: '',
+        workConditions: '',
+        country: '',
+        city: '',
+        fieldOfWork: '',
+        minAge: '',
+        maxAge: '',
+        minSalary: '',
+        maxSalary: '',
+        education: '',
+        employmentType: '',
+        employer: '',
+      });
     } catch (e) {
       dispatch(openErrorMessage);
     }
@@ -183,6 +208,11 @@ export const CreateVacancyForm = () => {
 
   return (
     <>
+      {countries.forEach((item) => {
+        if (item.name === state.country) {
+          cities.current = item.cities;
+        }
+      })}
       {error && <ErrorMessage />}
       {isLoading ? (
         <Loader />
@@ -252,14 +282,20 @@ export const CreateVacancyForm = () => {
                     value={state.country}
                     required
                   >
+                    {state.country ? <option className="menuItem">{state.country}</option> : null}
                     <option className="menuItem" value="">
                       Не указан
                     </option>
-                    {countries.map((country, index) => (
-                      <option key={index} className="menuItem" value={country.name}>
-                        {country.name}
-                      </option>
-                    ))}
+                    {countries.map((country, index) => {
+                      if (state.country === country.name) {
+                        return null;
+                      }
+                      return (
+                        <option key={index} className="menuItem" value={country.name}>
+                          {country.name}
+                        </option>
+                      );
+                    })}
                   </select>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -282,14 +318,20 @@ export const CreateVacancyForm = () => {
                     value={state.city}
                     required
                   >
+                    {state.city ? <option className="menuItem">{state.city}</option> : null}
                     <option className="menuItem" value="">
                       Не указан
                     </option>
-                    {cities.map((city, index) => (
-                      <option key={index} className="menuItem" value={city}>
-                        {city}
-                      </option>
-                    ))}
+                    {cities.current.map((city, index) => {
+                      if (city === state.city) {
+                        return null;
+                      }
+                      return (
+                        <option key={index} className="menuItem">
+                          {city}
+                        </option>
+                      );
+                    })}
                   </select>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
