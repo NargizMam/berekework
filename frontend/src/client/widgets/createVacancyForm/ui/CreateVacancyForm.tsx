@@ -12,7 +12,7 @@ import { Loader } from '../../../../shared/loader';
 import './CreateVacancyForm.css';
 import { openErrorMessage } from '../../../../widgets/WarningMessage/warningMessageSlice';
 import ErrorMessage from '../../../../widgets/WarningMessage/ErrorMessage';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getVacancyById } from '../../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy } from '../../../../feachers/vacancy/vacancySlice';
 import { selectEmployer } from '../../../page/Auth/model/AuthSlice';
@@ -23,32 +23,13 @@ interface Flag {
   workConditions: boolean;
 }
 
-// const initialState = {
-//   vacancyTitle: '',
-//   aboutVacancy: '',
-//   responsibilities: '',
-//   workConditions: '',
-//   country: '',
-//   city: '',
-//   fieldOfWork: '',
-//   minAge: '',
-//   maxAge: '',
-//   minSalary: '',
-//   maxSalary: '',
-//   education: '',
-//   employmentType: '',
-//   employer: '',
-// };
-
 export const CreateVacancyForm = () => {
-
   const dispatch = useAppDispatch();
   const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectVacancy);
-  const [cities, setCities] = useState<any>([]);
-  let test = useRef<string[]>([]);
+  let cities = useRef<string[]>([]);
   const [state, setState] = useState<ICreateVacancyForm>({
     vacancyTitle: '',
     aboutVacancy: '',
@@ -123,10 +104,9 @@ export const CreateVacancyForm = () => {
 
     countries.forEach((item) => {
       if (item.name === state.country) {
-        test.current = item.cities;
+        cities.current = item.cities;
       }
     });
-    console.log(test.current);
   }, [editVacancy, dispatch]);
 
   useEffect(() => {
@@ -153,7 +133,7 @@ export const CreateVacancyForm = () => {
           setState((prevState) => {
             return { ...prevState, city: '' };
           });
-          test.current = item.cities;
+          cities.current = item.cities;
         }
       });
     }
@@ -228,6 +208,11 @@ export const CreateVacancyForm = () => {
 
   return (
     <>
+      {countries.forEach((item) => {
+        if (item.name === state.country) {
+          cities.current = item.cities;
+        }
+      })}
       {error && <ErrorMessage />}
       {isLoading ? (
         <Loader />
@@ -337,8 +322,7 @@ export const CreateVacancyForm = () => {
                     <option className="menuItem" value="">
                       Не указан
                     </option>
-                    {test.current.map((city, index) => {
-                      console.log(city);
+                    {cities.current.map((city, index) => {
                       if (city === state.city) {
                         return null;
                       }
@@ -348,14 +332,6 @@ export const CreateVacancyForm = () => {
                         </option>
                       );
                     })}
-                    {/* <option className="menuItem" value="">
-                      Не указан
-                    </option>
-                    {cities.map((city, index) => (
-                      <option key={index} className="menuItem" value={city}>
-                        {city}
-                      </option>
-                    ))} */}
                   </select>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
