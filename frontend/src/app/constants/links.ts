@@ -4,7 +4,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
-export const API_URL = import.meta.env['VITE_API_URL'];
+export const API_URL = 'http://localhost:8000';
 
 export const vacancyCategory: CategoryVacancyI[] = [
   {
