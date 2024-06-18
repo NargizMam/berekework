@@ -1,16 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, test } from '@jest/globals';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { store } from '../frontend/src/app/store/store';
-import { LoginPage } from '../frontend/src/client/page/Auth';
+import { store } from '../../../../app/store/store';
+import { LoginPage } from '../ui/LoginPage';
+import '@testing-library/jest-dom';
 
-// Mock the AuthThunk functions
 jest.mock('../frontend/src/client/page/Auth/api/AuthThunk', () => ({
 	googleAuth: jest.fn(),
 	login: jest.fn(() => ({
-		unwrap: jest.fn().mockResolvedValueOnce({})
+		unwrap: jest.fn().mockResolvedValueOnce({}),
 	})),
 }));
 
@@ -58,8 +59,8 @@ describe('LoginPage', () => {
 				</Provider>
 		);
 		
-		userEvent.type(screen.getByLabelText(/E-mail/i), 'test@example.com');
-		userEvent.type(screen.getByLabelText(/Пароль/i), 'password123');
+		await userEvent.type(screen.getByLabelText(/E-mail/i), 'test@example.com');
+		await userEvent.type(screen.getByLabelText(/Пароль/i), 'password123');
 		
 		fireEvent.click(screen.getByRole('button', { name: /Войти/i }));
 		
