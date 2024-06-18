@@ -90,7 +90,7 @@
   }
 
   .MainCardWithIcon {
-    flex-wrap: wrap;
+    flex-direction: column;
     padding: 24px;
   }
 
@@ -98,3 +98,10 @@
     margin-top: 0;
   }
 }
+
+@media (max-width: 599.9px) {
+    .MainCard__title {
+        font-size: 1rem;
+    }
+}
+
