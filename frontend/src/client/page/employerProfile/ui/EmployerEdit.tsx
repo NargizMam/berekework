@@ -94,7 +94,7 @@ export const EmployerEditPage = () => {
         document: null,
         avatar: null,
       });
-      navigate(`/employer/${id}`);
+      navigate(`/employersProfile/${id}`);
     } else {
       await dispatch(createEmployer(state)).unwrap();
     }
@@ -110,7 +110,7 @@ export const EmployerEditPage = () => {
       document: null,
       avatar: null,
     });
-    navigate(`/employer/${id}`);
+    navigate(`/employersProfile/${id}`);
   };
 
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
