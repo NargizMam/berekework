@@ -87,52 +87,51 @@ employerRouter.patch('/:id', async (req, res, next) => {
 });
 
 employerRouter.put(
-    '/:id',
-    multiUpload.fields([
-      { name: 'document', maxCount: 1 },
-      { name: 'avatar', maxCount: 1 },
-    ]),
-    async (req, res, next) => {
-      try {
-        const files = req.files as UploadedFiles;
-        const employerId = req.params.id;
-        const updateData: any = {};
+  '/:id',
+  multiUpload.fields([
+    { name: 'document', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 },
+  ]),
+  async (req, res, next) => {
+    try {
+      const files = req.files as UploadedFiles;
+      const employerId = req.params.id;
+      const updateData: any = {};
 
-        if (req.body.email) updateData.email = req.body.email;
-        if (req.body.password) updateData.password = req.body.password;
-        if (files['avatar']) updateData.avatar = files['avatar'][0].filename;
-        if (req.body.companyName) updateData.companyName = req.body.companyName;
-        if (req.body.foundationYear) updateData.foundationYear = req.body.foundationYear;
-        if (files['document']) updateData.documents = files['document'][0].filename;
-        if (req.body.industry) updateData.industry = req.body.industry;
-        if (req.body.description) updateData.description = req.body.description;
-        if (req.body.address) updateData.address = req.body.address;
-        if (req.body.contacts) updateData.contacts = req.body.contacts;
-        if (req.body.adminsComment) updateData.adminsComment = req.body.adminsComment;
+      if (req.body.email) updateData.email = req.body.email;
+      if (req.body.password) updateData.password = req.body.password;
+      if (files['avatar']) updateData.avatar = files['avatar'][0].filename;
+      if (req.body.companyName) updateData.companyName = req.body.companyName;
+      if (req.body.foundationYear) updateData.foundationYear = req.body.foundationYear;
+      if (files['document']) updateData.documents = files['document'][0].filename;
+      if (req.body.industry) updateData.industry = req.body.industry;
+      if (req.body.description) updateData.description = req.body.description;
+      if (req.body.address) updateData.address = req.body.address;
+      if (req.body.contacts) updateData.contacts = req.body.contacts;
+      if (req.body.adminsComment) updateData.adminsComment = req.body.adminsComment;
 
-        const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });
-        // console.log(employer, 'employer')
-        if (!employer) {
-          return res.status(404).send({ message: 'Employer not found!' });
-        }
-
-        if (req.body.email) {
-          await transporter.sendMail({
-            from: '04072002mu@gmail.com',
-            to: req.body.email,
-            subject: 'Employer details updated',
-            text: `${req.body.email}, your employer details have been updated!`,
-          });
-        }
-
-        return res.send({ message: 'Employer updated successfully!', employer });
-      } catch (error) {
-        if (error instanceof mongoose.Error.ValidationError) {
-          return res.status(422).send(error);
-        }
-        return next(error);
+      const employer = await Employer.findByIdAndUpdate(employerId, updateData, { new: true });
+      if (!employer) {
+        return res.status(404).send({ message: 'Employer not found!' });
       }
-    },
+
+      if (req.body.email) {
+        await transporter.sendMail({
+          from: '04072002mu@gmail.com',
+          to: req.body.email,
+          subject: 'Employer details updated',
+          text: `${req.body.email}, your employer details have been updated!`,
+        });
+      }
+
+      return res.send({ message: 'Employer updated successfully!', employer });
+    } catch (error) {
+      if (error instanceof mongoose.Error.ValidationError) {
+        return res.status(422).send(error);
+      }
+      return next(error);
+    }
+  },
 );
 
 employerRouter.get('/', async (_req, res, next) => {
@@ -172,28 +171,14 @@ employerRouter.delete('/:id', async (req, res, next) => {
   }
 });
 
-employerRouter.post('/sessions', async (req, res, next) => {
+employerRouter.post('/tariff', async (req, res, next) => {
   try {
-    let employer = await Employer.findOne({ email: req.body.email });
-
-    if (!employer) {
-      employer = await Employer.findOne({ email: req.body.email });
-    }
-
-    if (!employer) {
-      return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
-    }
-
-    const isMatch = await employer.checkPassword(req.body.password);
-
-    if (!isMatch) {
-      return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
-    }
-
-    employer.generateToken();
-    await employer.save();
-
-    return res.send({ message: 'Вы успешно вошли в приложение!', employer });
+    await transporter.sendMail({
+      from: '04072002mu@gmail.com',
+      to: req.body.email,
+      subject: `Работодатель ${req.body.email} хочет купить тариф ${req.body.typeTariff}!`,
+      text: `${req.body.email}, deleted!`,
+    });
   } catch (error) {
     return next(error);
   }
