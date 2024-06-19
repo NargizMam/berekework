@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import {
@@ -14,6 +14,8 @@ import {
 import { getExtension } from '../../../../feachers/checkExtensiion';
 import { Button, Grid, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { API_URL } from '../../../../app/constants/links';
+import Box from '@mui/material/Box';
 
 export interface EmployerInfoApiMutation {
   email: string;
@@ -51,6 +53,7 @@ export const EmployerEditPage = () => {
   const imageSelect = useRef<HTMLInputElement>(null);
   const [filename, setFilename] = useState('');
   const [filenameImage, setFilenameImage] = useState('');
+  const [imageData, setImageData] = useState('');
   const [errorDocument, setErrorDocument] = useState(false);
 
   const loading = useAppSelector(selectEmployersProfileLoading);
@@ -64,11 +67,15 @@ export const EmployerEditPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    setState((prevState) => ({
-      ...prevState,
-      ...employer,
-    }));
-  }, [employer]);
+    if (id && employer) {
+      setState((prevState) => ({
+        ...prevState,
+        ...employer,
+        document: employer?.documents || '',
+      }));
+      setFilenameImage(employer.avatar);
+    }
+  }, [employer, id]);
 
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -105,6 +112,8 @@ export const EmployerEditPage = () => {
     if (files && files[0]) {
       if (name === 'logo') {
         setFilenameImage(files[0].name);
+        const imageUrl = URL.createObjectURL(files[0]);
+        setImageData(imageUrl);
       } else if (name === 'document') {
         setFilename(files[0].name);
         setErrorDocument(getExtension(files[0].name)?.toLowerCase() !== 'pdf');
@@ -115,6 +124,7 @@ export const EmployerEditPage = () => {
       }));
     }
   };
+
   const clearDocumentField = () => {
     setFilename('');
     setFilenameImage('');
@@ -126,6 +136,7 @@ export const EmployerEditPage = () => {
       documentSelect.current.value = '';
     }
   };
+
   const selectFile = (type: string) => {
     if (type === 'document') {
       if (documentSelect.current) {
@@ -137,6 +148,7 @@ export const EmployerEditPage = () => {
       }
     }
   };
+
   const getFieldError = (fieldName: string) => {
     try {
       return error?.errors[fieldName].message;
@@ -144,7 +156,6 @@ export const EmployerEditPage = () => {
       return undefined;
     }
   };
-
 
 
   return (
@@ -265,6 +276,20 @@ export const EmployerEditPage = () => {
               onChange={changeFileFiled}
               ref={documentSelect}
             />
+            {
+              id ?
+                <Box
+                  sx={{
+                    margin: '20px 0',
+                  }}
+                >
+                  <Link target="_blank" to={`${API_URL}/${employer?.documents}`}>
+                    Посмотреть на документ
+                  </Link>
+                </Box>
+                :
+                null
+            }
             <Grid container direction="row" spacing={2} alignItems="center">
               <Grid item xs>
                 <TextField
@@ -279,13 +304,13 @@ export const EmployerEditPage = () => {
               </Grid>
               <Grid item>
                 <Button variant="contained" onClick={() => selectFile('document')}>
-                  Browse
+                  Открыть
                 </Button>
               </Grid>
               {filename.length !== 0 && (
                 <Grid item>
                   <Button variant="contained" onClick={clearDocumentField}>
-                    Clear
+                    Очистить
                   </Button>
                 </Grid>
               )}
@@ -293,6 +318,16 @@ export const EmployerEditPage = () => {
           </Grid>
           <Grid item xs={12}>
             <input style={{ display: 'none' }} type="file" name="logo" onChange={changeFileFiled} ref={imageSelect} />
+            <Box
+              sx={{
+                margin: '20px 0',
+              }}
+            >
+              <img style={{
+                width: '350px',
+                height: '200px',
+              }} src={imageData ? imageData : API_URL + '/' + employer?.avatar} alt="avatar" />
+            </Box>
             <Grid container direction="row" spacing={2} alignItems="center">
               <Grid item xs>
                 <TextField
@@ -307,13 +342,13 @@ export const EmployerEditPage = () => {
               </Grid>
               <Grid item>
                 <Button variant="contained" onClick={() => selectFile('image')}>
-                  Browse
+                  Открыть
                 </Button>
               </Grid>
               {filenameImage && filenameImage.toString().length !== 0 && (
                 <Grid item>
                   <Button variant="contained" onClick={clearDocumentField}>
-                    Clear
+                    Отчистить
                   </Button>
                 </Grid>
               )}
@@ -321,7 +356,7 @@ export const EmployerEditPage = () => {
           </Grid>
           <Grid item xs={registerStyle ? 12 : 6}>
             <LoadingButton loading={loading} type="submit" variant="contained" sx={{ width: '100%' }}>
-              Create
+              {id ? 'Обновить' : 'Создать'}
             </LoadingButton>
           </Grid>
         </Grid>
