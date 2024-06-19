@@ -1,45 +1,38 @@
-import Typography from '@mui/material/Typography';
-import { Grid, Paper } from '@mui/material';
-import { PieChart } from '@mui/x-charts';
+import React from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import Box from '@mui/material/Box';
+import { Employer } from '../../page/employerPanel/model/types';
+import { User } from '../../../app/types';
 
-export function TotalCustomers() {
-  return (
-    <Paper sx={{ marginBottom: '30px', padding: '20px' }}>
-      <Typography color="text.secondary" variant="h6" marginBottom="20px">
-        Customers
-      </Typography>
-      <Grid display="flex">
-        <Grid>
-          <Typography marginBottom="10px">New customers</Typography>
-          <PieChart
-            series={[
-              {
-                data: [
-                  { id: 0, value: 10, label: 'Employers' },
-                  { id: 1, value: 15, label: 'Applicants' },
-                ],
-              },
-            ]}
-            width={400}
-            height={200}
-          />
-        </Grid>
-        <Grid>
-          <Typography marginBottom="10px">Lost</Typography>
-          <PieChart
-            series={[
-              {
-                data: [
-                  { id: 1, value: 30, label: 'Employers' },
-                  { id: 2, value: 25, label: 'Applicants' },
-                ],
-              },
-            ]}
-            width={400}
-            height={200}
-          />
-        </Grid>
-      </Grid>
-    </Paper>
-  );
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+interface Props {
+  employers: Employer[];
+  users: User[];
 }
+
+export const TotalCustomers: React.FC<Props> = ({ employers, users }) => {
+  const data = {
+    labels: ['Соискатель', 'Работодатель'],
+    datasets: [
+      {
+        label: 'Колличество',
+        data: [employers.length, users.length],
+        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  return (
+    <Box
+      sx={{
+        width: '500px',
+      }}
+    >
+      <Pie data={data} />
+    </Box>
+  );
+};
