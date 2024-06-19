@@ -1,7 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MainCardItem, { MainCardApiData } from './MainCardItem';
-import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './MainCards.css';
@@ -32,16 +31,12 @@ export const MainCards: React.FC<Props> = ({ slice }) => {
           className="MainCards__Swiper"
           spaceBetween={10}
           slidesPerView={1.2}
-          pagination={{
-            clickable: true,
-          }}
           breakpoints={{
             600: {
               slidesPerView: 2,
               spaceBetween: 10,
             },
           }}
-          modules={[Pagination]}
         >
           {items.map((mainCard, index) => (
             <SwiperSlide className="MainCards__SwiperSlide" key={index}>
