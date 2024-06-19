@@ -12,6 +12,7 @@ export interface Employer {
   avatar: string;
   documents: string;
   tariff: string;
+  createdAt: string;
 }
 
 export interface EmployerMutation {

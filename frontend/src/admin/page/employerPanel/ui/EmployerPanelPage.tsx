@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import {
   selectEmployerDeleteLoading,
-  selectEmployerLoading,
+  selectEmployersLoading,
   selectEmployers,
   selectEmployerUpdateLoading,
 } from '../model/employerSlice';
@@ -55,7 +55,7 @@ export const EmployerPanelPage = () => {
   const [document] = usePrismicDocumentByUID('pages', 'foremployer');
   const dispatch = useAppDispatch();
   const employers = useAppSelector(selectEmployers);
-  const loading = useAppSelector(selectEmployerLoading);
+  const loading = useAppSelector(selectEmployersLoading);
   const [selectTariff, setSelectTariff] = useState('');
   const [open, setOpen] = useState(false);
   const [employer, setEmployer] = useState({

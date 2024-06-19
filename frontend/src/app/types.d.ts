@@ -83,6 +83,7 @@ export interface User {
     telegram?: string;
   };
   documents?: string[];
+  createdAt: string;
 }
 
 export interface StatusHistory {
