@@ -50,9 +50,9 @@ export const CreateVacancyForm = () => {
   const navigate = useNavigate();
 
   const [isFull, setIsFull] = useState<Flag>({
-    aboutVacancy: true,
-    responsibilities: true,
-    workConditions: true,
+    aboutVacancy: false,
+    responsibilities: false,
+    workConditions: false,
   });
 
   const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
