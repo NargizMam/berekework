@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { VacancyI } from '../types';
 import auth, { RequestWithUser } from '../middleware/auth';
 import Employer from '../models/employer/employerModel';
+import Application from '../models/application/Application';
 
 const vacancyRouter = express.Router();
 
@@ -316,6 +317,22 @@ vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
       vacancyById.archive = true;
       await vacancyById.save();
     }
+
+    // Обновить статусы заявок на "Вакансия закрыта"
+    await Application.updateMany(
+      { vacancy: vacancyById._id },
+      {
+        userStatus: 'Вакансия закрыта',
+        employerStatus: 'Вакансия закрыта',
+        $push: {
+          statusHistory: {
+            status: 'Вакансия закрыта',
+            changedBy: 'employer',
+            changedAt: new Date()
+          }
+        }
+      }
+    );
 
     return res.send({ message: 'Vacancy deleted successfully' });
   } catch (e) {
