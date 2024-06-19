@@ -16,7 +16,7 @@ const Permit: React.FC<Props> = ({ children, employerOnly }) => {
     if (!user && !employer) {
       navigate('/');
     }
-    if (employerOnly && !employer) {
+    if (employerOnly && employer && employer.isPublished === false) {
       navigate('/');
     }
     if (employer && employer.isPublished === false) {
@@ -25,7 +25,7 @@ const Permit: React.FC<Props> = ({ children, employerOnly }) => {
     if(user && !user.token || employer && !employer.token){
       navigate('/login');
     }
-  }, [user, employer]);
+  }, [user, employer, employerOnly, navigate]);
 
   return <>{children}</>;
 };
