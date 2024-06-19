@@ -280,7 +280,7 @@ const run = async () => {
   // Create employers
   const [employer1, employer2] = await Employer.create(
     {
-      email: 'employer1@example.com',
+      email: 'muradil.koychubekob@gmail.com',
       password: 'password123',
       token: randomUUID(),
       role: 'employer',

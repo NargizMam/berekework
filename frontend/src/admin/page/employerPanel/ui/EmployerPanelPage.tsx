@@ -36,6 +36,7 @@ import { API_URL } from '../../../../app/constants/links';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { toast } from 'react-toastify';
 
 interface TariffGet {
   slice_type: string;
@@ -76,9 +77,14 @@ export const EmployerPanelPage = () => {
     setOpen(false);
   };
 
-  const handleDeleteEmployer = async (id: string) => {
-    await dispatch(deleteEmployer(id)).unwrap();
-    await dispatch(getAllEmployer());
+  const handleDeleteEmployer = async (id: string, email: string) => {
+    try {
+      await dispatch(deleteEmployer({ id, email })).unwrap();
+      await dispatch(getAllEmployer()).unwrap();
+      toast.success(`${email} удален!`);
+    } catch (error) {
+      toast.error('Что то пошло не так!');
+    }
   };
 
   const handleClickOpen = (id: string, email: string) => {
@@ -160,7 +166,7 @@ export const EmployerPanelPage = () => {
                     <IconButton
                       aria-label="delete"
                       disabled={deleteLoading}
-                      onClick={() => handleDeleteEmployer(employer._id)}
+                      onClick={() => handleDeleteEmployer(employer._id, employer.email)}
                     >
                       <DeleteIcon color={'error'} sx={{ fontSize: '30px' }} />
                     </IconButton>
