@@ -79,7 +79,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 899.9px) {
   .MainCardWithImage {
     padding: 24px;
   }

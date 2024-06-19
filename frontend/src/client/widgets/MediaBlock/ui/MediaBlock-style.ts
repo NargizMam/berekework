@@ -1,6 +1,5 @@
 const MediaBlockStyle = {
   container: {
-    maxWidth: '1280px',
     margin: '0 auto',
     marginBottom: {
       xs: '7%',
@@ -48,7 +47,6 @@ const MediaBlockStyle = {
   },
   cards: {
     display: 'flex',
-    gap: '10px',
     margin: '0 auto',
     position: 'relative',
   },

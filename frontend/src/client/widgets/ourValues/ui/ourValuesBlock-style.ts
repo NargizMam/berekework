@@ -1,9 +1,12 @@
 const OurValuesBlockStyle = {
-  ourValuesCardBlock: {
+  container: {
     marginBottom: {
       xs: '7%',
       lg: '178px',
     },
+  },
+  cards: {
+    display: 'flex',
   },
   ourValuesBlockTitle: {
     fontSize: {
@@ -72,9 +75,9 @@ const OurValuesBlockStyle = {
     color: '#8E8E8E',
     margin: 0,
   },
-  OurValuesSwiperSlide: {
-    height: 'auto',
-  },
+  // OurValuesSwiperSlide: {
+  //   height: 'auto',
+  // },
 };
 
 export default OurValuesBlockStyle;
