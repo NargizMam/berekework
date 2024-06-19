@@ -310,6 +310,7 @@ vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
     }
 
     if (isAdmin) {
+      await Application.deleteMany({ vacancy: req.params.id });
       await Vacancy.findByIdAndDelete(req.params.id);
     }
 
