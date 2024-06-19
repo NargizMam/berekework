@@ -3,16 +3,16 @@ import React, { FormEvent, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 
 interface Props {
-  onSearch: (vacancyTitle: string) => void;
+  onSearch: (searchTerm: string) => void;
   isLoading: boolean;
 }
 
 const VacancySearch: React.FC<Props> = ({ onSearch, isLoading }) => {
-  const [vacancyTitle, setVacancyTitle] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    onSearch(vacancyTitle);
+    onSearch(searchTerm);
   };
 
   return (
@@ -27,10 +27,10 @@ const VacancySearch: React.FC<Props> = ({ onSearch, isLoading }) => {
       >
         <TextField
           fullWidth
-          value={vacancyTitle}
-          onChange={(event) => setVacancyTitle(event.target.value)}
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
           autoComplete="off"
-          placeholder="Например: водитель или менеджер по продажам"
+          placeholder="Профессия, должность или компания"
           label="Поиск вакансий"
           InputProps={{
             style: { borderRadius: '30px' },

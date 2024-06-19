@@ -45,8 +45,8 @@ export const VacancyPageClient = () => {
     }
   }, [dispatch, vacancyFilter]);
 
-  const handleSearch = async (vacancyTitle: string) => {
-    await dispatch(getAllVacancyToCard(vacancyTitle));
+  const handleSearch = async (searchTerm: string) => {
+    await dispatch(getAllVacancyToCard(searchTerm));
   };
 
   const scrollUp = () => {

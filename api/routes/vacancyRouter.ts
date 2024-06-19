@@ -68,22 +68,33 @@ vacancyRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
 vacancyRouter.get('/', async (req, res, next) => {
   try {
     const categoryVacancy = req.query.getCategory;
-    const { vacancyTitle } = req.query;
+    const {searchTerm } = req.query;
     const filterCategory = req.query.category;
     const { salary, age, ...categories } = req.query;
     const { abroad, kyrgyzstan } = req.query;
     const vacancyCard = req.query.vacancyCard;
 
     if (vacancyCard) {
-      if (vacancyTitle) {
-        const filteredVacancies = await Vacancy.find({
-          vacancyTitle: { $regex: vacancyTitle, $options: 'i' },
-          archive: false,
-        })
-          .select('vacancyTitle salary city')
-          .populate('employer', '-_id companyName avatar')
-          .sort({ createdAt: -1 });
-        return res.send(filteredVacancies);
+      if (searchTerm) {
+        const employers = await Employer.find({ companyName: { $regex: searchTerm, $options: 'i'}});
+
+        if (employers.length > 0) {
+          const employerIds = employers.map(employer => employer._id);
+          const filteredVacancies = await Vacancy.find({ employer: { $in: employerIds }, archive: false })
+            .select('vacancyTitle salary city')
+            .populate('employer', '-_id companyName avatar')
+            .sort({ createdAt: -1 });
+          return res.send(filteredVacancies);
+        } else {
+          const filteredVacancies = await Vacancy.find({
+            vacancyTitle: { $regex: searchTerm, $options: 'i' },
+            archive: false,
+          })
+            .select('vacancyTitle salary city')
+            .populate('employer', '-_id companyName avatar')
+            .sort({ createdAt: -1 });
+          return res.send(filteredVacancies);
+        }
       }
 
       const result = await Vacancy.find({ archive: false })
