@@ -10,6 +10,23 @@ const TitleBlockStyle = {
       gap: '25px',
     },
   },
+  blockImageOnly: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '20px',
+    justifyContent: 'space-between',
+    marginBottom: {
+      xs: '7%',
+      lg: '116px',
+    },
+    '@media (max-width: 960px)': {
+      justifyContent: 'center',
+      marginBottom: {
+        xs: '7%',
+        lg: '60px',
+      },
+    },
+  },
   infoBlock: {
     maxWidth: '700px',
     display: 'flex',
@@ -20,6 +37,7 @@ const TitleBlockStyle = {
     fontWeight: '700',
     lineHeight: '1.07',
     fontSize: '56px',
+    maxWidth: '520px',
     '@media (max-width: 500px)': {
       fontSize: '35px',
     },
@@ -33,8 +51,12 @@ const TitleBlockStyle = {
   imageWrapper: {
     display: 'flex',
     justifyContent: 'center',
-    maxWidth: '500px',
+    maxWidth: '381px',
     minWidth: '300px',
+    marginRight: '50px',
+    '@media (max-width: 1050px)': {
+      marginRight: 0,
+    },
     '@media (max-width: 900px)': {
       maxWidth: '300px',
     },
