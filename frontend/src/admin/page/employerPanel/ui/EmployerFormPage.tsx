@@ -15,7 +15,7 @@ import { LoadingButton } from '@mui/lab';
 import { EmployerMutation } from '../model/types';
 
 export const EmployerFormPage = () => {
-
+  // const { id } = useParams() as { id: string };
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -42,6 +42,22 @@ export const EmployerFormPage = () => {
   const loading = useAppSelector(selectEmployersProfileLoading);
   const createLoading = useAppSelector(selectEmployerCreateLoading);
   const inputStyle = { borderRadius: '30px' };
+  // const employer = useAppSelector(selectEmployersProfileInfo);
+  //
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(getEmployersProfileInfo(id));
+  //   }
+  // }, [dispatch, id]);
+  //
+  // useEffect(() => {
+  //   if (id && employer) {
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       ...employer,
+  //     }));
+  //   }
+  // }, [employer, id]);
 
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
