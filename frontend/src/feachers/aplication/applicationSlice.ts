@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { deleteReply, getCandidateByEmployer, getCandidates, getReplyByUser } from './aplicationThunk';
 import { RootState } from '../../app/store/store';
 import { Vacancy } from '../../client/widgets/createVacancyForm/model/types';
-import { ApplicationByVacancy } from '../../app/types';
+import { ApplicationByVacancy, User } from '../../app/types';
 import { ApplicationResponse } from './types';
 
 interface Reply {
@@ -12,17 +12,9 @@ interface Reply {
   employerStatus: string;
   userStatus: string;
   updatedAt: string;
-  user: string;
+  user: User;
   vacancy: Vacancy;
 }
-
-// interface Candidate {
-//   _id: string;
-//   createdAt: string;
-//   employerStatus: string;
-//   updatedAt: string;
-//   user: User;
-// }
 
 interface ApplicationState {
   replies: Reply[];

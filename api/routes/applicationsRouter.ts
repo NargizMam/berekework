@@ -43,13 +43,13 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
 
     // Проверка на существование заявок, чтобы избежать дублирования
     const existingApplications = await Application.find({ vacancy: vacancyId, user: user._id });
-    const hasNonRejectedApplication = existingApplications.some(application => application.userStatus !== 'Отклонен');
+    const hasNonRejectedApplication = existingApplications.some((application) => application.userStatus !== 'Отклонен');
 
     if (hasNonRejectedApplication) {
       return res.status(400).json({ error: 'Между вами и этой вакансией уже существует активный отклик.' });
     }
 
-    const existingApplication = existingApplications.find(application => application.userStatus === 'Отклонен');
+    const existingApplication = existingApplications.find((application) => application.userStatus === 'Отклонен');
 
     if (existingApplication) {
       //Перезаписывание существующей заявки, если она была отклонена и восстанавливает создатель заявки
@@ -163,7 +163,6 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
       application.userStatus = newStatus;
       application.employerStatus = newStatus; // Синхронизация статуса работодателя с пользовательским статусом
       updatedBy = 'user';
-
     } else if (req.employer) {
       // Если запрос исходит от работодателя
       newStatus = req.body.employerStatus;
@@ -185,7 +184,6 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
       application.employerStatus = newStatus;
       application.userStatus = newStatus; // Синхронизация статуса соискателя с работодателем
       updatedBy = 'employer';
-
     } else {
       return res.status(403).send({ error: 'Нет прав для выполнения действия' });
     }
@@ -278,7 +276,7 @@ applicationsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => 
     const isAdmin = req.user && (req.user.role === 'admin' || req.user.role === 'superadmin');
     const isEmployer = vacancy.employer && vacancy.employer.equals(req.employer?._id);
 
-    if (!isAdmin && !isEmployer) {
+    if (!isAdmin && !isEmployer && !req.user) {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
@@ -359,7 +357,8 @@ applicationsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) 
       application.employerStatus = 'Отклонен'; // Обновление статуса работодателя на "Отклонен"
 
       let statusHistoryEntry;
-      const lastStatusEntry = application.statusHistory.length > 0 ? application.statusHistory[application.statusHistory.length - 1] : null;
+      const lastStatusEntry =
+        application.statusHistory.length > 0 ? application.statusHistory[application.statusHistory.length - 1] : null;
 
       if (isApplicant) {
         application.isDeletedByUser = true;

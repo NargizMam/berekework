@@ -9,9 +9,10 @@ import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { getVacancyById } from '../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy, selectVacancyLoading } from '../../../feachers/vacancy/vacancySlice';
 import './vacancyDetailPage.css';
-import { sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
-// import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
+import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
+import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
+import { toast } from 'react-toastify';
 
 export const VacancyDetailPage = () => {
   const employer = useAppSelector(selectEmployer);
@@ -20,7 +21,7 @@ export const VacancyDetailPage = () => {
   const { id } = useParams() as { id: string };
   const vacancy = useAppSelector(selectVacancy);
   const loading = useAppSelector(selectVacancyLoading);
-  // const candidates = useAppSelector(selectCandidates);
+  const candidates = useAppSelector(selectCandidates);
 
   useEffect(() => {
     if (id) {
@@ -28,14 +29,20 @@ export const VacancyDetailPage = () => {
     }
   }, [dispatch, id]);
 
-  // useEffect(() => {
-  //   if (employer) {
-  //     dispatch(getCandidateByEmployer(id));
-  //   }
-  // }, [dispatch, employer, id]);
+  useEffect(() => {
+    if (user && id) {
+      dispatch(getCandidateByEmployer(id));
+    }
+  }, [dispatch, user, id]);
 
   const sendReplyHandle = async (id: string) => {
-    await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
+    try {
+      await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
+      await dispatch(getCandidateByEmployer(id)).unwrap();
+      toast.success('Отклик отправлен!');
+    } catch (error) {
+      toast.error('Что то пошло не так!');
+    }
   };
 
   if (loading) {
@@ -59,7 +66,7 @@ export const VacancyDetailPage = () => {
               <span className="maxSalary"> до {vacancy.salary.maxSalary}</span>
             </div>
             <div className="employmentType">Тип занятости: {vacancy.employmentType}</div>
-            {!user || employer || user?.role === "superadmin" || user?.role === "admin" ? null : (
+            {!user || employer || user?.role === 'superadmin' || user?.role === 'admin' ? null : (
               <div className="vacancyButtons">
                 <Button
                   onClick={() => sendReplyHandle(vacancy._id)}
@@ -67,6 +74,7 @@ export const VacancyDetailPage = () => {
                   size="large"
                   color="success"
                   className="vacancyButton"
+                  disabled={candidates.some((reply) => reply.user._id === user._id) || false}
                 >
                   Откликнуться
                 </Button>
@@ -120,19 +128,6 @@ export const VacancyDetailPage = () => {
           </Typography>
         </div>
       </Box>
-      {/*{employer ? (*/}
-      {/*  <Box>*/}
-      {/*    <h1>Откликнутые</h1>*/}
-      {/*    {candidates.map((candidate, index) => (*/}
-      {/*      <Box key={candidate._id}>*/}
-      {/*        <p>*/}
-      {/*          <span>{index + 1}</span>*/}
-      {/*          {candidate.user.name} - {candidate.user.preferredJob} - {candidate.employerStatus}*/}
-      {/*        </p>*/}
-      {/*      </Box>*/}
-      {/*    ))}*/}
-      {/*  </Box>*/}
-      {/*) : null}*/}
     </>
   );
 };
