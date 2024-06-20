@@ -25,7 +25,7 @@ const SuccessMessage = () => {
         horizontal: 'right',
       }}
       open={showSuccessMessage}
-      autoHideDuration={5000}
+      autoHideDuration={2000}
       onClose={handleClose}
     >
       <Alert

@@ -21,7 +21,7 @@ const ErrorMessage = () => {
         horizontal: 'center',
       }}
       open={showErrorMessage}
-      autoHideDuration={5000}
+      autoHideDuration={2000}
       onClose={handleClose}
     >
       <Alert

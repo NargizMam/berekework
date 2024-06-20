@@ -28,7 +28,7 @@ const Form: React.FC<Props> = ({ loading, fields, state, submitFormHandler, inpu
   }, [state]);
 
   return (
-    <div className="applicantFormContainer" style={{ border: '1px solid red' }}>
+    <div className="applicantFormContainer">
       <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} autoComplete="off"
             onSubmit={submitFormHandler}>
         <div className="formContainer">

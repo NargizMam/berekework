@@ -172,11 +172,10 @@ const ApplicantFullForm: React.FC<Props> = ({ applicant, onSubmit, loading }) =>
         flexDirection: 'column',
         alignItems: 'center',
         position: 'relative',
-        border: '1px solid red',
       }}
     >
       <FileInput avatar={applicant?.avatar || ''} onChange={fileInputChangeHandler} />
-      <div className="applicantContainer" style={{border: '1px solid blue'}}>
+      <div className="applicantContainer">
         <p className="profileTitle">Настройки профиля</p>
         <Grid>
           <Form
