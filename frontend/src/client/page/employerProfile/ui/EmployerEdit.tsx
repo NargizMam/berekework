@@ -157,7 +157,6 @@ export const EmployerEditPage = () => {
     }
   };
 
-
   return (
     <>
       <form
@@ -276,20 +275,17 @@ export const EmployerEditPage = () => {
               onChange={changeFileFiled}
               ref={documentSelect}
             />
-            {
-              id ?
-                <Box
-                  sx={{
-                    margin: '20px 0',
-                  }}
-                >
-                  <Link target="_blank" to={`${API_URL}/${employer?.documents}`}>
-                    Посмотреть на документ
-                  </Link>
-                </Box>
-                :
-                null
-            }
+            {id ? (
+              <Box
+                sx={{
+                  margin: '20px 0',
+                }}
+              >
+                <Link target="_blank" to={`${API_URL}/${employer?.documents}`}>
+                  Посмотреть документ
+                </Link>
+              </Box>
+            ) : null}
             <Grid container direction="row" spacing={2} alignItems="center">
               <Grid item xs>
                 <TextField
@@ -323,10 +319,14 @@ export const EmployerEditPage = () => {
                 margin: '20px 0',
               }}
             >
-              <img style={{
-                width: '350px',
-                height: '200px',
-              }} src={imageData ? imageData : API_URL + '/' + employer?.avatar} alt="avatar" />
+              <img
+                style={{
+                  width: '350px',
+                  height: '200px',
+                }}
+                src={imageData ? imageData : API_URL + '/' + employer?.avatar}
+                alt="avatar"
+              />
             </Box>
             <Grid container direction="row" spacing={2} alignItems="center">
               <Grid item xs>
