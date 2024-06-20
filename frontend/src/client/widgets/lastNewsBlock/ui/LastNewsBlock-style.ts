@@ -3,35 +3,42 @@ const LastNewsBlockStyle = {
     boxSizing: 'border-box',
     flexDirection: 'column',
     fontSize: '24px',
-    margin: '0 auto 70px',
+    margin: '0 auto',
     height: '100%',
-    overflowY: 'hidden',
-    '@media (min-width: 1200px)': {
-      marginBottom: '108px',
-    },
   },
   row: {
-    '@media (min-width: 900px)': {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: '60px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: {
+      xs: '7%',
+      lg: '60px',
     },
   },
   title: {
     fontWeight: '700',
     lineHeight: '1.3',
-    fontSize: '22px',
-    marginBottom: '30px',
-    '@media (min-width: 600px)': {
-      fontSize: '32px',
+    color: '#000',
+    fontSize: {
+      xs: '1.5rem',
+      sm: '2rem',
+      md: '2.875rem',
     },
-    '@media (min-width: 900px)': {
-      marginBottom: 0,
+  },
+  paginationControls: {
+    display: 'flex',
+    gap: '10px',
+    '@media (max-width: 599.9px)': {
+      display: 'none',
     },
-    '@media (min-width: 1200px)': {
-      fontSize: '46px',
-    },
+  },
+  cards: {
+    display: 'flex',
+  },
+  subtitleNoCards: {
+    fontWeight: '500',
+    fontSize: '18px',
+    color: '#777',
   },
 };
 

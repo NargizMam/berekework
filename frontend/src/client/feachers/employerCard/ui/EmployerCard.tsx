@@ -1,7 +1,8 @@
-import { Avatar, Typography } from '@mui/material';
+import { Avatar, Box, Typography } from '@mui/material';
 import React from 'react';
 import noImage from '../../../../shared/assets/NoImage.png';
-import './EmployerCard.css';
+
+// import './EmployerCard.css';
 
 interface EmployerCardProps {
   data: {
@@ -12,18 +13,54 @@ interface EmployerCardProps {
 }
 
 const EmployerCard: React.FC<EmployerCardProps> = ({ data }) => {
+  const fullName = data.emplinfo[0].text;
+  const [firstName, lastName] = fullName.split(' ');
+
   return (
-    <div className="EmployerCard">
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+    }}>
       <Avatar
         src={data.image.url ? data.image.url : noImage}
         alt={data.emplinfo[0].text}
-        sx={{ height: '130px', width: '130px' }}
+        sx={{ height: '130px', width: '130px', mb: '30px' }}
       />
-      <Typography variant="h6" sx={{ width: '50%', mt: '10px' }}>
-        {data.emplinfo[0].text}
+      <Typography
+        variant='h6'
+        sx={{
+          fontSize: '20px',
+          fontWeight: 600,
+          lineHeight: 1.1,
+          color: '#000',
+          textAlign: 'center',
+        }}>
+        {firstName}
       </Typography>
-      <Typography>{data.emplinfo[1].text}</Typography>
-    </div>
+      <Typography
+        variant='h6'
+        sx={{
+          mb: '20px',
+          fontSize: '20px',
+          fontWeight: 600,
+          lineHeight: 1.1,
+          color: '#000',
+          textAlign: 'center',
+        }}>
+        {lastName}
+      </Typography>
+      <Typography sx={{
+        fontSize: '14px',
+        fontWeight: 500,
+        lineHeight: 1.4,
+        color: '#8E8E8E',
+        textAlign: 'center',
+      }}>
+        {data.emplinfo[1].text}
+      </Typography>
+    </Box>
   );
 };
 

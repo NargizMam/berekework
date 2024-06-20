@@ -6,7 +6,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid, Link,
+  Grid,
+  Link,
   Tab,
   Tabs,
   Typography,
@@ -16,7 +17,7 @@ import { Loader } from '../../../../shared/loader';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
-  selectEmployerLoading,
+  selectEmployersLoading,
   selectEmployersProfileInfo,
 } from '../../../../admin/page/employerPanel/model/employerSlice';
 import './employerProfile.css';
@@ -63,7 +64,7 @@ const EmployerProfile: React.FC = () => {
   const navigate = useNavigate();
   // const [openVacancyForm, setOpenVacancyForm] = useState(false);
   const profile = useAppSelector(selectEmployersProfileInfo);
-  const loading = useAppSelector(selectEmployerLoading);
+  const loading = useAppSelector(selectEmployersLoading);
 
   const application = useAppSelector(selectApplicationForEmployees);
   const [myApplication, setMyApplication] = useState<ApplicationResponse[]>([]);
@@ -172,7 +173,6 @@ const EmployerProfile: React.FC = () => {
             Скачать документы
           </Link>
           <Box sx={{ display: 'flex', mt: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
-
             {profile?.isPublished && (
               <Button
                 variant="outlined"

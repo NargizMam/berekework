@@ -3,6 +3,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import './ratesCard.css';
 import { Box } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
+import { selectTariff } from '../api/tariffThunk';
+import { selectEmployer } from '../../../page/Auth/model/AuthSlice';
+import { toast } from 'react-toastify';
 
 interface Props {
   title: string;
@@ -13,8 +17,10 @@ interface Props {
   };
 }
 
-const RatesCard: React.FC<Props> = ({ title, description, link }) => {
+const RatesCard: React.FC<Props> = ({ title, description }) => {
   const [cardLink, setCardLink] = useState<boolean>(false);
+  const employer = useAppSelector(selectEmployer);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (window.innerWidth < 770) {
@@ -23,6 +29,15 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
       setCardLink(false);
     }
   }, []);
+
+  const handleSelectTariff = async (tariff: string) => {
+    try {
+      await dispatch(selectTariff({ email: employer?.email || '', typeTariff: tariff }));
+      toast.success('Админу отправлено письмо!');
+    } catch (error) {
+      toast.success('Письмо не отправлено!');
+    }
+  };
 
   return (
     <Box className="rateCard">
@@ -36,14 +51,12 @@ const RatesCard: React.FC<Props> = ({ title, description, link }) => {
         ))}
       </div>
       {!cardLink && (
-        <a target={link.target} href={link.url}>
-          <div className="cardButton">
-            <p className="cardBtnText">Смотреть</p>
-            <div className="cardBtnIcon">
-              <CallMadeIcon sx={{ color: '#000' }} />
-            </div>
+        <div onClick={() => handleSelectTariff(title)} className="cardButton">
+          <p className="cardBtnText">Смотреть</p>
+          <div className="cardBtnIcon">
+            <CallMadeIcon sx={{ color: '#000' }} />
           </div>
-        </a>
+        </div>
       )}
     </Box>
   );
