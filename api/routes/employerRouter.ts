@@ -6,6 +6,7 @@ import { UploadedFiles } from '../types';
 import { transporter } from '../mailer';
 import auth from '../middleware/auth';
 import Vacancy from '../models/vacancy/Vacancy';
+import permit from '../middleware/permit';
 
 const employerRouter = Router();
 
@@ -15,7 +16,6 @@ employerRouter.post(
     { name: 'document', maxCount: 1 },
     { name: 'avatar', maxCount: 1 },
   ]),
-
   async (req, res, next) => {
     try {
       const files: UploadedFiles = req.files as UploadedFiles;
@@ -50,7 +50,7 @@ employerRouter.post(
   },
 );
 
-employerRouter.patch('/:id', async (req, res, next) => {
+employerRouter.patch('/:id', auth, permit('superadmin', 'admin'), async (req, res, next) => {
   try {
     const employer = await Employer.findByIdAndUpdate(
       req.params.id,
