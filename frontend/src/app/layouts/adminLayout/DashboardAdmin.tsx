@@ -207,7 +207,8 @@ const DashboardAdmin: React.FC<React.PropsWithChildren> = ({ children }) => {
                           px: 2.5,
                         }}
                         component={NavLink}
-                        to={`/${item.url}`}
+                        to={item.tooltip === 'Prismic' ? item.url : `/${item.url}`}
+                        target={item.tooltip === 'Prismic' ? '_blank' : ''}
                       >
                         <ListItemIcon
                           sx={{
