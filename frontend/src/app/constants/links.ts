@@ -63,7 +63,7 @@ export const dashboardAdminRouters = [
   {
     id: 'page_home111',
     title: 'Пользователи',
-    tooltip: 'пользователи',
+    tooltip: 'Пользователи',
     url: 'users',
     icon: PeopleIcon,
   },
