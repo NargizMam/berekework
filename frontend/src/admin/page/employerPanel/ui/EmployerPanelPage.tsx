@@ -71,10 +71,16 @@ export const EmployerPanelPage = () => {
   }, [dispatch]);
 
   const handleUpdateEmployer = async (event: FormEvent) => {
-    event.preventDefault();
-    await dispatch(updateStatusEmployer({ ...employer, tariff: selectTariff })).unwrap();
-    await dispatch(getAllEmployer()).unwrap();
-    setOpen(false);
+    try {
+      event.preventDefault();
+      await dispatch(updateStatusEmployer({ ...employer, tariff: selectTariff })).unwrap();
+      await dispatch(getAllEmployer()).unwrap();
+      setOpen(false);
+      toast.success('Успешно обновлен и отправлен на почту!');
+      setSelectTariff('');
+    } catch (error) {
+      toast.error('Что то пошло не так!');
+    }
   };
 
   const handleDeleteEmployer = async (id: string, email: string) => {
