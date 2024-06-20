@@ -11,7 +11,6 @@ import { selectVacancy, selectVacancyLoading } from '../../../feachers/vacancy/v
 import './vacancyDetailPage.css';
 import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
-import { selectCandidates } from '../../../feachers/aplication/applicationSlice';
 import { toast } from 'react-toastify';
 
 export const VacancyDetailPage = () => {
@@ -21,7 +20,6 @@ export const VacancyDetailPage = () => {
   const { id } = useParams() as { id: string };
   const vacancy = useAppSelector(selectVacancy);
   const loading = useAppSelector(selectVacancyLoading);
-  const candidates = useAppSelector(selectCandidates);
 
   useEffect(() => {
     if (id) {
@@ -40,8 +38,9 @@ export const VacancyDetailPage = () => {
       await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
       await dispatch(getCandidateByEmployer(id)).unwrap();
       toast.success('Отклик отправлен!');
-    } catch (error) {
-      toast.error('Что то пошло не так!');
+    } catch (error: any) {
+      const errorMessage = error.error || 'что-то пошло не так';
+      toast.error(errorMessage);
     }
   };
 
@@ -74,7 +73,6 @@ export const VacancyDetailPage = () => {
                   size="large"
                   color="success"
                   className="vacancyButton"
-                  disabled={candidates.some((reply) => reply.user._id === user._id) || false}
                 >
                   Откликнуться
                 </Button>

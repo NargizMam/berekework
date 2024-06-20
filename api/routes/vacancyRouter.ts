@@ -69,7 +69,7 @@ vacancyRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
 vacancyRouter.get('/', async (req, res, next) => {
   try {
     const categoryVacancy = req.query.getCategory;
-    const {searchTerm } = req.query;
+    const { searchTerm } = req.query;
     const filterCategory = req.query.category;
     const { salary, age, ...categories } = req.query;
     const { abroad, kyrgyzstan } = req.query;
@@ -77,10 +77,10 @@ vacancyRouter.get('/', async (req, res, next) => {
 
     if (vacancyCard) {
       if (searchTerm) {
-        const employers = await Employer.find({ companyName: { $regex: searchTerm, $options: 'i'}});
+        const employers = await Employer.find({ companyName: { $regex: searchTerm, $options: 'i' } });
 
         if (employers.length > 0) {
-          const employerIds = employers.map(employer => employer._id);
+          const employerIds = employers.map((employer) => employer._id);
           const filteredVacancies = await Vacancy.find({ employer: { $in: employerIds }, archive: false })
             .select('vacancyTitle salary city')
             .populate('employer', '-_id companyName avatar')
@@ -242,7 +242,7 @@ vacancyRouter.get('/:id', async (req, res, next) => {
 
     const result = await Vacancy.findById({ _id: id, archive: false }).populate(
       'employer',
-      '-_id -email -token -industry -documents -role -isPublished',
+      '-_id -token -industry -documents -role -isPublished',
     );
     return res.send(result);
   } catch (e) {
@@ -315,8 +315,9 @@ vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
 
     const isAdmin = req.user?.role === 'superadmin';
     const isEmployer = vacancyById.employer ? vacancyById.employer.equals(req.employer?._id) : false;
+    const isModerator = req.user?.role === 'admin';
 
-    if (!isAdmin && !isEmployer) {
+    if (!isAdmin && !isEmployer && !isModerator) {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
@@ -340,10 +341,10 @@ vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
           statusHistory: {
             status: 'Вакансия закрыта',
             changedBy: 'employer',
-            changedAt: new Date()
-          }
-        }
-      }
+            changedAt: new Date(),
+          },
+        },
+      },
     );
 
     return res.send({ message: 'Vacancy deleted successfully' });

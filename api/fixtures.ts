@@ -23,7 +23,7 @@ const run = async () => {
     await dropCollection(db, collectionName);
   }
 
-  const [_superadmin, _user1, _user2] = await User.create([
+  const [_superadmin, _user1, _user2, admin] = await User.create([
     {
       email: 'superadmin@example.com',
       password: 'password123',
@@ -87,6 +87,12 @@ const run = async () => {
         whatsapp: '+996987654321',
         telegram: '@user2',
       },
+    },
+    {
+      email: 'admin@example.com',
+      password: 'password123',
+      token: randomUUID(),
+      role: 'admin',
     },
   ]);
 
