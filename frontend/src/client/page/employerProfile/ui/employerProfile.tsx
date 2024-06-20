@@ -62,7 +62,6 @@ const a11yProps = (index: number) => ({
 const EmployerProfile: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  // const [openVacancyForm, setOpenVacancyForm] = useState(false);
   const profile = useAppSelector(selectEmployersProfileInfo);
   const loading = useAppSelector(selectEmployersLoading);
 
@@ -174,11 +173,7 @@ const EmployerProfile: React.FC = () => {
           </Link>
           <Box sx={{ display: 'flex', mt: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
             {profile?.isPublished && (
-              <Button
-                variant="outlined"
-                sx={{ marginLeft: { xs: 0, sm: 1 }, mt: { xs: 1, sm: 0 } }}
-                onClick={() => navigate('/vacancy/submit/')}
-              >
+              <Button variant="outlined" sx={{ mt: { xs: 1, sm: 0 } }} onClick={() => navigate('/vacancy/submit/')}>
                 Создать вакансию
               </Button>
             )}

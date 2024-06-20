@@ -62,7 +62,7 @@ const App = () => {
     {
       path: '/admin/*',
       element: (
-        <ProtectedRoute isAllowed={user?.role === 'superadmin' || user?.role === 'admin'  && !!user?.token}>
+        <ProtectedRoute isAllowed={user?.role === 'superadmin' || (user?.role === 'admin' && !!user?.token)}>
           <AdminRoutes />
         </ProtectedRoute>
       ),
@@ -91,9 +91,9 @@ const App = () => {
             <Route
               path="/employersProfile/:id"
               element={
-                <Permit employerOnly>
+                <ProtectedRoute isAllowed={!!employer}>
                   <EmployerProfile />
-                </Permit>
+                </ProtectedRoute>
               }
             />
             <Route
