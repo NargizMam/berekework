@@ -5,6 +5,7 @@ import { multiUpload } from '../multer';
 import { UploadedFiles } from '../types';
 import { transporter } from '../mailer';
 import auth from '../middleware/auth';
+import Vacancy from '../models/vacancy/Vacancy';
 
 const employerRouter = Router();
 
@@ -159,12 +160,17 @@ employerRouter.get('/:id', async (req, res, next) => {
 
 employerRouter.post('/:id', auth, async (req, res, next) => {
   try {
+    const id = req.params.id;
+
+    await Vacancy.deleteMany({ employer: id });
+
     await transporter.sendMail({
       from: '04072002mu@gmail.com',
       to: req.body.email,
       subject: 'Employer deleted!',
       text: `${req.body.email} удален !`,
     });
+
     await Employer.findByIdAndDelete(req.params.id);
     res.send({ message: 'Работодатель удален!' });
   } catch (error) {
