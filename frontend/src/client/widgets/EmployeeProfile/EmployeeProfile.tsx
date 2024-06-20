@@ -86,7 +86,7 @@ const EmployeeProfile: React.FC = () => {
             <button className="employee-btn" onClick={handleOpenDialog}>
               На рассмотрение
             </button>
-            {/*<Button variant={'contained'} onClick={handleOpenDialog}>На рассмотрение</Button>*/}
+            {/*<Button variant={'contained'} onClick={handleOpenDialog}>На рассмотрении</Button>*/}
             <SelectVacancyDialog open={openDialog} onClose={handleCloseDialog} userId={user._id} />
           </Box>
         ) : null}
