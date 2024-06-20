@@ -17,6 +17,7 @@ import { LoadingButton } from '@mui/lab';
 import { API_URL } from '../../../../app/constants/links';
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
+import { selectEmployer } from '../../Auth/model/AuthSlice';
 
 export interface EmployerInfoApiMutation {
   email: string;
@@ -34,6 +35,7 @@ export interface EmployerInfoApiMutation {
 export const EmployerEditPage = () => {
   const { id } = useParams() as { id: string };
   const dispatch = useAppDispatch();
+  const employerProf = useAppSelector(selectEmployer);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [state, setState] = useState<EmployerInfoApiMutation>({
@@ -155,7 +157,11 @@ export const EmployerEditPage = () => {
         avatar: null,
       });
       toast.success('Профиль изменен!');
-      navigate(`/employersProfile/${id}`);
+      if (employerProf) {
+        navigate(`/employersProfile/${id}`);
+      } else {
+        navigate(-1);
+      }
     } catch (error) {
       toast.error('Что то пошло не так!');
     }

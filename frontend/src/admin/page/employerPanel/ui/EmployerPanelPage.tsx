@@ -168,6 +168,11 @@ export const EmployerPanelPage = () => {
                   </Tooltip>
                 </TableCell>
                 <TableCell align="right">
+                  <Link underline="none" component={RouterLink} to={`/admin/employers-submit/${employer._id}`}>
+                    <Typography>Изменить</Typography>
+                  </Link>
+                </TableCell>
+                <TableCell align="right">
                   <Tooltip title={'Удалить работодателя'}>
                     <IconButton
                       aria-label="delete"
