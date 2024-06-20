@@ -23,7 +23,7 @@ export const createEmployer = createAsyncThunk<
     formData.append('address', employer.address);
     formData.append('contacts', employer.contacts);
     if (employer.document) {
-      formData.append('document', employer.document);
+      formData.append('documents', employer.document);
     }
     if (employer.avatar) {
       formData.append('avatar', employer.avatar);
@@ -75,6 +75,7 @@ export const updateEmployer = createAsyncThunk<
   }
 >('employer/update', async ({ id, data }, { rejectWithValue }) => {
   try {
+    console.log(data.avatar);
     const formData = new FormData();
     formData.append('companyName', data.companyName);
     formData.append('industry', data.industry);
@@ -82,11 +83,8 @@ export const updateEmployer = createAsyncThunk<
     formData.append('foundationYear', data.foundationYear);
     formData.append('address', data.address);
     formData.append('contacts', data.contacts);
-    if (data.document) {
-      formData.append('document', data.document);
-    }
     if (data.avatar) {
-      formData.append('logo', data.avatar);
+      formData.append('avatar', data.avatar);
     }
     if (data.document) {
       formData.append('document', data.document);

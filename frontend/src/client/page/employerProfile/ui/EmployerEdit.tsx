@@ -16,6 +16,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { API_URL } from '../../../../app/constants/links';
 import Box from '@mui/material/Box';
+import { toast } from 'react-toastify';
 
 export interface EmployerInfoApiMutation {
   email: string;
@@ -73,6 +74,7 @@ export const EmployerEditPage = () => {
         ...employer,
         document: employer?.documents || '',
       }));
+      setFilename(employer?.documents || '');
       setFilenameImage(employer.avatar);
     }
   }, [employer, id]);
@@ -85,32 +87,10 @@ export const EmployerEditPage = () => {
     }));
   };
 
-  const handleCreateEmployer = async (event: FormEvent) => {
-    event.preventDefault();
-    if (id) {
-      await dispatch(updateEmployer({ id, data: state })).unwrap();
-    } else {
-      await dispatch(createEmployer(state)).unwrap();
-    }
-    setState({
-      email: '',
-      password: '',
-      industry: '',
-      companyName: '',
-      description: '',
-      contacts: '',
-      foundationYear: '',
-      address: '',
-      document: null,
-      avatar: null,
-    });
-    navigate(`/employersProfile/${id}`);
-  };
-
   const changeFileFiled = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (files && files[0]) {
-      if (name === 'logo') {
+      if (name === 'avatar') {
         setFilenameImage(files[0].name);
         const imageUrl = URL.createObjectURL(files[0]);
         setImageData(imageUrl);
@@ -149,6 +129,38 @@ export const EmployerEditPage = () => {
     }
   };
 
+  const handleCreateEmployer = async (event: FormEvent) => {
+    event.preventDefault();
+    try {
+      if (id) {
+        if (state.avatar === filenameImage) {
+          const { avatar, ...stateWithoutAvatar } = state; // Destructure to exclude 'avatar'
+          await dispatch(updateEmployer({ id, data: { avatar, ...stateWithoutAvatar } })).unwrap();
+        } else {
+          await dispatch(updateEmployer({ id, data: state })).unwrap();
+        }
+      } else {
+        await dispatch(createEmployer(state)).unwrap();
+      }
+      setState({
+        email: '',
+        password: '',
+        industry: '',
+        companyName: '',
+        description: '',
+        contacts: '',
+        foundationYear: '',
+        address: '',
+        document: null,
+        avatar: null,
+      });
+      toast.success('Профиль изменен!');
+      navigate(`/employersProfile/${id}`);
+    } catch (error) {
+      toast.error('Что то пошло не так!');
+    }
+  };
+
   const getFieldError = (fieldName: string) => {
     try {
       return error?.errors[fieldName].message;
@@ -161,7 +173,7 @@ export const EmployerEditPage = () => {
     <>
       <form
         style={{
-          margin: '30px auto',
+          margin: '80px auto',
         }}
         autoComplete="off"
         onSubmit={handleCreateEmployer}
@@ -313,7 +325,7 @@ export const EmployerEditPage = () => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <input style={{ display: 'none' }} type="file" name="logo" onChange={changeFileFiled} ref={imageSelect} />
+            <input style={{ display: 'none' }} type="file" name="avatar" onChange={changeFileFiled} ref={imageSelect} />
             <Box
               sx={{
                 margin: '20px 0',
@@ -332,12 +344,12 @@ export const EmployerEditPage = () => {
               <Grid item xs>
                 <TextField
                   disabled
-                  label="Logo"
+                  label="avatar"
                   InputProps={{ style: inputStyle }}
                   value={filenameImage || ''}
                   onClick={() => selectFile('image')}
-                  error={Boolean(getFieldError('logo'))}
-                  helperText={getFieldError('logo')}
+                  error={Boolean(getFieldError('avatar'))}
+                  helperText={getFieldError('avatar')}
                 />
               </Grid>
               <Grid item>
@@ -354,10 +366,13 @@ export const EmployerEditPage = () => {
               )}
             </Grid>
           </Grid>
-          <Grid item xs={registerStyle ? 12 : 6}>
+          <Grid item sx={{ display: 'flex', flexDirection: 'row', gap: '0 15px', width: '100%' }}>
             <LoadingButton loading={loading} type="submit" variant="contained" sx={{ width: '100%' }}>
               {id ? 'Обновить' : 'Создать'}
             </LoadingButton>
+            <Button variant="contained" onClick={() => navigate(-1)} sx={{ width: '100%' }}>
+              Назад
+            </Button>
           </Grid>
         </Grid>
       </form>
