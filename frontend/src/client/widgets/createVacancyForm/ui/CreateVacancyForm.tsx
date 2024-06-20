@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { countries, educationTypes, workTypes } from '../model/constants';
 import CreateVacancyFormStyle from './CreateVacancyForm-style';
@@ -27,7 +27,7 @@ export const CreateVacancyForm = () => {
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectVacancy);
-  const cities = useRef<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
   const [state, setState] = useState<ICreateVacancyForm>({
     vacancyTitle: '',
     aboutVacancy: '',
@@ -80,6 +80,9 @@ export const CreateVacancyForm = () => {
     };
     if (id && editData) {
       setState(editData);
+      setCities(() => {
+        return countries.find((country) => country.name === editData.country)?.cities || [];
+      });
       dispatch(clearEditVacancy());
     } else {
       setState({
@@ -99,13 +102,7 @@ export const CreateVacancyForm = () => {
         employer: '',
       });
     }
-
-    countries.forEach((item) => {
-      if (item.name === state.country) {
-        cities.current = item.cities;
-      }
-    });
-  }, [editVacancy, dispatch, id, state.country]);
+  }, [editVacancy, dispatch, id]);
 
   useEffect(() => {
     if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {
@@ -125,14 +122,13 @@ export const CreateVacancyForm = () => {
     setState((prevState) => {
       return { ...prevState, [name]: value };
     });
-    if (name === 'country' || state.country !== '') {
-      countries.forEach((item) => {
-        if (item.name === value) {
-          setState((prevState) => {
-            return { ...prevState, city: '' };
-          });
-          cities.current = item.cities;
-        }
+    if (name === 'country') {
+      setState((prevState) => ({
+        ...prevState,
+        country: value,
+      }));
+      setCities(() => {
+        return countries.find((country) => country.name === value)?.cities || [];
       });
     }
   };
@@ -206,16 +202,11 @@ export const CreateVacancyForm = () => {
 
   return (
     <>
-      {countries.forEach((item) => {
-        if (item.name === state.country) {
-          cities.current = item.cities;
-        }
-      })}
       {error && <ErrorMessage />}
       {isLoading ? (
         <Loader />
       ) : (
-        <form onSubmit={submitHandler}>
+        <form style={{ margin: '30px 0' }} onSubmit={submitHandler}>
           <div className="CreateVacancyForm">
             <div>
               <label className="labelForField" htmlFor="vacancyTitle">
@@ -320,8 +311,8 @@ export const CreateVacancyForm = () => {
                     <option className="menuItem" value="">
                       Не указан
                     </option>
-                    {cities.current.map((city, index) => {
-                      if (city === state.city) {
+                    {cities.map((city, index) => {
+                      if (state.city === city) {
                         return null;
                       }
                       return (
