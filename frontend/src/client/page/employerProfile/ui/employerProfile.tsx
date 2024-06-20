@@ -146,12 +146,7 @@ const EmployerProfile: React.FC = () => {
       {profile && (
         <Grid mt={6}>
           <div className="companyHeader">
-            <img
-              className="companyLogo"
-              src={`http://localhost:8000/${profile.avatar}`}
-              alt="Логотип компании"
-              height="100px"
-            />
+            <img className="companyLogo" src={`${API_URL}/${profile.avatar}`} alt="Логотип компании" height="100px" />
             <Typography ml={2} variant="h4">
               {profile.companyName}
             </Typography>
