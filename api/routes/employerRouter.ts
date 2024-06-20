@@ -163,7 +163,6 @@ employerRouter.post('/:id', auth, async (req, res, next) => {
     const id = req.params.id;
 
     await Vacancy.deleteMany({ employer: id });
-
     await transporter.sendMail({
       from: '04072002mu@gmail.com',
       to: req.body.email,

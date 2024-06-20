@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
-import {Router} from 'express';
+import { Router } from 'express';
 import User from '../models/users/userModel';
-import {imagesUpload} from '../multer';
+import { imagesUpload } from '../multer';
 import Employer from '../models/employer/employerModel';
 import config from '../config';
-import {OAuth2Client} from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
-import auth, {RequestWithUser} from '../middleware/auth';
-import ignoreAuth from "../middleware/ignoreAuth";
+import auth, { RequestWithUser } from '../middleware/auth';
+import ignoreAuth from '../middleware/ignoreAuth';
 
 const client = new OAuth2Client(config.google.clientId);
 
@@ -16,15 +16,15 @@ const userRouter = Router();
 userRouter.post('/', imagesUpload.single('avatar'), async (req: RequestWithUser, res, next) => {
   try {
     const user = new User({
-        email: req.body.email,
-        name: req.body.name,
-        surname: req.body.surname,
-        password: req.body.password,
-        avatar: req.file ? req.file.filename : null,
-      });
-      user.generateToken();
-      await user.save();
-      return res.send({ message: 'Регистрация прошла успешно!', user });
+      email: req.body.email,
+      name: req.body.name,
+      surname: req.body.surname,
+      password: req.body.password,
+      avatar: req.file ? req.file.filename : null,
+    });
+    user.generateToken();
+    await user.save();
+    return res.send({ message: 'Регистрация прошла успешно!', user });
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(error);
@@ -142,7 +142,7 @@ userRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
   }
 });
 
-userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWithUser, res, next) => {
+userRouter.patch('/:id', imagesUpload.single('avatar'), async (req: RequestWithUser, res, next) => {
   // try {
   //   const user = await User.findById(req.params.id);
   //
@@ -224,60 +224,60 @@ userRouter.patch('/:id', imagesUpload.single('avatar'),  async (req: RequestWith
   //   }
   //   next(e);
   // }
-    try {
-      const user = await User.findById(req.params.id);
-      const {
-        name,
-        firstName,
-        surname,
-        patronymic,
-        gender,
-        dateOfBirth,
-        country,
-        city,
-        education,
-        aboutMe,
-        workExperience,
-        preferredJob,
-        preferredCity,
-        contacts
-      } = req.body;
-      if (user) {
-        const updated = await User.findOneAndUpdate(
-            {_id: user._id},
-            {
-              name,
-              firstName,
-              surname,
-              patronymic,
-              avatar: req.file ? req.file.filename : req.body.avatar,
-              gender,
-              dateOfBirth,
-              country,
-              city,
-              education,
-              aboutMe,
-              workExperience: JSON.parse(workExperience),
-              preferredJob,
-              preferredCity,
-              contacts: JSON.parse(contacts),
-            },
-            {new: true}
-        );
-        return res.send({ message: 'Данные изменены', updated });
-      } else {
-        return res.status(404).send({ message: 'Пользователь не найден' });
-      }
-    } catch (e) {
-      if (e instanceof mongoose.Error.ValidationError) {
-        return res.status(422).send(e);
-      }
-      return next(e);
+  try {
+    const user = await User.findById(req.params.id);
+    const {
+      name,
+      firstName,
+      surname,
+      patronymic,
+      gender,
+      dateOfBirth,
+      country,
+      city,
+      education,
+      aboutMe,
+      workExperience,
+      preferredJob,
+      preferredCity,
+      contacts,
+    } = req.body;
+    if (user) {
+      const updated = await User.findOneAndUpdate(
+        { _id: user._id },
+        {
+          name,
+          firstName,
+          surname,
+          patronymic,
+          avatar: req.file ? req.file.filename : req.body.avatar,
+          gender,
+          dateOfBirth,
+          country,
+          city,
+          education,
+          aboutMe,
+          workExperience: JSON.parse(workExperience),
+          preferredJob,
+          preferredCity,
+          contacts: JSON.parse(contacts),
+        },
+        { new: true },
+      );
+      return res.send({ message: 'Данные изменены', updated });
+    } else {
+      return res.status(404).send({ message: 'Пользователь не найден' });
     }
+  } catch (e) {
+    if (e instanceof mongoose.Error.ValidationError) {
+      return res.status(422).send(e);
+    }
+    return next(e);
+  }
 });
 
 userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) => {
-  if (req.params.id !== 'sessions' && req.user?.role === 'superadmin') {
+  if ((req.params.id !== 'sessions' && req.user?.role === 'superadmin') || req.user?.role === 'admin') {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
@@ -317,6 +317,5 @@ userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) =>
     }
   }
 });
-
 
 export default userRouter;

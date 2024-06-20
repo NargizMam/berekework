@@ -315,8 +315,9 @@ vacancyRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
 
     const isAdmin = req.user?.role === 'superadmin';
     const isEmployer = vacancyById.employer ? vacancyById.employer.equals(req.employer?._id) : false;
+    const isModerator = req.user?.role === 'admin';
 
-    if (!isAdmin && !isEmployer) {
+    if (!isAdmin && !isEmployer && !isModerator) {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
