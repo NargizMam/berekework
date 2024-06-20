@@ -277,7 +277,7 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), async (req: RequestWithU
 });
 
 userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) => {
-  if ((req.params.id !== 'sessions' && req.user?.role === 'superadmin') || req.user?.role === 'admin') {
+  if (req.params.id !== 'sessions' && (req.user?.role === 'superadmin' || req.user?.role === 'admin')) {
     try {
       const deletedModerator = await User.findByIdAndDelete(req.params.id);
       if (!deletedModerator) {
