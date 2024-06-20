@@ -10,9 +10,9 @@ export const getAllVacancy = createAsyncThunk<VacancyApiData[]>('vacancy/getAll'
 
 export const getAllVacancyToCard = createAsyncThunk<VacancyResponseToCard[], string | undefined>(
   'vacancy/getAllToCard',
-  async (vacancyTitle) => {
+  async (searchTerm) => {
     const response = await axiosApi.get<VacancyResponseToCard[]>(
-      `/vacancy?vacancyCard=true${vacancyTitle ? `&vacancyTitle=${vacancyTitle.toLowerCase()}` : ''}`,
+      `/vacancy?vacancyCard=true${searchTerm ? `&searchTerm=${searchTerm.toLowerCase()}` : ''}`,
     );
     return response.data;
   },
