@@ -15,7 +15,6 @@ import ErrorMessage from '../../../../widgets/WarningMessage/ErrorMessage';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getVacancyById } from '../../../../feachers/vacancy/vacancyThunk';
 import { selectVacancy } from '../../../../feachers/vacancy/vacancySlice';
-import { selectEmployer } from '../../../page/Auth/model/AuthSlice';
 
 interface Flag {
   aboutVacancy: boolean;
@@ -25,11 +24,10 @@ interface Flag {
 
 export const CreateVacancyForm = () => {
   const dispatch = useAppDispatch();
-  const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
   const editVacancy = useAppSelector(selectVacancy);
-  let cities = useRef<string[]>([]);
+  const cities = useRef<string[]>([]);
   const [state, setState] = useState<ICreateVacancyForm>({
     vacancyTitle: '',
     aboutVacancy: '',
@@ -49,10 +47,10 @@ export const CreateVacancyForm = () => {
   const { id } = useParams() as { id: string };
   const navigate = useNavigate();
 
-  const [_isFull, setIsFull] = useState<Flag>({
-    aboutVacancy: true,
-    responsibilities: true,
-    workConditions: true,
+  const [isFull, setIsFull] = useState<Flag>({
+    aboutVacancy: false,
+    responsibilities: false,
+    workConditions: false,
   });
 
   const [isDisabled, setIsDisabled] = useState(isFull.aboutVacancy && isFull.responsibilities && isFull.workConditions);
@@ -107,7 +105,7 @@ export const CreateVacancyForm = () => {
         cities.current = item.cities;
       }
     });
-  }, [editVacancy, dispatch]);
+  }, [editVacancy, dispatch, id, state.country]);
 
   useEffect(() => {
     if (!isFull.aboutVacancy && !isFull.responsibilities && !isFull.workConditions) {

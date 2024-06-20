@@ -1,0 +1,9 @@
+.swiper-pagination {
+    display: none;
+}
+
+@media (min-width: 600px) {
+    .swiper-pagination {
+        display: block;
+    }
+}

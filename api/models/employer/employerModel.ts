@@ -5,80 +5,83 @@ import bcrypt from 'bcrypt';
 
 export const SALT_WORK_FACTOR = 10;
 
-const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMethods>({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: async function (this: HydratedDocument<UserFields>, email: string): Promise<boolean> {
-        if (!this.isModified('email')) return true;
-        const user: HydratedDocument<UserFields> | null = await Employer.findOne({
-          email,
-        });
-        return !user;
+const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMethods>(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: async function (this: HydratedDocument<UserFields>, email: string): Promise<boolean> {
+          if (!this.isModified('email')) return true;
+          const user: HydratedDocument<UserFields> | null = await Employer.findOne({
+            email,
+          });
+          return !user;
+        },
+        message: 'This user is already registered!',
       },
-      message: 'This user is already registered!',
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    token: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
+      required: true,
+    },
+    industry: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    contacts: {
+      type: String,
+      required: true,
+    },
+    documents: {
+      type: String,
+    },
+    foundationYear: {
+      type: String,
+    },
+    role: {
+      type: String,
+      default: 'employer',
+    },
+    isPublished: {
+      type: Boolean,
+      default: false,
+    },
+    googleID: String,
+    avatar: String,
+    tariff: {
+      type: String,
+      default: 'Базовый',
+    },
+    vacancies: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Vacancy',
+      },
+    ],
+    adminsComment: {
+      type: String,
     },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  token: {
-    type: String,
-    required: true,
-  },
-  companyName: {
-    type: String,
-    required: true,
-  },
-  industry: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-  contacts: {
-    type: String,
-    required: true,
-  },
-  documents: {
-    type: String,
-  },
-  foundationYear: {
-    type: String,
-  },
-  role: {
-    type: String,
-    default: 'employer',
-  },
-  isPublished: {
-    type: Boolean,
-    default: false,
-  },
-  googleID: String,
-  avatar: String,
-  tariff: {
-    type: String,
-    default: 'Базовый',
-  },
-  vacancies: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Vacancy',
-    },
-  ],
-  adminsComment: {
-    type: String,
-  },
-});
+  { timestamps: true },
+);
 
 employerSchema.methods.checkPassword = function (password: string) {
   return bcrypt.compare(password, this.password);

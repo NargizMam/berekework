@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import WebIcon from '@mui/icons-material/Web';
 
 export const API_URL = import.meta.env['VITE_API_URL'];
 
@@ -62,7 +63,7 @@ export const dashboardAdminRouters = [
   {
     id: 'page_home111',
     title: 'Пользователи',
-    tooltip: 'Добавить пользователя',
+    tooltip: 'Пользователи',
     url: 'users',
     icon: PeopleIcon,
   },
@@ -89,5 +90,12 @@ export const dashboardSuperAdminRoutes = [
     tooltip: 'Добавить модератора',
     url: 'admin/moderators',
     icon: PersonAddAltIcon,
+  },
+  {
+    id: 'page_content',
+    title: 'Редактор сайта',
+    tooltip: 'Prismic',
+    url: 'https://prismic.io/dashboard/login',
+    icon: WebIcon,
   },
 ];

@@ -126,7 +126,6 @@ export const ApplicationPanelPage = () => {
               <TableCell>Статус работодателя</TableCell>
               <TableCell>Дата подачи</TableCell>
               <TableCell>Дата обновления</TableCell>
-              <TableCell align='right'>Действия</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

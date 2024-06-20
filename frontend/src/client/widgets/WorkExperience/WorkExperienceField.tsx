@@ -20,7 +20,6 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
     duration: duration || '0 лет',
   });
   const [isAdded, setIsAdded] = useState(isExisting);
-  console.log(isAdded);
   const fieldChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setState((prevState) => ({

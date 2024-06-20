@@ -6,8 +6,8 @@ import { Navigation } from 'swiper/modules';
 import MediaCard, { MediaCardApiData } from './MediaCard/MediaCard';
 import MediaBlockStyle from './MediaBlock-style';
 import FsLightbox from 'fslightbox-react';
-import arrowLeft from '../images/arrow-left.png';
-import arrowRight from '../images/arrow-right.png';
+import arrowLeft from '../../../../shared/assets/arrow-left.png';
+import arrowRight from '../../../../shared/assets/arrow-right.png';
 import './SwiperNavigation.css';
 
 export interface MediaBlockApiData {
@@ -41,12 +41,12 @@ export const VideoBlock: React.FC<Props> = ({ slice }) => {
     );
   }
 
-  const showNavigation = slice.items.length > 3;
+  const showNavigation = slice.items.length > 2;
 
   const sources = slice.items.map((item) => item.video?.embed_url || '').filter((url): url is string => Boolean(url));
 
   return (
-    <Box sx={MediaBlockStyle.container}>
+    <Box sx={MediaBlockStyle.videoContainer}>
       <Box sx={MediaBlockStyle.row}>
         {slice.primary.title.map((title, index) => (
           <Typography id='video' key={index} variant="h4" sx={MediaBlockStyle.title}>

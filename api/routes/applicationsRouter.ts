@@ -17,6 +17,10 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
       return res.status(404).json({ error: 'Vacancy not found' });
     }
 
+    if (vacancy.archive) {
+      return res.status(403).json({ error: 'Нельзя создать заявку на архивированную вакансию' });
+    }
+
     let user;
     let createdBy;
     if (req.user) {
@@ -39,13 +43,13 @@ applicationsRouter.post('/:vacancyId/:userId?', auth, async (req: RequestWithUse
 
     // Проверка на существование заявок, чтобы избежать дублирования
     const existingApplications = await Application.find({ vacancy: vacancyId, user: user._id });
-    const hasNonRejectedApplication = existingApplications.some(application => application.userStatus !== 'Отклонен');
+    const hasNonRejectedApplication = existingApplications.some((application) => application.userStatus !== 'Отклонен');
 
     if (hasNonRejectedApplication) {
       return res.status(400).json({ error: 'Между вами и этой вакансией уже существует активный отклик.' });
     }
 
-    const existingApplication = existingApplications.find(application => application.userStatus === 'Отклонен');
+    const existingApplication = existingApplications.find((application) => application.userStatus === 'Отклонен');
 
     if (existingApplication) {
       //Перезаписывание существующей заявки, если она была отклонена и восстанавливает создатель заявки
@@ -125,7 +129,22 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
     // Поиск заявки по ID
     const application = await Application.findById(_id).populate('vacancy');
     if (!application) {
-      return res.status(404).send({ error: 'Application not found' });
+      return res.status(404).send({ error: 'Заявка не найдена' });
+    }
+
+    // Проверка статуса вакансии
+    const vacancy = await Vacancy.findById(application.vacancy._id);
+    if (!vacancy) {
+      return res.status(404).send({ error: 'Вакансия не найдена' });
+    }
+
+    if (vacancy.archive) {
+      return res.status(403).send({ error: 'Вакансия закрыта' });
+    }
+
+    // Проверка текущего статуса заявки
+    if (application.userStatus === 'Отклонен' || application.employerStatus === 'Отклонен') {
+      return res.status(403).send({ error: 'Изменение статуса отклоненной заявки невозможно' });
     }
 
     let updatedBy, newStatus;
@@ -134,41 +153,39 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
     if (req.user) {
       newStatus = req.body.userStatus;
       if (!validStatuses.includes(newStatus)) {
-        return res.status(400).json({ error: 'Invalid status' });
+        return res.status(400).json({ error: 'Некорректный статус' });
       }
 
       if (!application.user.equals(req.user._id)) {
-        return res.status(403).send({ error: 'Not authorized' });
+        return res.status(403).send({ error: 'Нет прав для выполнения действия' });
       }
 
       application.userStatus = newStatus;
       application.employerStatus = newStatus; // Синхронизация статуса работодателя с пользовательским статусом
       updatedBy = 'user';
-
     } else if (req.employer) {
       // Если запрос исходит от работодателя
       newStatus = req.body.employerStatus;
       if (!validStatuses.includes(newStatus)) {
-        return res.status(400).json({ error: 'Invalid status' });
+        return res.status(400).json({ error: 'Некорректный статус' });
       }
 
       const vacancyId = application.vacancy._id;
       const vacancy = await Vacancy.findById(vacancyId).populate('employer');
 
       if (!vacancy) {
-        return res.status(404).send({ error: 'Vacancy not found' });
+        return res.status(404).send({ error: 'Вакансия не найдена' });
       }
 
       if (vacancy.employer && !vacancy.employer._id.equals(req.employer?._id)) {
-        return res.status(403).send({ error: 'Not authorized' });
+        return res.status(403).send({ error: 'Нет прав для выполнения действия' });
       }
 
       application.employerStatus = newStatus;
       application.userStatus = newStatus; // Синхронизация статуса соискателя с работодателем
       updatedBy = 'employer';
-
     } else {
-      return res.status(403).send({ error: 'Not authorized' });
+      return res.status(403).send({ error: 'Нет прав для выполнения действия' });
     }
 
     // Создание записи в статус истории и добавление её в массив статус истории
@@ -182,10 +199,10 @@ applicationsRouter.patch('/:id', auth, async (req: RequestWithUser, res, next) =
 
     const result = await application.save();
     if (!result) {
-      return res.status(404).send({ message: 'Application not found' });
+      return res.status(404).send({ message: 'Заявка не найдена' });
     }
 
-    return res.send({ message: 'Status updated', application: result });
+    return res.send({ message: 'Статус обновлен', application: result });
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(422).send(e);
@@ -259,7 +276,7 @@ applicationsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => 
     const isAdmin = req.user && (req.user.role === 'admin' || req.user.role === 'superadmin');
     const isEmployer = vacancy.employer && vacancy.employer.equals(req.employer?._id);
 
-    if (!isAdmin && !isEmployer) {
+    if (!isAdmin && !isEmployer && !req.user) {
       return res.status(403).send({ error: 'Not authorized' });
     }
 
@@ -335,31 +352,48 @@ applicationsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) 
     }
 
     // Установка флагов удаления и обновление статуса для всех пользователей
-    application.userStatus = 'Отклонен'; // Обновление статуса соискателя на "Отклонен"
-    application.employerStatus = 'Отклонен'; // Обновление статуса работодателя на "Отклонен"
+    if (!vacancy.archive) {
+      application.userStatus = 'Отклонен'; // Обновление статуса соискателя на "Отклонен"
+      application.employerStatus = 'Отклонен'; // Обновление статуса работодателя на "Отклонен"
 
-    let statusHistoryEntry;
-    if (isApplicant) {
-      application.isDeletedByUser = true;
-      message = 'Заявка удалена соискателем, и оба статуса установлены на "Отклонен"';
-      statusHistoryEntry = {
-        status: 'Отклонен',
-        changedBy: 'user',
-        changedAt: new Date(),
-      };
-    } else if (isEmployer) {
-      application.isDeletedByEmployer = true;
-      message = 'Заявка удалена работодателем, и оба статуса установлены на "Отклонен"';
-      statusHistoryEntry = {
-        status: 'Отклонен',
-        changedBy: 'employer',
-        changedAt: new Date(),
-      };
-    }
+      let statusHistoryEntry;
+      const lastStatusEntry =
+        application.statusHistory.length > 0 ? application.statusHistory[application.statusHistory.length - 1] : null;
 
-    // Добавление записи в историю статусов
-    if (statusHistoryEntry) {
-      application.statusHistory.push(statusHistoryEntry);
+      if (isApplicant) {
+        application.isDeletedByUser = true;
+        message = 'Заявка удалена соискателем, и оба статуса установлены на "Отклонен"';
+        if (lastStatusEntry?.status !== 'Отклонен') {
+          statusHistoryEntry = {
+            status: 'Отклонен',
+            changedBy: 'user',
+            changedAt: new Date(),
+          };
+        }
+      } else if (isEmployer) {
+        application.isDeletedByEmployer = true;
+        message = 'Заявка удалена работодателем, и оба статуса установлены на "Отклонен"';
+        if (lastStatusEntry?.status !== 'Отклонен') {
+          statusHistoryEntry = {
+            status: 'Отклонен',
+            changedBy: 'employer',
+            changedAt: new Date(),
+          };
+        }
+      }
+
+      // Добавление записи в историю статусов
+      if (statusHistoryEntry) {
+        application.statusHistory.push(statusHistoryEntry);
+      }
+    } else {
+      if (isApplicant) {
+        application.isDeletedByUser = true;
+        message = 'Заявка удалена соискателем';
+      } else if (isEmployer) {
+        application.isDeletedByEmployer = true;
+        message = 'Заявка удалена работодателем';
+      }
     }
 
     // Сохраняем изменения

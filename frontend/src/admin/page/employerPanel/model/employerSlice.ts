@@ -93,7 +93,7 @@ const employerSlice = createSlice({
 
 export const employerReducer = employerSlice.reducer;
 export const selectEmployers = (state: RootState) => state.employerAdmin.employers;
-export const selectEmployerLoading = (state: RootState) => state.employerAdmin.employersLoading;
+export const selectEmployersLoading = (state: RootState) => state.employerAdmin.employersLoading;
 export const selectEmployerError = (state: RootState) => state.employerAdmin.employerError;
 export const selectEmployersProfileInfo = (state: RootState) => state.employerAdmin.employersProfile;
 export const selectEmployersProfileLoading = (state: RootState) => state.employerAdmin.employersProfileLoading;

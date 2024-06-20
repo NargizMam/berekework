@@ -1,0 +1,19 @@
+.swiper-last-news-button-prev,
+.swiper-last-news-button-next {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #d2d2d2;
+    border: 1px solid #d2d2d2;
+    min-width: 50px;
+    height: 50px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.swiper-button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

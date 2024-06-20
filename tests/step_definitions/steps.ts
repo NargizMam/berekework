@@ -6,7 +6,7 @@ Given('я нахожусь на странице {string}', (page: string) => {
 });
 
 When('я ввожу {string} в поле {string}', (text: string, field: string) => {
-  I.fillField(field, text);
+  I.fillField(`input[name="${field}"]`, text);
 });
 
 When('я нажимаю на кнопку {string}', (button: string) => {

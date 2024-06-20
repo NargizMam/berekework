@@ -59,8 +59,8 @@ interface UpdateStatusEmployer {
 
 export const updateStatusEmployer = createAsyncThunk<void, UpdateStatusEmployer>(
   'employer/updateStatus',
-  async ({ id, email , tariff}) => {
-    await axiosApi.patch(`/employer/${id}`, { email , tariff});
+  async ({ id, email, tariff }) => {
+    await axiosApi.patch(`/employer/${id}`, { email, tariff });
   },
 );
 
@@ -101,6 +101,11 @@ export const updateEmployer = createAsyncThunk<
   }
 });
 
-export const deleteEmployer = createAsyncThunk<void, string>('employer/delete', async (id) => {
-  await axiosApi.delete(`/employer/${id}`);
+interface DeleteEmployer {
+  id: string;
+  email: string;
+}
+
+export const deleteEmployer = createAsyncThunk<void, DeleteEmployer>('employer/delete', async ({ id, email }) => {
+  await axiosApi.post(`/employer/${id}`, { email });
 });
