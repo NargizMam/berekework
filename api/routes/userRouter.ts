@@ -290,7 +290,7 @@ userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) =>
   } else {
     try {
       const headerValue = req.get('Authorization');
-      const successMessage = { message: 'Success!' };
+      const successMessage = { message: 'Вы успешно вышли. До скорого!' };
 
       if (!headerValue) {
         return res.send({ ...successMessage, stage: 'No header' });
