@@ -47,7 +47,7 @@ const StatusHistoryModal: React.FC<StatusHistoryModalProps> = ({ open, handleClo
             <TableHead>
               <TableRow>
                 <TableCell>Статус</TableCell>
-                <TableCell>Действие</TableCell>
+                <TableCell>Изменил</TableCell>
                 <TableCell>Дата</TableCell>
               </TableRow>
             </TableHead>
