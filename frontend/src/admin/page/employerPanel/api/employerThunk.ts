@@ -23,7 +23,7 @@ export const createEmployer = createAsyncThunk<
     formData.append('address', employer.address);
     formData.append('contacts', employer.contacts);
     if (employer.document) {
-      formData.append('documents', employer.document);
+      formData.append('document', employer.document);
     }
     if (employer.avatar) {
       formData.append('avatar', employer.avatar);

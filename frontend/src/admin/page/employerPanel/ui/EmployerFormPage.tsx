@@ -61,6 +61,12 @@ export const EmployerFormPage = () => {
 
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    if (name === 'contacts') {
+      setState((prevState) => ({
+        ...prevState,
+        contacts: value.toString(),
+      }));
+    }
     setState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -262,6 +268,7 @@ export const EmployerFormPage = () => {
               id="standard-basic"
               label="Контакты"
               variant="outlined"
+              type="number"
               required={true}
               InputProps={{ style: inputStyle }}
               error={Boolean(getFieldError('contacts'))}
@@ -330,7 +337,7 @@ export const EmployerFormPage = () => {
               )}
             </Grid>
           </Grid>
-          <Grid item xs={isRegisterPath ? 12 : 6}>
+          <Grid item sx={{ display: 'flex', flexDirection: 'row', gap: '0 15px', width: '100%' }}>
             <LoadingButton
               loading={loading || createLoading}
               type="submit"
@@ -339,6 +346,9 @@ export const EmployerFormPage = () => {
             >
               Создать
             </LoadingButton>
+            <Button variant="contained" onClick={() => navigate(-1)} sx={{ width: '100%' }}>
+              Назад
+            </Button>
           </Grid>
         </Grid>
       </form>
