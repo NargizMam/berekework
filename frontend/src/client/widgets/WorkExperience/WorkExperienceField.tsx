@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import { WorkExperience } from '../../page/Profile/model/types';
@@ -61,9 +61,11 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
       </Grid>
       <Grid>
         {!isAdded ? (
-          <IconButton onClick={addFieldToFormState} aria-label="delete" color="primary">
-            <CheckIcon />
-          </IconButton>
+          <Tooltip title={'Сохранить'}>
+            <IconButton onClick={addFieldToFormState} aria-label="delete" color="primary">
+              <CheckIcon />
+            </IconButton>
+          </Tooltip>
         ) : (
           <IconButton onClick={() => handleDeleteField(id)} aria-label="delete" color="primary">
             <DeleteIcon />

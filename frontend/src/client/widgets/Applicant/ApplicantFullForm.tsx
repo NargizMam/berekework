@@ -87,6 +87,12 @@ const ApplicantFullForm: React.FC<Props> = ({ applicant, onSubmit, loading }) =>
             [name]: value,
           },
         };
+      } else if (['country'].includes(name)) {
+        return {
+          ...prevState,
+          [name]: value,
+          city: '',
+        };
       } else {
         return {
           ...prevState,
@@ -171,7 +177,7 @@ const ApplicantFullForm: React.FC<Props> = ({ applicant, onSubmit, loading }) =>
       <FileInput avatar={applicant?.avatar || ''} onChange={fileInputChangeHandler} />
       <div className="applicantContainer">
         <p className="profileTitle">Настройки профиля</p>
-        <Grid sx={{ maxWidth: '850px' }}>
+        <Grid>
           <Form
             state={state}
             submitFormHandler={submitFormHandler}
