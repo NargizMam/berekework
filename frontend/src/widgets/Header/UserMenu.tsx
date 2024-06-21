@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { logout } from '../../client/page/Auth/api/AuthThunk';
 import { EmployerAuth, User } from '../../client/page/Auth/model/types';
 import { useAppDispatch } from '../../app/store/hooks';
-import { apiURL } from '../../constants';
+import { API_URL } from '../../app/constants/links';
 
 interface Props {
   user: User | EmployerAuth | null;
@@ -16,7 +16,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const avatar = apiURL + '/avatars/' + user?.avatar;
+  const avatar = API_URL + '/avatars/' + user?.avatar;
 
   const handleLogout = () => {
     dispatch(logout()).unwrap();
