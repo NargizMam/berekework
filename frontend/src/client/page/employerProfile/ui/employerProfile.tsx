@@ -220,7 +220,7 @@ const EmployerProfile: React.FC = () => {
       {/*  </>*/}
       {/*)}*/}
       <Dialog open={Boolean(vacancyId)} onClose={onDeleteCancel}>
-        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogTitle>Подтвердите удаление</DialogTitle>
         <DialogContent>Вы действительно хотите удалить эту вакансию ?</DialogContent>
         <DialogActions>
           <Button onClick={onDeleteConfirm}>Да</Button>
