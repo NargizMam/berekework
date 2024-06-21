@@ -2,8 +2,8 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import {
   selectEmployerDeleteLoading,
-  selectEmployersLoading,
   selectEmployers,
+  selectEmployersLoading,
   selectEmployerUpdateLoading,
 } from '../model/employerSlice';
 import { deleteEmployer, getAllEmployer, updateStatusEmployer } from '../api/employerThunk';
@@ -57,6 +57,7 @@ export const EmployerPanelPage = () => {
   const employers = useAppSelector(selectEmployers);
   const loading = useAppSelector(selectEmployersLoading);
   const [selectTariff, setSelectTariff] = useState('');
+  const [employeeId, setEmployeeId] = useState<{ id: string; email: string } | null>(null);
   const [open, setOpen] = useState(false);
   const [employer, setEmployer] = useState({
     id: '',
@@ -84,13 +85,10 @@ export const EmployerPanelPage = () => {
   };
 
   const handleDeleteEmployer = async (id: string, email: string) => {
-    try {
-      await dispatch(deleteEmployer({ id, email })).unwrap();
-      await dispatch(getAllEmployer()).unwrap();
-      toast.success(`${email} удален!`);
-    } catch (error) {
-      toast.error('Что то пошло не так!');
-    }
+    setEmployeeId({
+      id,
+      email,
+    });
   };
 
   const handleClickOpen = (id: string, email: string) => {
@@ -105,6 +103,23 @@ export const EmployerPanelPage = () => {
   if (loading) {
     return <Loader />;
   }
+
+  const onDeleteConfirm = async () => {
+    if (employeeId?.id && employeeId?.email) {
+      try {
+        await dispatch(deleteEmployer({ id: employeeId.id, email: employeeId.email })).unwrap();
+        await dispatch(getAllEmployer()).unwrap();
+        toast.success(`${employeeId.email} удален!`);
+      } catch (error) {
+        toast.error('Что то пошло не так!');
+      }
+      setEmployeeId(null);
+    }
+  };
+
+  const onDeleteCancel = () => {
+    setEmployeeId(null);
+  };
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px 0' }}>
@@ -224,6 +239,18 @@ export const EmployerPanelPage = () => {
             </Button>
           </DialogActions>
         </form>
+      </Dialog>
+      <Dialog open={Boolean(employeeId)} onClose={onDeleteCancel}>
+        <DialogTitle>Подтвердите удаление</DialogTitle>
+        <DialogContent>Вы действительно хотите удалить этого работодателя?</DialogContent>
+        <DialogActions>
+          <Button onClick={onDeleteConfirm} disabled={deleteLoading}>
+            Да
+          </Button>
+          <Button onClick={onDeleteCancel} disabled={deleteLoading}>
+            Нет
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );

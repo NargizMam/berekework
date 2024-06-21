@@ -4,6 +4,10 @@ import { deleteModerator, getAllModerators } from '../api/moderatorsThunk';
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Paper,
   Table,
   TableBody,
@@ -23,14 +27,26 @@ export const ModeratorsPage = () => {
   const moderators = useAppSelector(selectModerators);
   const loading = useAppSelector(selectModeratorsLoading);
   const [openForm, setOpenForm] = useState(false);
+  const [moderatorId, setModeratorId] = useState<string | null>(null);
 
   useEffect(() => {
     dispatch(getAllModerators());
   }, [dispatch]);
 
   const onDeleteModerator = async (id: string) => {
-    await dispatch(deleteModerator(id)).unwrap();
-    dispatch(getAllModerators());
+    setModeratorId(id);
+  };
+
+  const onDeleteConfirm = async () => {
+    if (moderatorId) {
+      await dispatch(deleteModerator(moderatorId)).unwrap();
+      dispatch(getAllModerators());
+      setModeratorId(null);
+    }
+  };
+
+  const onDeleteCancel = () => {
+    setModeratorId(null);
   };
 
   return (
@@ -74,6 +90,14 @@ export const ModeratorsPage = () => {
         </>
       )}
       {openForm && <ModeratorsForm close={() => setOpenForm(false)} />}
+      <Dialog open={Boolean(moderatorId)} onClose={onDeleteCancel}>
+        <DialogTitle>Подтвердите удаление</DialogTitle>
+        <DialogContent>Вы действительно хотите удалить этого админа?</DialogContent>
+        <DialogActions>
+          <Button onClick={onDeleteConfirm}>Да</Button>
+          <Button onClick={onDeleteCancel}>Нет</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
