@@ -55,6 +55,7 @@ const App = () => {
         <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
         <Route path="/users" element={<UserPanelPage />} />
         <Route path="/applications/:id" element={<ApplicationPanelPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AdminBaseLayout>
   );

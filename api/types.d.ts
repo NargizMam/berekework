@@ -55,6 +55,7 @@ export interface UserFields {
     telegram?: string;
   };
   documents?: string[] | null;
+  isArchive: boolean;
 }
 
 export interface EmployerFields {

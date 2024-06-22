@@ -88,7 +88,7 @@ userRouter.post('/sessions', async (req, res, next) => {
       user = await Employer.findOne({ email: req.body.email });
     }
 
-    if (!user) {
+    if (!user || user.isArchive) {
       return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
     }
 
@@ -273,6 +273,27 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), async (req: RequestWithU
       return res.status(422).send(e);
     }
     return next(e);
+  }
+});
+
+userRouter.patch('/archive/:id', auth, async (req: RequestWithUser, res, next) => {
+  try {
+    const id = req.params.id;
+
+    if (req.user?.role === 'superadmin' || req.user?.role === 'admin') {
+      const user = await User.findById(id);
+      if (!user) {
+        return res.status(404).send({ error: 'User not found' });
+      }
+
+      user.isArchive = !user.isArchive;
+      await user.save();
+      return res.status(200).send({ message: 'Archive status updated successfully!' });
+    } else {
+      return res.status(403).send({ error: 'Unauthorized action' });
+    }
+  } catch (e) {
+    next(e);
   }
 });
 
