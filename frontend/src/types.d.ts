@@ -45,6 +45,10 @@ export interface EmployerInfoApi {
   createdAt: string;
   updatedAt: string;
   isPublished: boolean;
+  tariff: {
+    data: string;
+    titleTariff: string;
+  }
 }
 
 export interface EmployerProfileMutation {
