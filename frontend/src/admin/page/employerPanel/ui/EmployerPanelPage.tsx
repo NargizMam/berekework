@@ -173,7 +173,7 @@ export const EmployerPanelPage = () => {
                     PDF
                   </Link>
                 </TableCell>
-                <TableCell>{employer.tariff}</TableCell>
+                <TableCell>{employer.tariff.titleTariff}</TableCell>
                 <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
                 <TableCell align="right">
                   <Tooltip title={'Изменить статус'}>

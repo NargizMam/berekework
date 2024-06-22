@@ -72,8 +72,8 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
       },
       titleTariff: {
           type: String,
-          enum: ['базовый', 'недельный', 'месячный'],
-          default: 'базовый',
+          enum: ['Разовый', 'Месячный', 'Полугодовой'],
+          default: 'разовый',
       },
     },
     vacancies: [

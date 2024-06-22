@@ -72,6 +72,32 @@ const EmployerProfile: React.FC = () => {
   const [vacancyId, setVacancyId] = useState<string | null>(null);
   const deleteLoading = useAppSelector(selectVacancyDeleteLoading);
   const [value, setValue] = React.useState(0);
+
+
+  const currentDate = new Date();
+
+  let daysLeft: number = 0;
+
+  if(profile) {
+    const tariffDate = new Date(profile.tariff.data);
+
+    if (profile.tariff.titleTariff === 'Разовый') {
+      const diffTime = Math.abs(currentDate.getTime() - tariffDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      daysLeft = 1 - diffDays;
+    } else if (profile.tariff.titleTariff === 'Месячный') {
+      const diffTime = Math.abs(currentDate.getTime() - tariffDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      daysLeft = 30 - diffDays;
+    } else if (profile.tariff.titleTariff === 'Полугодовой') {
+      const diffTime = Math.abs(currentDate.getTime() - tariffDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      daysLeft = 183 - diffDays;
+    } else {
+      daysLeft = 0; // Если тип тарифа неизвестен, считаем, что подписка неактивна
+    }
+  }
+
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -145,12 +171,17 @@ const EmployerProfile: React.FC = () => {
       </Box>
       {profile && (
         <Grid mt={6}>
-          <div className="companyHeader">
-            <img className="companyLogo" src={`${API_URL}/${profile.avatar}`} alt="Логотип компании" height="100px" />
-            <Typography ml={2} variant="h4">
-              {profile.companyName}
-            </Typography>
-          </div>
+          <div className="companyHeader"
+               style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <img className="companyLogo" src={`${API_URL}/${profile.avatar}`} alt="Логотип компании" height="100px"/>
+              <Typography ml={2} variant="h4">
+                {profile.companyName}
+              </Typography>
+            </div>
+            <Typography>Ваш тариф: <strong>{profile.tariff.titleTariff}</strong></Typography>
+            <Typography>Дней осталось до конца подписки: <strong>{daysLeft}</strong></Typography>
+        </div>
           <p className="companyInfo">
             <strong>Сфера деятельности:</strong> {profile.industry}
           </p>
@@ -166,9 +197,9 @@ const EmployerProfile: React.FC = () => {
           <Link target="_blank" className="companyLink" href={API_URL + '/' + profile.documents}>
             Скачать документы
           </Link>
-          <Box sx={{ display: 'flex', mt: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
+          <Box sx={{display: 'flex', mt: 2, flexDirection: {xs: 'column', sm: 'row'}}}>
             {profile?.isPublished && (
-              <Button variant="outlined" sx={{ mt: { xs: 1, sm: 0 } }} onClick={() => navigate('/vacancy/submit/')}>
+              <Button variant="outlined" sx={{mt: {xs: 1, sm: 0}}} onClick={() => navigate('/vacancy/submit/')}>
                 Создать вакансию
               </Button>
             )}
@@ -176,8 +207,8 @@ const EmployerProfile: React.FC = () => {
         </Grid>
       )}
 
-      <Box sx={{ width: '100%', mt: 4 }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{width: '100%', mt: 4}}>
+        <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
           <Tabs value={value} onChange={handleChange}>
             <Tab label="Вакансии" {...a11yProps(0)} />
             <Tab label="Новые заявки" {...a11yProps(1)} />

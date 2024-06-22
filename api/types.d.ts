@@ -77,7 +77,7 @@ export interface EmployerFields {
   adminsComment: string;
   tariff: {
     data: Date;
-    titleTariff: "базовый" | "недельный" | "месячный" | "годовой";
+    titleTariff: 'Разовый'|'Месячный'|'Полугодовой';
   };
 }
 
