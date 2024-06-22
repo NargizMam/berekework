@@ -66,9 +66,15 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     },
     googleID: String,
     avatar: String,
-    tariff: {
-      type: String,
-      default: 'Базовый',
+      tariff: {
+      data: {
+          type: Date,
+      },
+      titleTariff: {
+          type: String,
+          enum: ['базовый', 'недельный', 'месячный'],
+          default: 'базовый',
+      },
     },
     vacancies: [
       {

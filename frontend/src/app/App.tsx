@@ -100,9 +100,9 @@ const App = () => {
             <Route
               path="/edit-employer/:id"
               element={
-                <Permit employerOnly>
+                <ProtectedRoute  isAllowed={!!employer}>
                   <EmployerEditPage />
-                </Permit>
+                </ProtectedRoute >
               }
             />
             <Route
