@@ -117,3 +117,10 @@ export interface ApplicationByVacancy {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface AllArchiveResponse {
+  users: User[];
+  employee: Employer[];
+  moderators: User[];
+  vacancies: VacancyApiData[];
+}

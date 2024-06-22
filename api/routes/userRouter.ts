@@ -34,6 +34,25 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req: RequestWithUser,
   }
 });
 
+// Этот router нужен для получение всех архивированных моделей (user, moderators, vacancy, employee)
+userRouter.get('/archives', auth, permit('superadmin', 'admin'), async (req: RequestWithUser, res, next) => {
+  try {
+    const deletedUser = await User.find({ isArchive: true, role: 'user' });
+    const deletedEmployee = await Employer.find({ isArchive: true });
+    const deletedModerators = await User.find({ isArchive: true, role: 'admin' });
+    const deletedVacancy = await User.find({ archive: true });
+
+    return res.send({
+      users: deletedUser,
+      employee: deletedEmployee,
+      moderators: deletedModerators,
+      vacancies: deletedVacancy,
+    });
+  } catch (e) {
+    return next(e);
+  }
+});
+
 userRouter.post('/google', async (req, res, next) => {
   try {
     const ticket = await client.verifyIdToken({
@@ -110,16 +129,19 @@ userRouter.post('/sessions', async (req, res, next) => {
 userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req: RequestWithUser, res, next) => {
   try {
     if (req.query.filter === 'moderator') {
-      const moderators = await User.find({ role: 'admin' });
+      const moderators = await User.find({ role: 'admin', isArchive: false });
       return res.send(moderators);
     }
     if (req.query.filter) {
       const prof = req.query.filter;
-      const filteredUsers = await User.find({ preferredJob: { $regex: prof.toString(), $options: 'i' } });
+      const filteredUsers = await User.find({
+        preferredJob: { $regex: prof.toString(), $options: 'i' },
+        isArchive: false,
+      });
       return res.send(filteredUsers);
     }
     if (!req.query.filter) {
-      const users = await User.find({ role: { $nin: ['admin', 'superadmin'] } });
+      const users = await User.find({ role: { $nin: ['admin', 'superadmin'] }, isArchive: false });
       return res.send(users);
     }
   } catch (error) {

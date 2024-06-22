@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllUser, getSingleUser } from './usersThunk';
+import { getAllArchive, getAllUser, getSingleUser } from './usersThunk';
 import { RootState } from '../../app/store/store';
-import { User } from '../../app/types';
+import { AllArchiveResponse, User } from '../../app/types';
 
 interface UsersState {
   users: User[];
   user: User | null;
   usersLoading: boolean;
   userLoading: boolean;
+  archives: AllArchiveResponse | null;
+  archivesLoading: boolean;
 }
 
 const initialState: UsersState = {
@@ -15,6 +17,8 @@ const initialState: UsersState = {
   user: null,
   usersLoading: false,
   userLoading: false,
+  archives: null,
+  archivesLoading: false,
 };
 
 const usersSlice = createSlice({
@@ -42,6 +46,18 @@ const usersSlice = createSlice({
     builder.addCase(getSingleUser.rejected, (state) => {
       state.usersLoading = false;
     });
+
+    builder
+      .addCase(getAllArchive.pending, (state) => {
+        state.archivesLoading = true;
+      })
+      .addCase(getAllArchive.fulfilled, (state, { payload }) => {
+        state.archives = payload;
+        state.archivesLoading = false;
+      })
+      .addCase(getAllArchive.rejected, (state) => {
+        state.archivesLoading = false;
+      });
   },
 });
 
@@ -50,3 +66,5 @@ export const selectUsers = (state: RootState) => state.users.users;
 export const selectProfile = (state: RootState) => state.users.user;
 export const selectUsersLoading = (state: RootState) => state.users.usersLoading;
 export const selectProfileLoading = (state: RootState) => state.users.userLoading;
+export const selectArchives = (state: RootState) => state.users.archives;
+export const selectArchivesLoading = (state: RootState) => state.users.archivesLoading;

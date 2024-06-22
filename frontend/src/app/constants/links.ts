@@ -4,7 +4,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import WebIcon from '@mui/icons-material/Web';
-import ArchiveIcon from '@mui/icons-material/Archive';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 export const API_URL = import.meta.env['VITE_API_URL'];
 
@@ -104,6 +104,6 @@ export const dashboardSuperAdminRoutes = [
     title: 'Архив',
     tooltip: 'Архив',
     url: 'admin/archive',
-    icon: ArchiveIcon,
+    icon: InventoryIcon,
   },
 ];
