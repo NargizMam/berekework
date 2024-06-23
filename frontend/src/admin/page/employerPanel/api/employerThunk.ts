@@ -4,14 +4,17 @@ import { Employer, EmployerMutation } from '../model/types';
 import { EmployerInfoApi, ValidationError } from '../../../../types';
 import { isAxiosError } from 'axios';
 import { EmployerInfoApiMutation } from '../../../../client/page/employerProfile/ui/EmployerEdit';
+import { RootState } from '../../../../app/store/store';
+import { setUser } from '../../../../client/page/Auth/model/AuthSlice';
 
 export const createEmployer = createAsyncThunk<
   void,
   EmployerMutation,
   {
     rejectValue: ValidationError;
+    state: RootState;
   }
->('employer/create', async (employer, { rejectWithValue }) => {
+>('employer/create', async (employer, { rejectWithValue, dispatch }) => {
   try {
     const formData = new FormData();
     formData.append('email', employer.email);
@@ -28,7 +31,9 @@ export const createEmployer = createAsyncThunk<
     if (employer.avatar) {
       formData.append('avatar', employer.avatar);
     }
-    await axiosApi.post('/employer', formData);
+    const response = await axiosApi.post('/employer', formData);
+    dispatch(setUser(response.data.employer));
+    return response.data;
   } catch (error) {
     if (isAxiosError(error) && error.response && error.response.status === 422) {
       return rejectWithValue(error.response.data);

@@ -5,71 +5,78 @@ import bcrypt from 'bcrypt';
 
 export const SALT_WORK_FACTOR = 10;
 
-const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: async function (this: HydratedDocument<UserFields>, email: string): Promise<boolean> {
-        if (!this.isModified('email')) return true;
+const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: async function (this: HydratedDocument<UserFields>, email: string): Promise<boolean> {
+          if (!this.isModified('email')) return true;
 
-        const user: HydratedDocument<UserFields> | null = await User.findOne({
-          email,
-        });
+          const user: HydratedDocument<UserFields> | null = await User.findOne({
+            email,
+          });
 
-        return !user;
+          return !user;
+        },
+        message: 'This user is already registered!',
       },
-      message: 'This user is already registered!',
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    token: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      default: 'user',
+      enum: ['user', 'admin', 'superadmin', 'employer'],
+    },
+    displayName: String,
+    avatar: String,
+    googleID: String,
+    name: String,
+    surname: String,
+    patronymic: String,
+    gender: {
+      type: String,
+      enum: ['жен', 'муж'],
+    },
+    dateOfBirth: String,
+    country: String,
+    city: String,
+    education: String,
+    aboutMe: {
+      type: String,
+      minlength: 100,
+    },
+    workExperience: [
+      {
+        _id: String,
+        fieldOfWork: String,
+        duration: String,
+      },
+    ],
+    preferredJob: String,
+    mainDuration: String,
+    preferredCity: String,
+    contacts: {
+      phone: String,
+      whatsapp: String,
+      telegram: String,
+    },
+    isArchive: {
+      type: Boolean,
+      default: false,
     },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  token: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    default: 'user',
-    enum: ['user', 'admin', 'superadmin', 'employer'],
-  },
-  displayName: String,
-  avatar: String,
-  googleID: String,
-  name: String,
-  surname: String,
-  patronymic: String,
-  gender: {
-    type: String,
-    enum: ['жен', 'муж'],
-  },
-  dateOfBirth: String,
-  country: String,
-  city: String,
-  education: String,
-  aboutMe: {
-    type: String,
-    minlength: 100,
-  },
-  workExperience: [
-    {
-      _id: String,
-      fieldOfWork: String,
-      duration: String,
-    },
-  ],
-  preferredJob: String,
-  mainDuration: String,
-  preferredCity: String,
-  contacts: {
-    phone: String,
-    whatsapp: String,
-    telegram: String,
-  }
-},{ timestamps: true },);
+  { timestamps: true },
+);
 
 userSchema.methods.checkPassword = function (password: string) {
   return bcrypt.compare(password, this.password);

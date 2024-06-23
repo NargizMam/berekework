@@ -55,6 +55,7 @@ export interface UserFields {
     telegram?: string;
   };
   documents?: string[] | null;
+  isArchive: boolean;
 }
 
 export interface EmployerFields {
@@ -75,7 +76,11 @@ export interface EmployerFields {
   foundationYear: string;
   vacancies: Types.ObjectId[];
   adminsComment: string;
-  tariff: string;
+  isArchive: boolean;
+  tariff: {
+    data: Date;
+    titleTariff: 'Разовый' | 'Месячный' | 'Полугодовой';
+  };
 }
 
 export interface UserMethods {

@@ -1,7 +1,3 @@
-.applicantFormContainer {
-  width: 350px;
-}
-
 .labelForField {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
@@ -39,6 +35,10 @@ div.inputContainer {
   margin-bottom: 10px;
 }
 
+.workExpYearField {
+  width: 150px;
+}
+
 .applicantField {
   font-family: 'Montserrat', sans-serif;
   border: #e9e9e9 solid 2px;
@@ -48,15 +48,34 @@ div.inputContainer {
   border-radius: 35px;
   line-height: 20px;
   padding-left: 30px;
-  width: 250px;
+  width: 310px;
   height: 70px;
   background-color: #ffffff;
   margin-bottom: 10px;
+  padding-right: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '▼';
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #333;
 }
 
 textarea.applicantField {
   height: 360px;
-  width: 270px;
+  width: 310px;
+  padding: 20px;
 }
 
 button.sendBtn {
@@ -80,15 +99,15 @@ button.sendBtn {
 
 @media (min-width: 600px) {
   .workExpWrapperField {
-    width: 400px;
+    width: 350px;
   }
 
   .applicantField {
-    width: 400px;
+    width: 550px;
   }
 
   textarea.applicantField {
-    width: 380px;
+    width: 550px;
   }
 }
 
@@ -97,16 +116,17 @@ button.sendBtn {
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
   .workExpWrapperField {
     width: 350px;
   }
 
   .applicantField {
-    width: 600px;
+    width: 650px;
   }
 
   textarea.applicantField {
-    width: 600px;
+    width: 650px;
   }
 
   button.sendBtn {

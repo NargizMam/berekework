@@ -11,8 +11,12 @@ export interface Employer {
   isPublished: string;
   avatar: string;
   documents: string;
-  tariff: string;
+  tariff: {
+    data: string;
+    titleTariff: string;
+  };
   createdAt: string;
+  isArchive: boolean;
 }
 
 export interface EmployerMutation {

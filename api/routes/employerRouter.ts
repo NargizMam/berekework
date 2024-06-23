@@ -66,7 +66,14 @@ employerRouter.patch('/:id', auth, permit('superadmin', 'admin'), async (req, re
             },
           },
         },
-        { $set: { tariff: req.body.tariff } },
+        {
+          $set: {
+            tariff: {
+              titleTariff: req.body.tariff,
+              data: new Date(),
+            },
+          },
+        },
       ],
       { new: true },
     );
@@ -81,7 +88,6 @@ employerRouter.patch('/:id', auth, permit('superadmin', 'admin'), async (req, re
       subject: 'Employer details updated',
       text: `${req.body.email}, Ваш статус работодателя был обновлен!`,
     });
-
     return res.send({ message: 'Работодатель обновлен успешно!', employer });
   } catch (error) {
     return next(error);
@@ -138,7 +144,7 @@ employerRouter.put(
 
 employerRouter.get('/', async (_req, res, next) => {
   try {
-    const results = await Employer.find();
+    const results = await Employer.find({ isArchive: false });
     res.send(results);
   } catch (error) {
     return next(error);

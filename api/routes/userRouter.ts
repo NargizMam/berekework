@@ -8,6 +8,7 @@ import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth, { RequestWithUser } from '../middleware/auth';
 import ignoreAuth from '../middleware/ignoreAuth';
+import Vacancy from '../models/vacancy/Vacancy';
 
 const client = new OAuth2Client(config.google.clientId);
 
@@ -31,6 +32,25 @@ userRouter.post('/', imagesUpload.single('avatar'), async (req: RequestWithUser,
     }
 
     next(error);
+  }
+});
+
+// Этот router нужен для получение всех архивированных моделей (user, moderators, vacancy, employee)
+userRouter.get('/archives', auth, permit('superadmin', 'admin'), async (req: RequestWithUser, res, next) => {
+  try {
+    const deletedUser = await User.find({ isArchive: true, role: 'user' });
+    const deletedEmployee = await Employer.find({ isArchive: true });
+    const deletedModerators = await User.find({ isArchive: true, role: 'admin' });
+    const deletedVacancy = await Vacancy.find({ archive: true }).populate('employer');
+
+    return res.send({
+      users: deletedUser,
+      employee: deletedEmployee,
+      moderators: deletedModerators,
+      vacancies: deletedVacancy,
+    });
+  } catch (e) {
+    return next(e);
   }
 });
 
@@ -88,7 +108,7 @@ userRouter.post('/sessions', async (req, res, next) => {
       user = await Employer.findOne({ email: req.body.email });
     }
 
-    if (!user) {
+    if (!user || user.isArchive) {
       return res.status(422).send({ error: 'Электронная почта или пароль не верны!' });
     }
 
@@ -110,16 +130,19 @@ userRouter.post('/sessions', async (req, res, next) => {
 userRouter.get('/', auth, permit('superadmin', 'admin', 'employer'), async (req: RequestWithUser, res, next) => {
   try {
     if (req.query.filter === 'moderator') {
-      const moderators = await User.find({ role: 'admin' });
+      const moderators = await User.find({ role: 'admin', isArchive: false });
       return res.send(moderators);
     }
     if (req.query.filter) {
       const prof = req.query.filter;
-      const filteredUsers = await User.find({ preferredJob: { $regex: prof.toString(), $options: 'i' } });
+      const filteredUsers = await User.find({
+        preferredJob: { $regex: prof.toString(), $options: 'i' },
+        isArchive: false,
+      });
       return res.send(filteredUsers);
     }
     if (!req.query.filter) {
-      const users = await User.find({ role: { $nin: ['admin', 'superadmin'] } });
+      const users = await User.find({ role: { $nin: ['admin', 'superadmin'] }, isArchive: false });
       return res.send(users);
     }
   } catch (error) {
@@ -273,6 +296,70 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), async (req: RequestWithU
       return res.status(422).send(e);
     }
     return next(e);
+  }
+});
+
+userRouter.patch('/archive/:id', auth, permit('superadmin', 'admin'), async (req: RequestWithUser, res, next) => {
+  try {
+    const id = req.params.id;
+    const userQuery = req.query.user;
+    const employeeQuery = req.query.employee;
+    const moderatorQuery = req.query.moderator;
+    const vacancyQuery = req.query.vacancy;
+
+    if (userQuery) {
+      const user = await User.findById(id);
+
+      if (!user) {
+        return res.status(404).send({ error: 'User not found' });
+      }
+
+      user.isArchive = !user.isArchive;
+      await user.save();
+      return res.status(200).send({ message: 'User archive status updated successfully!' });
+    }
+
+    if (employeeQuery) {
+      const employee = await Employer.findById(id);
+
+      if (!employee) {
+        return res.status(404).send({ error: 'Employee not found' });
+      }
+
+      employee.isArchive = !employee.isArchive;
+      await Vacancy.updateMany({ employer: employee._id }, { archive: employee.isArchive });
+      await employee.save();
+
+      return res.status(200).send({ message: 'Employee archive status updated successfully!' });
+    }
+
+    if (moderatorQuery) {
+      const moderator = await User.findById(id);
+
+      if (!moderator) {
+        return res.status(404).send({ error: 'Moderator not found' });
+      }
+
+      moderator.isArchive = !moderator.isArchive;
+      await moderator.save();
+      return res.status(200).send({ message: 'Moderator archive status updated successfully!' });
+    }
+
+    if (vacancyQuery) {
+      const vacancy = await Vacancy.findById(id);
+      if (!vacancy) {
+        return res.status(404).send({ error: 'Vacancy not found' });
+      }
+
+      vacancy.archive = !vacancy.archive;
+      await vacancy.save();
+
+      return res.status(200).send({ message: 'Vacancy archive status updated successfully!' });
+    }
+
+    return res.status(404).send({ message: 'Not found' });
+  } catch (e) {
+    next(e);
   }
 });
 

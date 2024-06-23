@@ -30,6 +30,7 @@ import Permit from '../shared/permit/Permit';
 import { CreateVacancyForm } from '../client/widgets/createVacancyForm';
 import { ApplicationPanelPage } from '../admin/page/applicationPanel/ui/ApplicationPanelPage';
 import AdminBaseLayout from './layouts/adminLayout/AdminBaseLayout';
+import { ArchivePanel } from '../admin/page/archivePanel';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -55,6 +56,8 @@ const App = () => {
         <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
         <Route path="/users" element={<UserPanelPage />} />
         <Route path="/applications/:id" element={<ApplicationPanelPage />} />
+        <Route path="/archive" element={<ArchivePanel />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AdminBaseLayout>
   );
@@ -100,9 +103,9 @@ const App = () => {
             <Route
               path="/edit-employer/:id"
               element={
-                <Permit employerOnly>
+                <ProtectedRoute  isAllowed={!!employer}>
                   <EmployerEditPage />
-                </Permit>
+                </ProtectedRoute >
               }
             />
             <Route
