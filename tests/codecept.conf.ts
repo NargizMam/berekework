@@ -12,6 +12,7 @@ export const config: CodeceptJS.MainConfig = {
   helpers: {
     Puppeteer: {
       url: 'http://localhost:5173',
+      waitForTimeout: 60000,
       show: process.env['CI'] !== 'true',
       windowSize: '1200x900',
     }
