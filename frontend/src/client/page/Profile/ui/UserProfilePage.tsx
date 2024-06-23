@@ -51,7 +51,7 @@ export const UserProfilePage = () => {
             )}
           </div>
           <p className="profileTitle">
-            {profile.surname} {profile.name}
+            {profile.surname} {profile.name}  {profile.patronymic}
           </p>
           <p className="applicantInfo">{profile.preferredJob}</p>
           {profile.dateOfBirth ?
