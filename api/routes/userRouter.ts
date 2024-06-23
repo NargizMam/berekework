@@ -144,87 +144,6 @@ userRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
 });
 
 userRouter.patch('/:id', imagesUpload.single('avatar'), async (req: RequestWithUser, res, next) => {
-  // try {
-  //   const user = await User.findById(req.params.id);
-  //
-  //   if (!user) {
-  //     return res.status(404).send({ message: 'User not found!' });
-  //   }
-  //
-  //   // let avatar: string | undefined | null = undefined;
-  //   //
-  //   // if (req.body.avatar === 'delete') {
-  //   //   avatar = null;
-  //   // } else if (req.file) {
-  //   //   avatar = req.file.filename;
-  //   // }
-  //
-  //   // const contacts = req.body.contacts
-  //   //   ? {
-  //   //       phone: req.body.contacts.phone || null,
-  //   //       whatsapp: req.body.contacts.whatsapp || null,
-  //   //       telegram: req.body.contacts.telegram || null,
-  //   //     }
-  //   //   : null;
-  //
-  //   if (user.role === 'user') {
-  //     const requiredFields = [
-  //       'name',
-  //       'surname',
-  //       'gender',
-  //       'dateOfBirth',
-  //       'country',
-  //       'city',
-  //       'education',
-  //       'aboutMe',
-  //       'workExperience',
-  //       'preferredJob',
-  //       'preferredCity',
-  //     ];
-  //
-  //     // for (const field of requiredFields) {
-  //     //   // Проверка вложенных полей, таких как contacts.phone
-  //     //   const value = field.includes('.') ? req.body[field.split('.')[0]]?.[field.split('.')[1]] : req.body[field];
-  //     //
-  //     //   if (!value) {
-  //     //     return res.status(400).send({ message: `${field} is required` });
-  //     //   }
-  //     // }
-  //   }
-  //
-  //   const result = await User.updateOne(
-  //     { _id: req.params.id },
-  //     {
-  //       $set: {
-  //         name: req.body.name || null,
-  //         surname: req.body.surname || null,
-  //         patronymic: req.body.patronymic || null,
-  //         gender: req.body.gender || null,
-  //         dateOfBirth: req.body.dateOfBirth || null,
-  //         country: req.body.country || null,
-  //         city: req.body.city || null,
-  //         education: req.body.education || null,
-  //         aboutMe: req.body.aboutMe || null,
-  //         workExperience: req.body.workExperience || null,
-  //         preferredJob: req.body.preferredJob || null,
-  //         preferredCity: req.body.preferredCity || null,
-  //         contacts,
-  //         avatar,
-  //       },
-  //     },
-  //   );
-  //
-  //   if (result.matchedCount === 0) {
-  //     return res.status(404).send({ message: 'User not found!' });
-  //   }
-  //
-  //   return res.send({ message: 'ok' });
-  // } catch (e) {
-  //   if (e instanceof mongoose.Error.ValidationError) {
-  //     return res.status(422).send(e);
-  //   }
-  //   next(e);
-  // }
   try {
     const user = await User.findById(req.params.id);
     const {
@@ -321,10 +240,11 @@ userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) =>
 
 userRouter.post('/send-otp', async (req, res, next) => {
   try {
-    const user = await User.findOne({email: req.body.email});
+    const email = req.body.email;
+    const user = await User.findOne({email});
 
     if (!user) {
-      return res.status(404).send({error: 'User does nor exist'});
+      return res.status(422).send({ error: 'Пользователь не найден' });
     }
 
     const otp = Math.floor(Math.random() * 900000).toString();
@@ -335,12 +255,12 @@ userRouter.post('/send-otp', async (req, res, next) => {
 
     const mailOptions = {
       from: '<BerekeWorkOtp@gmail.com>',
-      to: req.body.email,
+      to: email,
       subject: 'Your OTP Code to Berekework',
-      text: `Your OTP code is ${otp}. It will expire in 3 minutes.`,
+      text: `Ваш OTP код ${otp}`,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error, _info) => {
       if (error) {
         return next(error);
       } else {
@@ -359,29 +279,31 @@ userRouter.post('/compare-otp', async (req, res, next) => {
     const otp = req.body.otp;
 
     if (user?.otp !== otp) {
-      return res.status(422).send({message: 'Неверный OTP'});
+      return res.status(422).send({ error: 'Неверный Otp' });
     }
 
-    return res.status(400).send({message: 'Success'});
+    return res.status(200).send({message: 'Success'});
 
   } catch (e) {
     return next(e);
   }
 });
 
-userRouter.post('change-password', async (req, res, next) => {
+userRouter.post('/change-password', async (req, res, next) => {
   try {
-    const user = await User.findOne({email: req.body.email});
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-    User.findOneAndReplace(
-        {email: req.body.email},
-        {password: req.body.password}
-    );
+    if (!user) {
+      return res.status(422).send({ error: 'Пользователь не найден' });
+    }
 
-    user?.generateToken();
-    await user?.save();
+    user.password = password;
+    user.generateToken();
 
+    await user.save();
 
+    return res.send({ message: 'Пароль изменен' });
   } catch (e) {
     return next(e);
   }

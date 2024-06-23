@@ -30,6 +30,7 @@ import Permit from '../shared/permit/Permit';
 import { CreateVacancyForm } from '../client/widgets/createVacancyForm';
 import { ApplicationPanelPage } from '../admin/page/applicationPanel/ui/ApplicationPanelPage';
 import AdminBaseLayout from './layouts/adminLayout/AdminBaseLayout';
+import SendEmail from '../client/page/ChangePassword/ui/SendEmail';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -84,6 +85,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/change-password" element={<SendEmail />} />
             <Route path="/vacancy" element={<VacancyPageClient />} />
             <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
             <Route path="/vacancy/edit/:id" element={<CreateVacancyForm />} />
