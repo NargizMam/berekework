@@ -7,6 +7,7 @@ import UserCrmTable from '../../../widgets/crmTable/userCrmTable';
 import { toast } from 'react-toastify';
 import EmployeeTable from '../../../widgets/crmTable/employeeTable';
 import VacancyTableCrm from '../../../widgets/crmTable/vacancyTableCrm';
+import ModeratorTableCrm from '../../../widgets/crmTable/moderatorTableCrm';
 
 const CustomTabPanel = (props: { children?: React.ReactNode; index: number; value: number }) => {
   const { children, value, index, ...other } = props;
@@ -93,6 +94,21 @@ export const ArchivePanel = () => {
     }
   };
 
+  const onArchiveModerator = async (id: string) => {
+    try {
+      await dispatch(
+        archiveModels({
+          id: id,
+          model: 'moderator',
+        }),
+      ).unwrap();
+      await dispatch(getAllArchive());
+      toast.success('Модератор востановлен!');
+    } catch (error) {
+      toast.error('Что то пошло не так!');
+    }
+  };
+
   return (
     <>
       <Box sx={{ width: '100%', mt: 4 }}>
@@ -118,7 +134,11 @@ export const ArchivePanel = () => {
               />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              MODERATORS
+              <ModeratorTableCrm
+                moderators={archives.moderators}
+                isArchive={true}
+                onArchiveModerator={onArchiveModerator}
+              />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
               <VacancyTableCrm

@@ -334,6 +334,14 @@ userRouter.patch('/archive/:id', auth, permit('superadmin', 'admin'), async (req
     }
 
     if (moderatorQuery) {
+      const moderator = await User.findById(id);
+
+      if (!moderator) {
+        return res.status(404).send({ error: 'Moderator not found' });
+      }
+
+      moderator.isArchive = !moderator.isArchive;
+      await moderator.save();
       return res.status(200).send({ message: 'Moderator archive status updated successfully!' });
     }
 
