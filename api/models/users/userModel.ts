@@ -68,7 +68,8 @@ const userSchema = new mongoose.Schema<UserFields, UserModel, UserMethods>({
     phone: String,
     whatsapp: String,
     telegram: String,
-  }
+  },
+  otp: String,
 },{ timestamps: true },);
 
 userSchema.methods.checkPassword = function (password: string) {
