@@ -117,7 +117,7 @@ export const VacancyPage = () => {
                 </TableCell>
                 <TableCell align="right">
                   <Button onClick={() => handleDeleteVacancy(vacancy._id)} variant="contained">
-                    Удаление
+                    Удалить
                   </Button>
                 </TableCell>
               </TableRow>

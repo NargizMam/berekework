@@ -20,7 +20,7 @@ import {
 import { Loader } from '../../../../shared/loader';
 import { selectModerators, selectModeratorsLoading } from '../model/moderatorsSlice';
 import { ModeratorsForm } from './moderatorsForm';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const ModeratorsPage = () => {
   const dispatch = useAppDispatch();
@@ -79,7 +79,7 @@ export const ModeratorsPage = () => {
                     <TableCell align="left">{new Date(moderator.updatedAt).toLocaleString()}</TableCell>
                     <TableCell align="left">
                       <Button onClick={() => onDeleteModerator(moderator._id)}>
-                        <DeleteForeverIcon />
+                        <DeleteIcon color={'error'} sx={{ fontSize: '30px' }} />
                       </Button>
                     </TableCell>
                   </TableRow>
