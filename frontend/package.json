@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start:test": "VITE_API_URL=http://localhost:8010 PORT=5183 vite",
+    "start:test": "VITE_API_URL=http://localhost:8010 PORT=5173 vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
