@@ -8,6 +8,7 @@ import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth, { RequestWithUser } from '../middleware/auth';
 import ignoreAuth from '../middleware/ignoreAuth';
+import {transporter} from "../mailer";
 import Vacancy from '../models/vacancy/Vacancy';
 
 const client = new OAuth2Client(config.google.clientId);
@@ -166,87 +167,6 @@ userRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => {
 });
 
 userRouter.patch('/:id', imagesUpload.single('avatar'), async (req: RequestWithUser, res, next) => {
-  // try {
-  //   const user = await User.findById(req.params.id);
-  //
-  //   if (!user) {
-  //     return res.status(404).send({ message: 'User not found!' });
-  //   }
-  //
-  //   // let avatar: string | undefined | null = undefined;
-  //   //
-  //   // if (req.body.avatar === 'delete') {
-  //   //   avatar = null;
-  //   // } else if (req.file) {
-  //   //   avatar = req.file.filename;
-  //   // }
-  //
-  //   // const contacts = req.body.contacts
-  //   //   ? {
-  //   //       phone: req.body.contacts.phone || null,
-  //   //       whatsapp: req.body.contacts.whatsapp || null,
-  //   //       telegram: req.body.contacts.telegram || null,
-  //   //     }
-  //   //   : null;
-  //
-  //   if (user.role === 'user') {
-  //     const requiredFields = [
-  //       'name',
-  //       'surname',
-  //       'gender',
-  //       'dateOfBirth',
-  //       'country',
-  //       'city',
-  //       'education',
-  //       'aboutMe',
-  //       'workExperience',
-  //       'preferredJob',
-  //       'preferredCity',
-  //     ];
-  //
-  //     // for (const field of requiredFields) {
-  //     //   // Проверка вложенных полей, таких как contacts.phone
-  //     //   const value = field.includes('.') ? req.body[field.split('.')[0]]?.[field.split('.')[1]] : req.body[field];
-  //     //
-  //     //   if (!value) {
-  //     //     return res.status(400).send({ message: `${field} is required` });
-  //     //   }
-  //     // }
-  //   }
-  //
-  //   const result = await User.updateOne(
-  //     { _id: req.params.id },
-  //     {
-  //       $set: {
-  //         name: req.body.name || null,
-  //         surname: req.body.surname || null,
-  //         patronymic: req.body.patronymic || null,
-  //         gender: req.body.gender || null,
-  //         dateOfBirth: req.body.dateOfBirth || null,
-  //         country: req.body.country || null,
-  //         city: req.body.city || null,
-  //         education: req.body.education || null,
-  //         aboutMe: req.body.aboutMe || null,
-  //         workExperience: req.body.workExperience || null,
-  //         preferredJob: req.body.preferredJob || null,
-  //         preferredCity: req.body.preferredCity || null,
-  //         contacts,
-  //         avatar,
-  //       },
-  //     },
-  //   );
-  //
-  //   if (result.matchedCount === 0) {
-  //     return res.status(404).send({ message: 'User not found!' });
-  //   }
-  //
-  //   return res.send({ message: 'ok' });
-  // } catch (e) {
-  //   if (e instanceof mongoose.Error.ValidationError) {
-  //     return res.status(422).send(e);
-  //   }
-  //   next(e);
-  // }
   try {
     const user = await User.findById(req.params.id);
     const {
@@ -404,5 +324,78 @@ userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) =>
     }
   }
 });
+
+userRouter.post('/send-otp', async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const user = await User.findOne({email});
+
+    if (!user) {
+      return res.status(422).send({ error: 'Пользователь не найден' });
+    }
+
+    const otp = Math.floor(Math.random() * 900000).toString();
+
+    user.otp = otp;
+
+    await user.save();
+
+    const mailOptions = {
+      from: '<BerekeWorkOtp@gmail.com>',
+      to: email,
+      subject: 'Your OTP Code to Berekework',
+      text: `Ваш OTP код ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, _info) => {
+      if (error) {
+        return next(error);
+      } else {
+        return res.status(200).send({message: `OTP отправлен на ${req.body.email}`});
+      }
+    });
+
+  } catch (e) {
+    return next(e);
+  }
+});
+
+userRouter.post('/compare-otp', async (req, res, next) => {
+  try {
+    const user = await User.findOne({email: req.body.email});
+    const otp = req.body.otp;
+
+    if (user?.otp !== otp) {
+      return res.status(422).send({ error: 'Неверный Otp' });
+    }
+
+    return res.status(200).send({message: 'Success'});
+
+  } catch (e) {
+    return next(e);
+  }
+});
+
+userRouter.post('/change-password', async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(422).send({ error: 'Пользователь не найден' });
+    }
+
+    user.password = password;
+    user.generateToken();
+
+    await user.save();
+
+    return res.send({ message: 'Пароль изменен' });
+  } catch (e) {
+    return next(e);
+  }
+});
+
+
 
 export default userRouter;

@@ -11,6 +11,7 @@ import { warningMessageReducer } from '../../widgets/WarningMessage/warningMessa
 import { createVacancyFormReducer } from '../../client/widgets/createVacancyForm/model/createVacancyFormSlice';
 import { vacancyReducer } from '../../feachers/vacancy/vacancySlice';
 import { applicationReducer } from '../../feachers/aplication/applicationSlice';
+import { changePasswordReducer } from '../../client/page/ChangePassword/model/ChangePasswordSlice';
 
 const usersPersistConfig = {
   key: 'shop:users',
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   employerAdmin: employerReducer,
   warningMessage: warningMessageReducer,
   createVacancyForm: createVacancyFormReducer,
+  changePassword: changePasswordReducer,
 });
 
 export const store = configureStore({

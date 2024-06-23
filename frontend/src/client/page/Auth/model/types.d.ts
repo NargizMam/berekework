@@ -49,3 +49,9 @@ export interface ValidationError {
   name: string;
   _message: string;
 }
+
+export interface ChangePasswordData {
+  email: string;
+  otp: string;
+  password: string;
+}

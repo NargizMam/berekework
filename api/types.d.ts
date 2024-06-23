@@ -55,6 +55,7 @@ export interface UserFields {
     telegram?: string;
   };
   documents?: string[] | null;
+  otp?: string;
   isArchive: boolean;
 }
 
