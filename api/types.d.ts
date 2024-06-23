@@ -76,7 +76,10 @@ export interface EmployerFields {
   foundationYear: string;
   vacancies: Types.ObjectId[];
   adminsComment: string;
-  tariff: string;
+  tariff: {
+    data: Date;
+    titleTariff: 'Разовый'|'Месячный'|'Полугодовой';
+  };
 }
 
 export interface UserMethods {

@@ -63,9 +63,33 @@ export const EmployerPanelPage = () => {
     id: '',
     email: '',
   });
+  const [daysLeftMap, setDaysLeftMap] = useState<{ [key: string]: number }>({});
   const tariffs = document?.data.body.filter((slice: TariffGet) => slice.slice_type === 'tariff')[0].items || [];
   const updateLoading = useAppSelector(selectEmployerUpdateLoading);
   const deleteLoading = useAppSelector(selectEmployerDeleteLoading);
+  const currentDate = new Date();
+
+  useEffect(() => {
+    if (employers) {
+      const newDaysLeftMap: { [key: string]: number } = {};
+      employers.forEach((employer) => {
+        const tariffDate = new Date(employer.tariff.data);
+        const diffTime = Math.abs(currentDate.getTime() - tariffDate.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (employer.tariff.titleTariff === 'Разовый') {
+          newDaysLeftMap[employer._id] = 1 - diffDays;
+        } else if (employer.tariff.titleTariff === 'Месячный') {
+          newDaysLeftMap[employer._id] = 30 - diffDays;
+        } else if (employer.tariff.titleTariff === 'Полугодовой') {
+          newDaysLeftMap[employer._id] = 183 - diffDays;
+        } else {
+          newDaysLeftMap[employer._id] = 0;
+        }
+      });
+      setDaysLeftMap(newDaysLeftMap);
+    }
+  }, [employers, currentDate]);
 
   useEffect(() => {
     dispatch(getAllEmployer());
@@ -144,6 +168,7 @@ export const EmployerPanelPage = () => {
               <TableCell align="left">Контакты</TableCell>
               <TableCell align="left">Документы</TableCell>
               <TableCell align="left">Статус</TableCell>
+              <TableCell align="left">До конца подписки</TableCell>
               <TableCell align="left">Оплата</TableCell>
               <TableCell align="center" colSpan={2}>
                 Дейсвие
@@ -173,7 +198,8 @@ export const EmployerPanelPage = () => {
                     PDF
                   </Link>
                 </TableCell>
-                <TableCell>{employer.tariff}</TableCell>
+                <TableCell>{employer.tariff.titleTariff}</TableCell>
+                <TableCell>{daysLeftMap[employer._id]}</TableCell>
                 <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
                 <TableCell align="right">
                   <Tooltip title={'Изменить статус'}>
