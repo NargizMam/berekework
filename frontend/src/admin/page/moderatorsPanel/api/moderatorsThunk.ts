@@ -11,17 +11,17 @@ export const getAllModerators = createAsyncThunk<ModeratorApi[]>('moderators/get
   return response.data;
 });
 
-export const createModerator = createAsyncThunk<string, Moderator, { rejectValue: ValidationError, state: RootState  }>(
+export const createModerator = createAsyncThunk<string, Moderator, { rejectValue: ValidationError; state: RootState }>(
   'moderators/create',
-  async (moderator,  { getState, rejectWithValue, dispatch }) => {
+  async (moderator, { getState, rejectWithValue, dispatch }) => {
     try {
-      const token = getState().auth.user?.token ;
-      const response = await axiosApi.post('/moderator', moderator, { headers: { Authorization: 'Bearer ' + token }} );
-      dispatch(openSuccessMessage(response.data.message))
+      const token = getState().auth.user?.token;
+      const response = await axiosApi.post('/moderator', moderator, { headers: { Authorization: 'Bearer ' + token } });
+      dispatch(openSuccessMessage(response.data.message));
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response) {
-        dispatch(openErrorMessage(e.response.data))
+        dispatch(openErrorMessage(e.response.data));
         return rejectWithValue(e.response.data);
       }
       throw e;
@@ -34,11 +34,11 @@ export const deleteModerator = createAsyncThunk<string, string, { rejectValue: G
   async (moderatorsId, { rejectWithValue, dispatch }) => {
     try {
       const response = await axiosApi.delete(`/moderator/${moderatorsId}`);
-       dispatch(openSuccessMessage(response.data.text))
+      dispatch(openSuccessMessage(response.data.text));
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response) {
-        dispatch(openErrorMessage(e.response.data.message))
+        dispatch(openErrorMessage(e.response.data.message));
         return rejectWithValue(e.response.data);
       }
       throw e;
