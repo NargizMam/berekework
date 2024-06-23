@@ -8,6 +8,7 @@ import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth, { RequestWithUser } from '../middleware/auth';
 import ignoreAuth from '../middleware/ignoreAuth';
+import Vacancy from '../models/vacancy/Vacancy';
 
 const client = new OAuth2Client(config.google.clientId);
 
@@ -40,7 +41,7 @@ userRouter.get('/archives', auth, permit('superadmin', 'admin'), async (req: Req
     const deletedUser = await User.find({ isArchive: true, role: 'user' });
     const deletedEmployee = await Employer.find({ isArchive: true });
     const deletedModerators = await User.find({ isArchive: true, role: 'admin' });
-    const deletedVacancy = await User.find({ archive: true });
+    const deletedVacancy = await Vacancy.find({ archive: true }).populate('employer');
 
     return res.send({
       users: deletedUser,
@@ -298,22 +299,57 @@ userRouter.patch('/:id', imagesUpload.single('avatar'), async (req: RequestWithU
   }
 });
 
-userRouter.patch('/archive/:id', auth, async (req: RequestWithUser, res, next) => {
+userRouter.patch('/archive/:id', auth, permit('superadmin', 'admin'), async (req: RequestWithUser, res, next) => {
   try {
     const id = req.params.id;
+    const userQuery = req.query.user;
+    const employeeQuery = req.query.employee;
+    const moderatorQuery = req.query.moderator;
+    const vacancyQuery = req.query.vacancy;
 
-    if (req.user?.role === 'superadmin' || req.user?.role === 'admin') {
+    if (userQuery) {
       const user = await User.findById(id);
+
       if (!user) {
         return res.status(404).send({ error: 'User not found' });
       }
 
       user.isArchive = !user.isArchive;
       await user.save();
-      return res.status(200).send({ message: 'Archive status updated successfully!' });
-    } else {
-      return res.status(403).send({ error: 'Unauthorized action' });
+      return res.status(200).send({ message: 'User archive status updated successfully!' });
     }
+
+    if (employeeQuery) {
+      const employee = await Employer.findById(id);
+
+      if (!employee) {
+        return res.status(404).send({ error: 'Employee not found' });
+      }
+
+      employee.isArchive = !employee.isArchive;
+      await Vacancy.updateMany({ employer: employee._id }, { archive: employee.isArchive });
+      await employee.save();
+
+      return res.status(200).send({ message: 'Employee archive status updated successfully!' });
+    }
+
+    if (moderatorQuery) {
+      return res.status(200).send({ message: 'Moderator archive status updated successfully!' });
+    }
+
+    if (vacancyQuery) {
+      const vacancy = await Vacancy.findById(id);
+      if (!vacancy) {
+        return res.status(404).send({ error: 'Vacancy not found' });
+      }
+
+      vacancy.archive = !vacancy.archive;
+      await vacancy.save();
+
+      return res.status(200).send({ message: 'Vacancy archive status updated successfully!' });
+    }
+
+    return res.status(404).send({ message: 'Not found' });
   } catch (e) {
     next(e);
   }

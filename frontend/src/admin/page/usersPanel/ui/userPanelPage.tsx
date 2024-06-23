@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import { archiveUser, getAllUser } from '../../../../feachers/user/usersThunk';
+import { archiveModels, getAllUser } from '../../../../feachers/user/usersThunk';
 import { selectUsers, selectUsersLoading } from '../../../../feachers/user/usersSlice';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
@@ -28,7 +28,12 @@ export const UserPanelPage = () => {
   const onDeleteConfirm = async () => {
     if (userId) {
       try {
-        await dispatch(archiveUser(userId)).unwrap();
+        await dispatch(
+          archiveModels({
+            id: userId,
+            model: 'user',
+          }),
+        ).unwrap();
         await dispatch(getAllUser());
         setUserId(null);
         toast.success('Пользователь архивирован!');

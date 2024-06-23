@@ -56,8 +56,13 @@ export const deleteUser = createAsyncThunk<void, string>('users/delete', async (
   await axiosApi.delete(`/user/${id}`);
 });
 
-export const archiveUser = createAsyncThunk<void, string>('users/archive', async (id) => {
-  await axiosApi.patch(`/user/archive/${id}`);
+interface ArchiveProps {
+  id: string;
+  model: string;
+}
+
+export const archiveModels = createAsyncThunk<void, ArchiveProps>('users/archive', async (item) => {
+  await axiosApi.patch(`/user/archive/${item.id}?${item.model}=true`);
 });
 
 export const getAllArchive = createAsyncThunk<AllArchiveResponse, undefined>('users/getAllArchive', async () => {

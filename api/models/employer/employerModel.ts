@@ -66,14 +66,14 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     },
     googleID: String,
     avatar: String,
-      tariff: {
+    tariff: {
       data: {
-          type: Date,
+        type: Date,
       },
       titleTariff: {
-          type: String,
-          enum: ['Разовый', 'Месячный', 'Полугодовой'],
-          default: 'разовый',
+        type: String,
+        enum: ['Разовый', 'Месячный', 'Полугодовой'],
+        default: 'Разовый',
       },
     },
     vacancies: [
@@ -84,6 +84,10 @@ const employerSchema = new mongoose.Schema<EmployerFields, EmployerModel, UserMe
     ],
     adminsComment: {
       type: String,
+    },
+    isArchive: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },
