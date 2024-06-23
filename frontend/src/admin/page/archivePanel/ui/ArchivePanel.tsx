@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
 import { selectArchives } from '../../../../feachers/user/usersSlice';
-import { getAllArchive } from '../../../../feachers/user/usersThunk';
+import { archiveUser, getAllArchive } from '../../../../feachers/user/usersThunk';
 import UserCrmTable from '../../../widgets/crmTable/userCrmTable';
+import { toast } from 'react-toastify';
 
 const CustomTabPanel = (props: { children?: React.ReactNode; index: number; value: number }) => {
   const { children, value, index, ...other } = props;
@@ -38,8 +39,14 @@ export const ArchivePanel = () => {
     dispatch(getAllArchive());
   }, [dispatch]);
 
-  const archiveUser = (id: string) => {
-    console.log(id);
+  const onArchiveUser = async (id: string) => {
+    try {
+      await dispatch(archiveUser(id)).unwrap();
+      await dispatch(getAllArchive());
+      toast.success('Пользователь востановлен!');
+    } catch (error) {
+      toast.error('Что то пошло не так!');
+    }
   };
 
   return (
@@ -56,7 +63,7 @@ export const ArchivePanel = () => {
         {archives && (
           <>
             <CustomTabPanel value={value} index={0}>
-              <UserCrmTable users={archives.users} isArchive={true} archiveUser={archiveUser} />
+              <UserCrmTable users={archives.users} isArchive={true} archiveUser={onArchiveUser} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               Employee

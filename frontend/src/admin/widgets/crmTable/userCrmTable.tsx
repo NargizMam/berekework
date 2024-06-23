@@ -14,6 +14,9 @@ import ArchiveIcon from '@mui/icons-material/Archive';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { User } from '../../../app/types';
+import { useAppDispatch } from '../../../app/store/hooks';
+import { deleteUser, getAllArchive } from '../../../feachers/user/usersThunk';
+import { toast } from 'react-toastify';
 
 interface Props {
   users: User[];
@@ -22,8 +25,15 @@ interface Props {
 }
 
 const UserCrmTable: React.FC<Props> = ({ users, archiveUser, isArchive = false }) => {
-  const deleteUser = (id: string) => {
-    console.log(id);
+  const dispatch = useAppDispatch();
+  const onDeleteUser = async (id: string) => {
+    try {
+      await dispatch(deleteUser(id)).unwrap();
+      await dispatch(getAllArchive());
+      toast.success('Пользователь удален!');
+    } catch (error) {
+      toast.error('Что то пошло не так!');
+    }
   };
 
   return (
@@ -68,7 +78,7 @@ const UserCrmTable: React.FC<Props> = ({ users, archiveUser, isArchive = false }
                         </IconButton>
                       </Tooltip>
                       <Tooltip title={'Удалить пользователя'}>
-                        <IconButton onClick={() => deleteUser(user._id)}>
+                        <IconButton onClick={() => onDeleteUser(user._id)}>
                           <DeleteIcon />
                         </IconButton>
                       </Tooltip>
