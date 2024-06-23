@@ -12,7 +12,7 @@ export const createEmployer = createAsyncThunk<
   EmployerMutation,
   {
     rejectValue: ValidationError;
-    state: RootState
+    state: RootState;
   }
 >('employer/create', async (employer, { rejectWithValue, dispatch }) => {
   try {

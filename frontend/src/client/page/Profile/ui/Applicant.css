@@ -1,3 +1,4 @@
+
 .applicantContainer {
   display: flex;
   flex-direction: column;
@@ -23,7 +24,7 @@
 
 .photoFrame {
   position: relative;
-  margin-top: 160px;
+  margin-top: 0 ;
 }
 
 .photoBtn {
@@ -105,8 +106,8 @@
     border-radius: 50%;
     background-color: #ffffff;
     top: -150px;
+    margin-top: 160px;
   }
-
   .FIO {
     font-size: 36px;
     line-height: 30px;

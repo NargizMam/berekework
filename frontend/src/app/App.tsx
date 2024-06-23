@@ -31,6 +31,7 @@ import { CreateVacancyForm } from '../client/widgets/createVacancyForm';
 import { ApplicationPanelPage } from '../admin/page/applicationPanel/ui/ApplicationPanelPage';
 import AdminBaseLayout from './layouts/adminLayout/AdminBaseLayout';
 import SendEmail from '../client/page/ChangePassword/ui/SendEmail';
+import { ArchivePanel } from '../admin/page/archivePanel';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -56,6 +57,8 @@ const App = () => {
         <Route path="/vacancy/:id" element={<VacancyDetailPage />} />
         <Route path="/users" element={<UserPanelPage />} />
         <Route path="/applications/:id" element={<ApplicationPanelPage />} />
+        <Route path="/archive" element={<ArchivePanel />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AdminBaseLayout>
   );

@@ -1,4 +1,5 @@
 import { Employer } from '../admin/page/employerPanel/model/types';
+import { ModeratorApi } from '../types';
 
 export interface VacancyApiData {
   _id: string;
@@ -116,4 +117,11 @@ export interface ApplicationByVacancy {
   statusHistory: StatusHistory[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface AllArchiveResponse {
+  users: User[];
+  employee: Employer[];
+  moderators: ModeratorApi[];
+  vacancies: VacancyApiData[];
 }

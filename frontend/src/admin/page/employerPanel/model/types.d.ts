@@ -16,6 +16,7 @@ export interface Employer {
     titleTariff: string;
   };
   createdAt: string;
+  isArchive: boolean;
 }
 
 export interface EmployerMutation {

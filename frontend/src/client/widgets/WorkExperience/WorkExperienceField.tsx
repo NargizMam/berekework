@@ -13,7 +13,7 @@ interface Props {
   isExisting: boolean;
 }
 
-const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, addField, isExisting }) => {
+const WorkExperienceField: React.FC<Props> = ({id, job, duration, deleteField, addField, isExisting}) => {
   const [state, setState] = useState<WorkExperience>({
     _id: id,
     fieldOfWork: job || '',
@@ -21,7 +21,7 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
   });
   const [isAdded, setIsAdded] = useState(isExisting);
   const fieldChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     setState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -33,7 +33,7 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
   };
 
   const addFieldToFormState = () => {
-    addField({ ...state });
+    addField({...state});
     setIsAdded(true);
   };
 
@@ -41,7 +41,7 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
     <div className="workExpWrapper">
       <Grid item xs={6}>
         <input
-          style={{ marginLeft: '8px' }}
+          style={{marginLeft: '8px'}}
           className="workExpWrapperField"
           id="job"
           value={state.fieldOfWork}
@@ -51,8 +51,8 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
       </Grid>
       <Grid item xs={6}>
         <input
-          style={{ marginLeft: '8px', width: '205px' }}
-          className="applicantField"
+          style={{marginLeft: '8px', width: '205px'}}
+          className="workExpWrapperField workExpYearField"
           id="duration"
           value={state.duration}
           onChange={fieldChangeHandler}
@@ -61,15 +61,17 @@ const WorkExperienceField: React.FC<Props> = ({ id, job, duration, deleteField, 
       </Grid>
       <Grid>
         {!isAdded ? (
-          <Tooltip title={'Сохранить'}>
+          <Tooltip title={'Сохранить опыт'}>
             <IconButton onClick={addFieldToFormState} aria-label="delete" color="primary">
-              <CheckIcon />
+              <CheckIcon/>
             </IconButton>
           </Tooltip>
         ) : (
-          <IconButton onClick={() => handleDeleteField(id)} aria-label="delete" color="primary">
-            <DeleteIcon />
-          </IconButton>
+          <Tooltip title={'Удалить'}>
+            <IconButton onClick={() => handleDeleteField(id)} aria-label="delete" color="primary">
+              <DeleteIcon/>
+            </IconButton>
+          </Tooltip>
         )}
       </Grid>
     </div>

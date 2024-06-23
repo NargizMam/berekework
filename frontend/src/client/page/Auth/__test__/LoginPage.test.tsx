@@ -41,7 +41,7 @@ describe('LoginPage component', () => {
   test('should enable the submit button when form is valid', () => {
     const { getByRole, getByLabelText } = renderWithProviders(<LoginPage />);
     fireEvent.change(getByLabelText(/e-mail/i), {
-      target: { value: 'test@example.com' },
+      target: { value: '__test__@example.com' },
     });
     fireEvent.change(getByLabelText(/пароль/i), {
       target: { value: 'password' },
@@ -55,7 +55,7 @@ describe('LoginPage component', () => {
 
     const { getByLabelText, getByRole } = renderWithProviders(<LoginPage />);
     fireEvent.change(getByLabelText(/e-mail/i), {
-      target: { value: 'test@example.com' },
+      target: { value: '__test__@example.com' },
     });
     fireEvent.change(getByLabelText(/пароль/i), {
       target: { value: 'password' },
@@ -65,7 +65,7 @@ describe('LoginPage component', () => {
 
     await waitFor(() => {
       expect(mockedLogin).toHaveBeenCalledWith({
-        email: 'test@example.com',
+        email: '__test__@example.com',
         password: 'password',
       });
     });

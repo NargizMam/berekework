@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../app/axiosApi';
-import { User } from '../../app/types';
+import { AllArchiveResponse, User } from '../../app/types';
 import { UserMutation } from '../../client/page/Profile/model/types';
 import { GlobalError } from '../../client/page/Auth/model/types';
 import { openErrorMessage, openSuccessMessage } from '../../widgets/WarningMessage/warningMessageSlice';
@@ -49,9 +49,23 @@ export const changeProfile = createAsyncThunk<void, ProfileChange, { rejectValue
       dispatch(openErrorMessage('An unexpected error occurred'));
       throw error;
     }
-  }
+  },
 );
 
 export const deleteUser = createAsyncThunk<void, string>('users/delete', async (id) => {
   await axiosApi.delete(`/user/${id}`);
+});
+
+interface ArchiveProps {
+  id: string;
+  model: string;
+}
+
+export const archiveModels = createAsyncThunk<void, ArchiveProps>('users/archive', async (item) => {
+  await axiosApi.patch(`/user/archive/${item.id}?${item.model}=true`);
+});
+
+export const getAllArchive = createAsyncThunk<AllArchiveResponse, undefined>('users/getAllArchive', async () => {
+  const archives = await axiosApi.get<AllArchiveResponse>('/user/archives');
+  return archives.data;
 });

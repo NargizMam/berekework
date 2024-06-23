@@ -66,11 +66,14 @@ employerRouter.patch('/:id', auth, permit('superadmin', 'admin'), async (req, re
             },
           },
         },
-        { $set: { tariff:{
-          titleTariff: req.body.tariff,
-              data: new Date}
-        }},
-
+        {
+          $set: {
+            tariff: {
+              titleTariff: req.body.tariff,
+              data: new Date(),
+            },
+          },
+        },
       ],
       { new: true },
     );
@@ -141,7 +144,7 @@ employerRouter.put(
 
 employerRouter.get('/', async (_req, res, next) => {
   try {
-    const results = await Employer.find();
+    const results = await Employer.find({ isArchive: false });
     res.send(results);
   } catch (error) {
     return next(error);
