@@ -1,12 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/hooks';
-import {
-  selectEmployerDeleteLoading,
-  selectEmployers,
-  selectEmployersLoading,
-  selectEmployerUpdateLoading,
-} from '../model/employerSlice';
-import { deleteEmployer, getAllEmployer, updateStatusEmployer } from '../api/employerThunk';
+import { selectEmployers, selectEmployersLoading, selectEmployerUpdateLoading } from '../model/employerSlice';
+import { getAllEmployer, updateStatusEmployer } from '../api/employerThunk';
 import {
   Box,
   Button,
@@ -15,28 +10,19 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  IconButton,
   InputLabel,
   Link,
   MenuItem,
-  Paper,
   Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { Loader } from '../../../../shared/loader';
 import { Link as RouterLink } from 'react-router-dom';
-import { API_URL } from '../../../../app/constants/links';
 import { usePrismicDocumentByUID } from '@prismicio/react';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
+import { archiveModels } from '../../../../feachers/user/usersThunk';
+import { selectArchivesLoading } from '../../../../feachers/user/usersSlice';
+import EmployeeTable from '../../../widgets/crmTable/employeeTable';
 
 interface TariffGet {
   slice_type: string;
@@ -66,7 +52,7 @@ export const EmployerPanelPage = () => {
   const [daysLeftMap, setDaysLeftMap] = useState<{ [key: string]: number }>({});
   const tariffs = document?.data.body.filter((slice: TariffGet) => slice.slice_type === 'tariff')[0].items || [];
   const updateLoading = useAppSelector(selectEmployerUpdateLoading);
-  const deleteLoading = useAppSelector(selectEmployerDeleteLoading);
+  const archiveLoading = useAppSelector(selectArchivesLoading);
   const currentDate = new Date();
 
   useEffect(() => {
@@ -131,9 +117,15 @@ export const EmployerPanelPage = () => {
   const onDeleteConfirm = async () => {
     if (employeeId?.id && employeeId?.email) {
       try {
-        await dispatch(deleteEmployer({ id: employeeId.id, email: employeeId.email })).unwrap();
+        // await dispatch(deleteEmployer({ id: employeeId.id, email: employeeId.email })).unwrap();
+        await dispatch(
+          archiveModels({
+            id: employeeId.id,
+            model: 'employee',
+          }),
+        );
         await dispatch(getAllEmployer()).unwrap();
-        toast.success(`${employeeId.email} удален!`);
+        toast.success(`${employeeId.email} архивирован!`);
       } catch (error) {
         toast.error('Что то пошло не так!');
       }
@@ -157,78 +149,13 @@ export const EmployerPanelPage = () => {
           <Typography variant={'h6'}>Создать</Typography>
         </Link>
       </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 500, overflowX: 'auto' }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Название компании</TableCell>
-              <TableCell align="left">Вид деятельности</TableCell>
-              <TableCell align="left">Адрес</TableCell>
-              <TableCell align="left">Контакты</TableCell>
-              <TableCell align="left">Документы</TableCell>
-              <TableCell align="left">Статус</TableCell>
-              <TableCell align="left">До конца подписки</TableCell>
-              <TableCell align="left">Оплата</TableCell>
-              <TableCell align="center" colSpan={2}>
-                Дейсвие
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {employers.map((employer) => (
-              <TableRow key={employer._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  {employer.email}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {employer.companyName}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {employer.industry}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {employer.address}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {employer.contacts}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  <Link target="_blank" href={API_URL + '/' + employer.documents}>
-                    PDF
-                  </Link>
-                </TableCell>
-                <TableCell>{employer.tariff.titleTariff}</TableCell>
-                <TableCell>{daysLeftMap[employer._id]}</TableCell>
-                <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
-                <TableCell align="right">
-                  <Tooltip title={'Изменить статус'}>
-                    <IconButton onClick={() => handleClickOpen(employer._id, employer.email)}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-                <TableCell align="right">
-                  <Link underline="none" component={RouterLink} to={`/admin/employers-submit/${employer._id}`}>
-                    <Typography>Изменить</Typography>
-                  </Link>
-                </TableCell>
-                <TableCell align="right">
-                  <Tooltip title={'Удалить работодателя'}>
-                    <IconButton
-                      aria-label="delete"
-                      disabled={deleteLoading}
-                      onClick={() => handleDeleteEmployer(employer._id, employer.email)}
-                    >
-                      <DeleteIcon color={'error'} sx={{ fontSize: '30px' }} />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <EmployeeTable
+        employers={employers}
+        archiveLoading={archiveLoading}
+        handleClickOpen={handleClickOpen}
+        handleArchiveEmployer={handleDeleteEmployer}
+        daysLeftMap={daysLeftMap}
+      />
       <Dialog
         open={open}
         onClose={handleClose}
@@ -267,13 +194,13 @@ export const EmployerPanelPage = () => {
         </form>
       </Dialog>
       <Dialog open={Boolean(employeeId)} onClose={onDeleteCancel}>
-        <DialogTitle>Подтвердите удаление</DialogTitle>
-        <DialogContent>Вы действительно хотите удалить этого работодателя?</DialogContent>
+        <DialogTitle>Подтвердите архивирование</DialogTitle>
+        <DialogContent>Вы действительно хотите архивировать этого работодателя?</DialogContent>
         <DialogActions>
-          <Button onClick={onDeleteConfirm} disabled={deleteLoading}>
+          <Button onClick={onDeleteConfirm} disabled={archiveLoading}>
             Да
           </Button>
-          <Button onClick={onDeleteCancel} disabled={deleteLoading}>
+          <Button onClick={onDeleteCancel} disabled={archiveLoading}>
             Нет
           </Button>
         </DialogActions>

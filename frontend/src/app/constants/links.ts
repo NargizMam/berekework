@@ -4,6 +4,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import WebIcon from '@mui/icons-material/Web';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 export const API_URL = process.env['VITE_API_URL'];
 
@@ -97,5 +98,12 @@ export const dashboardSuperAdminRoutes = [
     tooltip: 'Prismic',
     url: 'https://prismic.io/dashboard/login',
     icon: WebIcon,
+  },
+  {
+    id: 'page_archive',
+    title: 'Архив',
+    tooltip: 'Архив',
+    url: 'admin/archive',
+    icon: InventoryIcon,
   },
 ];
