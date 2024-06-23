@@ -1,7 +1,8 @@
 const {I} = inject();
 
-Given('я нахожусь на странице {string}', (page: string) => {
+Given('я нахожусь на странице {string}', async (page) => {
   console.log(page);
+  await page.goto(page, { timeout: 60000, waitUntil: 'networkidle0' });
   I.amOnPage(page);
 });
 
