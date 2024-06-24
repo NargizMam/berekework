@@ -77,7 +77,11 @@ export const EmployerFormPage = () => {
     event.preventDefault();
     await dispatch(createEmployer(state)).unwrap();
     setState(state);
-    navigate('/');
+    if (isRegisterPath) {
+      navigate('/');
+    } else {
+      navigate(-1);
+    }
   };
 
   const changeFileField = (event: ChangeEvent<HTMLInputElement>) => {
