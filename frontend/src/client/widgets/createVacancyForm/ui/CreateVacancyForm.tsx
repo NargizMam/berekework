@@ -210,6 +210,11 @@ export const CreateVacancyForm = () => {
         <form style={{ margin: '30px 0' }} onSubmit={submitHandler}>
           <div className="CreateVacancyForm">
             <div>
+              <Typography sx={{ fontWeight: 'bold', fontSize: { xs: '20px', sm: '25px', md: '34px' } }}>
+                {id ? 'Редактирование вакансии' : 'Создание вакансии'}
+              </Typography>
+            </div>
+            <div>
               <label className="labelForField" htmlFor="vacancyTitle">
                 <Typography sx={CreateVacancyFormStyle.lable}>Название вакансии</Typography>
               </label>
