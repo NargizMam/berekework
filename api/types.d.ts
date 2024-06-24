@@ -80,7 +80,7 @@ export interface EmployerFields {
   isArchive: boolean;
   tariff: {
     data: Date;
-    titleTariff: 'Разовый' | 'Месячный' | 'Полугодовой';
+    titleTariff: 'Нет тарифа'| 'Разовый' | 'Месячный' | 'Полугодовой';
   };
 }
 
