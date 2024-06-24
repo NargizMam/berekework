@@ -64,7 +64,7 @@ export const EmployerPanelPage = () => {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         if (employer.tariff.titleTariff === 'Разовый') {
-          newDaysLeftMap[employer._id] = 1 - diffDays;
+          newDaysLeftMap[employer._id] = 2 - diffDays;
         } else if (employer.tariff.titleTariff === 'Месячный') {
           newDaysLeftMap[employer._id] = 30 - diffDays;
         } else if (employer.tariff.titleTariff === 'Полугодовой') {
@@ -75,7 +75,7 @@ export const EmployerPanelPage = () => {
       });
       setDaysLeftMap(newDaysLeftMap);
     }
-  }, [employers, currentDate]);
+  }, [employers]);
 
   useEffect(() => {
     dispatch(getAllEmployer());

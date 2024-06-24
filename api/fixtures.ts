@@ -300,7 +300,10 @@ const run = async () => {
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac1._id, vac2._id, vac3._id, vac7._id],
       isPublished: true,
-      tariff: 'Годовой',
+      tariff: {
+        data: new Date,
+        titleTariff: 'Полугодовой'
+      },
     },
     {
       email: 'employer2@example.com',
@@ -317,7 +320,10 @@ const run = async () => {
       documents: 'fixtures/dummy.pdf',
       vacancies: [vac8._id, vac6._id, vac5._id, vac4._id],
       isPublished: true,
-      tariff: 'Месячный',
+      tariff: {
+        data: new Date,
+        titleTariff: 'Месячный'
+      },
     },
     {
       email: 'employer3@example.com',
@@ -334,7 +340,10 @@ const run = async () => {
       documents: 'fixtures/dummy.pdf',
       vacancies: [],
       isPublished: false,
-      tariff: 'Базовый',
+      tariff: {
+        data: new Date,
+        titleTariff: 'Нет тарифа'
+      },
     },
   );
 
