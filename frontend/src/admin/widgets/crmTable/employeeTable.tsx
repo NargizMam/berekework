@@ -104,7 +104,7 @@ const EmployeeTable: React.FC<Props> = ({
               {!isArchive ? (
                 <>
                   <TableCell>{employer.tariff.titleTariff}</TableCell>
-                  <TableCell>{daysLeftMap[employer._id]}</TableCell>
+                  <TableCell>{daysLeftMap[employer._id] ? daysLeftMap[employer._id] : 'Нет'}</TableCell>
                   <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
                   <TableCell align="right">
                     {handleClickOpen && (
