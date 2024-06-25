@@ -1,24 +1,16 @@
 /* eslint-disable */
 import { fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import configureMockStore from 'redux-mock-store';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { Middleware, AnyAction } from 'redux';
 import { EmployerFormPage } from '../../../../admin/page/employerPanel';
 import { createEmployer } from '../../../../admin/page/employerPanel/api/employerThunk';
-import { RootState } from '../../../../app/store/store';
 import { renderWithProviders } from '../../../../testUtils/renderWithProviders';
+import { createTestStore } from '../../../../app/store/storeTestUtil';
+import { AppStore } from '../../../../app/store/store'; // Импортируйте правильный тип
 
 jest.mock('../../../../app/store/hooks', () => ({
   useAppDispatch: () => jest.fn().mockReturnValue({ unwrap: () => jest.fn() }),
   useAppSelector: jest.fn(),
 }));
-
-// Определите тип для вашего состояния
-type State = RootState;
-
-const middlewares: ThunkMiddleware<State, AnyAction>[] = [thunk as ThunkMiddleware<State, AnyAction>];
-const mockStore = configureMockStore<State, any>(middlewares);
 
 jest.mock('../../../../admin/page/employerPanel/api/employerThunk');
 const mockedCreateEmployer = createEmployer as jest.MockedFunction<typeof createEmployer>;
@@ -28,10 +20,10 @@ jest.mock('@prismicio/client', () => ({
 }));
 
 describe('EmployerFormPage component', () => {
-  let store: ReturnType<typeof mockStore>;
+  let store: AppStore; // Указываем тип переменной
   
   beforeEach(() => {
-    store = mockStore({});
+    store = createTestStore();
     store.dispatch = jest.fn();
   });
   
@@ -73,6 +65,7 @@ describe('EmployerFormPage component', () => {
   });
   
   test('should call createEmployer action on form submit', async () => {
+    // @ts-ignore
     mockedCreateEmployer.mockResolvedValue({} as any);
     
     const { getByLabelText, getByRole } = renderWithProviders(<EmployerFormPage />, { store });
@@ -120,9 +113,15 @@ describe('EmployerFormPage component', () => {
   });
   
   test('should toggle password visibility', () => {
-    const { getByLabelText } = renderWithProviders(<EmployerFormPage />, { store });
+    const { getByLabelText, getByRole } = renderWithProviders(<EmployerFormPage />, { store });
+    fireEvent.change(getByLabelText(/Email почта/i), {
+      target: { value: 'test@example.com' },
+    });
+    fireEvent.change(getByLabelText(/Пароль/i), {
+      target: { value: 'password' },
+    });
     const passwordInput = getByLabelText(/Пароль/i);
-    const toggleButton = getByLabelText(/toggle password visibility/i);
+    const toggleButton = getByRole('button', { name: /toggle password visibility/i });
     
     expect(passwordInput).toHaveAttribute('type', 'password');
     
