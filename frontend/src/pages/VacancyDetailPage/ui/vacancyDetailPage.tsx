@@ -12,6 +12,7 @@ import './vacancyDetailPage.css';
 import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import { toast } from 'react-toastify';
+import BackButton from '../../../shared/backButton/BackButton';
 
 export const VacancyDetailPage = () => {
   const employer = useAppSelector(selectEmployer);
@@ -69,6 +70,7 @@ export const VacancyDetailPage = () => {
 
   return (
     <>
+      <BackButton />
       <Box sx={{ marginTop: '20px' }} className="vacancyDetail">
         <div className="mainBlock">
           <div className="vacancyTitleBlock">
