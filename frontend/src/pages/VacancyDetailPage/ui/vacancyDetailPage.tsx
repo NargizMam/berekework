@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Button, CircularProgress, Link, Typography } from '@mui/material';
 import { Email, Phone } from '@mui/icons-material';
@@ -21,22 +21,37 @@ export const VacancyDetailPage = () => {
   const vacancy = useAppSelector(selectVacancy);
   const loading = useAppSelector(selectVacancyLoading);
 
+  const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
+
   useEffect(() => {
     if (id) {
       dispatch(getVacancyById(id));
     }
   }, [dispatch, id]);
 
-  useEffect(() => {
+  const fetchApplicationStatus = useCallback(async () => {
     if (user && id) {
-      dispatch(getCandidateByEmployer(id));
+      try {
+        const applications = await dispatch(getCandidateByEmployer(id)).unwrap();
+        if (applications.length > 0) {
+          setApplicationStatus(applications[0].userStatus);
+        } else {
+          setApplicationStatus(null); // Нет заявок
+        }
+      } catch (error: any) {
+        toast.error('что-то пошло не так');
+      }
     }
   }, [dispatch, user, id]);
+
+  useEffect(() => {
+    void fetchApplicationStatus();
+  }, [fetchApplicationStatus]);
 
   const sendReplyHandle = async (id: string) => {
     try {
       await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
-      await dispatch(getCandidateByEmployer(id)).unwrap();
+      await fetchApplicationStatus();
       toast.success('Отклик отправлен!');
     } catch (error: any) {
       const errorMessage = error.error || 'что-то пошло не так';
@@ -67,15 +82,22 @@ export const VacancyDetailPage = () => {
             <div className="employmentType">Тип занятости: {vacancy.employmentType}</div>
             {!user || employer || user?.role === 'superadmin' || user?.role === 'admin' ? null : (
               <div className="vacancyButtons">
+                {applicationStatus && applicationStatus !== 'Отклонен' ? (
+                  <Typography sx={{mt: 2, pl: '5px'}} variant="body1" color="textSecondary">
+                    Вы откликнулись
+                  </Typography>
+                ) : (
                 <Button
                   onClick={() => sendReplyHandle(vacancy._id)}
                   variant="contained"
                   size="large"
                   color="success"
+                  sx={{mt: 2}}
                   className="vacancyButton"
                 >
                   Откликнуться
                 </Button>
+                )}
               </div>
             )}
           </div>
