@@ -288,6 +288,11 @@ applicationsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => 
       filter = { vacancy: _id, isDeletedByEmployer: false };
     }
 
+    // Пользователи видят только свои заявки
+    if (req.user) {
+      filter = { vacancy: _id, user: req.user._id, isDeletedByUser: false };
+    }
+
     const applications = await Application.find(filter)
       .populate({
         path: 'vacancy',
