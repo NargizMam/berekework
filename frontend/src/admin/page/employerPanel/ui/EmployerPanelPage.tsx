@@ -75,7 +75,7 @@ export const EmployerPanelPage = () => {
       });
       setDaysLeftMap(newDaysLeftMap);
     }
-  }, [employers, currentDate]);
+  }, [employers]);
 
   useEffect(() => {
     dispatch(getAllEmployer());
