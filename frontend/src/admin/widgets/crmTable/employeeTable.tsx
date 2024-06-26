@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   IconButton,
   Link,
@@ -23,6 +23,7 @@ import { getAllArchive } from '../../../feachers/user/usersThunk';
 import { deleteEmployer } from '../../page/employerPanel/api/employerThunk';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../../app/store/hooks';
+import ModalCrm from '../modalCrm/ModalCrm';
 
 interface Props {
   employers: Employer[];
@@ -42,119 +43,137 @@ const EmployeeTable: React.FC<Props> = ({
   isArchive = false,
 }) => {
   const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
 
-  const onDeleteEmployee = async (id: string, email: string) => {
-    try {
-      await dispatch(deleteEmployer({ id, email })).unwrap();
-      await dispatch(getAllArchive());
-      toast.success(`${email} удален!`);
-    } catch (error) {
-      toast.error('Что то пошло не так!');
+  const onDeleteEmployee = async () => {
+    if (isOpen) {
+      try {
+        await dispatch(deleteEmployer({ id: isOpen, email })).unwrap();
+        await dispatch(getAllArchive());
+        toast.success(`${email} удален!`);
+        setIsOpen(null);
+      } catch (error) {
+        toast.error('Что то пошло не так!');
+        setIsOpen(null);
+      }
     }
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500, overflowX: 'auto' }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Email</TableCell>
-            <TableCell align="left">Название компании</TableCell>
-            <TableCell align="left">Вид деятельности</TableCell>
-            <TableCell align="left">Адрес</TableCell>
-            <TableCell align="left">Контакты</TableCell>
-            <TableCell align="left">Документы</TableCell>
-            {!isArchive ? (
-              <>
-                <TableCell align="left">Статус</TableCell>
-                <TableCell align="left">До конца подписки</TableCell>
-                <TableCell align="left">Оплата</TableCell>
-              </>
-            ) : (
-              ''
-            )}
-            <TableCell align="center" colSpan={2}>
-              Дейсвие
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {employers.map((employer) => (
-            <TableRow key={employer._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {employer.email}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {employer.companyName}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {employer.industry}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {employer.address}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {employer.contacts}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Link target="_blank" href={API_URL + '/' + employer.documents}>
-                  PDF
-                </Link>
-              </TableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 500, overflowX: 'auto' }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">Название компании</TableCell>
+              <TableCell align="left">Вид деятельности</TableCell>
+              <TableCell align="left">Адрес</TableCell>
+              <TableCell align="left">Контакты</TableCell>
+              <TableCell align="left">Документы</TableCell>
               {!isArchive ? (
                 <>
-                  <TableCell>{employer.tariff.titleTariff}</TableCell>
-                  <TableCell>{daysLeftMap[employer._id] ? daysLeftMap[employer._id] : 'Нет'}</TableCell>
-                  <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
-                  <TableCell align="right">
-                    {handleClickOpen && (
-                      <Tooltip title={'Изменить статус'}>
-                        <IconButton onClick={() => handleClickOpen(employer._id, employer.email)}>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Link underline="none" component={RouterLink} to={`/admin/employers-submit/${employer._id}`}>
-                      <Typography>Изменить</Typography>
-                    </Link>
-                  </TableCell>
+                  <TableCell align="left">Статус</TableCell>
+                  <TableCell align="left">До конца подписки</TableCell>
+                  <TableCell align="left">Оплата</TableCell>
                 </>
               ) : (
                 ''
               )}
-              <TableCell align="center">
-                {!isArchive ? (
-                  <Tooltip title={'Архивировать работодателя'}>
-                    <IconButton
-                      aria-label="delete"
-                      disabled={archiveLoading}
-                      onClick={() => handleArchiveEmployer(employer._id, employer.email)}
-                    >
-                      <ArchiveIcon sx={{ fontSize: '30px' }} />
-                    </IconButton>
-                  </Tooltip>
-                ) : (
-                  <>
-                    <Tooltip title={'Восстановить работодателя'}>
-                      <IconButton onClick={() => handleArchiveEmployer(employer._id, employer.email)}>
-                        <UnarchiveIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title={'Удалить работодателя'}>
-                      <IconButton onClick={() => onDeleteEmployee(employer._id, employer.email)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                )}
+              <TableCell align="center" colSpan={2}>
+                Дейсвие
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {employers.map((employer) => (
+              <TableRow key={employer._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {employer.email}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {employer.companyName}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {employer.industry}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {employer.address}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {employer.contacts}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  <Link target="_blank" href={API_URL + '/' + employer.documents}>
+                    PDF
+                  </Link>
+                </TableCell>
+                {!isArchive ? (
+                  <>
+                    <TableCell>{employer.tariff.titleTariff}</TableCell>
+                    <TableCell>{daysLeftMap[employer._id] ? daysLeftMap[employer._id] : 'Нет'}</TableCell>
+                    <TableCell>{employer.isPublished ? 'Оплатил' : 'Не оплатил'}</TableCell>
+                    <TableCell align="right">
+                      {handleClickOpen && (
+                        <Tooltip title={'Изменить статус'}>
+                          <IconButton onClick={() => handleClickOpen(employer._id, employer.email)}>
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Link underline="none" component={RouterLink} to={`/admin/employers-submit/${employer._id}`}>
+                        <Typography>Изменить</Typography>
+                      </Link>
+                    </TableCell>
+                  </>
+                ) : (
+                  ''
+                )}
+                <TableCell align="center">
+                  {!isArchive ? (
+                    <Tooltip title={'Архивировать работодателя'}>
+                      <IconButton
+                        aria-label="delete"
+                        disabled={archiveLoading}
+                        onClick={() => handleArchiveEmployer(employer._id, employer.email)}
+                      >
+                        <ArchiveIcon sx={{ fontSize: '30px' }} />
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <>
+                      <Tooltip title={'Восстановить работодателя'}>
+                        <IconButton onClick={() => handleArchiveEmployer(employer._id, employer.email)}>
+                          <UnarchiveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={'Удалить работодателя'}>
+                        <IconButton onClick={() => {
+                          setIsOpen(employer._id);
+                          setEmail(employer.email);
+                        }}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <ModalCrm
+        title={'удаление'}
+        text={'Вы действительно хотите удалить этого работодателя?'}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onDeleteConfirm={onDeleteEmployee}
+      />
+    </>
   );
 };
 

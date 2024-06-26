@@ -52,7 +52,7 @@ export const UserPanelPage = () => {
     <>
       <UserCrmTable users={users} archiveUser={handleDeleteUser} />
       <Dialog open={Boolean(userId)} onClose={onDeleteCancel}>
-        <DialogTitle>Подтвердите удаление</DialogTitle>
+        <DialogTitle>Подтвердите архивирование</DialogTitle>
         <DialogContent>Вы действительно хотите архивировать этого пользователя?</DialogContent>
         <DialogActions>
           <Button onClick={onDeleteConfirm}>Да</Button>

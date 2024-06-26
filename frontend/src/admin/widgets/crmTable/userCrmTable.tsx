@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   IconButton,
   Paper,
@@ -17,6 +17,7 @@ import { User } from '../../../app/types';
 import { useAppDispatch } from '../../../app/store/hooks';
 import { deleteUser, getAllArchive } from '../../../feachers/user/usersThunk';
 import { toast } from 'react-toastify';
+import ModalCrm from '../modalCrm/ModalCrm';
 
 interface Props {
   users: User[];
@@ -26,75 +27,90 @@ interface Props {
 
 const UserCrmTable: React.FC<Props> = ({ users, archiveUser, isArchive = false }) => {
   const dispatch = useAppDispatch();
-  const onDeleteUser = async (id: string) => {
-    try {
-      await dispatch(deleteUser(id)).unwrap();
-      await dispatch(getAllArchive());
-      toast.success('Пользователь удален!');
-    } catch (error) {
-      toast.error('Что то пошло не так!');
+  const [isOpen, setIsOpen] = useState<string | null>(null);
+
+  const onDeleteUser = async () => {
+    if (isOpen) {
+      try {
+        await dispatch(deleteUser(isOpen)).unwrap();
+        await dispatch(getAllArchive());
+        toast.success('Пользователь удален!');
+        setIsOpen(null);
+      } catch (error) {
+        toast.error('Что то пошло не так!');
+        setIsOpen(null);
+      }
     }
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Email</TableCell>
-            <TableCell>Профессия</TableCell>
-            <TableCell>Номер</TableCell>
-            <TableCell>Город</TableCell>
-            <TableCell>Страна</TableCell>
-            <TableCell align="right">Роль</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow key={user._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {user.email}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {user.preferredJob}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {user.contacts?.phone}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {user.city}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {user.country}
-              </TableCell>
-              <TableCell align="right">{user.role}</TableCell>
-              <TableCell align="right">
-                {isArchive ? (
-                  <>
-                    <Tooltip title={'Восстановить пользователя'}>
-                      <IconButton onClick={() => archiveUser(user._id)}>
-                        <UnarchiveIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title={'Удалить пользователя'}>
-                      <IconButton onClick={() => onDeleteUser(user._id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                ) : (
-                  <Tooltip title={'Архивировать пользователя'}>
-                    <IconButton onClick={() => archiveUser(user._id)}>
-                      <ArchiveIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
-              </TableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Email</TableCell>
+              <TableCell>Профессия</TableCell>
+              <TableCell>Номер</TableCell>
+              <TableCell>Город</TableCell>
+              <TableCell>Страна</TableCell>
+              <TableCell align="right">Роль</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow key={user._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {user.email}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {user.preferredJob}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {user.contacts?.phone}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {user.city}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {user.country}
+                </TableCell>
+                <TableCell align="right">{user.role}</TableCell>
+                <TableCell align="right">
+                  {isArchive ? (
+                    <>
+                      <Tooltip title={'Восстановить пользователя'}>
+                        <IconButton onClick={() => archiveUser(user._id)}>
+                          <UnarchiveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={'Удалить пользователя'}>
+                        <IconButton onClick={() => setIsOpen(user._id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                  ) : (
+                    <Tooltip title={'Архивировать пользователя'}>
+                      <IconButton onClick={() => archiveUser(user._id)}>
+                        <ArchiveIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <ModalCrm
+        title={'удаление'}
+        text={'Вы действительно хотите удалить этого пользователя?'}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onDeleteConfirm={onDeleteUser}
+      />
+    </>
   );
 };
 

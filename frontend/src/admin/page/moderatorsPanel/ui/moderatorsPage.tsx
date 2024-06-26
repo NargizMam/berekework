@@ -50,11 +50,11 @@ export const ModeratorsPage = () => {
   return (
     <Box>
       {loading && <Loader />}
-      <Button variant="outlined" onClick={() => setOpenForm(true)}>
+      <Button variant="outlined" onClick={() => setOpenForm(true)} sx={{mb: 3}}>
         Создать модератора
       </Button>
       {moderators.length === 0 ? (
-        <Typography sx={{ mt: 2 }}>Модераторы еще не созданы</Typography>
+        <Typography sx={{ fontWeight: 'bold' }} variant={'h4'}>Модераторы еще не созданы</Typography>
       ) : (
         <ModeratorTableCrm moderators={moderators} onArchiveModerator={onDeleteModerator} />
       )}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   IconButton,
   ListItemButton,
@@ -22,6 +22,7 @@ import { deleteVacancy } from '../../../feachers/vacancy/vacancyThunk';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../../app/store/hooks';
 import { getAllArchive } from '../../../feachers/user/usersThunk';
+import ModalCrm from '../modalCrm/ModalCrm';
 
 interface Props {
   vacancies: VacancyApiData[];
@@ -45,102 +46,116 @@ const VacancyTableCrm: React.FC<Props> = ({
   unArchiveVacancyClick,
 }) => {
   const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState<string | null>(null);
 
-  const onDeleteVacancy = async (id: string) => {
-    try {
-      await dispatch(deleteVacancy(id));
-      await dispatch(getAllArchive());
-      toast.success('Вакансия удалена!');
-    } catch (error) {
-      toast.error('Что то пошло не так!');
+  const onDeleteVacancy = async () => {
+    if (isOpen) {
+      try {
+        await dispatch(deleteVacancy(isOpen));
+        await dispatch(getAllArchive());
+        toast.success('Вакансия удалена!');
+        setIsOpen(null);
+      } catch (error) {
+        toast.error('Что то пошло не так!');
+        setIsOpen(null);
+      }
     }
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Название</TableCell>
-            <TableCell>Вид занятости</TableCell>
-            <TableCell align="right">Компания</TableCell>
-            <TableCell>Город</TableCell>
-            <TableCell>Заработная плата</TableCell>
-            <TableCell>Дата создания</TableCell>
-            <TableCell>Дата редактирования</TableCell>
-            <TableCell align="center" colSpan={2}>
-              Дейсвие
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {vacancies.map((vacancy) => (
-            <TableRow key={vacancy._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                <ListItemButton component={Link} to={`/admin/applications/${vacancy._id}`}>
-                  {vacancy.vacancyTitle}
-                </ListItemButton>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {vacancy.employmentType}
-              </TableCell>
-              <TableCell>{vacancy.employer?.companyName}</TableCell>
-              <TableCell component="th" scope="row">
-                {vacancy.city}
-              </TableCell>
-              {vacancy.salary ? (
-                <TableCell component="th" scope="row">
-                  {vacancy.salary.minSalary} - {vacancy.salary.maxSalary}
-                </TableCell>
-              ) : (
-                <TableCell align="right">No salary</TableCell>
-              )}
-              <TableCell component="th" scope="row">
-                {dayjs(vacancy.createdAt).format('DD MMMM YYYY')}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {dayjs(vacancy.updatedAt).format('DD MMMM YYYY')}
-              </TableCell>
-              <TableCell align="right">
-                <LinkItem to={'/vacancy/' + vacancy._id} target="_blank">
-                  Предпросмотр
-                </LinkItem>
-              </TableCell>
-              <TableCell align="right">
-                {isArchive ? (
-                  <>
-                    {unArchiveVacancyClick && (
-                      <Tooltip title={'Восстановить вакансию'}>
-                        <IconButton
-                          onClick={() =>
-                            unArchiveVacancyClick(vacancy._id, vacancy.employer.isArchive, vacancy.employer.email)
-                          }
-                        >
-                          <UnarchiveIcon />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    <Tooltip title={'Удалить вакансию'}>
-                      <IconButton onClick={() => onDeleteVacancy(vacancy._id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                ) : (
-                  archiveVacancyClick && (
-                    <Tooltip title={'Архивировать вакансию'}>
-                      <IconButton onClick={() => archiveVacancyClick(vacancy._id)}>
-                        <ArchiveIcon />
-                      </IconButton>
-                    </Tooltip>
-                  )
-                )}
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Название</TableCell>
+              <TableCell>Вид занятости</TableCell>
+              <TableCell align="right">Компания</TableCell>
+              <TableCell>Город</TableCell>
+              <TableCell>Заработная плата</TableCell>
+              <TableCell>Дата создания</TableCell>
+              <TableCell>Дата редактирования</TableCell>
+              <TableCell align="center" colSpan={2}>
+                Дейсвие
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {vacancies.map((vacancy) => (
+              <TableRow key={vacancy._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  <ListItemButton component={Link} to={`/admin/applications/${vacancy._id}`}>
+                    {vacancy.vacancyTitle}
+                  </ListItemButton>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {vacancy.employmentType}
+                </TableCell>
+                <TableCell>{vacancy.employer?.companyName}</TableCell>
+                <TableCell component="th" scope="row">
+                  {vacancy.city}
+                </TableCell>
+                {vacancy.salary ? (
+                  <TableCell component="th" scope="row">
+                    {vacancy.salary.minSalary} - {vacancy.salary.maxSalary}
+                  </TableCell>
+                ) : (
+                  <TableCell align="right">No salary</TableCell>
+                )}
+                <TableCell component="th" scope="row">
+                  {dayjs(vacancy.createdAt).format('DD MMMM YYYY')}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {dayjs(vacancy.updatedAt).format('DD MMMM YYYY')}
+                </TableCell>
+                <TableCell align="right">
+                  <LinkItem to={'/vacancy/' + vacancy._id} target="_blank">
+                    Предпросмотр
+                  </LinkItem>
+                </TableCell>
+                <TableCell align="right">
+                  {isArchive ? (
+                    <>
+                      {unArchiveVacancyClick && (
+                        <Tooltip title={'Восстановить вакансию'}>
+                          <IconButton
+                            onClick={() =>
+                              unArchiveVacancyClick(vacancy._id, vacancy.employer.isArchive, vacancy.employer.email)
+                            }
+                          >
+                            <UnarchiveIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                      <Tooltip title={'Удалить вакансию'}>
+                        <IconButton onClick={() => setIsOpen(vacancy._id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                  ) : (
+                    archiveVacancyClick && (
+                      <Tooltip title={'Архивировать вакансию'}>
+                        <IconButton onClick={() => archiveVacancyClick(vacancy._id)}>
+                          <ArchiveIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <ModalCrm
+        title={'удаление'}
+        text={'Вы действительно хотите удалить эту вакансию?'}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onDeleteConfirm={onDeleteVacancy}
+      />
+    </>
   );
 };
 

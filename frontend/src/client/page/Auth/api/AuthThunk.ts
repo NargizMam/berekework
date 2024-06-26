@@ -90,7 +90,6 @@ export const logout = createAsyncThunk<void, undefined, { state: RootState }>(
   async (_, { getState, dispatch }) => {
     const token = getState().auth.user?.token || getState().auth.employer?.token;
       const response = await axiosApi.delete('/user/sessions', { headers: { Authorization: 'Bearer ' + token } });
-    console.log(response.data);
     if (getState().auth.user?.token) {
       dispatch(openSuccessMessage(response.data.message));
       dispatch(unsetUser());
