@@ -3,12 +3,12 @@ import CardContent from '@mui/material/CardContent';
 import './InterestedVacancies.css';
 import './mediaInterestedVacancies.css';
 import * as React from 'react';
-import logo from './images/logo.png';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { selectReplies } from '../../../feachers/aplication/applicationSlice';
 import { useEffect, useState } from 'react';
 import { deleteReply, getReplyByUser, updateApplication } from '../../../feachers/aplication/aplicationThunk';
 import dayjs from 'dayjs';
+import { API_URL } from '../../../app/constants/links';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -93,7 +93,7 @@ const InterestedVacancies = () => {
                     >
                       {reply.userStatus}
                     </Typography>
-                    <img className="logo" src={logo} alt="logo" />
+                    <img className="logo" src={API_URL + '/' + reply.vacancy.employer.avatar} alt="logo" />
                     <Typography
                       sx={{
                         fontSize: 14,
@@ -145,6 +145,7 @@ const InterestedVacancies = () => {
                     sx={{
                       display: 'flex',
                       flexDirection: 'column',
+                      gap: '10px 0',
                     }}
                   >
                     {reply.userStatus !== 'Заинтересован' ? (
@@ -152,7 +153,11 @@ const InterestedVacancies = () => {
                         Связаться
                       </button>
                     ) : null}
-                    <button onClick={() => deleteHandle(reply._id)} className="btn-recall btn-vacancies">
+                    <button
+                      style={{ margin: 0 }}
+                      onClick={() => deleteHandle(reply._id)}
+                      className="btn-recall btn-vacancies"
+                    >
                       Отозвать
                     </button>
                   </CardActions>
@@ -184,7 +189,7 @@ const InterestedVacancies = () => {
                     >
                       {reply.userStatus}
                     </Typography>
-                    <img className="logo" src={logo} alt="logo" />
+                    <img className="logo" src={API_URL + '/' + reply.vacancy.employer.avatar} alt="logo" />
                     <Typography
                       sx={{
                         fontSize: 14,

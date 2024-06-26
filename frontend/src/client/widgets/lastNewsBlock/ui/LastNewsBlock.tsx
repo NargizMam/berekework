@@ -8,14 +8,25 @@ import arrowLeft from '../../../../shared/assets/arrow-left.png';
 import arrowRight from '../../../../shared/assets/arrow-right.png';
 import 'swiper/css';
 import './SwiperLastNewsNavigation.css';
+import React from 'react';
 
-export const LastNewsBlock = () => {
+export interface LastNewsBlockTitle {
+  primary: {
+    lastnewsblock: string;
+  }
+}
+
+interface Props {
+  slice: LastNewsBlockTitle
+}
+
+export const LastNewsBlock: React.FC<Props> = ({slice}) => {
   const [pages] = useAllPrismicDocumentsByType('lastnews');
 
   if (!pages || pages.length === 0) {
     return (
       <Typography variant="h4" sx={LastNewsBlockStyle.subtitleNoCards}>
-        Нет доступных новостей.
+        {slice.primary.lastnewsblock}
       </Typography>
     );
   }

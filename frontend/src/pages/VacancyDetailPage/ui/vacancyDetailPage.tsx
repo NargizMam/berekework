@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Button, CircularProgress, Link, Typography } from '@mui/material';
 import { Email, Phone } from '@mui/icons-material';
@@ -12,6 +12,8 @@ import './vacancyDetailPage.css';
 import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplication/aplicationThunk';
 import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import { toast } from 'react-toastify';
+import BackButton from '../../../shared/backButton/BackButton';
+import { ApplicationByVacancy } from '../../../app/types';
 
 export const VacancyDetailPage = () => {
   const employer = useAppSelector(selectEmployer);
@@ -21,22 +23,37 @@ export const VacancyDetailPage = () => {
   const vacancy = useAppSelector(selectVacancy);
   const loading = useAppSelector(selectVacancyLoading);
 
+  const [application, setApplication] = useState<ApplicationByVacancy | null>(null);
+
   useEffect(() => {
     if (id) {
       dispatch(getVacancyById(id));
     }
   }, [dispatch, id]);
 
-  useEffect(() => {
+  const fetchApplicationStatus = useCallback(async () => {
     if (user && id) {
-      dispatch(getCandidateByEmployer(id));
+      try {
+        const applications = await dispatch(getCandidateByEmployer(id)).unwrap();
+        if (applications.length > 0) {
+          setApplication(applications[0]);
+        } else {
+          setApplication(null); // Нет заявок
+        }
+      } catch (error: any) {
+        toast.error('что-то пошло не так');
+      }
     }
   }, [dispatch, user, id]);
+
+  useEffect(() => {
+    void fetchApplicationStatus();
+  }, [fetchApplicationStatus]);
 
   const sendReplyHandle = async (id: string) => {
     try {
       await dispatch(sendReplyByUser({ vacancyId: id, userId: user?._id })).unwrap();
-      await dispatch(getCandidateByEmployer(id)).unwrap();
+      await fetchApplicationStatus();
       toast.success('Отклик отправлен!');
     } catch (error: any) {
       const errorMessage = error.error || 'что-то пошло не так';
@@ -54,6 +71,7 @@ export const VacancyDetailPage = () => {
 
   return (
     <>
+      <BackButton />
       <Box sx={{ marginTop: '20px' }} className="vacancyDetail">
         <div className="mainBlock">
           <div className="vacancyTitleBlock">
@@ -67,15 +85,28 @@ export const VacancyDetailPage = () => {
             <div className="employmentType">Тип занятости: {vacancy.employmentType}</div>
             {!user || employer || user?.role === 'superadmin' || user?.role === 'admin' ? null : (
               <div className="vacancyButtons">
+                {application && application.userStatus !== 'Отклонен' ? (
+                  application.createdBy === 'user' ? (
+                    <Typography sx={{ mt: 2, pl: '5px' }} variant="body1" color="textSecondary">
+                      Вы откликнулись
+                    </Typography>
+                  ) : (
+                    <Typography sx={{ mt: 2, pl: '5px' }} variant="body1" color="textSecondary">
+                      Работодатель откликнулся на Вас
+                    </Typography>
+                  )
+                ) : (
                 <Button
                   onClick={() => sendReplyHandle(vacancy._id)}
                   variant="contained"
                   size="large"
                   color="success"
+                  sx={{mt: 2}}
                   className="vacancyButton"
                 >
                   Откликнуться
                 </Button>
+                )}
               </div>
             )}
           </div>

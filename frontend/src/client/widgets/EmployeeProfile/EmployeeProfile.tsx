@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { selectEmployer } from '../../page/Auth/model/AuthSlice';
 import { getSingleUser } from '../../../feachers/user/usersThunk';
 import { selectProfile, selectUsersLoading } from '../../../feachers/user/usersSlice';
@@ -8,8 +8,9 @@ import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { Loader } from '../../../shared/loader';
 import './Employee.css';
 import './MediaEmployee.css';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import SelectVacancyDialog from './selectVacancyDialog';
+import BackButton from '../../../shared/backButton/BackButton';
 
 const EmployeeProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +18,6 @@ const EmployeeProfile: React.FC = () => {
   const user = useAppSelector(selectProfile);
   const employer = useAppSelector(selectEmployer);
   const isLoading = useAppSelector(selectUsersLoading);
-  const navigate = useNavigate();
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -47,9 +47,7 @@ const EmployeeProfile: React.FC = () => {
 
   return (
     <>
-      <Box sx={{margin: '100px 0 20px'}}>
-        <Button variant={'contained'} sx={{fontSize: '17px'}} onClick={() => navigate('/potential-employees')}>Назад</Button>
-      </Box>
+      <BackButton/>
       <div className="UserProfile__container">
         <h2 className="UserProfile__title">
           Сотрудник: {user.name} {user.surname}

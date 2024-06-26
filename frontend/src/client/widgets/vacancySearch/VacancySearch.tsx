@@ -23,6 +23,8 @@ const VacancySearch: React.FC<Props> = ({ onSearch, isLoading }) => {
           alignItems: 'center',
           gap: '0 15px',
           margin: '15px 0',
+          mt: '24px',
+          mb: '24px',
         }}
       >
         <TextField
