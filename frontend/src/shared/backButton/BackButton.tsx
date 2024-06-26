@@ -13,6 +13,7 @@ const BackButton = () => {
     <Button
       onClick={handleBack}
       startIcon={<ArrowBackIos />}
+      disableRipple
       sx={{
         mt: 2,
         mb: 2,
@@ -24,6 +25,9 @@ const BackButton = () => {
           backgroundColor: 'transparent',
           textDecoration: 'none',
           color: '#000',
+        },
+        '&:focus': {
+          outline: 'none',
         },
       }}
     >
