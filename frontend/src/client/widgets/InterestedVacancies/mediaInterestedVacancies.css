@@ -17,6 +17,13 @@
   }
 }
 
+@media (max-width: 750px) {
+  .card-vacancies {
+    width: 100%;
+    max-width: unset;
+  }
+}
+
 @media (max-width: 460px) {
   .cards-div {
     width: 100%;
