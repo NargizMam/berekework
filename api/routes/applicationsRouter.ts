@@ -241,9 +241,10 @@ applicationsRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
     }
 
     const applications = await Application.find(filter)
-      .populate({ path: 'vacancy', populate: { path: 'employer' } })
+      .populate({ path: 'vacancy' })
       .populate('user', '_id name surname dateOfBirth preferredJob contacts')
       .sort({ createdAt: -1 });
+
 
     return res.send(applications);
   } catch (e) {

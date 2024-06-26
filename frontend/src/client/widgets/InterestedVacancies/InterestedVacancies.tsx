@@ -75,7 +75,7 @@ const InterestedVacancies = () => {
           {replies.map((reply) => {
             if (reply.createdBy === 'employer') {
               return (
-                <Box className="card-vacancies">
+                <Box className="card-vacancies" key={reply._id}>
                   <CardContent>
                     <Typography
                       sx={{
