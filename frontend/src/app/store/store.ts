@@ -19,7 +19,7 @@ const usersPersistConfig = {
   whitelist: ['user', 'employer'],
 };
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   auth: persistReducer(usersPersistConfig, authReducer),
   lastNews: lastNewsReducer,
   users: usersReducer,
