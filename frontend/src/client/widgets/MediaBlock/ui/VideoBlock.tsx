@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation } from 'swiper/modules';
 import MediaCard, { MediaCardApiData } from './MediaCard/MediaCard';
 import MediaBlockStyle from './MediaBlock-style';
+import FsLightbox from 'fslightbox-react';
 import arrowLeft from '../../../../shared/assets/arrow-left.png';
 import arrowRight from '../../../../shared/assets/arrow-right.png';
 import './SwiperNavigation.css';
@@ -24,6 +25,13 @@ interface Props {
 }
 
 export const VideoBlock: React.FC<Props> = ({ slice }) => {
+  const [toggler, setToggler] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openLightbox = (index: number) => {
+    setCurrentIndex(index);
+    setToggler(!toggler);
+  };
 
   if (!slice.items || slice.items.length === 0) {
     return (
@@ -34,6 +42,8 @@ export const VideoBlock: React.FC<Props> = ({ slice }) => {
   }
 
   const showNavigation = slice.items.length > 2;
+
+  const sources = slice.items.map((item) => item.video?.embed_url || '').filter((url): url is string => Boolean(url));
 
   return (
     <Box sx={MediaBlockStyle.videoContainer}>
@@ -60,6 +70,7 @@ export const VideoBlock: React.FC<Props> = ({ slice }) => {
             index={0}
             video={slice.items[0].video}
             mediaCardsLength={slice.items.length}
+            onClick={() => openLightbox(0)}
           />
         ) : (
           <Swiper
@@ -82,11 +93,13 @@ export const VideoBlock: React.FC<Props> = ({ slice }) => {
                   index={index}
                   video={item.video}
                   mediaCardsLength={slice.items.length}
+                  onClick={() => openLightbox(index)}
                 />
               </SwiperSlide>
             ))}
           </Swiper>
         )}
+        <FsLightbox toggler={toggler} sources={sources} slide={currentIndex + 1} />
       </Box>
     </Box>
   );
