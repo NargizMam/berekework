@@ -65,8 +65,8 @@ const EmployeeProfile: React.FC = () => {
         <p>
           <span>Образование:</span> {user.education}
         </p>
-        {user.workExperience.map((work) => (
-          <p>
+        {user.workExperience.map((work, index) => (
+          <p key={`work-${index}`}>
             <span>Опыт работы:</span> {`${work.fieldOfWork} - ${work.duration}`}
           </p>
         ))}
