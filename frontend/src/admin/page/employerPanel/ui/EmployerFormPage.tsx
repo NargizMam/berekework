@@ -15,7 +15,6 @@ import { LoadingButton } from '@mui/lab';
 import { EmployerMutation } from '../model/types';
 
 export const EmployerFormPage = () => {
-  // const { id } = useParams() as { id: string };
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -39,26 +38,10 @@ export const EmployerFormPage = () => {
   const [filenameImage, setFilenameImage] = useState('');
   const [errorDocument, setErrorDocument] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const loading = useAppSelector(selectEmployersProfileLoading);
-  const createLoading = useAppSelector(selectEmployerCreateLoading);
+  const loading = useAppSelector(selectEmployersProfileLoading) as boolean;
+  const createLoading = useAppSelector(selectEmployerCreateLoading) as boolean;
   const inputStyle = { borderRadius: '30px' };
-  // const employer = useAppSelector(selectEmployersProfileInfo);
-  //
-  // useEffect(() => {
-  //   if (id) {
-  //     dispatch(getEmployersProfileInfo(id));
-  //   }
-  // }, [dispatch, id]);
-  //
-  // useEffect(() => {
-  //   if (id && employer) {
-  //     setState((prevState) => ({
-  //       ...prevState,
-  //       ...employer,
-  //     }));
-  //   }
-  // }, [employer, id]);
-
+  
   const changeField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === 'contacts') {
@@ -72,7 +55,7 @@ export const EmployerFormPage = () => {
       [name]: value,
     }));
   };
-
+  
   const handleCreateEmployer = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(createEmployer(state)).unwrap();
@@ -83,7 +66,7 @@ export const EmployerFormPage = () => {
       navigate(-1);
     }
   };
-
+  
   const changeFileField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
     if (files && files[0]) {
@@ -99,7 +82,7 @@ export const EmployerFormPage = () => {
       }));
     }
   };
-
+  
   const clearDocumentField = () => {
     setFilename('');
     setFilenameImage('');
@@ -111,7 +94,7 @@ export const EmployerFormPage = () => {
       documentSelect.current.value = '';
     }
   };
-
+  
   const selectFile = (type: string) => {
     if (type === 'document') {
       if (documentSelect.current) {
@@ -123,7 +106,7 @@ export const EmployerFormPage = () => {
       }
     }
   };
-
+  
   const getFieldError = (fieldName: string) => {
     try {
       return error?.errors[fieldName].message;
@@ -131,15 +114,15 @@ export const EmployerFormPage = () => {
       return undefined;
     }
   };
-
+  
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-
+  
   return (
     <>
       <form
@@ -343,7 +326,7 @@ export const EmployerFormPage = () => {
           </Grid>
           <Grid item sx={{ display: 'flex', flexDirection: 'row', gap: '0 15px', width: '100%' }}>
             <LoadingButton
-              loading={loading || createLoading}
+              loading={Boolean(loading) || Boolean(createLoading)}
               type="submit"
               variant="contained"
               sx={{ width: '100%', borderRadius: isRegisterPath ? '30px' : '4px' }}
