@@ -46,7 +46,7 @@ const ModeratorTableCrm: React.FC<Props> = ({ moderators, onArchiveModerator, is
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ mt: 5 }}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
