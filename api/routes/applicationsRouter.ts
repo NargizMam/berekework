@@ -285,12 +285,13 @@ applicationsRouter.get('/:id', auth, async (req: RequestWithUser, res, next) => 
 
     // Работодатели видят заявки, которые не были удалены ими
     if (isEmployer) {
-      filter = { vacancy: _id, isDeletedByEmployer: false };
+      filter.isDeletedByEmployer = false;
     }
 
     // Пользователи видят только свои заявки
-    if (req.user) {
-      filter = { vacancy: _id, user: req.user._id, isDeletedByUser: false };
+    if (req.user && req.user.role === 'user') {
+      filter.user = req.user._id;
+      filter.isDeletedByUser = false;
     }
 
     const applications = await Application.find(filter)

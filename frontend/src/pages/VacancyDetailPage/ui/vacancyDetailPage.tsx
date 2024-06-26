@@ -13,6 +13,7 @@ import { getCandidateByEmployer, sendReplyByUser } from '../../../feachers/aplic
 import { selectEmployer, selectUser } from '../../../client/page/Auth/model/AuthSlice';
 import { toast } from 'react-toastify';
 import BackButton from '../../../shared/backButton/BackButton';
+import { ApplicationByVacancy } from '../../../app/types';
 
 export const VacancyDetailPage = () => {
   const employer = useAppSelector(selectEmployer);
@@ -22,7 +23,7 @@ export const VacancyDetailPage = () => {
   const vacancy = useAppSelector(selectVacancy);
   const loading = useAppSelector(selectVacancyLoading);
 
-  const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
+  const [application, setApplication] = useState<ApplicationByVacancy | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -35,9 +36,9 @@ export const VacancyDetailPage = () => {
       try {
         const applications = await dispatch(getCandidateByEmployer(id)).unwrap();
         if (applications.length > 0) {
-          setApplicationStatus(applications[0].userStatus);
+          setApplication(applications[0]);
         } else {
-          setApplicationStatus(null); // Нет заявок
+          setApplication(null); // Нет заявок
         }
       } catch (error: any) {
         toast.error('что-то пошло не так');
@@ -84,10 +85,16 @@ export const VacancyDetailPage = () => {
             <div className="employmentType">Тип занятости: {vacancy.employmentType}</div>
             {!user || employer || user?.role === 'superadmin' || user?.role === 'admin' ? null : (
               <div className="vacancyButtons">
-                {applicationStatus && applicationStatus !== 'Отклонен' ? (
-                  <Typography sx={{mt: 2, pl: '5px'}} variant="body1" color="textSecondary">
-                    Вы откликнулись
-                  </Typography>
+                {application && application.userStatus !== 'Отклонен' ? (
+                  application.createdBy === 'user' ? (
+                    <Typography sx={{ mt: 2, pl: '5px' }} variant="body1" color="textSecondary">
+                      Вы откликнулись
+                    </Typography>
+                  ) : (
+                    <Typography sx={{ mt: 2, pl: '5px' }} variant="body1" color="textSecondary">
+                      Работодатель откликнулся на Вас
+                    </Typography>
+                  )
                 ) : (
                 <Button
                   onClick={() => sendReplyHandle(vacancy._id)}
