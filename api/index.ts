@@ -9,11 +9,12 @@ import employerRouter from './routes/employerRouter';
 import applicationsRouter from './routes/applicationsRouter';
 import imageUploadRouter from './routes/imageUploadRouter';
 import employeesCardRouter from './routes/employeesCardRouter';
-import moderatorRouter from "./routes/moderatorRouter";
+import moderatorRouter from './routes/moderatorRouter';
+import path from 'path';
 
 const app = express();
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cors());
 
