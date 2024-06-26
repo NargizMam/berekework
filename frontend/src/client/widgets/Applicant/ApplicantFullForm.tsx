@@ -134,7 +134,7 @@ const ApplicantFullForm: React.FC<Props> = ({ applicant, onSubmit, loading }) =>
   };
 
   const addField = () => {
-    const fieldId = crypto.randomUUID();
+    const fieldId = Math.random().toString();
     setFields((prevState) => [
       ...prevState,
       <WorkExperienceField
