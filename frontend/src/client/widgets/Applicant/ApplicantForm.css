@@ -79,6 +79,7 @@ textarea.applicantField {
 }
 
 button.sendBtn {
+  width: 310px;
   min-width: 300px;
   font-weight: 600;
   font-size: 20px;
@@ -107,6 +108,10 @@ button.sendBtn {
   }
 
   textarea.applicantField {
+    width: 550px;
+  }
+
+  button.sendBtn{
     width: 550px;
   }
 }
