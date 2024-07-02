@@ -35,7 +35,7 @@ employerRouter.post(
       await employer.save();
 
       await transporter.sendMail({
-        from: '04072002mu@gmail.com',
+        from: process.env['USER_MAILER'],
         to: req.body.email,
         subject: 'new employer!!',
         text: `${req.body.email} already to employer!`,
@@ -83,7 +83,7 @@ employerRouter.patch('/:id', auth, permit('superadmin', 'admin'), async (req, re
     }
 
     await transporter.sendMail({
-      from: '04072002mu@gmail.com',
+      from: process.env['USER_MAILER'],
       to: req.body.email,
       subject: 'Employer details updated',
       text: `${req.body.email}, Ваш статус работодателя был обновлен!`,
@@ -125,7 +125,7 @@ employerRouter.put(
 
       if (req.body.email) {
         await transporter.sendMail({
-          from: '04072002mu@gmail.com',
+          from: process.env['USER_MAILER'],
           to: req.body.email,
           subject: 'Employer details updated',
           text: `${req.body.email}, your employer details have been updated!`,
@@ -170,7 +170,7 @@ employerRouter.post('/:id', auth, async (req, res, next) => {
 
     await Vacancy.deleteMany({ employer: id });
     await transporter.sendMail({
-      from: '04072002mu@gmail.com',
+      from: process.env['USER_MAILER'],
       to: req.body.email,
       subject: 'Employer deleted!',
       text: `${req.body.email} удален !`,
@@ -186,7 +186,7 @@ employerRouter.post('/:id', auth, async (req, res, next) => {
 employerRouter.post('/tariff', auth, async (req, res, next) => {
   try {
     await transporter.sendMail({
-      from: '04072002mu@gmail.com',
+      from: process.env['USER_MAILER'],
       to: req.body.email,
       subject: `Работодатель ${req.body.email} хочет купить тариф ${req.body.typeTariff}!`,
       text: `${req.body.email}, deleted!`,

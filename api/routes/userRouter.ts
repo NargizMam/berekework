@@ -8,7 +8,7 @@ import { OAuth2Client } from 'google-auth-library';
 import permit from '../middleware/permit';
 import auth, { RequestWithUser } from '../middleware/auth';
 import ignoreAuth from '../middleware/ignoreAuth';
-import {transporter} from "../mailer";
+import { transporter } from '../mailer';
 import Vacancy from '../models/vacancy/Vacancy';
 
 const client = new OAuth2Client(config.google.clientId);
@@ -328,7 +328,7 @@ userRouter.delete('/:id', ignoreAuth, async (req: RequestWithUser, res, next) =>
 userRouter.post('/send-otp', async (req, res, next) => {
   try {
     const email = req.body.email;
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(422).send({ error: 'Пользователь не найден' });
@@ -341,7 +341,7 @@ userRouter.post('/send-otp', async (req, res, next) => {
     await user.save();
 
     const mailOptions = {
-      from: '<BerekeWorkOtp@gmail.com>',
+      from: process.env['USER_MAILER'],
       to: email,
       subject: 'Your OTP Code to Berekework',
       text: `Ваш OTP код ${otp}`,
@@ -351,10 +351,9 @@ userRouter.post('/send-otp', async (req, res, next) => {
       if (error) {
         return next(error);
       } else {
-        return res.status(200).send({message: `OTP отправлен на ${req.body.email}`});
+        return res.status(200).send({ message: `OTP отправлен на ${req.body.email}` });
       }
     });
-
   } catch (e) {
     return next(e);
   }
@@ -362,15 +361,14 @@ userRouter.post('/send-otp', async (req, res, next) => {
 
 userRouter.post('/compare-otp', async (req, res, next) => {
   try {
-    const user = await User.findOne({email: req.body.email});
+    const user = await User.findOne({ email: req.body.email });
     const otp = req.body.otp;
 
     if (user?.otp !== otp) {
       return res.status(422).send({ error: 'Неверный Otp' });
     }
 
-    return res.status(200).send({message: 'Success'});
-
+    return res.status(200).send({ message: 'Success' });
   } catch (e) {
     return next(e);
   }
@@ -395,7 +393,5 @@ userRouter.post('/change-password', async (req, res, next) => {
     return next(e);
   }
 });
-
-
 
 export default userRouter;

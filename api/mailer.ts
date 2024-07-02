@@ -5,18 +5,7 @@ export const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   secure: true,
   auth: {
-    user: '04072002mu@gmail.com',
-    pass: 'zrslivmlllbgcsmw',
+    user: process.env['USER_MAILER'],
+    pass: process.env['USER_MAILER_PASSWORD'],
   },
 });
-
-// const mailOptions = {
-//   from: '04072002mu@gmail.com',
-//   to: 'muradilakk02@gmail.com',
-//   subject: 'Hello my friend!',
-//   text: 'Text of letter',
-// };
-//
-// transporter.sendMail(mailOptions, (err) => {
-//   console.log(err);
-// });
