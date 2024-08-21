@@ -183,14 +183,15 @@ employerRouter.post('/:id', auth, async (req, res, next) => {
   }
 });
 
-employerRouter.post('/tariff', auth, async (req, res, next) => {
+employerRouter.post('/tariff/', auth, async (req, res, next) => {
   try {
     await transporter.sendMail({
       from: process.env['USER_MAILER'],
       to: req.body.email,
-      subject: `Работодатель ${req.body.email} хочет купить тариф ${req.body.typeTariff}!`,
-      text: `${req.body.email}, deleted!`,
+      subject: `Employer want to update`,
+      text: `Работодатель ${req.body.email} хочет купить тариф ${req.body.typeTariff}!`,
     });
+    res.send('ok!').status(200)
   } catch (error) {
     return next(error);
   }
