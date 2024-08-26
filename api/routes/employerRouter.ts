@@ -164,6 +164,20 @@ employerRouter.get('/:id', async (req, res, next) => {
   }
 });
 
+employerRouter.post('/tariff/', auth, async (req, res, next) => {
+  try {
+    await transporter.sendMail({
+      from: process.env['USER_MAILER'],
+      to: req.body.email,
+      subject: `Employer want to update`,
+      text: `Работодатель ${req.body.email} хочет купить тариф ${req.body.typeTariff}!`,
+    });
+    res.send('ok!').status(200)
+  } catch (error) {
+    return next(error);
+  }
+});
+
 employerRouter.post('/:id', auth, async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -178,20 +192,6 @@ employerRouter.post('/:id', auth, async (req, res, next) => {
 
     await Employer.findByIdAndDelete(req.params.id);
     res.send({ message: 'Работодатель удален!' });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-employerRouter.post('/tariff/', auth, async (req, res, next) => {
-  try {
-    await transporter.sendMail({
-      from: process.env['USER_MAILER'],
-      to: req.body.email,
-      subject: `Employer want to update`,
-      text: `Работодатель ${req.body.email} хочет купить тариф ${req.body.typeTariff}!`,
-    });
-    res.send('ok!').status(200)
   } catch (error) {
     return next(error);
   }
