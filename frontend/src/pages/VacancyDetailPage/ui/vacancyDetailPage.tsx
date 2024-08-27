@@ -96,23 +96,23 @@ export const VacancyDetailPage = () => {
                     </Typography>
                   )
                 ) : (
-                <Button
-                  onClick={() => sendReplyHandle(vacancy._id)}
-                  variant="contained"
-                  size="large"
-                  color="success"
-                  sx={{mt: 2}}
-                  className="vacancyButton"
-                >
-                  Откликнуться
-                </Button>
+                  <Button
+                    onClick={() => sendReplyHandle(vacancy._id)}
+                    variant="contained"
+                    size="large"
+                    color="success"
+                    sx={{ mt: 2 }}
+                    className="vacancyButton"
+                  >
+                    Откликнуться
+                  </Button>
                 )}
               </div>
             )}
           </div>
           <div className="aboutEmployer">
             <div className="employer-logo">
-              {vacancy.employer ? <img src={API_URL + '/' + vacancy.employer.avatar} alt="avatar compnay" /> : ''}
+              {vacancy.employer ? <img src={API_URL + '/' + vacancy.employer.avatar} width={100} height={100} alt="avatar compnay" /> : ''}
             </div>
             <div className="companyInfo">
               <h3 className="companyName">{vacancy.employer?.companyName}</h3>
@@ -120,15 +120,18 @@ export const VacancyDetailPage = () => {
               <div className="location">
                 <MyLocationIcon /> <span>{vacancy.city}</span>, <span>{vacancy.country}</span>
               </div>
-              <div className="contacts-block">
-                <span>Contacts:</span>
-                <Link className="contacts" sx={{ cursor: 'pointer' }}>
-                  <Phone /> {vacancy.employer?.contacts}
-                </Link>
-                <Link className="contacts" sx={{ cursor: 'pointer' }}>
-                  <Email /> {vacancy.employer?.email}
-                </Link>
-              </div>
+              {
+                user &&
+                <div className="contacts-block">
+                  <span>Contacts:</span>
+                  <Link className="contacts" sx={{ cursor: 'pointer' }}>
+                    <Phone /> {vacancy.employer?.contacts}
+                  </Link>
+                  <Link className="contacts" sx={{ cursor: 'pointer' }}>
+                    <Email /> {vacancy.employer?.email}
+                  </Link>
+                </div>
+              }
             </div>
           </div>
         </div>
